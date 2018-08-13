@@ -12,7 +12,7 @@ class ItemGroup extends Model
     protected $fillable = ['ItemGroupName', 'ItemGroupImage'];
 
     public function items(){
-      return $this->hasMany('App\Item', 'ItemGroupID')->withDefault();
+      return $this->hasMany('App\Item', 'ItemGroupID');
     }
 
     // public function scopeClient($query){

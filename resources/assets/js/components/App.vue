@@ -4,10 +4,8 @@
 <template>
   <div class="container-fluid remove-all-padding">
     <TopMeniu v-if="$auth.check()"></TopMeniu>
-    <div class="jumbotron">
       <Login v-if="!$auth.check()"></Login>
       <router-view v-if="$auth.check()"></router-view>
-    </div>
   </div>
 </template>
 <script>

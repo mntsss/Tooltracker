@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-sm navbar-keytracker remove-top-padding w-100 align-self-top">
+  <nav class="navbar navbar-expand-sm navbar-keytracker remove-top-padding w-100 align-self-top mb-5">
     <a class="navbar-brand " @click="$router.push('/')"><img src="/media/logo.svg" alt="logo"/></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Išskleisti meniu">
       <i class="fas fa-bars text-warning" style="font-size: 30px"></i>

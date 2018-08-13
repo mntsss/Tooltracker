@@ -17,6 +17,8 @@ Route::group(['middleware' => 'jwt.auth'], function(){
   //item groups routes
   Route::prefix('group')->group(function(){
     Route::get('list', 'ItemGroupController@getGroups');
+    Route::get('info/{id}', 'ItemGroupController@getInfo');
     Route::post('create', 'ItemGroupController@create');
+
   });
 });

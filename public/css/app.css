@@ -10742,6 +10742,33 @@ html {
   z-index: 500;
 }
 
+/***************************** Function buttons ****************************/
+
+.nav-arrow {
+  float: left;
+  position: absolute;
+  overflow: visible;
+}
+
+.nav-arrow:hover {
+  cursor: pointer;
+  border: 1px solid #007BFF;
+  border-radius: 15%;
+}
+
+.btn-func-misc {
+  float: right;
+  overflow: visible;
+  padding: 10px;
+  border: 1px solid transparent;
+}
+
+.btn-func-misc:hover {
+  cursor: pointer;
+  border: 1px solid #007BFF;
+  border-radius: 15%;
+}
+
 @media screen and (min-width: 1200px) {
   .item-add-box {
     font-size: 100px;

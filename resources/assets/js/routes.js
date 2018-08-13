@@ -17,7 +17,16 @@ const routes = [
     meta: {
       auth:false
     }
-  }
+   },
+   {
+       path: '/group/:groupID',
+       name: 'group',
+       component: require('./components/ItemGroup'),
+       props: true,
+       meta: {
+           auth:true
+       }
+   }
 ]
 
 export default routes
