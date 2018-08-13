@@ -14,7 +14,6 @@ class ItemWithdrawal extends Model
     public function item(){
       return $this->belongsTo('App\Item', 'ItemID');
     }
-
     public function worker(){
       return $this->belongsTo('App\Worker', 'WorkerID')->withDefault();
     }

@@ -6,7 +6,7 @@
             <span class="fas fa-plus text-success"></span>
         </div>
     </div>
-    <router-link tag="div" class="item-box-panel" :to="{ name: 'group', params: { groupID: group.ItemGroupID}}" v-for="group in itemGroups" :key="group.ItemGroupID">
+    <router-link tag="div" class="item-box-panel" :to="{ name: 'group', params: { group: group}}" v-for="group in itemGroups" :key="group.ItemGroupID">
         <div class="item-image-box" v-if="group.ItemGroupImage">
             <img :src="'media/uploads/'+group.ItemGroupImage" alt="item-img" class="item-img"/>
         </div>

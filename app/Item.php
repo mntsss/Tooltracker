@@ -14,7 +14,9 @@ class Item extends Model
     public function itemGroup(){
       return $this->belongsTo('App\ItemGroup', 'ItemGroupID');
     }
-
+    public function withdrawals(){
+      return $this->belongsTo('App\ItemWithdrawal', 'ItemID');
+    }
     // public function scopeClient($query){
     //   return $query->where('ClientID', Auth::user()->ClientID);
     // }

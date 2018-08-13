@@ -19,7 +19,7 @@ const routes = [
     }
    },
    {
-       path: '/group/:groupID',
+       path: '/group',
        name: 'group',
        component: require('./components/ItemGroup'),
        props: true,

@@ -9,8 +9,13 @@
 
       </div>
       <div class="card-body">
-        <div class="row remove-side-margin">
+        <div class="row remove-side-margin" v-for="item in itemGroup.items">
+          <div class="col-6">
+            {{item.ItemName}}
+          </div>
+          <div class="col">
 
+          </div>
         </div>
       </div>
     </div>
@@ -20,24 +25,24 @@
   export default {
     data(){
       return {
-          itemGroup: null
+
       }
     },
     props: {
-        groupID: {
+        group: {
             required: true,
-            type: Number
+            type: Object
         }
     },
     computed: {
-        itemGroupID: function(){
-            return this.groupID;
+        itemGroup: function(){
+            return this.group;
         }
     },
-    mounted(){
-        this.$http.get('/group/info/'+this.itemGroupID).then((response)=>{
+    created(){
+        this.$http.get('/group/info/'+this.itemGroup.ItemGroupID).then((response)=>{
             if(response.status==200){
-                this.itemGroup = response.data;
+                console.log(response.data);
             }
             else{
                 console.log('error')

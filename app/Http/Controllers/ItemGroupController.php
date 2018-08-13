@@ -44,6 +44,6 @@ class ItemGroupController extends Controller
     }
 
     public function getInfo($id){
-        return response()->json(ItemGroup::with('items')->find($id));
+        return response()->json(ItemGroup::with('items')->withdrawals->find($id));
     }
 }
