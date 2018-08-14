@@ -15,9 +15,15 @@ class Item extends Model
       return $this->belongsTo('App\ItemGroup', 'ItemGroupID');
     }
     public function withdrawals(){
-      return $this->belongsTo('App\ItemWithdrawal', 'ItemID');
+      return $this->hasMany('App\ItemWithdrawal', 'ItemID');
     }
-    // public function scopeClient($query){
-    //   return $query->where('ClientID', Auth::user()->ClientID);
-    // }
+    public function lastWithdrawal(){
+      return $this->hasOne('App\ItemWithdrawal', 'ItemID')->latest();
+    }
+    public function lastSuspention(){
+      return $this->hasOne('App\ItemSuspention', 'ItemID')->latest();
+    }
+    public function lastReservation(){
+      return $this->hasOne('App\ReservationItem', 'ItemID')->latest();
+    }
 }

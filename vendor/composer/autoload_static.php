@@ -350,9 +350,9 @@ class ComposerStaticInit2d3ec22a94ef1c083a1f5f6d39ae07b9
     );
 
     public static $classMap = array (
-        'App\\Client' => __DIR__ . '/../..' . '/app/Client.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Http\\Controllers\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/AuthController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
         'App\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',
         'App\\Http\\Controllers\\Auth\\RegisterController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/RegisterController.php',
@@ -368,8 +368,10 @@ class ComposerStaticInit2d3ec22a94ef1c083a1f5f6d39ae07b9
         'App\\Http\\Middleware\\TrimStrings' => __DIR__ . '/../..' . '/app/Http/Middleware/TrimStrings.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
+        'App\\Http\\Requests\\CreateItemGroupRequest' => __DIR__ . '/../..' . '/app/Http/Requests/CreateItemGroupRequest.php',
         'App\\Item' => __DIR__ . '/../..' . '/app/Item.php',
         'App\\ItemGroup' => __DIR__ . '/../..' . '/app/ItemGroup.php',
+        'App\\ItemSuspention' => __DIR__ . '/../..' . '/app/ItemSuspention.php',
         'App\\ItemWithdrawal' => __DIR__ . '/../..' . '/app/ItemWithdrawal.php',
         'App\\Object' => __DIR__ . '/../..' . '/app/Object.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
@@ -377,9 +379,10 @@ class ComposerStaticInit2d3ec22a94ef1c083a1f5f6d39ae07b9
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
+        'App\\Reservation' => __DIR__ . '/../..' . '/app/Reservation.php',
+        'App\\ReservationItem' => __DIR__ . '/../..' . '/app/ReservationItem.php',
         'App\\Traits\\OrderActions' => __DIR__ . '/../..' . '/app/Traits/OrderActions.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
-        'App\\Usergroup' => __DIR__ . '/../..' . '/app/Usergroup.php',
         'App\\Worker' => __DIR__ . '/../..' . '/app/Worker.php',
         'Carbon\\Carbon' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Carbon.php',
         'Carbon\\CarbonInterval' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/CarbonInterval.php',

@@ -38,7 +38,7 @@ class ItemGroupController extends Controller
 
     }
 
-    public function getGroups(){
+    public function groups(){
       $groups = ItemGroup::get();
       return response()->json($groups);
     }

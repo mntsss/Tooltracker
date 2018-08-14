@@ -9,7 +9,7 @@ class ItemWithdrawal extends Model
 {
     protected $primaryKey = "ItemWithdrawalID";
 
-    protected $fillable = ['ItemWithdrawalQuentity', 'ItemWithdrawalReturned', 'ItemWithdrawalReturnedQuantity', 'ItemID', 'WorkerID', 'ObjectID'];
+    protected $fillable = ['ItemWithdrawalQuantity', 'ItemWithdrawalReturned', 'ItemWithdrawalReturnedQuantity', 'ItemID', 'WorkerID', 'ObjectID'];
 
     public function item(){
       return $this->belongsTo('App\Item', 'ItemID');

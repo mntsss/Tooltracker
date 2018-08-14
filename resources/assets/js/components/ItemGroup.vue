@@ -1,20 +1,30 @@
 <template>
   <div class="container">
+    <RenameModal></RenameModal>
     <div class="card">
       <div class="card-header">
               <a @click="$router.go(-1)"><h4 class="fa fa-arrow-left text-primary remove-all-margin p-2 nav-arrow"></h4></a>
-              <span class="fas fa-ellipsis-v text-primary remove-all-margin btn-func-misc"></span>
+              <div class="dropdown show">
+                <a class="fas fa-ellipsis-v text-primary remove-all-margin btn-func-misc" id="dropdownGroupFunc" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <!-- <span class="fas fa-ellipsis-v text-primary remove-all-margin btn-func-misc"></span> -->
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownGroupFunc">
+                  <a class="dropdown-item" @click="openModal('modalRename')">Pervadinti</a>
+                  <a class="dropdown-item" href="#">Keisti nuotrauką</a>
+                  <a class="dropdown-item" href="#">Ištrinti</a>
+                </div>
+              </div>
               <h4 class="text-dark text-center">{{itemGroup.ItemGroupName}}</h4>
 
 
       </div>
       <div class="card-body">
-        <div class="row remove-side-margin" v-for="item in itemGroup.items">
+        <div class="row remove-side-margin" v-for="item in items">
           <div class="col-6">
-            {{item.ItemName}}
+            {{item.item.ItemName}}
           </div>
-          <div class="col">
-
+          <div class="col text-center">
+            {{item.state}}
           </div>
         </div>
       </div>
@@ -22,10 +32,12 @@
   </div>
 </template>
 <script>
+import RenameModal from './modals/RenameGroup.vue'
   export default {
     data(){
       return {
-
+        items: [],
+        openedModal: null
       }
     },
     props: {
@@ -40,14 +52,22 @@
         }
     },
     created(){
-        this.$http.get('/group/info/'+this.itemGroup.ItemGroupID).then((response)=>{
+        this.$http.get('/item/list/'+this.itemGroup.ItemGroupID).then((response)=>{
             if(response.status==200){
-                console.log(response.data);
+                this.items = response.data;
             }
             else{
                 console.log('error')
             }
         })
+    },
+    methods: {
+      openModal: function(modalName){
+        this.openedModal = modalName;
+      }
+    },
+    components: {
+      RenameModal
     }
 }
 </script>
