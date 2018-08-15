@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <CreateGroup></CreateGroup>
-    <div class="item-box-panel" onclick="$('#categoryAdd').modal()">
+    <div class="item-box-panel" @click="$modal.show('create-group-modal')">
         <div class="item-add-box" style="height: 100% !important">
             <span class="fas fa-plus text-success"></span>
         </div>

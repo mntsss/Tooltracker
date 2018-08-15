@@ -4,12 +4,12 @@ import axios from 'axios';
 import VueAxios from 'vue-axios';
 import routes from './routes';
 import store from './store';
-
+import vmodal from 'vue-js-modal'
 import App from './components/App.vue'
-
+import swal from 'sweetalert'
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
-
+Vue.use(vmodal);
 //api requests setup with jwt tokens
 const tokenProvider = require('axios-token-interceptor');
 axios.defaults.baseURL = window.location.href+'api';
