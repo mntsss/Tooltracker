@@ -2,13 +2,13 @@
   <div class="container">
     <RenameModal></RenameModal>
     <ChangeImageModal></ChangeImageModal>
-    <DeleteModal></DeleteModal>
+    <CreateItemModal></CreateItemModal>
     <div class="card">
       <div class="card-header">
               <a @click="$router.go(-1)"><h4 class="fa fa-arrow-left text-primary remove-all-margin p-2 nav-arrow"></h4></a>
+
               <div class="dropdown show">
-                <a class="fas fa-ellipsis-v text-primary remove-all-margin btn-func-misc" id="dropdownGroupFunc" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <!-- <span class="fas fa-ellipsis-v text-primary remove-all-margin btn-func-misc"></span> -->
+                <a class="fas fa-ellipsis-v text-primary btn-func-misc ml-2 mr-2 mb-0 mt-0" id="dropdownGroupFunc" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownGroupFunc">
                   <a class="dropdown-item cursor-pointer" @click="show('rename-group-modal')">Pervadinti</a>
@@ -16,6 +16,7 @@
                   <a class="dropdown-item cursor-pointer" @click="deleteGroup">Ištrinti</a>
                 </div>
               </div>
+              <a @click="show('create-item-modal')"><h4 class="fas fa-plus text-primary p-2 btn-func-misc ml-2 mr-2 mb-0 mt-0"></h4></a>
               <h4 class="text-dark text-center">{{itemGroup.ItemGroupName}}</h4>
 
 
@@ -36,7 +37,8 @@
 <script>
 import RenameModal from './modals/RenameGroup.vue'
 import ChangeImageModal from './modals/ChangeGroupImage.vue'
-import DeleteModal from './modals/DeleteConfirmationModal.vue'
+import CreateItemModal from './modals/CreateItem.vue'
+import swal from 'sweetalert'
   export default {
     data(){
       return {
@@ -56,31 +58,44 @@ import DeleteModal from './modals/DeleteConfirmationModal.vue'
             if(response.status==200){
                 this.items = response.data;
             }
-            else{
-                console.log('error')
-            }
+        }).catch(error => {
+          swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
         })
     },
     methods: {
         show (name) {
             this.$modal.show(name, {groupID: this.itemGroup.ItemGroupID});
         },
-        hide (name) {
-            this.$modal.hide(name);
-        },
         deleteGroup: function(){
-            this.$modal.show('delete-confirm-modal',
-            {
-                header: 'Ar tikrai norite ištrinti šią grupę?',
-                message: 'Ištrinti galima tik grupes, kurios neturi naudojamų, rezervuotų ar taisomų įrankių. Ištrynus grupę, visi jai priskirti įrankiai taip pat bus ištrinti.',
-                url: '/group/delete/'+this.itemGroup.ItemGroupID
+            swal({
+              title: 'Ar tikrai norite ištrinti šią grupę?',
+              text: 'Ištrinti galima tik grupes, kurios neturi naudojamų, rezervuotų ar taisomų įrankių. Ištrynus grupę, visi jai priskirti įrankiai taip pat bus ištrinti.',
+              icon: 'warning',
+              dangerMode: true,
+              buttons: {
+                del: { text: 'Trinti', value: true},
+                cancel: {text: 'Atšaukti'}
+              }
+            }).then(value => {
+              if(value){
+                this.$http.get('/group/delete/'+this.itemGroup.ItemGroupID).then((response)=>{
+                    if(response.status == 200){
+                        swal(response.data.message, response.data.success, "success").then(value => { this.$router.push({name: 'main'})})
+                    }
+                }).catch(error =>{
+                    if(error.response.status == 422)
+                    {
+                        swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
+                    }
+                })
+              }
             })
         }
     },
     components: {
       RenameModal,
       ChangeImageModal,
-      DeleteModal
+      CreateItemModal
     }
 }
 </script>

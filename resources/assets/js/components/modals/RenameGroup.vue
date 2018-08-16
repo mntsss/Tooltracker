@@ -47,8 +47,8 @@ export default {
         }).catch(error =>{
             if(error.response.status == 422)
             {
-                this.$modal.hide('rename-group-modal')
-                swal(error.response.data.message, error.response.data.errors.name[0], "error");
+                //this.$modal.hide('rename-group-modal')
+                swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
             }
         })
     },

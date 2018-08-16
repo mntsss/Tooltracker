@@ -27,4 +27,12 @@ class CreateItemGroupRequest extends FormRequest
           'name' => 'required|string|min:3|max:25'
         ];
     }
+    public function messages(){
+      return [
+        'name.required' => 'Neįvestas grupės pavadinimas.',
+        'name.string' => 'Neįvestas grupės pavadinimas.',
+        'name.min' => 'Grupės pavadinimas negali būti trumpesnis nei 3 simboliai.',
+        'name.max' => 'Grupės pavadinimas negali būti ilgesnis nei 25 simboliai.'
+      ];
+    }
 }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateItemGroupRequest;
 use App\Http\Requests\RenameItemGroupRequest;
-use App\Http\Requests\ChangeGroupImageRequest;
+
 use Illuminate\Support\Facades\Validator;
 use App\ItemGroup;
 use Auth;
@@ -25,7 +25,12 @@ class ItemGroupController extends Controller
         return response()->json(['message' => 'Klaida', 'errors' => ['name' => ['Grupė tokiu pavadinimu jau yra.']]], 422);
       }
       if(!is_null($request->image) && $request->image != "null" && $request->image != ""){
-        Validator::make($request->all(), ['image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'])->validate();
+        Validator::make($request->all(), ['image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:40496'],
+        [
+          'image.image' => 'Galite įkelti tik nuotrauką ar paveikslėlį!',
+          'image.mimes' => 'Netinkamas failo plėtinys',
+          'image.max' => 'Failas per didelis.'
+          ])->validate();
         $image = $request->file('image');
         $input['imagename'] = time().'.'.$image->getClientOriginalExtension();
         $destinationPath = public_path('/media/uploads/');
@@ -33,9 +38,6 @@ class ItemGroupController extends Controller
       }else {
         $input['imagename'] = "";
       }
-      // $imageName = time().'.'.$request->image->getClientOriginalExtension();
-      // $path = $request->image->storeAs('media/uploads', $imageName);
-
       ItemGroup::create([
         'ItemGroupName' => $request->name,
         'ItemGroupImage' => $input['imagename']
@@ -59,10 +61,17 @@ class ItemGroupController extends Controller
 
     public function changeImage(Request $request){
 
-        Validator::make($request->all(), [ 'id' => 'required|numeric'])->validate();
+        Validator::make($request->all(), [ 'id' => 'required|numeric'], [
+          'id.required' => 'Įrankių grupė nežinoma. Apie klaidą praneškina administratoriui.',
+          'id.numeric' => 'Kažkur įvyko klaida identifikuojant įrankių grupę. Apie klaidą praneškite administratoriui.'
+        ])->validate();
 
         if(!is_null($request->image) && $request->image != "null" && $request->image != ""){
-          Validator::make($request->all(), ['image' =>'image|mimes:jpg,jpeg,gif,png|max:4096'])->validate();
+          Validator::make($request->all(), ['image' =>'image|mimes:jpg,jpeg,gif,png|max:4096'], [
+            'image.image' => 'Galite įkelti tik nuotrauką ar paveikslėlį!',
+            'image.mimes' => 'Netinkamas failo plėtinys',
+            'image.max' => 'Failas per didelis.'
+            ])->validate();
           $image = $request->file('image');
           $input['imagename'] = time().'.'.$image->getClientOriginalExtension();
           $destinationPath = public_path('/media/uploads/');
@@ -77,14 +86,14 @@ class ItemGroupController extends Controller
     }
 
     public function delete($id){
-         $items = Item::where('ItemGroupID', $id)->with('lastWithdrawal', 'lastSuspention', 'lastReservation')->get();
+         $items = Item::where('ItemGroupID', $id)->existing()->with('lastWithdrawal', 'lastSuspention', 'lastReservation')->get();
         foreach($items as $item){
             if($this->GetItemState($item) != "Sandėlyje"){
                 return response()->json(['message' => 'Klaida',
                                                             'errors' => ['name' => [$item->ItemName.' negrąžintas į sandėlį, todėl įrankių grupė nebuvo ištrinta.']]], 422);
             }
         }
-        Item::where('ItemGroupID', $id)->delete();
+        Item::where('ItemGroupID', $id)->deleteItem();
         ItemGroup::destroy($id);
         return response()->json(['message' => 'Atlikta!', 'success' => 'Įrankių grupė sėkmingai ištrinta.'],200);
     }

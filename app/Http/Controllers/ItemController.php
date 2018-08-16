@@ -18,7 +18,7 @@ class ItemController extends Controller
     }
 
     public function items($groupID){
-      $items = Item::where('ItemGroupID', $groupID)->with('lastWithdrawal', 'lastSuspention', 'lastReservation')->get();
+      $items = Item::where('ItemGroupID', $groupID)->existing()->with('lastWithdrawal', 'lastSuspention', 'lastReservation')->get();
       $response = [];
       foreach($items as $item){
         array_push($response, ['item'=> $item, 'state' => $this->GetItemState($item)]);

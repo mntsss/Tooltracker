@@ -26,4 +26,10 @@ class Item extends Model
     public function lastReservation(){
       return $this->hasOne('App\ReservationItem', 'ItemID')->latest();
     }
+    public function scopeDeleteItem($query){
+      return $query->update(['ItemDeleted' => true]);
+    }
+    public function scopeExisting($query){
+      return $query->where('ItemDeleted', false);
+    }
 }

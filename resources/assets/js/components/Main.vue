@@ -31,7 +31,7 @@ export default {
       itemGroups: [],
     }
   },
-  mounted(){
+  created(){
     this.loadGroups()
   },
   computed: {
