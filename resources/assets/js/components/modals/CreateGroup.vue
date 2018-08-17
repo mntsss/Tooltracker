@@ -60,16 +60,16 @@ export default {
                 this.$modal.hide('create-group-modal')
                 swal(response.data.message, response.data.success, "success")
                 this.$parent.loadGroups();
+                this.name = null;
+                this.image= null
             }
         }).catch(error =>{
             if(error.response.status == 422)
             {
-                // this.$modal.hide('create-group-modal')
                 swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
             }
             if(error.response.status == 413)
             {
-                // this.$modal.hide('create-group-modal')
                 swal("Klaida", "Failo dydis netinkamas!", "error");
             }
         })

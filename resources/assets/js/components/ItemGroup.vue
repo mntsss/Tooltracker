@@ -54,13 +54,7 @@ import swal from 'sweetalert'
     },
     created(){
         this.itemGroup = this.group;
-        this.$http.get('/item/list/'+this.itemGroup.ItemGroupID).then((response)=>{
-            if(response.status==200){
-                this.items = response.data;
-            }
-        }).catch(error => {
-          swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
-        })
+        this.loadItems()
     },
     methods: {
         show (name) {
@@ -90,6 +84,15 @@ import swal from 'sweetalert'
                 })
               }
             })
+        },
+        loadItems: function(){
+          this.$http.get('/item/list/'+this.itemGroup.ItemGroupID).then((response)=>{
+              if(response.status==200){
+                  this.items = response.data;
+              }
+          }).catch(error => {
+            swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
+          })
         }
     },
     components: {

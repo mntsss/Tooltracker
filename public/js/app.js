@@ -16286,14 +16286,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     _this.$modal.hide('create-group-modal');
                     __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()(response.data.message, response.data.success, "success");
                     _this.$parent.loadGroups();
+                    _this.name = null;
+                    _this.image = null;
                 }
             }).catch(function (error) {
                 if (error.response.status == 422) {
-                    // this.$modal.hide('create-group-modal')
                     __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
                 }
                 if (error.response.status == 413) {
-                    // this.$modal.hide('create-group-modal')
                     __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()("Klaida", "Failo dydis netinkamas!", "error");
                 }
             });
@@ -16883,16 +16883,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     created: function created() {
-        var _this = this;
-
         this.itemGroup = this.group;
-        this.$http.get('/item/list/' + this.itemGroup.ItemGroupID).then(function (response) {
-            if (response.status == 200) {
-                _this.items = response.data;
-            }
-        }).catch(function (error) {
-            __WEBPACK_IMPORTED_MODULE_3_sweetalert___default()(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
-        });
+        this.loadItems();
     },
 
     methods: {
@@ -16901,7 +16893,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
 
         deleteGroup: function deleteGroup() {
-            var _this2 = this;
+            var _this = this;
 
             __WEBPACK_IMPORTED_MODULE_3_sweetalert___default()({
                 title: 'Ar tikrai norite ištrinti šią grupę?',
@@ -16914,10 +16906,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             }).then(function (value) {
                 if (value) {
-                    _this2.$http.get('/group/delete/' + _this2.itemGroup.ItemGroupID).then(function (response) {
+                    _this.$http.get('/group/delete/' + _this.itemGroup.ItemGroupID).then(function (response) {
                         if (response.status == 200) {
                             __WEBPACK_IMPORTED_MODULE_3_sweetalert___default()(response.data.message, response.data.success, "success").then(function (value) {
-                                _this2.$router.push({ name: 'main' });
+                                _this.$router.push({ name: 'main' });
                             });
                         }
                     }).catch(function (error) {
@@ -16926,6 +16918,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         }
                     });
                 }
+            });
+        },
+        loadItems: function loadItems() {
+            var _this2 = this;
+
+            this.$http.get('/item/list/' + this.itemGroup.ItemGroupID).then(function (response) {
+                if (response.status == 200) {
+                    _this2.items = response.data;
+                }
+            }).catch(function (error) {
+                __WEBPACK_IMPORTED_MODULE_3_sweetalert___default()(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
             });
         }
     },
@@ -17503,36 +17506,59 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         save: function save() {
-            /*var form = new FormData();
-              form.append('name', this.name)
-            form.append('image', this.image)
-              this.$http.post('/group/create', form,
-            {
-                headers: {'Content-Type': 'multipart/form-data'}
-            }).then((response)=>{
-                if(response.status == 200){
-                    this.$modal.hide('create-group-modal')
-                    swal(response.data.message, response.data.success, "success")
-                    this.$parent.loadGroups();
+            var _this = this;
+
+            var form = new FormData();
+
+            form.append('name', this.name);
+            form.append('image', this.image);
+            if (this.code != null && this.code != "") form.append('code', this.code);
+            if (this.consumable == true) form.append('consumable', 1);
+            if (this.consumable == false) form.append('consumable', 0);
+            if (this.warranty_date != null && this.warranty_date != "") form.append('warranty_date', this.format(this.warranty_date));
+            if (this.purchase_date != null && this.purchase_date != "") form.append('purchase_date', this.format(this.purchase_date));
+            form.append('groupID', this.groupID);
+
+            this.$http.post('/item/create', form, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            }).then(function (response) {
+                if (response.status == 200) {
+                    _this.$modal.hide('create-item-modal');
+                    __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()(response.data.message, response.data.success, "success");
+                    _this.$parent.loadItems();
+                    _this.name = null;
+                    _this.image = null;
+                    _this.code = null;
+                    _this.consumable = false;
+                    _this.warranty_date = '';
+                    _this.purchase_date = '';
                 }
-            }).catch(error =>{
-                if(error.response.status == 422)
-                {
-                    // this.$modal.hide('create-group-modal')
-                    swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
+            }).catch(function (error) {
+
+                if (error.response.status == 422) {
+                    __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
                 }
-                if(error.response.status == 413)
-                {
-                    // this.$modal.hide('create-group-modal')
-                    swal("Klaida", "Failo dydis netinkamas!", "error");
+                if (error.response.status == 413) {
+                    __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()("Klaida", "Failo dydis netinkamas!", "error");
                 }
-            })*/
+            });
         },
         handleFileUpload: function handleFileUpload() {
             this.image = this.$refs.image.files[0];
         },
         beforeOpen: function beforeOpen(event) {
             this.groupID = event.params.groupID;
+        },
+        format: function format(date) {
+            if (date == null || date == "") return null;
+            var d = new Date(date),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+
+            if (month.length < 2) month = '0' + month;
+            if (day.length < 2) day = '0' + day;
+            return [year, month, day].join('-');
         }
     },
     components: {

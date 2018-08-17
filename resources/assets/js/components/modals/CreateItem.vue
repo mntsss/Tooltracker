@@ -85,38 +85,61 @@ export default {
     },
   methods: {
     save: function(){
-        /*var form = new FormData();
+        var form = new FormData();
 
         form.append('name', this.name)
         form.append('image', this.image)
+        if(this.code != null && this.code != "")form.append('code', this.code)
+        if(this.consumable == true) form.append('consumable', 1)
+        if(this.consumable == false) form.append('consumable', 0)
+        if(this.warranty_date != null && this.warranty_date != "") form.append('warranty_date', this.format(this.warranty_date))
+        if(this.purchase_date != null && this.purchase_date != "") form.append('purchase_date', this.format(this.purchase_date))
+        form.append('groupID', this.groupID)
 
-        this.$http.post('/group/create', form,
+        this.$http.post('/item/create', form,
         {
             headers: {'Content-Type': 'multipart/form-data'}
-        }).then((response)=>{
+        }
+      ).then((response)=>{
             if(response.status == 200){
-                this.$modal.hide('create-group-modal')
+                this.$modal.hide('create-item-modal')
                 swal(response.data.message, response.data.success, "success")
-                this.$parent.loadGroups();
+                this.$parent.loadItems();
+                this.name = null
+                this.image = null
+                this.code = null
+                this.consumable = false
+                this.warranty_date = ''
+                this.purchase_date= ''
             }
         }).catch(error =>{
+
             if(error.response.status == 422)
             {
-                // this.$modal.hide('create-group-modal')
                 swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
             }
             if(error.response.status == 413)
             {
-                // this.$modal.hide('create-group-modal')
                 swal("Klaida", "Failo dydis netinkamas!", "error");
             }
-        })*/
+        })
     },
     handleFileUpload: function(){
         this.image = this.$refs.image.files[0];
     },
     beforeOpen: function(event){
       this.groupID = event.params.groupID
+    },
+    format: function(date){
+      if(date == null || date == "") return null
+      var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+        return [year, month, day].join('-');
     }
   },
   components: {
