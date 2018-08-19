@@ -1,11 +1,16 @@
 <template>
-  <div class="container">
+    <div class="loading-parent">
+        <Loading :active.sync="isLoading"
+        :can-cancel="false"
+        :is-full-page="fullPage"></Loading>
+
+  <div class="container" style="min-height: 70vh !important">
     <RenameModal></RenameModal>
     <ChangeImageModal></ChangeImageModal>
     <CreateItemModal></CreateItemModal>
     <div class="card">
       <div class="card-header">
-              <a @click="$router.go(-1)"><h4 class="fa fa-arrow-left text-primary remove-all-margin p-2 nav-arrow"></h4></a>
+              <a @click="$router.push({name: 'main'})"><h4 class="fa fa-arrow-left text-primary remove-all-margin p-2 nav-arrow"></h4></a>
 
               <div class="dropdown show">
                 <a class="fas fa-ellipsis-v text-primary btn-func-misc ml-2 mr-2 mb-0 mt-0" id="dropdownGroupFunc" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -17,44 +22,50 @@
                 </div>
               </div>
               <a @click="show('create-item-modal')"><h4 class="fas fa-plus text-primary p-2 btn-func-misc ml-2 mr-2 mb-0 mt-0"></h4></a>
-              <h4 class="text-dark text-center">{{itemGroup.ItemGroupName}}</h4>
+              <h4 class="text-dark text-center" v-if="itemGroup">{{itemGroup.ItemGroupName}}</h4>
 
 
       </div>
       <div class="card-body">
-        <div class="row remove-side-margin" v-for="item in items">
+        <router-link tag="div" class="row remove-side-margin cursor-pointer" :to="{ name: 'item', params: { itemProp: item}}" v-for="item in items" :key="item.item.ItemID">
           <div class="col-6">
             {{item.item.ItemName}}
           </div>
           <div class="col text-center">
             {{item.state}}
           </div>
-        </div>
+      </router-link>
       </div>
     </div>
   </div>
+</div>
 </template>
 <script>
+
 import RenameModal from './modals/RenameGroup.vue'
 import ChangeImageModal from './modals/ChangeGroupImage.vue'
 import CreateItemModal from './modals/CreateItem.vue'
 import swal from 'sweetalert'
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/vue-loading.min.css'
+
   export default {
     data(){
       return {
         items: [],
-        itemGroup: null
+        itemGroup: null,
+        isLoading: true,
+        fullPage: false
       }
     },
     props: {
         group: {
             required: true,
-            type: Object
+            type: String
         }
     },
-    created(){
-        this.itemGroup = this.group;
-        this.loadItems()
+    async created(){
+        this.loadGroup().then(this.loadItems)
     },
     methods: {
         show (name) {
@@ -85,10 +96,20 @@ import swal from 'sweetalert'
               }
             })
         },
+        loadGroup: function(){
+            return this.$http.get('/group/get/'+this.group).then((response)=>{
+                if(response.status == 200){
+                    this.itemGroup = response.data;
+                }
+            }).catch(error => {
+                swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
+            })
+        },
         loadItems: function(){
-          this.$http.get('/item/list/'+this.itemGroup.ItemGroupID).then((response)=>{
+          return this.$http.get('/item/list/'+this.itemGroup.ItemGroupID).then((response)=>{
               if(response.status==200){
                   this.items = response.data;
+                  this.isLoading = false;
               }
           }).catch(error => {
             swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
@@ -98,7 +119,23 @@ import swal from 'sweetalert'
     components: {
       RenameModal,
       ChangeImageModal,
-      CreateItemModal
+      CreateItemModal,
+      Loading
     }
 }
 </script>
+<style>
+    .loading-parent{
+        position: relative;
+    }
+    .loading-overlay .loading-background {
+        opacity: 1 !important;
+        background-color: #F5F8FA !important;
+    }
+    .loading-overlay .loading-icon:after {
+        width: 9em !important;
+        height: 9em !important;
+        border-width: 1em !important;
+    }
+
+</style>

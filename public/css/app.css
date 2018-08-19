@@ -10621,49 +10621,15 @@ html {
 
 /********************* Loading spinner ****************/
 
-.loader-container {
-  position: absolute;
-  top: 40%;
-  text-align: center;
-  font-size: calc(18px + 1vw);
+.loading-overlay .loading-background {
+  opacity: 1 !important;
+  background-color: #F5F8FA !important;
 }
 
-.loader {
-  border: 16px solid #f3f3f3;
-  border-top: 16px solid #3498db;
-  border-bottom: 16px solid #3498db;
-  border-radius: 50%;
-  width: 10vw;
-  min-width: 100px;
-  height: 10vw;
-  min-height: 100px;
-  -webkit-animation: spin 2s linear infinite;
-          animation: spin 2s linear infinite;
-  margin: 0 auto;
-}
-
-@-webkit-keyframes spin {
-  0% {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
-  }
-
-  100% {
-    -webkit-transform: rotate(360deg);
-            transform: rotate(360deg);
-  }
-}
-
-@keyframes spin {
-  0% {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
-  }
-
-  100% {
-    -webkit-transform: rotate(360deg);
-            transform: rotate(360deg);
-  }
+.loading-overlay .loading-icon:after {
+  width: 9em !important;
+  height: 9em !important;
+  border-width: 1em !important;
 }
 
 /********************* Item styles ********************/

@@ -97,4 +97,9 @@ class ItemGroupController extends Controller
         ItemGroup::destroy($id);
         return response()->json(['message' => 'Atlikta!', 'success' => 'Įrankių grupė sėkmingai ištrinta.'],200);
     }
+
+    public function get($id){
+        $user = ItemGroup::find($id);
+        return response()->json($user);
+    }
 }

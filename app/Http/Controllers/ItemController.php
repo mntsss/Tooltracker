@@ -56,4 +56,12 @@ class ItemController extends Controller
       else return response()->json(['message' => 'Klaida!', 'errors' => ['name' => ['Įvyko klaida jungiantis į duomenų bazę. Apie klaidą praneškite administracijai.']]], 422);
 
     }
+
+    public function get($id){
+
+        $item = Item::where('ItemID', $id)->existing()->with('lastWithdrawal', 'lastSuspention', 'lastReservation')->first();
+          return response()->json(['item'=> $item, 'state' => $this->GetItemState($item)], 200);
+        /*else
+          return response()->json(['message' => 'Klaida!', 'errors' => ['name' => ['Įvyko klaida jungiantis į duomenų bazę. Apie klaidą praneškite administracijai.']]], 422);*/
+    }
 }

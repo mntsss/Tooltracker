@@ -19,12 +19,21 @@ const routes = [
     }
    },
    {
-       path: '/group',
+       path: '/group/:group',
        name: 'group',
        component: require('./components/ItemGroup'),
        props: true,
        meta: {
            auth:true
+       }
+   },
+   {
+       path: '/item',
+       name: 'item',
+       component: require('./components/Item'),
+       props: true,
+       meta: {
+           auth: true
        }
    }
 ]

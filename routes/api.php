@@ -21,10 +21,12 @@ Route::group(['middleware' => 'jwt.auth'], function(){
     Route::post('rename', 'ItemGroupController@rename');
     Route::post('image', 'ItemGroupController@changeImage');
     Route::get('delete/{id}', 'ItemGroupController@delete');
+    Route::get('get/{id}', 'ItemGroupController@get');
 
   });
   Route::prefix('item')->group(function(){
     Route::get('list/{groupID}', 'ItemController@items');
     Route::post('create', 'ItemController@create');
+    Route::get('get/{id}', 'ItemController@get');
   });
 });
