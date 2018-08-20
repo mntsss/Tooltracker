@@ -32,4 +32,7 @@ Route::group(['middleware' => 'jwt.auth'], function(){
     Route::post('image', 'ItemController@changeImage');
     Route::get('delete/{id}', 'ItemController@delete');
   });
+  Route::prefix('user')->group(function(){
+     Route::get('list', 'UserController@listUsers'); 
+  });
 });

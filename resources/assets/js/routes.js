@@ -35,6 +35,14 @@ const routes = [
        meta: {
            auth: true
        }
+   },
+   {
+       path: '/users',
+       name: 'users',
+       component: require('./components/Users'),
+       meta: {
+           auth: true
+       }
    }
 ]
 

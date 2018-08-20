@@ -8,19 +8,19 @@
     <div class="collapse navbar-collapse row" id="navbar">
       <ul class="navbar-nav mr-auto col-lg-6">
         <li class="nav-item">
-          <router-link tag="div" to="/" class="nav-link">Pradžia</router-link>
+          <router-link tag="div" to="/" class="nav-link cursor-pointer">Pradžia</router-link>
         </li>
         <li class="nav-item">
-          <router-link tag="div" to="/" class="nav-link">Darbuotojai</router-link>
+          <router-link tag="div" :to="{ name: 'users'}" class="nav-link cursor-pointer">Vartotojai</router-link>
         </li>
         <li class="nav-item">
-          <router-link tag="div" to="/" class="nav-link">Objektai</router-link>
+          <router-link tag="div" to="/" class="nav-link cursor-pointer">Objektai</router-link>
         </li>
         <li class="nav-item">
-          <router-link tag="div" to="/" class="nav-link">Statistika</router-link>
+          <router-link tag="div" to="/" class="nav-link cursor-pointer">Statistika</router-link>
         </li>
         <li class="nav-item">
-          <router-link tag="div" to="/" class="nav-link">Istorija</router-link>
+          <router-link tag="div" to="/" class="nav-link cursor-pointer">Istorija</router-link>
         </li>
       </ul>
       <ul class="navbar-nav ml-auto col-lg-6">

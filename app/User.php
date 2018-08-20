@@ -23,8 +23,8 @@ class User extends Authenticatable implements JWTSubject
         'password', 'remember_token',
     ];
 
-    public function scopeClient($query){
-      return $query->where('ClientID', Auth::user()->ClientID);
+    public function scopeExisting($query){
+      return $query->where('UserDeleted', false);
     }
 
     public function Usergroup(){

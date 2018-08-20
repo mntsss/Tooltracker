@@ -15,8 +15,9 @@ class UserController extends Controller
       $this->middleware('auth');
     }
 
-    public function changePassword(){
-      return view('change-password');
+    public function listUsers(){
+        $users = User::existing()->get();
+        return response()->json($users, 200);            
     }
 
     public function changePasswordSubmit(Request $request)
@@ -55,4 +56,5 @@ class UserController extends Controller
       $request->session()->flash('success', 'Vartotojas '.$request->name.' užregistruotas.');
       return redirect()->route('active');
     }
+
 }

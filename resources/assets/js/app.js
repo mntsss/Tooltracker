@@ -2,14 +2,20 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
+import Vuex from 'vuex'
+
+import vmodal from 'vue-js-modal'
+import swal from 'sweetalert'
+
 import routes from './routes';
 import store from './store';
-import vmodal from 'vue-js-modal'
+
 import App from './components/App.vue'
-import swal from 'sweetalert'
+
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
 Vue.use(vmodal);
+Vue.use(Vuex);
 //api requests setup with jwt tokens
 const tokenProvider = require('axios-token-interceptor');
 axios.defaults.baseURL = window.location.href+'api';
@@ -29,7 +35,7 @@ const router = new VueRouter({
 });
 
 Vue.router = router;
-
+Vue.store = store;
 //jwt auth init
 Vue.use(require('@websanova/vue-auth'), {
    auth: require('@websanova/vue-auth/drivers/auth/bearer.js'),
@@ -40,4 +46,5 @@ Vue.use(require('@websanova/vue-auth'), {
 
 //main app init
 App.router = Vue.router;
+App.store = Vue.store;
 new Vue(App).$mount('#app');
