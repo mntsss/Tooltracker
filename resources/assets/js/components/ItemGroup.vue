@@ -128,14 +128,4 @@ import 'vue-loading-overlay/dist/vue-loading.min.css'
     .loading-parent{
         position: relative;
     }
-    .loading-overlay .loading-background {
-        opacity: 1 !important;
-        background-color: #F5F8FA !important;
-    }
-    .loading-overlay .loading-icon:after {
-        width: 9em !important;
-        height: 9em !important;
-        border-width: 1em !important;
-    }
-
 </style>

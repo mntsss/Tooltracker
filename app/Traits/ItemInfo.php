@@ -6,6 +6,9 @@ trait ItemInfo{
 
   public function GetItemState(Item $item){
 
+    if($item->ItemDeleted){
+      return "Ištrintas";
+    }
     if(!is_null($item->lastWithdrawal)){
       if($item->lastWithdrawal->ItemWithdrawalReturned == false){
         return "Naudojamas";

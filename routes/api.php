@@ -28,5 +28,8 @@ Route::group(['middleware' => 'jwt.auth'], function(){
     Route::get('list/{groupID}', 'ItemController@items');
     Route::post('create', 'ItemController@create');
     Route::get('get/{id}', 'ItemController@get');
+    Route::post('rename', 'ItemController@rename');
+    Route::post('image', 'ItemController@changeImage');
+    Route::get('delete/{id}', 'ItemController@delete');
   });
 });

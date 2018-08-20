@@ -3,6 +3,8 @@
     <Loading :active.sync="isLoading"
         :can-cancel="false"
         :is-full-page="fullPage"></Loading>
+        <RenameItemModal></RenameItemModal>
+        <ChangeItemImageModal></ChangeItemImageModal>
     <div class="container">
 
     <div class="card">
@@ -14,9 +16,9 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownGroupFunc">
               <a class="dropdown-item cursor-pointer">Priskirti čipą</a>
-              <a class="dropdown-item cursor-pointer">Pervadinti</a>
-              <a class="dropdown-item cursor-pointer">Keisti nuotrauką</a>
-              <a class="dropdown-item cursor-pointer">Ištrinti</a>
+              <a class="dropdown-item cursor-pointer" @click="show('rename-item-modal')">Pervadinti</a>
+              <a class="dropdown-item cursor-pointer" @click="show('change-item-image-modal')">Keisti nuotrauką</a>
+              <a class="dropdown-item cursor-pointer" @click="deleteItem">Ištrinti</a>
             </div>
           </div>
           <h4 class="text-dark text-center">{{item.ItemName}}</h4>
@@ -56,7 +58,8 @@ import vueImages from 'vue-images'
 import swal from 'sweetalert'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.min.css'
-
+import RenameItemModal from './modals/RenameItem.vue'
+import ChangeItemImageModal from './modals/ChangeItemImage.vue'
   export default {
     data(){
       return {
@@ -74,26 +77,41 @@ import 'vue-loading-overlay/dist/vue-loading.min.css'
   },
   props: {
       itemProp: {
-          required: true,
+          required: false,
           type: Object
       }
   },
   created(){
+    if(this.itemProp == null){
+      this.loadItem()
+    }
+    else {
       this.item =  this.itemProp.item
       this.itemStatus = this.itemProp.state
-      this.images.push({imageUrl: '/media/uploads/'+this.item.ItemImage, caption: this.item.ItemName})
+      if(this.item.ItemImage == null || this.item.ItemImage == "null" || this.item.ItemImage == "")
+        this.images.push({imageUrl: '/media/default_picture.png', caption: this.item.ItemName})
+      else
+        this.images.push({imageUrl: '/media/uploads/'+this.item.ItemImage, caption: this.item.ItemName})
+    }
   },
   mounted(){
-    this.isLoading = false  
+    this.isLoading = false
   },
   methods: {
+    show: function(name){
+      this.$modal.show(name, {itemID: this.item.ItemID})
+    },
     loadItem: function(){
-            this.isLoading = true
-        this.$http.get('/item/get/'+this.itemID).then((response)=>{
+            //this.isLoading = true
+        return this.$http.get('/item/get/'+this.item.ItemID).then((response)=>{
             if(response.status == 200){
                 this.itemStatus = response.data.state
                 this.item = response.data.item
-                this.isLoading = false;
+                this.images =[];
+                if(this.item.ItemImage == null || this.item.ItemImage == "null" || this.item.ItemImage == "")
+                  this.images.push({imageUrl: '/media/default_picture.png', caption: this.item.ItemName})
+                else
+                  this.images.push({imageUrl: '/media/uploads/'+this.item.ItemImage, caption: this.item.ItemName})
             }
         }).catch(error => {
             if(error.response.status == 422){
@@ -101,11 +119,38 @@ import 'vue-loading-overlay/dist/vue-loading.min.css'
                 this.isLoading = false
             }
         })
-    }
+    },
+    deleteItem: function(){
+        swal({
+          title: 'Ar tikrai norite ištrinti šį įrankį?',
+          text: 'Ištrinti galima tik įrankius, kurie nėra naudojami, rezervuoti ar taisomi.',
+          icon: 'warning',
+          dangerMode: true,
+          buttons: {
+            del: { text: 'Trinti', value: true},
+            cancel: {text: 'Atšaukti'}
+          }
+        }).then(value => {
+          if(value){
+            this.$http.get('/item/delete/'+this.item.ItemID).then((response)=>{
+                if(response.status == 200){
+                    swal(response.data.message, response.data.success, "success").then(value => { this.$router.push({ path: '/group/'+this.item.ItemGroupID})})
+                }
+            }).catch(error =>{
+                if(error.response.status == 422)
+                {
+                    swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
+                }
+            })
+          }
+        })
+    },
   },
   components: {
       vueImages,
-      Loading
+      Loading,
+      RenameItemModal,
+      ChangeItemImageModal
   }
 }
 </script>

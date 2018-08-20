@@ -9,7 +9,7 @@ class Item extends Model
 {
     protected $primaryKey = 'ItemID';
 
-    protected $fillable = ['ItemName', 'ItemCode', 'ItemQuantity', 'ItemImage', 'ItemGroupID'];
+    protected $fillable = ['ItemName', 'ItemCode', 'ItemQuantity', 'ItemImage', 'ItemDeleted','ItemGroupID'];
 
     public function itemGroup(){
       return $this->belongsTo('App\ItemGroup', 'ItemGroupID');
