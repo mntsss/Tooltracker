@@ -8,22 +8,24 @@
     <div class="container">
 
     <div class="card">
-      <div class="card-header">
-          <a @click="$router.push({ path: '/group/'+item.ItemGroupID})"><h4 class="fa fa-arrow-left text-primary remove-all-margin p-2 nav-arrow"></h4></a>
-
-          <div class="dropdown show">
-            <a class="fas fa-ellipsis-v text-primary btn-func-misc ml-2 mr-2 mb-0 mt-0" id="dropdownGroupFunc" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            </a>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownGroupFunc">
-              <a class="dropdown-item cursor-pointer">Priskirti čipą</a>
-              <a class="dropdown-item cursor-pointer" @click="show('rename-item-modal')">Pervadinti</a>
-              <a class="dropdown-item cursor-pointer" @click="show('change-item-image-modal')">Keisti nuotrauką</a>
-              <a class="dropdown-item cursor-pointer" @click="deleteItem">Ištrinti</a>
-            </div>
-          </div>
-          <h4 class="text-dark text-center">{{item.ItemName}}</h4>
-
-      </div>
+      <v-layout row wrap align-content-center class="card-header pb-0 pt-0">
+          <v-flex headline shrink justify-start align-content-center>
+              <a @click="$router.push({ path: '/group/'+item.ItemGroupID})" class="headline"><span class="fa fa-arrow-left text-primary remove-all-margin p-2 btn-func-misc"></span></a>
+          </v-flex>
+          <v-flex>
+              <div class="text-dark text-center headline">{{item.ItemName}}</div>
+          </v-flex>
+          <v-flex shrink headline justify-end align-content-center>
+              <v-menu offset-y>
+                <a slot="activator" class="headline"><span class="fas fa-ellipsis-v text-primary p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"></span></a>
+                <v-list>
+                  <v-list-tile v-for="(item, index) in dropdownMeniu" :key="index" @click="item.click">
+                    <v-list-tile-title>{{item.text}}</v-list-tile-title>
+                  </v-list-tile>
+                </v-list>
+              </v-menu>
+          </v-flex>
+      </v-layout>
       <div class="card-body">
         <div class="row remove-side-margin">
             <div class="col-auto">
@@ -72,7 +74,13 @@ import ChangeItemImageModal from './modals/ChangeItemImage.vue'
           showclosebutton: true,
           showcaption: true,
           isLoading: true,
-          fullPage: false
+          fullPage: false,
+          dropdownMeniu: [
+            {text: 'Priskirti čipą', click: () =>{}},
+            {text: 'Pervadinti', click: ()=>{this.show('rename-item-modal')}},
+            {text: 'Keisti nuotrauką', click: ()=>{this.show('change-item-image-modal')}},
+            {text: 'Ištrinti', click: ()=>{this.deleteItem()}}
+          ]
       }
   },
   props: {
@@ -162,9 +170,5 @@ import ChangeItemImageModal from './modals/ChangeItemImage.vue'
     }
     .loading-parent{
         position: relative;
-    }
-    .loading-overlay .loading-background {
-        opacity: 1 !important;
-        background-color: #F5F8FA !important;
     }
     </style>

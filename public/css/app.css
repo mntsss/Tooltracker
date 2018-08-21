@@ -10772,9 +10772,6 @@ html {
 }
 
 .btn-func-misc {
-  float: right;
-  overflow: visible;
-  padding: 10px;
   border: 1px solid transparent;
 }
 
@@ -10786,6 +10783,10 @@ html {
 
 .cursor-pointer:hover {
   cursor: pointer;
+}
+
+.v-menu {
+  vertical-align: inherit !important;
 }
 
 @media screen and (min-width: 1200px) {

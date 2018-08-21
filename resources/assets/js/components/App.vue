@@ -81,7 +81,6 @@
 </template>
 <script>
 import Login from './Login.vue'
-import TopMeniu from './TopMeniu.vue'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.min.css'
 export default {
@@ -128,7 +127,6 @@ export default {
     },
   components: {
     Login,
-    TopMeniu,
     Loading
   }
 }
