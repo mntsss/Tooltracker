@@ -1,5 +1,5 @@
 import Main from './components/Main.vue';
-import Login from './components/Login.vue';
+
 
 const routes = [
   {
@@ -13,7 +13,7 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: Login,
+    component: require('./components/Login'),
     meta: {
       auth:false
     }

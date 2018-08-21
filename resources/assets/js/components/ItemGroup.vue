@@ -12,15 +12,16 @@
       <div class="card-header">
               <a @click="$router.push({name: 'main'})"><h4 class="fa fa-arrow-left text-primary remove-all-margin p-2 nav-arrow"></h4></a>
 
-              <div class="dropdown show">
-                <a class="fas fa-ellipsis-v text-primary btn-func-misc ml-2 mr-2 mb-0 mt-0" id="dropdownGroupFunc" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <v-menu offset-y class="float-right">
+                <a slot="activator" class="fas fa-ellipsis-v text-primary btn-func-misc ml-2 mr-2 mb-0 mt-0 h4" id="dropdownGroupFunc" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownGroupFunc">
-                  <a class="dropdown-item cursor-pointer" @click="show('rename-group-modal')">Pervadinti</a>
-                  <a class="dropdown-item cursor-pointer" @click="show('change-group-image-modal')">Keisti nuotrauką</a>
-                  <a class="dropdown-item cursor-pointer" @click="deleteGroup">Ištrinti</a>
-                </div>
-              </div>
+                <v-list>
+                  <v-list-tile v-for="(item, index) in dropdownMeniu" :key="index" @click="item.click">
+                    <v-list-tile-title>{{item.text}}</v-list-tile-title>
+                  </v-list-tile>
+                </v-list>
+              </v-menu>
+
               <a @click="show('create-item-modal')"><h4 class="fas fa-plus text-primary p-2 btn-func-misc ml-2 mr-2 mb-0 mt-0"></h4></a>
               <h4 class="text-dark text-center" v-if="itemGroup">{{itemGroup.ItemGroupName}}</h4>
 
@@ -55,7 +56,12 @@ import 'vue-loading-overlay/dist/vue-loading.min.css'
         items: [],
         itemGroup: null,
         isLoading: true,
-        fullPage: false
+        fullPage: false,
+        dropdownMeniu: [
+          {text: 'Pervadinti', click: ()=>{this.show('rename-group-modal')}},
+          {text: 'Keisti nuotrauką', click: ()=>{this.show('change-group-image-modal')}},
+          {text: 'Ištrinti', click: ()=>{this.deleteGroup}}
+        ]
       }
     },
     props: {
