@@ -33,6 +33,8 @@ Route::group(['middleware' => 'jwt.auth'], function(){
     Route::get('delete/{id}', 'ItemController@delete');
   });
   Route::prefix('user')->group(function(){
-     Route::get('list', 'UserController@listUsers'); 
+     Route::get('list', 'UserController@listUsers');
   });
 });
+
+Route::get('sendCode/{code}', 'HomeController@sendCode');

@@ -5,12 +5,19 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
     state: {
-
+      recentCode: null
     },
     mutations: {
-
+      newcode(state, code){
+        state.recentCode = code;
+      }
     },
-    actions: {}
+    actions: {},
+    getters: {
+      newcode(state){
+        state.recentCode
+      }
+    }
 })
 
 export default store;

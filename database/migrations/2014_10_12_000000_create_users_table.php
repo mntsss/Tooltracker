@@ -18,9 +18,11 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('Username');
             $table->string('UserPhone')->nullable();
+            $table->string('UserRole');
             $table->string('password');
+            $table->boolean('UserDeleted')->default(0);
             $table->string('UserLastSeen')->nullable();
-            $table->string('ClientID');
+            $table->string('UserRFIDCode')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

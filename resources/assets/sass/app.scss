@@ -34,7 +34,7 @@ body{
   margin-bottom: 20px;
 }
 .navbar-keytracker{
-    background-color: #0F3F75 !important;
+    background-color: #8F2C35 !important;
     padding: 0 10px !important;
 }
 
@@ -162,7 +162,7 @@ html{
     border-radius: 10px;
     padding: 0px !important;
     box-sizing: border-box;
-    box-shadow: 0px 0px 0px 5px #0F3F75;
+    box-shadow: 0px 0px 0px 5px #8F2C35;
     transition: box-shadow 0.6s linear;
     margin: 0.5em;
     width: 140px;
@@ -195,7 +195,8 @@ html{
     width: 100%;
     height: 100%;
     overflow: hidden;
-    border-radius: 10px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px
 }
 
 .item-noimg{
@@ -214,7 +215,7 @@ html{
     font-size: 14px;
     font-weight: 550 !important;
     color: white;
-    background-color: #0F3F75;
+    background-color: #8F2C35;
     padding: 5px;
     overflow: hidden;
     border-bottom-left-radius: 10px;
@@ -252,16 +253,16 @@ html{
   }
 
 .tooltip-inner {
-        background-color: #0F3F75 !important;
+        background-color: #8F2C35 !important;
         color: #FFFFFF;
-        border: 1px solid #0F3F75;
+        border: 1px solid #8F2C35;
         padding: 15px;
         font-size: 15px;
     }
 /*****************************  Item popup box  **************************/
 .popup-item-box{
     display: none;
-    background-color: #0F3F75;
+    background-color: #8F2C35;
     border: 4px solid #C02222;
     border-radius: 15px;
     font-weight: 550;
@@ -289,7 +290,7 @@ html{
 }
 .btn-func-misc:hover {
  cursor: pointer;
- border: 1px solid #007BFF;
+ border: 1px solid #DC3545;
  border-radius: 15%;
 }
 

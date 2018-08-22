@@ -23,6 +23,8 @@
     "@websanova/vue-auth": "^2.21.14-beta",
     "ajv": "^6.5.2",
     "axios-token-interceptor": "^0.1.0",
+    "laravel-echo": "^1.4.0",
+    "pusher-js": "^4.3.0",
     "stylus-loader": "^3.0.2",
     "sweetalert": "^2.1.0",
     "vue-axios": "^2.1.3",

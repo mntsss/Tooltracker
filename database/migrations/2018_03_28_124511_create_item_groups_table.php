@@ -17,7 +17,6 @@ class CreateItemGroupsTable extends Migration
             $table->increments('ItemGroupID');
             $table->string('ItemGroupName');
             $table->string('ItemGroupImage');
-            $table->integer('ClientID');
             $table->timestamps();
         });
     }

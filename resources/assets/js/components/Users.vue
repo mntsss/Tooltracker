@@ -20,7 +20,7 @@
                         <v-expansion-panel>
                             <v-expansion-panel-content v-for="(user, i) in users" :key="i">
                                 <div slot="header">
-                                    {{user.UserName}}
+                                    {{user.Username}}
                                 </div>
                                 <v-card>
                                     <v-card-text>

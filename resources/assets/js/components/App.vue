@@ -3,6 +3,25 @@
 </style>
 <template>
   <v-app id="inspire" dark :if="$auth.ready()">
+    <v-snackbar
+      v-model="snackbar"
+      :bottom="y === 'bottom'"
+      :left="x === 'left'"
+      :multi-line="mode === 'multi-line'"
+      :right="x === 'right'"
+      :timeout="timeout"
+      :top="y === 'top'"
+      :vertical="mode === 'vertical'"
+    >
+      {{ snackbarText }}
+      <v-btn
+        color="pink"
+        flat
+        @click="snackbar = false"
+      >
+        Close
+      </v-btn>
+    </v-snackbar>
     <div class="loading-parent">
         <Loading :active.sync="isLoading"
         :can-cancel="false"
@@ -23,7 +42,7 @@
           >
           <v-list-tile slot="activator" fluid>
             <v-list-tile-action>
-              <v-icon>{{item.icon}}</v-icon>
+              <v-icon class="text-danger">{{item.icon}}</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title>{{item.text}}</v-list-tile-title>
@@ -48,7 +67,7 @@
 
         <v-list-tile @click="item.click" v-else-if="!item.children">
           <v-list-tile-action>
-            <v-icon>{{item.icon}}</v-icon>
+            <v-icon class="text-danger">{{item.icon}}</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title>{{item.text}}</v-list-tile-title>
@@ -59,7 +78,7 @@
     </v-navigation-drawer>
     <v-toolbar app fixed clipped-left v-if="$auth.check()">
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <v-toolbar-title>Įrankių valdymas</v-toolbar-title>
+      <v-toolbar-title><span class="headline shrink">Tool</span><span class="shrink headline text-danger">Tracker</span></v-toolbar-title>
     </v-toolbar>
     <v-content>
       <v-container fluid fill-height>
@@ -93,9 +112,9 @@ export default {
               { icon: 'fa-toolbox', 'icon-alt': 'keyboard_arrow_down', text: 'Įrankiai', click: () => {this.model = !this.model},
                 model: false,
                 children: [
-                  {icon: 'fa-wrench', text: 'Visi', click: ''},
-                  {icon: 'fa-lock', text: 'Įšaldyti', click: ''},
-                  {icon: 'fa-trash', text: 'Ištrinti', click: ''}
+                  {icon: 'keyboard_arrow_right', text: 'Visi', click: ''},
+                  {icon: 'keyboard_arrow_right', text: 'Įšaldyti', click: ''},
+                  {icon: 'keyboard_arrow_right', text: 'Ištrinti', click: ''}
                 ]
               },
               {
@@ -104,8 +123,8 @@ export default {
                 text: 'Objektai',
                 model: false,
                 children: [
-                  { icon: 'fa-building', text: 'Aktyvūs', click: '' },
-                  { icon: 'fa-hotel', text: 'Uždaryti', click: ''}
+                  { icon: 'keyboard_arrow_right', text: 'Aktyvūs', click: '' },
+                  { icon: 'keyboard_arrow_right', text: 'Uždaryti', click: ''}
                 ]
               },
               { icon: 'fa-users', text: 'Vartotojai', click: ()=>{ this.$router.push({name: 'users'})} },
@@ -113,17 +132,33 @@ export default {
               {icon: 'fa-cogs', text: 'Nustatymai', click: '',
                 model: false,
                 children: [
-                  {icon: '', text: 'Keisti slaptažodį', click: ''},
-                  {icon: '', text: 'Atsijungti', click: ()=>{this.$auth.logout()}},
+                  {icon: 'keyboard_arrow_right', text: 'Keisti slaptažodį', click: ''},
+                  {icon: 'keyboard_arrow_right', text: 'Atsijungti', click: ()=>{this.$auth.logout()}},
                 ]
               }
-            ]
+            ],
+            snackbar: false,
+            y: 'top',
+            x: 'right',
+            mode: 'vertical',
+            timeout: 6000
             }
     },
     computed: {
     isLoading: function(){
-            return !(this.$auth.ready())
-        }
+          return !(this.$auth.ready())
+      },
+    RFIDcode: function(){
+        return this.$store.state.recentCode
+      },
+    snackbarText: function(){
+      return 'Nuskaitytas kodas: '+this.RFIDcode
+      }
+    },
+    watch:{
+      RFIDcode(oldRFIDcode, newRFIDcode){
+        this.snackbar = true
+      }
     },
   components: {
     Login,

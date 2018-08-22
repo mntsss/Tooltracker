@@ -1,3 +1,4 @@
+require('./bootstrap');
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import axios from 'axios';
@@ -46,6 +47,12 @@ Vue.use(require('@websanova/vue-auth'), {
    router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js'),
    tokenDefaultName: 'access_token',
 });
+
+//Subscribing to pusher channel
+Echo.channel('code-channel')
+  .listen('ReceivedCode', (e) => {
+    store.commit('newcode', e.code)
+  });
 
 //main app init
 App.router = Vue.router;

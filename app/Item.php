@@ -9,11 +9,16 @@ class Item extends Model
 {
     protected $primaryKey = 'ItemID';
 
-    protected $fillable = ['ItemName', 'ItemCode', 'ItemQuantity', 'ItemImage', 'ItemDeleted','ItemGroupID'];
+    protected $fillable = ['ItemName', 'ItemQuantity', 'ItemImage', 'ItemDeleted','ItemGroupID'];
 
     public function itemGroup(){
       return $this->belongsTo('App\ItemGroup', 'ItemGroupID');
     }
+
+    public function codes(){
+      return $this->hasMany('App\RfidCode', 'ItemID');
+    }
+
     public function withdrawals(){
       return $this->hasMany('App\ItemWithdrawal', 'ItemID');
     }

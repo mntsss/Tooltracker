@@ -44,10 +44,19 @@ export default {
   },
   created(){
     this.loadGroups()
+    console.log(this.code)
   },
   computed: {
     username: function(){
       return this.$auth.user().UserName
+    },
+    code: {
+      get(){
+        return this.$store.state.recentCode;
+      },
+      set(value){
+        return this.$store.commit('newcode', value)
+      }
     }
   },
   methods: {

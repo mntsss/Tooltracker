@@ -28,12 +28,13 @@
       </v-layout>
       <div class="card-body">
         <div class="row remove-side-margin">
-            <div class="col-auto">
-                <vueImages :imgs="images"
+            <div class="col-auto" style="max-width:250px !important">
+                <!-- <vueImages :imgs="images"
                             :modalclose="modalclose"
                             :keyinput="keyinput"
                             :showclosebutton="showclosebutton" class="image">
-                </vueImages>
+                </vueImages> -->
+                <img v-bind:src="'/media/uploads/'+item.ItemImage" class="image"/>
             </div>
             <div class="colt">
                 <p class="text-left h4">

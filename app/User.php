@@ -12,7 +12,7 @@ class User extends Authenticatable implements JWTSubject
 
     protected $primaryKey = "UserID";
     protected $fillable = [
-        'email', 'Username', 'UserPhone','password', 'UserLastSeen', 'UserRole', 'UserDeleted'];
+        'email', 'Username', 'UserPhone','password', 'UserLastSeen', 'UserRole', 'UserDeleted', 'UserRFIDCode'];
 
     /**
      * The attributes that should be hidden for arrays.

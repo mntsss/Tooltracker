@@ -8,6 +8,9 @@ use Carbon\Carbon;
 use App\ListVehicle;
 use App\ItemGroup;
 use App\Item;
+
+use App\Events\ReceivedCode;
+
 class HomeController extends Controller
 {
     public function __construct()
@@ -24,5 +27,9 @@ class HomeController extends Controller
       }
       $param['items'] = json_encode($items);*/
       return view('layouts/main')->with('param', []);
+    }
+
+    public function sendCode($code){
+      broadcast(new ReceivedCode($code));
     }
 }
