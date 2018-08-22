@@ -83,6 +83,21 @@ export default {
             }
         }
     },
+    computed: {
+        visibility: function(){
+            return this.$children[0].visibility.modal
+        },
+        RFIDCode: function(){
+            return this.$store.state.recentCode
+        }
+    },
+    watch: {
+        RFIDCode(oldRFIDCode, newRFIDCode){
+            if(this.visibility){
+                this.code = this.RFIDCode;
+            }
+        }
+    },
   methods: {
     save: function(){
         var form = new FormData();

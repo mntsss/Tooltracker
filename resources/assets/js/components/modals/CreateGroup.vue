@@ -45,6 +45,11 @@ export default {
             image: null
         }
     },
+    // computed:{
+    //     visibility: function(){
+    //         return this.$children[0].visibility.modal
+    //     }
+    // },
   methods: {
     save: function(){
         var form = new FormData();

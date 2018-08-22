@@ -76,7 +76,9 @@
     </div>
 </template>
 <script>
+import CreateUser from './modals/CreateUser.vue'
 import Loading from 'vue-loading-overlay'
+
 import 'vue-loading-overlay/dist/vue-loading.min.css'
 import swal from 'sweetalert'
 export default{
@@ -107,7 +109,8 @@ export default{
         }
     },
     components: {
-        Loading
+        Loading,
+        CreateUser
     }
 }
 </script>
