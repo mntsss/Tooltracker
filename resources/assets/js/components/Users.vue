@@ -1,18 +1,20 @@
 <template>
     <div class="loading-parent">
+      <CreateUser></CreateUser>
+      <EditUser></EditUser>
         <Loading :active.sync="isLoading"
         :can-cancel="false"
         :is-full-page="fullPage"></Loading>
         <div class="container" style="min-height: 70vh !important">
             <div class="card">
-                <v-layout row wrap align-center class="card-header pb-0 pt-0">
+                <v-layout row wrap align-center class="card-header pb-0 pt-0 theme--dark v-toolbar mx-0">
                     <v-flex headline align-center>
-                        <div class="text-center mb-0 text-dark">
+                        <div class="text-center mb-0">
                             Vartotojai
                         </div>
                     </v-flex>
                     <v-flex shrink>
-                        <a @click="show('create-user-modal')" class="headline"><span class="fas fa-plus text-primary p-2 btn-func-misc ml-2 mr-2 mb-0 mt-0"></span></a>
+                        <a @click="show('create-user-modal')" class="headline"><span class="fas fa-plus text-danger p-2 btn-func-misc ml-2 mr-2 mb-0 mt-0"></span></a>
                     </v-flex>
                 </v-layout>
                 <v-container class="card-body">
@@ -26,42 +28,72 @@
                                     <v-card-text>
                                         <v-layout row wrap align-center >
                                             <v-flex shrink pa-2 style="width: 40px !important">
-                                                <v-icon headline>fa-phone</v-icon>
+                                                <v-icon headline class="text-danger">fa-phone</v-icon>
                                             </v-flex>
                                             <v-flex shrink px-2>Telefonas:</v-flex>
                                             <v-flex px-2>{{user.UserPhone}}</v-flex>
                                         </v-layout>
                                         <v-layout row wrap align-center >
                                             <v-flex shrink pa-2 style="width: 40px !important">
-                                                <v-icon headline>fa-envelope</v-icon>
+                                                <v-icon headline class="text-danger">fa-envelope</v-icon>
                                             </v-flex>
                                             <v-flex shrink px-2>El. paštas:</v-flex>
                                             <v-flex px-2>{{user.email}}</v-flex>
                                         </v-layout>
                                         <v-layout row wrap align-center >
                                             <v-flex shrink pa-2 style="width: 40px !important">
-                                                <v-icon headline>fa-crown</v-icon>
+                                                <v-icon headline class="text-danger">fa-crown</v-icon>
                                             </v-flex>
                                             <v-flex px-2 shrink>Vartotojo tipas:</v-flex>
                                             <v-flex px-2>{{user.UserRole}}</v-flex>
                                         </v-layout>
                                         <v-layout row wrap align-center >
                                             <v-flex shrink pa-2 style="width: 40px !important">
-                                                <v-icon headline>fa-calendar-alt</v-icon>
+                                                <v-icon headline class="text-danger">fa-calendar-alt</v-icon>
                                             </v-flex>
                                             <v-flex px-2 shrink>Paskutinis aktyvumas:</v-flex>
                                             <v-flex px-2>{{user.UserLastSeen}}</v-flex>
                                         </v-layout>
+                                        <v-layout row wrap align-center >
+                                            <v-flex shrink pa-2 style="width: 40px !important">
+                                                <v-icon headline class="text-danger">fa-calendar-check</v-icon>
+                                            </v-flex>
+                                            <v-flex px-2 shrink>Registracijos data:</v-flex>
+                                            <v-flex px-2>{{user.created_at}}</v-flex>
+                                        </v-layout>
+                                        <v-layout row wrap align-center >
+                                            <v-flex shrink pa-2 style="width: 40px !important">
+                                                <v-icon headline class="text-danger">fa-address-card</v-icon>
+                                            </v-flex>
+                                            <v-flex px-2 shrink>Priskirta identifikacinė kortelė:</v-flex>
+                                            <v-flex px-2>
+                                              <v-icon headline class="text-success" v-if="user.UserRFIDCode">fa-check</v-icon>
+                                              <v-icon headline class="text-warning" v-else-if="user.UserRFIDCode == null">fa-times</v-icon>
+                                            </v-flex>
+                                        </v-layout>
                                         <v-layout row wrap align-center pa-2 justify-end>
                                             <v-flex shrink justify-end>
-                                                <v-btn outline>
-                                                    <v-icon>fa-history</v-icon>
-                                                    <span class="mx-2">Istorija</span>
+                                              <v-btn outline>
+                                                  <v-icon class="text-danger">fa-history</v-icon>
+                                                  <span class="mx-2">Istorija</span>
+                                              </v-btn>
+                                              <v-btn outline>
+                                                  <v-icon class="text-danger">fa-toolbox</v-icon>
+                                                  <span class="mx-2">Įrankiai</span>
+                                              </v-btn>
+                                              <v-btn outline @click="show('edit-user-modal', {user: user})">
+                                                    <v-icon class="text-danger">fa-edit</v-icon>
+                                                    <span class="mx-2">Redaguoti</span>
                                                 </v-btn>
                                                 <v-btn outline>
-                                                    <v-icon>fa-toolbox</v-icon>
-                                                    <span class="mx-2">Įrankiai</span>
+                                                    <v-icon class="text-danger">fa-id-card</v-icon>
+                                                    <span class="mx-2">Nauja kortelė</span>
                                                 </v-btn>
+                                              <v-btn outline>
+                                                  <v-icon class="text-danger">fa-trash</v-icon>
+                                                  <span class="mx-2">Ištrinti</span>
+                                              </v-btn>
+
                                             </v-flex>
                                         </v-layout>
                                     </v-card-text>
@@ -77,6 +109,7 @@
 </template>
 <script>
 import CreateUser from './modals/CreateUser.vue'
+import EditUser from './modals/EditUser.vue'
 import Loading from 'vue-loading-overlay'
 
 import 'vue-loading-overlay/dist/vue-loading.min.css'
@@ -110,7 +143,8 @@ export default{
     },
     components: {
         Loading,
-        CreateUser
+        CreateUser,
+        EditUser
     }
 }
 </script>

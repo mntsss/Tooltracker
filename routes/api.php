@@ -34,6 +34,8 @@ Route::group(['middleware' => 'jwt.auth'], function(){
   });
   Route::prefix('user')->group(function(){
      Route::get('list', 'UserController@listUsers');
+     Route::post('create', 'UserController@create');
+     Route::post('edit', 'UserController@edit');
   });
 });
 

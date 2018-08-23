@@ -10,6 +10,9 @@ const store = new Vuex.Store({
     mutations: {
       newcode(state, code){
         state.recentCode = code;
+      },
+      resetCode(state){
+        state.recentCode = null
       }
     },
     actions: {},

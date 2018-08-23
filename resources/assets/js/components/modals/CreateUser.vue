@@ -8,14 +8,20 @@
         <div class="card-header bg-dark text-light">
             Pridėti vartotoją <a @click="$modal.hide('create-user-modal')" class="float-right"><span class="fas fa-times btn-func-misc"></span></a>
         </div>
-        <div class="card-body">
+        <div class="card-body bg-dark">
             <v-form v-model="valid">
-                <v-text-field v-model="email" :rules="emailRules" :counter="50" label="El paštas" required></v-text-field>
-                <v-text-field v-model="name" :rules="nameRules" :counter="50" label="Vardas, pavardė" required></v-text-field>
-                <v-select v-model="role" :items = "userRoles" :rules="roleRules" required></v-select>
-                <v-text-field v-model="phone" :rules="phoneRules" :counter="14" label="Telefonas"></v-text-field>
+                <v-text-field v-model="email" :rules="emailRules" label="El paštas" required></v-text-field>
+                <v-text-field v-model="name" :rules="nameRules" label="Vardas, pavardė" required></v-text-field>
+                <v-select v-model="role" :items = "userRoles" :rules="roleRules" label="Vartotojo tipas" required></v-select>
+                <v-text-field v-model="password" :rules="passwordRules" type="password" label="Slaptažodis" required></v-text-field>
+                <v-text-field v-model="repassword" :rules="repasswordRules" type="password" label="Pakartokite slaptažodį" required></v-text-field>
+                <v-text-field v-model="phone" :rules="phoneRules" label="Telefonas"></v-text-field>
+                <v-layout row wrap align-center v-if="!nocode">
+                  <v-flex v-if="!code" class="border-danger text-center headline text-danger">Laukiama nauja kortelė...</v-flex>
+                  <v-flex v-else-if="code" class="border-danger text-center headline text-success">Kortelė nuskaityta!</v-flex>
+                </v-layout>
                 <v-checkbox v-model="nocode" label="Be identifikacinės kortelės"></v-checkbox>
-                <v-btn @click="" :disabled="code == null && !nocode">Išsaugoti</v-btn>
+                <v-btn @click="save()" :disabled="disabled">Išsaugoti</v-btn>
             </v-form>
         </div>
     </div>
@@ -26,13 +32,16 @@ import swal from 'sweetalert'
 export default {
     data(){
         return {
-            email: null,
-            name: null,
-            role: null,
-            phone: null,
+            email: '',
+            name: '',
+            role: '',
+            phone: '',
+            password: '',
+            repassword: '',
             code: null,
             nocode: false,
-            /*emailRules: [
+            valid: false,
+            emailRules: [
                 v => !!v || "El. paštas būtinas!",
                 v => v.length <= 50 || "El. pašto adresas per ilgas!"
             ],
@@ -40,9 +49,16 @@ export default {
                 v => !!v || "Vartotojo vardas būtinas!",
                 v => v.length <= 50 || "Vartotojo vardas negali viršyti 50 simbolių!"
             ],
+            passwordRules: [
+              v => !!v || "Slaptažodis būtinas!",
+              v => v.length >= 6 || "Slaptažodis negali būti trumpesnis nei 6 simboliai."
+            ],
+            repasswordRules: [
+              v => v === this.password || "Slaptažodžiai nesutampa!"
+            ],
             phoneRules: [ v => v.length <= 14 || "Įvestas per ilgas telefono numeris!"],
             roleRules: [ v => !!v || "Nenurodytas vartotojo tipas!"],
-            userRoles: [ 'Darbuotojas', 'Administratorius']*/
+            userRoles: [ 'Darbuotojas', 'Administratorius']
         }
     },
     computed: {
@@ -51,43 +67,50 @@ export default {
         },
         RFIDCode: function(){
             return this.$store.state.recentCode
+        },
+        disabled: function(){
+          if(this.code || this.nocode)
+          {
+            if(this.valid)
+              return false
+          }
+          return true
         }
     },
     watch: {
         RFIDCode(oldRFIDCode, newRFIDCode){
-            if(this.visibility){
-                this.code = newRFIDCode
+            if(this.visibility && this.RFIDCode){
+                this.code = this.RFIDCode
+                this.$store.commit('resetCode')
             }
         }
     },
   methods: {
     save: function(){
-        /*var form = new FormData();
 
-        form.append('name', this.name)
-        form.append('image', this.image)
-        if(this.code != null && this.code != "")form.append('code', this.code)
-        if(this.consumable == true) form.append('consumable', 1)
-        if(this.consumable == false) form.append('consumable', 0)
-        if(this.warranty_date != null && this.warranty_date != "") form.append('warranty_date', this.format(this.warranty_date))
-        if(this.purchase_date != null && this.purchase_date != "") form.append('purchase_date', this.format(this.purchase_date))
-        form.append('groupID', this.groupID)
-
-        this.$http.post('/item/create', form,
-        {
-            headers: {'Content-Type': 'multipart/form-data'}
+        this.$http.post('/user/create', {
+          email: this.email,
+          username: this.name,
+          password: this.password,
+          password_confirmation: this.repassword,
+          phone: this.phone,
+          role: this.role,
+          code: this.code,
+          nocode: this.nocode
         }
       ).then((response)=>{
             if(response.status == 200){
-                this.$modal.hide('create-item-modal')
+                this.$modal.hide('create-user-modal')
                 swal(response.data.message, response.data.success, "success")
-                this.$parent.loadItems();
-                this.name = null
-                this.image = null
+                this.$parent.loadUsers();
+                this.email = ''
+                this.name = ''
                 this.code = null
-                this.consumable = false
-                this.warranty_date = ''
-                this.purchase_date= ''
+                this.password = ''
+                this.repassword = ''
+                this.phone = ''
+                this.role = ''
+                this.nocode= false
             }
         }).catch(error =>{
 
@@ -95,11 +118,7 @@ export default {
             {
                 swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
             }
-            if(error.response.status == 413)
-            {
-                swal("Klaida", "Failo dydis netinkamas!", "error");
-            }
-        })*/
+        })
     },
   }
 }

@@ -127,7 +127,13 @@ export default {
                   { icon: 'keyboard_arrow_right', text: 'Uždaryti', click: ''}
                 ]
               },
-              { icon: 'fa-users', text: 'Vartotojai', click: ()=>{ this.$router.push({name: 'users'})} },
+              { icon: 'fa-users', text: 'Vartotojai', click: '',
+                model: false,
+                children: [
+                  { icon: 'keyboard_arrow_right', text: 'Aktyvūs', click: ()=>{ this.$router.push({name: 'users'})}},
+                  { icon: 'keyboard_arrow_right', text: 'Ištrinti', click: ''}
+                ]
+              },
               {icon: 'fa-history', text: 'Istorija', click: ''},
               {icon: 'fa-cogs', text: 'Nustatymai', click: '',
                 model: false,

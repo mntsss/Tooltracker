@@ -8,16 +8,16 @@
     <div class="container">
 
     <div class="card">
-      <v-layout row wrap align-content-center class="card-header pb-0 pt-0">
+      <v-layout row wrap align-content-center class="card-header pb-0 pt-0 mx-0 theme--dark v-toolbar">
           <v-flex headline shrink justify-start align-content-center>
-              <a @click="$router.push({ path: '/group/'+item.ItemGroupID})" class="headline"><span class="fa fa-arrow-left text-primary remove-all-margin p-2 btn-func-misc"></span></a>
+              <a @click="$router.push({ path: '/group/'+item.ItemGroupID})" class="headline"><span class="fa fa-arrow-left text-danger remove-all-margin p-2 btn-func-misc"></span></a>
           </v-flex>
           <v-flex>
-              <div class="text-dark text-center headline">{{item.ItemName}}</div>
+              <div class="text-center headline">{{item.ItemName}}</div>
           </v-flex>
           <v-flex shrink headline justify-end align-content-center>
               <v-menu offset-y>
-                <a slot="activator" class="headline"><span class="fas fa-ellipsis-v text-primary p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"></span></a>
+                <a slot="activator" class="headline"><span class="fas fa-ellipsis-v text-danger p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"></span></a>
                 <v-list>
                   <v-list-tile v-for="(item, index) in dropdownMeniu" :key="index" @click="item.click">
                     <v-list-tile-title>{{item.text}}</v-list-tile-title>

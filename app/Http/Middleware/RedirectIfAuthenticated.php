@@ -17,13 +17,7 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if (Auth::guard($guard)->check()) {
-        //  if(Auth::user()->role == "Vadybininkas")
-            return redirect('/active');
-          /*if(Auth::user()->role == "Perziura")
-              return redirect('/viewer');
-          if(Auth::user()->role == "Tiekejas")
-                return redirect('/supplier');*/
+
         }
 
         return $next($request);

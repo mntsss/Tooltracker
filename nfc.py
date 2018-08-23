@@ -57,32 +57,19 @@ class TracerAndSELECTInterpreter(CardConnectionObserver):
     def update(self, cardconnection, ccevent):
         global UDP_MESSAGE, UDP_RAW_MSG, sock
 
-        print('EVENT: ' + ccevent.type)
-
-        if 'connect' == ccevent.type:
-            print('connecting to ' + cardconnection.getReader())
-
-        elif 'disconnect' == ccevent.type:
-            #print(vars(cardconnection))
-            print('disconnecting from ' + cardconnection.getReader())
-
-        elif 'command' == ccevent.type:
-            str = toHexString(ccevent.args[0])
-
-        elif 'response' == ccevent.type:
+        if 'response' == ccevent.type:
             UDP_RAW_MSG = toHexString(ccevent.args[0])
             UDP_MESSAGE = UDP_RAW_MSG
             UDP_MESSAGE = UDP_MESSAGE.replace(" ","")
 
             if UDP_RAW_MSG != "":
-                sock.sendto(bytes(UDP_MESSAGE + '_ON', 'utf-8'), (UDP_IP, UDP_PORT))
-                req = urllib.request.Request('http://localhost/api/sendCode/'+UDP_MESSAGE)
-                r = urllib.request.urlopen(req)
-                #response = req.getresponse()
-                print("Issiusta...")
-                
-				
-
+                #sock.sendto(bytes(UDP_MESSAGE + '_ON', 'utf-8'), (UDP_IP, UDP_PORT))
+                try:
+                    req = urllib.request.Request('http://localhost/api/sendCode/'+UDP_MESSAGE)
+                    r = urllib.request.urlopen(req)
+                    print("Issiusta...")
+                except Exception:
+                    pass
 
 # a simple card observer that tries to select DF_TELECOM on an inserted card
 class selectDFTELECOMObserver(CardObserver):
@@ -111,10 +98,9 @@ class selectDFTELECOMObserver(CardObserver):
             response, sw1, sw2 = card.connection.transmit(apdu)
 
 
-        for card in removedcards:
-            if UDP_RAW_MSG != '':
-                sock.sendto(bytes(UDP_MESSAGE + '_OFF', 'utf-8'), (UDP_IP, UDP_PORT))
-
+        #for card in removedcards:
+         #   if UDP_RAW_MSG != '':
+         #       sock.sendto(bytes(UDP_MESSAGE + '_OFF', 'utf-8'), (UDP_IP, UDP_PORT))
 
 if __name__ == '__main__':
     #print("Insert or remove a SIM card in the system.")

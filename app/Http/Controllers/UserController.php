@@ -3,11 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\EditUserRequest;
+
 use Illuminate\Support\Facades\Validator;
 use Auth;
 use Carbon\Carbon;
 use Hash;
 use App\User;
+use App\RfidCode;
 
 class UserController extends Controller
 {
@@ -17,7 +21,7 @@ class UserController extends Controller
 
     public function listUsers(){
         $users = User::existing()->get();
-        return response()->json($users, 200);            
+        return response()->json($users, 200);
     }
 
     public function changePasswordSubmit(Request $request)
@@ -37,24 +41,38 @@ class UserController extends Controller
         return redirect()->route("active");
     }
 
-    public function register(){
-      return view('register-user');
-    }
+    public function create(CreateUserRequest $request){
+      if(RfidCode::where('Code', $request->code)->exists())
+        return response()->json(['message' => 'Klaida!', 'errors' => ['name' => ['Kortelės ar čipo kodas jau naudojamas sistemoje ir negali būti priskirtas dar kartą! Bandykite kitą kortelę.']] ],422);
 
-    public function registerSubmit(Request $request){
-      Validator::make($request->all(), [
-        'email' => 'email|required|min:6|max:35|unique:users',
-        'password' => 'required|string|min:6|confirmed',
-        'name' => 'required|string|min:6|max:50',
-      ])->validate();
+      if($request->code == null && !$request->nocode)
+        return response()->json(['message' => 'Klaida!', 'errors' => ['name' => ['Serveris negavo kortelės kodo, ir varnelė dėl vartotojo registravimo be kortelės nebuvo pažymėta. Bandykite dar kartą, jeigu klaida išlieka - susisiekite su administracija.']]], 422);
 
-      User::create([
+      if($request->nocode)
+        $request->code = null;
+      if(User::create([
         'email' => $request->email,
-        'Username' => $request->name,
-        'password' => Hash::make($request->password),
-      ]);
-      $request->session()->flash('success', 'Vartotojas '.$request->name.' užregistruotas.');
-      return redirect()->route('active');
+        'Username' => $request->username,
+        'UserRole' => $request->role,
+        'UserPhone' => $request->phone,
+        'UserRFIDCode' => $request->code,
+        'password' => Hash::make($request->password)
+      ]))
+        return response()->json(['message' => 'Atlikta!', 'success' => 'Naujas vartotojas sėkmingai užregistruotas!'], 200);
+      else
+        return response()->json(['message' => 'Klaida!', 'errors' => ['name' => ['Įvyko klaida jungiantis į duomenų bazę. Apie klaidą praneškite administracijai.']]], 422);
     }
+
+    public function edit(EditUserRequest $request){
+      if(User::find($request->id)->update([
+        'Username' => $request->username,
+        'UserPhone' => $request->phone
+      ]))
+        return response()->json(['message' => 'Atlikta!', 'success' => 'Vartotojo informacija sėkmingai pakeista!'], 200);
+      else
+        return response()->json(['message' => 'Klaida!', 'errors' => ['name' => ['Įvyko klaida jungiantis į duomenų bazę. Apie klaidą praneškite administracijai.']]], 422);
+
+    }
+
 
 }
