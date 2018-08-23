@@ -27,8 +27,15 @@ class User extends Authenticatable implements JWTSubject
       return $query->where('UserDeleted', false);
     }
 
-    public function Usergroup(){
-      return $this->belongsTo('App\Usergroup', 'UsergroupID');
+    public function suspentions(){
+        return $this->hasMany('App\ItemSuspention', 'UserID');
+    }
+
+    public function withdrawals(){
+        return $this->hasMany('App\ItemWithdrawal', 'UserID');
+    }
+    public function reservations(){
+        return $this->hasMany('App\Reservation', 'UserID');
     }
 
     /**

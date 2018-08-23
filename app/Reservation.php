@@ -13,4 +13,8 @@ class Reservation extends Model
     public function items(){
       return $this->hasMany('App\ReservationItem', 'ReservationID');
     }
+
+    public function scopeActive($query){
+        return $query->where('ReservationDelivered', false);
+    }
 }

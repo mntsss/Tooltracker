@@ -83497,7 +83497,7 @@ var render = function() {
     [
       _c("div", { staticClass: "card" }, [
         _c("div", { staticClass: "card-header bg-dark text-light" }, [
-          _vm._v("\n      Prisijungimas\n    ")
+          _vm._v("\r\n      Prisijungimas\r\n    ")
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
@@ -86993,6 +86993,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).catch(function (error) {
                 __WEBPACK_IMPORTED_MODULE_4_sweetalert___default()(error.response.data.message, Object.values(error.response.data.errors)[0][0], 'error');
             });
+        },
+        deleteUser: function deleteUser(user) {
+            var _this2 = this;
+
+            __WEBPACK_IMPORTED_MODULE_4_sweetalert___default()({
+                title: 'Ar tikrai norite ištrinti vartotoją ' + user.Username + '?',
+                text: 'Ištrinti vartotoją galima tik tuo atveju, jeigu jis neturi aktyvių rezervacijų, paimtų ar įšaldytų įrankių.',
+                icon: 'warning',
+                dangerMode: true,
+                buttons: {
+                    del: { text: 'Trinti', value: true },
+                    cancel: { text: 'Atšaukti' }
+                }
+            }).then(function (value) {
+                if (value) {
+                    _this2.$http.get('/user/delete/' + user.UserID).then(function (response) {
+                        if (response.status == 200) {
+                            __WEBPACK_IMPORTED_MODULE_4_sweetalert___default()(response.data.message, response.data.success, "success").then(function (value) {
+                                _this2.loadUsers();
+                            });
+                        }
+                    }).catch(function (error) {
+                        if (error.response.status == 422) {
+                            __WEBPACK_IMPORTED_MODULE_4_sweetalert___default()(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
+                        }
+                    });
+                }
+            });
         }
     },
     components: {
@@ -87479,22 +87507,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            email: '',
             name: '',
             phone: '',
             id: null,
             valid: false,
-            emailRules: [function (v) {
-                return !!v || "El. paštas būtinas!";
-            }, function (v) {
-                return v.length <= 50 || "El. pašto adresas per ilgas!";
-            }],
             nameRules: [function (v) {
                 return !!v || "Vartotojo vardas būtinas!";
             }, function (v) {
@@ -87511,7 +87532,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this = this;
 
             this.$http.post('/user/edit', {
-                email: this.email,
                 username: this.name,
                 phone: this.phone,
                 id: this.id
@@ -87520,7 +87540,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     _this.$modal.hide('edit-user-modal');
                     __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()(response.data.message, response.data.success, "success");
                     _this.$parent.loadUsers();
-                    _this.email = '';
                     _this.name = '';
                     _this.phone = '';
                     _this.id = null;
@@ -87534,7 +87553,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         beforeOpen: function beforeOpen(e) {
             var user = e.params.user;
-            this.email = user.email;
             this.name = user.Username;
             this.phone = user.UserPhone;
             this.id = user.UserID;
@@ -87596,21 +87614,6 @@ var render = function() {
                 }
               },
               [
-                _c("v-text-field", {
-                  attrs: {
-                    rules: _vm.emailRules,
-                    label: "El paštas",
-                    required: ""
-                  },
-                  model: {
-                    value: _vm.email,
-                    callback: function($$v) {
-                      _vm.email = $$v
-                    },
-                    expression: "email"
-                  }
-                }),
-                _vm._v(" "),
                 _c("v-text-field", {
                   attrs: {
                     rules: _vm.nameRules,
@@ -88217,7 +88220,14 @@ var render = function() {
                                               _vm._v(" "),
                                               _c(
                                                 "v-btn",
-                                                { attrs: { outline: "" } },
+                                                {
+                                                  attrs: { outline: "" },
+                                                  on: {
+                                                    click: function($event) {
+                                                      _vm.deleteUser(user)
+                                                    }
+                                                  }
+                                                },
                                                 [
                                                   _c(
                                                     "v-icon",

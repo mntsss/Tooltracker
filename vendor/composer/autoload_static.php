@@ -372,6 +372,8 @@ class ComposerStaticInit2d3ec22a94ef1c083a1f5f6d39ae07b9
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Http\\Requests\\CreateItemGroupRequest' => __DIR__ . '/../..' . '/app/Http/Requests/CreateItemGroupRequest.php',
         'App\\Http\\Requests\\CreateItemRequest' => __DIR__ . '/../..' . '/app/Http/Requests/CreateItemRequest.php',
+        'App\\Http\\Requests\\CreateUserRequest' => __DIR__ . '/../..' . '/app/Http/Requests/CreateUserRequest.php',
+        'App\\Http\\Requests\\EditUserRequest' => __DIR__ . '/../..' . '/app/Http/Requests/EditUserRequest.php',
         'App\\Http\\Requests\\RenameItemGroupRequest' => __DIR__ . '/../..' . '/app/Http/Requests/RenameItemGroupRequest.php',
         'App\\Http\\Requests\\RenameItemRequest' => __DIR__ . '/../..' . '/app/Http/Requests/RenameItemRequest.php',
         'App\\Item' => __DIR__ . '/../..' . '/app/Item.php',

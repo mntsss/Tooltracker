@@ -27,6 +27,8 @@ return array(
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
     'App\\Http\\Requests\\CreateItemGroupRequest' => $baseDir . '/app/Http/Requests/CreateItemGroupRequest.php',
     'App\\Http\\Requests\\CreateItemRequest' => $baseDir . '/app/Http/Requests/CreateItemRequest.php',
+    'App\\Http\\Requests\\CreateUserRequest' => $baseDir . '/app/Http/Requests/CreateUserRequest.php',
+    'App\\Http\\Requests\\EditUserRequest' => $baseDir . '/app/Http/Requests/EditUserRequest.php',
     'App\\Http\\Requests\\RenameItemGroupRequest' => $baseDir . '/app/Http/Requests/RenameItemGroupRequest.php',
     'App\\Http\\Requests\\RenameItemRequest' => $baseDir . '/app/Http/Requests/RenameItemRequest.php',
     'App\\Item' => $baseDir . '/app/Item.php',

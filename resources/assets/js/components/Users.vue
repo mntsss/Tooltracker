@@ -89,7 +89,7 @@
                                                     <v-icon class="text-danger">fa-id-card</v-icon>
                                                     <span class="mx-2">Nauja kortelė</span>
                                                 </v-btn>
-                                              <v-btn outline>
+                                              <v-btn outline @click="deleteUser(user)">
                                                   <v-icon class="text-danger">fa-trash</v-icon>
                                                   <span class="mx-2">Ištrinti</span>
                                               </v-btn>
@@ -138,6 +138,31 @@ export default{
                 }
             }).catch(error => {
                 swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], 'error')
+            })
+        },
+        deleteUser: function(user){
+            swal({
+              title: 'Ar tikrai norite ištrinti vartotoją '+user.Username+'?',
+              text: 'Ištrinti vartotoją galima tik tuo atveju, jeigu jis neturi aktyvių rezervacijų, paimtų ar įšaldytų įrankių.',
+              icon: 'warning',
+              dangerMode: true,
+              buttons: {
+                del: { text: 'Trinti', value: true},
+                cancel: {text: 'Atšaukti'}
+              }
+            }).then(value => {
+              if(value){
+                this.$http.get('/user/delete/'+user.UserID).then((response)=>{
+                    if(response.status == 200){
+                        swal(response.data.message, response.data.success, "success").then(value => { this.loadUsers()})
+                    }
+                }).catch(error =>{
+                    if(error.response.status == 422)
+                    {
+                        swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
+                    }
+                })
+              }
             })
         }
     },

@@ -13,4 +13,7 @@ class ItemSuspention extends Model
     public function item(){
       return $this->belongsTo('App\Item', 'ItemID');
     }
+    public function scopeActive($query){
+        return $query->where('SuspentionReturned', false);
+    }
 }

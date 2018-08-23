@@ -11,7 +11,6 @@
         </div>
         <div class="card-body bg-dark">
             <v-form v-model="valid">
-                <v-text-field v-model="email" :rules="emailRules" label="El paštas" required></v-text-field>
                 <v-text-field v-model="name" :rules="nameRules" label="Vardas, pavardė" required></v-text-field>
                 <v-text-field v-model="phone" :rules="phoneRules" label="Telefonas"></v-text-field>
                 <v-btn @click="save()" :disabled="!valid">Išsaugoti</v-btn>
@@ -25,15 +24,10 @@ import swal from 'sweetalert'
 export default {
     data(){
         return {
-            email: '',
             name: '',
             phone: '',
             id: null,
             valid: false,
-            emailRules: [
-                v => !!v || "El. paštas būtinas!",
-                v => v.length <= 50 || "El. pašto adresas per ilgas!"
-            ],
             nameRules: [
                 v => !!v || "Vartotojo vardas būtinas!",
                 v => v.length <= 50 || "Vartotojo vardas negali viršyti 50 simbolių!"
@@ -45,7 +39,6 @@ export default {
     save: function(){
 
         this.$http.post('/user/edit', {
-          email: this.email,
           username: this.name,
           phone: this.phone,
           id: this.id
@@ -55,7 +48,6 @@ export default {
                 this.$modal.hide('edit-user-modal')
                 swal(response.data.message, response.data.success, "success")
                 this.$parent.loadUsers();
-                this.email = ''
                 this.name = ''
                 this.phone = ''
                 this.id = null
@@ -70,7 +62,6 @@ export default {
     },
     beforeOpen: function(e){
       var user = e.params.user
-      this.email = user.email
       this.name = user.Username
       this.phone = user.UserPhone
       this.id = user.UserID
