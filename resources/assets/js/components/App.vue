@@ -2,7 +2,7 @@
   @import '/css/app.css';
 </style>
 <template>
-  <v-app id="inspire" dark :if="$auth.ready()">
+  <v-app dark :if="$auth.ready()">
     <v-snackbar
       v-model="snackbar"
       :bottom="y === 'bottom'"
@@ -92,7 +92,7 @@
         </v-layout>
       </v-container>
     </v-content>
-    <v-footer app fixed>
+    <v-footer app fixed v-if="$auth.ready()">
       <span>&copy; 2018</span>
     </v-footer>
   </div>
@@ -112,7 +112,7 @@ export default {
               { icon: 'fa-toolbox', 'icon-alt': 'keyboard_arrow_down', text: 'Įrankiai', click: () => {this.model = !this.model},
                 model: false,
                 children: [
-                  {icon: 'keyboard_arrow_right', text: 'Visi', click: ''},
+                  {icon: 'keyboard_arrow_right', text: 'Visi', click: ()=> {this.$router.push({name: 'groups'})}},
                   {icon: 'keyboard_arrow_right', text: 'Įšaldyti', click: ''},
                   {icon: 'keyboard_arrow_right', text: 'Ištrinti', click: ''}
                 ]
@@ -131,7 +131,7 @@ export default {
                 model: false,
                 children: [
                   { icon: 'keyboard_arrow_right', text: 'Aktyvūs', click: ()=>{ this.$router.push({name: 'users'})}},
-                  { icon: 'keyboard_arrow_right', text: 'Ištrinti', click: ''}
+                  { icon: 'keyboard_arrow_right', text: 'Ištrinti', click: ()=>{ this.$router.push({name: 'deletedUsers'})}}
                 ]
               },
               {icon: 'fa-history', text: 'Istorija', click: ''},

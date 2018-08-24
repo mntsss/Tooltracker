@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\EditUserRequest;
+use App\Http\Requests\AddUserCardRequest;
+use App\Http\Requests\RestoreUserRequest;
 
 use Illuminate\Support\Facades\Validator;
 use Auth;
@@ -16,12 +18,17 @@ use App\RfidCode;
 class UserController extends Controller
 {
     public function __construct(){
-      $this->middleware('auth');
+      //$this->middleware('auth');
     }
 
     public function listUsers(){
         $users = User::existing()->get();
         return response()->json($users, 200);
+    }
+
+    public function deletedUsers(){
+      $users = User::getDeleted()->get();
+      return response()->json($users, 200);
     }
 
     public function changePasswordSubmit(Request $request)
@@ -74,5 +81,36 @@ class UserController extends Controller
 
     }
 
+    public function delete($id){
+      $withdrawalsCheck = User::find($id)->withdrawals()->Active()->exists();
+      $reservationCheck = User::find($id)->reservations()->Active()->exists();
+      if($withdrawalsCheck)
+        return response()->json(['message' => 'Klaida!', 'errors' => ['name' => [ 'Vartotojas turi naudojamų arba įšaldytų įrankių!']]], 422);
+      else if($reservationCheck)
+        return response()->json(['message' => 'Klaida!', 'errors' => ['name' => [ 'Vartotojas turi aktyvių rezervacijų!']]], 422);
+      else {
+        if(User::find($id)->update(['UserDeleted' => true, 'password' => 'deleted', 'UserRFIDCode' => null]))
+          return response()->json(['message' => 'Atlikta!', 'success' => 'Vartotojas sėkmingai ištrintas.'],200);
+        else
+          return response()->json(['message' => 'Klaida!', 'errors' => ['name' => ['Įvyko klaida jungiantis į duomenų bazę. Apie klaidą praneškite administracijai.']]], 422);
+      }
+    }
 
+    public function addcard(AddUserCardRequest $request){
+      if(RfidCode::where('Code', $request->code)->exists())
+        return response()->json(['message' => 'Klaida!', 'errors' => ['name' => ['Kortelės ar čipo kodas jau naudojamas sistemoje ir negali būti priskirtas dar kartą! Bandykite kitą kortelę.']] ],422);
+
+      if(User::find($request->id)->update(['UserRFIDCode' => $request->code]))
+        return response()->json(['message' => 'Atlikta!', 'success' => 'Vartotojui sėkmingai priskirta nauja identifikacinė kortelė.'],200);
+      else
+        return response()->json(['message' => 'Klaida!', 'errors' => ['name' => ['Įvyko klaida jungiantis į duomenų bazę. Apie klaidą praneškite administracijai.']]], 422);
+    }
+
+    public function restoreuser(RestoreUserRequest $request){
+      if(User::find($request->id)->update(['UserDeleted' => false, 'password' => Hash::make($request->password)]))
+        return response()->json(['message' => 'Atlikta', 'success' => 'Vartotojas sėkmingai atkurtas!'], 200);
+      else {
+        return response()->json(['message' => 'Klaida!', 'errors' => ['name' => ['Įvyko klaida jungiantis į duomenų bazę. Apie klaidą praneškite administracijai.']]], 422);
+      }
+    }
 }

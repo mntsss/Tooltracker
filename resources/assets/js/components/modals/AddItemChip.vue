@@ -1,0 +1,94 @@
+<template>
+  <modal name="add-item-chip-modal"
+         height="auto"
+         :adaptive="true"
+         transition="pop-out"
+         :pivotY="0.3"
+         @before-open="beforeOpen"
+         @before-close="beforeClose">
+    <div class="card">
+        <div class="card-header text-light theme--dark v-toolbar headline">
+            Priskirti identifikacinį čipą <a @click="$modal.hide('add-item-chip-modal')" class="float-right"><span class="fas fa-times btn-func-misc"></span></a>
+        </div>
+        <div class="card-body bg-dark text-light">
+            <v-form v-model="valid">
+                <v-layout row wrap align-center>
+                  <v-flex v-if="!code" class="border-danger text-center headline text-danger">Laukiama naujo čipo...</v-flex>
+                  <v-flex v-else-if="code" class="border-danger text-center headline text-success">Čipas nuskaityta!</v-flex>
+                </v-layout>
+                <v-layout row mx-0 align-center justify-center pa-3>
+                  <v-flex shrink>
+                    <v-btn @click="save()" :disabled="disabled">Pridėti</v-btn>
+                  </v-flex>
+                </v-layout>
+            </v-form>
+        </div>
+    </div>
+  </modal>
+</template>
+<script>
+import swal from 'sweetalert'
+export default {
+    data(){
+        return {
+            id: '',
+            code: null,
+            valid: false,
+        }
+    },
+    computed: {
+        visibility: function(){
+            return this.$children[0].visibility.modal
+        },
+        RFIDCode: function(){
+            return this.$store.state.recentCode
+        },
+        disabled: function(){
+          if(this.code)
+            return false
+          return true
+        }
+    },
+    watch: {
+        RFIDCode(oldRFIDCode, newRFIDCode){
+            if(this.visibility && this.RFIDCode){
+                this.code = this.RFIDCode
+                this.$store.commit('resetCode')
+            }
+        }
+    },
+  methods: {
+    save: function(){
+
+        this.$http.post('/item/addchip', {
+          id: this.id,
+          code: this.code,
+        }
+      ).then((response)=>{
+            if(response.status == 200){
+                this.$modal.hide('add-item-chip-modal')
+                swal(response.data.message, response.data.success, "success")
+                this.$parent.loadUsers();
+            }
+        }).catch(error =>{
+
+            if(error.response.status == 422)
+            {
+              this.code = null
+              swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
+            }
+            else{
+                swal("Klaida", error.response.data.message, "error");
+            }
+        })
+    },
+    beforeOpen: function(event){
+      this.id = event.params.itemID
+    },
+    beforeClose: function(){
+      this.id = ''
+      this.code = null
+    }
+  }
+}
+</script>

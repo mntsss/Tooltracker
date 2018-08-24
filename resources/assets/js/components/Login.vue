@@ -1,28 +1,20 @@
 <template>
 <div class="row h-100 justify-content-center align-items-center">
   <div class="card">
-    <div class="card-header bg-dark text-light">
+    <div class="card-header theme--dark v-toolbar headline">
       Prisijungimas
     </div>
-    <div class="card-body">
-      <form method="post" autocomplete="off" @submit.prevent="login">
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text"><span class="fas fa-user"></span></span>
-          </div>
-          <input type="text" v-model="email" class="form-control" placeholder="El. paštas" aria-label="El. paštas" autocomplete="off"/>
-        </div>
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text"><span class="fas fa-lock"></span></span>
-          </div>
-          <input type="password" v-model="password" class="form-control" placeholder="Slaptažodis" aria-label="Slaptažodis" />
-        </div>
-        <div class="form-group d-flex justify-content-center">
-          <button type="submit" class="btn btn-warning text-dark">Prisijungti</button>
-        </div>
-      </form>
-    </div>
+    <v-layout row mx-0 class="card-body bg-dark">
+      <v-form v-model="valid">
+        <v-text-field prepend-icon="fa-user" v-model="email" :rules="[v => !!v || 'Neįvestas el. paštas']" label="El. paštas" required></v-text-field>
+        <v-text-field prepend-icon="fa-lock" type="password" v-model="password" :rules="[v => !!v || 'Neįvestas slaptažodis']" label="Slaptažodis" required></v-text-field>
+        <v-layout row mx-0 align-center justify-center pa-3>
+          <v-flex shrink>
+            <v-btn outline @click="login"><v-icon class="text-danger mx-2">fa-sign-in-alt</v-icon>Prisijungti</v-btn>
+          </v-flex>
+        </v-layout>
+      </v-form>
+    </v-layout>
   </div>
 </div>
 </template>
@@ -32,7 +24,8 @@ export default{
     return {
       email: null,
       password: null,
-      errors: []
+      errors: [],
+      valid: false
     }
   },
   methods: {

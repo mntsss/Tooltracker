@@ -53,6 +53,9 @@ export default {
 
                 swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
             }
+            else{
+                swal("Klaida", error.response.data.message, "error");
+            }
         })
     },
     beforeOpen: function(event){

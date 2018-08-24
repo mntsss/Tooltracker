@@ -26,7 +26,9 @@ class User extends Authenticatable implements JWTSubject
     public function scopeExisting($query){
       return $query->where('UserDeleted', false);
     }
-
+    public function scopeGetDeleted($query){
+      return $query->where('UserDeleted', true);
+    }
     public function suspentions(){
         return $this->hasMany('App\ItemSuspention', 'UserID');
     }

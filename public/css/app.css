@@ -10786,6 +10786,10 @@ html {
   cursor: pointer;
 }
 
+.v--modal-overlay {
+  background: rgba(0, 0, 0, 0.5) !important;
+}
+
 .v-menu {
   vertical-align: inherit !important;
 }

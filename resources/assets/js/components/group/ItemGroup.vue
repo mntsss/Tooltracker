@@ -11,7 +11,7 @@
     <div class="card">
       <v-layout row wrap align-center class="card-header pb-0 pt-0 mx-0 theme--dark v-toolbar">
           <v-flex headline shrink justify-start align-content-center>
-              <a @click="$router.push({name: 'main'})" class="headline"><span class="fa fa-arrow-left text-danger remove-all-margin p-2 btn-func-misc"></span></a>
+              <a @click="$router.push({name: 'groups'})" class="headline"><span class="fa fa-arrow-left text-danger remove-all-margin p-2 btn-func-misc"></span></a>
           </v-flex>
           <v-flex>
               <div class="text-center headline" v-if="itemGroup">{{itemGroup.ItemGroupName}}</div>
@@ -44,9 +44,9 @@
 </template>
 <script>
 
-import RenameModal from './modals/RenameGroup.vue'
-import ChangeImageModal from './modals/ChangeGroupImage.vue'
-import CreateItemModal from './modals/CreateItem.vue'
+import RenameModal from '../modals/RenameGroup.vue'
+import ChangeImageModal from '../modals/ChangeGroupImage.vue'
+import CreateItemModal from '../modals/CreateItem.vue'
 import swal from 'sweetalert'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.min.css'
@@ -94,7 +94,7 @@ import 'vue-loading-overlay/dist/vue-loading.min.css'
               if(value){
                 this.$http.get('/group/delete/'+this.itemGroup.ItemGroupID).then((response)=>{
                     if(response.status == 200){
-                        swal(response.data.message, response.data.success, "success").then(value => { this.$router.push({name: 'main'})})
+                        swal(response.data.message, response.data.success, "success").then(value => { this.$router.push({name: 'groups'})})
                     }
                 }).catch(error =>{
                     if(error.response.status == 422)

@@ -5,6 +5,7 @@
         :is-full-page="fullPage"></Loading>
         <RenameItemModal></RenameItemModal>
         <ChangeItemImageModal></ChangeItemImageModal>
+        <AddItemChipModal></AddItemChipModal>
     <div class="container">
 
     <div class="card">
@@ -61,8 +62,9 @@ import vueImages from 'vue-images'
 import swal from 'sweetalert'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.min.css'
-import RenameItemModal from './modals/RenameItem.vue'
-import ChangeItemImageModal from './modals/ChangeItemImage.vue'
+import RenameItemModal from '../modals/RenameItem.vue'
+import ChangeItemImageModal from '../modals/ChangeItemImage.vue'
+import AddItemChipModal from '../modals/AddItemChip.vue'
   export default {
     data(){
       return {
@@ -77,7 +79,7 @@ import ChangeItemImageModal from './modals/ChangeItemImage.vue'
           isLoading: true,
           fullPage: false,
           dropdownMeniu: [
-            {text: 'Priskirti čipą', click: () =>{}},
+            {text: 'Priskirti čipą', click: () =>{this.show('add-item-chip-modal')}},
             {text: 'Pervadinti', click: ()=>{this.show('rename-item-modal')}},
             {text: 'Keisti nuotrauką', click: ()=>{this.show('change-item-image-modal')}},
             {text: 'Ištrinti', click: ()=>{this.deleteItem()}}
@@ -159,7 +161,8 @@ import ChangeItemImageModal from './modals/ChangeItemImage.vue'
       vueImages,
       Loading,
       RenameItemModal,
-      ChangeItemImageModal
+      ChangeItemImageModal,
+      AddItemChipModal
   }
 }
 </script>

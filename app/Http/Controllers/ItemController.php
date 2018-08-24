@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateItemRequest;
 use App\Http\Requests\RenameItemRequest;
+use App\Http\Requests\AddItemChipRequest;
 use App\Item;
 use App\ItemGroup;
+use App\RfidCode;
 use Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\ItemInfo;
@@ -16,8 +18,8 @@ class ItemController extends Controller
   use ItemInfo;
 
     public function __construct(){
-      //$this->middleware('auth');
-    }
+       $this->middleware('auth');
+   }
 
     public function items($groupID){
       $items = Item::where('ItemGroupID', $groupID)->existing()->with('lastWithdrawal', 'lastSuspention', 'lastReservation')->get();
@@ -43,19 +45,33 @@ class ItemController extends Controller
       }else {
         $input['imagename'] = "";
       }
-
-      if(Item::create([
+      if($request->code == '')$request->code = null;
+      if($request->nocode) $request->code = null;
+      $item = Item::create([
         'ItemName' => $request->name,
-        'ItemCode' => $request->code,
         'ItemConsumable' => $request->consumable,
         'ItemImage' => $input['imagename'],
         'ItemWarranty' => $request->warranty_date,
         'ItemPurchase' => $request->purchase_date,
         'ItemGroupID' => $request->groupID
-      ]))
-        return response()->json(['message' => 'Atlikta!', 'success'=>'Įrankis pridėtas į grupę.'], 200);
-      else return response()->json(['message' => 'Klaida!', 'errors' => ['name' => ['Įvyko klaida jungiantis į duomenų bazę. Apie klaidą praneškite administracijai.']]], 422);
+      ]);
+      if($item){
+        if($request->code)
+        {
+          if(RfidCode::create(['Code' => $request->code, 'ItemID' => $item->ItemID])){
 
+          }
+          else
+          {
+            return response()->json(['message' => 'Klaida!', 'errors' => ['name' => ['Įvyko klaida jungiantis į duomenų bazę. Apie klaidą praneškite administracijai.']]], 422);
+          }
+        }
+        else
+        {
+          return response()->json(['message' => 'Atlikta!', 'success'=>'Įrankis pridėtas į grupę.'], 200);
+        }
+      }
+      else return response()->json(['message' => 'Klaida!', 'errors' => ['name' => ['Įvyko klaida jungiantis į duomenų bazę. Apie klaidą praneškite administracijai.']]], 422);
     }
 
     public function get($id){
@@ -99,9 +115,21 @@ class ItemController extends Controller
     }
 
     public function delete($id){
-      if(Item::find($id)->update(['ItemDeleted' => true]))
+      $reservationCheck = Item::find($id)->reservations()->get();
+      foreach($reservationCheck as $res){
+        if($res->reservation()->Active()->exists())
+          return response()->json(['message' => 'Klaida', 'errors' => ['name' => ['Įrankis priskirtas aktyviai rezercavijai, todėl negali būti ištrintas.']]],422);
+      }
+      if(Item::find($id)->withdrawals()->Active()->exists())
+        return response()->json(['message' => 'Klaida', 'errors' => ['name' => ['Įrankis priskirtas vartotojui, todėl negali būti ištrintas.']]],422);
+      else if(Item::find($id)->update(['ItemDeleted' => true]))
         return response()->json(['message' => 'Atlikta!', 'success' => 'Įrankis sėkmingai ištrintas.'], 200);
     else return response()->json(['message' => 'Klaida', 'errors' => ['name' => ['Kažkur įvyko klaida siunčiant užklausą į duomenų bazę. Susisiekite su administracija.']]],422);
+    }
 
+    public function addchip(AddItemChipRequest $request){
+      if(RfidCode::create(['Code' => $request->code, 'ItemID' => $request->id]))
+        return response()->json(['message' => 'Atlikta', 'success' => 'Naujas čipas buvo sėkmingai priskirtas įrankiui!'],200);
+      else return response()->json(['message' => 'Klaida', 'errors' => ['name' => ['Kažkur įvyko klaida siunčiant užklausą į duomenų bazę. Susisiekite su administracija.']]],422);
     }
 }

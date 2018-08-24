@@ -297,6 +297,10 @@ html{
 .cursor-pointer:hover{
     cursor:pointer;
 }
+/////// modal style override /////
+.v--modal-overlay {
+  background: rgba(0, 0, 0, 0.5) !important;
+}
 
 .v-menu{
     vertical-align: inherit !important;

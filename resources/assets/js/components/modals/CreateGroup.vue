@@ -73,9 +73,12 @@ export default {
             {
                 swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
             }
-            if(error.response.status == 413)
+            else if(error.response.status == 413)
             {
                 swal("Klaida", "Failo dydis netinkamas!", "error");
+            }
+            else{
+                swal("Klaida", error.response.data.message, "error");
             }
         })
     },

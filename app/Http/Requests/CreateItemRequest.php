@@ -25,7 +25,8 @@ class CreateItemRequest extends FormRequest
     {
         return [
           'name' => 'required|string|min:3|max:40',
-          'code' => 'nullable|string',
+          'code' => 'nullable|string|max:30|unique:rfid_codes,Code',
+          'nocode' => 'required|boolean',
           'consumable' => 'nullable|boolean',
           'warranty_date' => 'nullable|date',
           'purchase_date' => 'nullable|date',
@@ -41,6 +42,8 @@ class CreateItemRequest extends FormRequest
         'name.max' => 'Įrankio pavadinimas negali būti ilgesnis nei 40 simbolių!',
         'consumable.boolean' => 'Nesuprantama "Suvartojama" pasirinkta reikšmė.',
         'code.string' => 'Netinkamas nuskaityto čipo kodo formatas!',
+        'code.max' => 'Klaidingai nuskaitytas čipo kodas! Pabandykite dar kartą, jei klaida kartojasi, bandykite kitą kortelę.',
+        'code.unique' => 'Identifikacinis čipas jau priskirta kitam įrankiui! Nuskaitykite naują čipą.',
         'warranty_date.date' => 'Netinkamas garantinio laikotarpio formatas.',
         'purchase_date.date' => 'Neteisingas įsigijimo datos formatas.',
         'groupID' => 'Severis neranda įrankių grupės identifikacijos. Apie klaidą praneškite administratoriui.'

@@ -11,6 +11,14 @@ const routes = [
     }
   },
   {
+    path: '/groups',
+    name: 'groups',
+    component: require('./components/group/Groups'),
+    meta: {
+      auth: true
+    }
+  },
+  {
     path: '/login',
     name: 'login',
     component: require('./components/Login'),
@@ -21,7 +29,7 @@ const routes = [
    {
        path: '/group/:group',
        name: 'group',
-       component: require('./components/ItemGroup'),
+       component: require('./components/group/ItemGroup'),
        props: true,
        meta: {
            auth:true
@@ -30,7 +38,7 @@ const routes = [
    {
        path: '/item',
        name: 'item',
-       component: require('./components/Item'),
+       component: require('./components/item/Item'),
        props: true,
        meta: {
            auth: true
@@ -39,10 +47,18 @@ const routes = [
    {
        path: '/users',
        name: 'users',
-       component: require('./components/Users'),
+       component: require('./components/user/Users'),
        meta: {
            auth: true
        }
+   },
+   {
+     path: '/users/deleted',
+     name: 'deletedUsers',
+     component: require('./components/user/DeletedUsers'),
+     meta: {
+       auth: true
+     }
    }
 ]
 

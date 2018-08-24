@@ -15,7 +15,7 @@ class CreateItemWithdrawalsTable extends Migration
     {
         Schema::create('item_withdrawals', function (Blueprint $table) {
             $table->increments('ItemWithdrawalID');
-            $table->integer('ItemWithdrawalQuentity')->default(1);
+            $table->integer('ItemWithdrawalQuantity')->default(1);
             $table->boolean('ItemWithdrawalReturned')->default(0);
             $table->integer('ItemWithdrawalReturnedQuantity')->nullable();
             $table->integer('UserID')->nullable();

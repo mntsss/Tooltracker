@@ -31,11 +31,16 @@ Route::group(['middleware' => 'jwt.auth'], function(){
     Route::post('rename', 'ItemController@rename');
     Route::post('image', 'ItemController@changeImage');
     Route::get('delete/{id}', 'ItemController@delete');
+    Route::post('addchip', 'ItemController@addchip');
   });
   Route::prefix('user')->group(function(){
      Route::get('list', 'UserController@listUsers');
+     Route::get('deleted', 'UserController@deletedUsers');
      Route::post('create', 'UserController@create');
      Route::post('edit', 'UserController@edit');
+     Route::get('delete/{id}', 'UserController@delete');
+     Route::post('addcard', 'UserController@addcard');
+     Route::post('restore', 'UserController@restoreuser');
   });
 });
 

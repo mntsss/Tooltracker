@@ -1,7 +1,6 @@
 <template>
     <div class="loading-parent">
-      <CreateUser></CreateUser>
-      <EditUser></EditUser>
+      <RestoreUser></RestoreUser>
         <Loading :active.sync="isLoading"
         :can-cancel="false"
         :is-full-page="fullPage"></Loading>
@@ -10,11 +9,8 @@
                 <v-layout row wrap align-center class="card-header pb-0 pt-0 theme--dark v-toolbar mx-0">
                     <v-flex headline align-center>
                         <div class="text-center mb-0">
-                            Vartotojai
+                            Ištrinti vartotojai
                         </div>
-                    </v-flex>
-                    <v-flex shrink>
-                        <a @click="show('create-user-modal')" class="headline"><span class="fas fa-plus text-danger p-2 btn-func-misc ml-2 mr-2 mb-0 mt-0"></span></a>
                     </v-flex>
                 </v-layout>
                 <v-container class="card-body">
@@ -49,10 +45,10 @@
                                         </v-layout>
                                         <v-layout row wrap align-center >
                                             <v-flex shrink pa-2 style="width: 40px !important">
-                                                <v-icon headline class="text-danger">fa-calendar-alt</v-icon>
+                                                <v-icon headline class="text-danger">fa-trash</v-icon>
                                             </v-flex>
-                                            <v-flex px-2 shrink>Paskutinis aktyvumas:</v-flex>
-                                            <v-flex px-2>{{user.UserLastSeen}}</v-flex>
+                                            <v-flex px-2 shrink>Ištrynimo data:</v-flex>
+                                            <v-flex px-2>{{user.updated_at}}</v-flex>
                                         </v-layout>
                                         <v-layout row wrap align-center >
                                             <v-flex shrink pa-2 style="width: 40px !important">
@@ -81,17 +77,9 @@
                                                   <v-icon class="text-danger">fa-toolbox</v-icon>
                                                   <span class="mx-2">Įrankiai</span>
                                               </v-btn>
-                                              <v-btn outline @click="show('edit-user-modal', {user: user})">
-                                                    <v-icon class="text-danger">fa-edit</v-icon>
-                                                    <span class="mx-2">Redaguoti</span>
-                                                </v-btn>
-                                                <v-btn outline>
-                                                    <v-icon class="text-danger">fa-id-card</v-icon>
-                                                    <span class="mx-2">Nauja kortelė</span>
-                                                </v-btn>
-                                              <v-btn outline @click="deleteUser(user)">
-                                                  <v-icon class="text-danger">fa-trash</v-icon>
-                                                  <span class="mx-2">Ištrinti</span>
+                                              <v-btn outline @click="show('restore-user-modal', {id: user.UserID})">
+                                                  <v-icon class="text-danger">fa-undo</v-icon>
+                                                  <span class="mx-2">Atkurti</span>
                                               </v-btn>
 
                                             </v-flex>
@@ -108,9 +96,10 @@
     </div>
 </template>
 <script>
-import CreateUser from './modals/CreateUser.vue'
-import EditUser from './modals/EditUser.vue'
+
 import Loading from 'vue-loading-overlay'
+
+import RestoreUser from '../modals/RestoreDeletedUser.vue'
 
 import 'vue-loading-overlay/dist/vue-loading.min.css'
 import swal from 'sweetalert'
@@ -131,7 +120,7 @@ export default{
             this.$modal.show(name, param)
         },
         loadUsers: function(){
-            this.$http.get('user/list').then((response)=>{
+            this.$http.get('user/deleted').then((response)=>{
                 if(response.status == 200){
                     this.users = response.data
                     this.isLoading = false
@@ -139,37 +128,11 @@ export default{
             }).catch(error => {
                 swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], 'error')
             })
-        },
-        deleteUser: function(user){
-            swal({
-              title: 'Ar tikrai norite ištrinti vartotoją '+user.Username+'?',
-              text: 'Ištrinti vartotoją galima tik tuo atveju, jeigu jis neturi aktyvių rezervacijų, paimtų ar įšaldytų įrankių.',
-              icon: 'warning',
-              dangerMode: true,
-              buttons: {
-                del: { text: 'Trinti', value: true},
-                cancel: {text: 'Atšaukti'}
-              }
-            }).then(value => {
-              if(value){
-                this.$http.get('/user/delete/'+user.UserID).then((response)=>{
-                    if(response.status == 200){
-                        swal(response.data.message, response.data.success, "success").then(value => { this.loadUsers()})
-                    }
-                }).catch(error =>{
-                    if(error.response.status == 422)
-                    {
-                        swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
-                    }
-                })
-              }
-            })
         }
     },
     components: {
         Loading,
-        CreateUser,
-        EditUser
+        RestoreUser
     }
 }
 </script>

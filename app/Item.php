@@ -22,6 +22,9 @@ class Item extends Model
     public function withdrawals(){
       return $this->hasMany('App\ItemWithdrawal', 'ItemID');
     }
+    public function reservations(){
+      return $this->hasMany('App\ReservationItem', 'ItemID');
+    }
     public function lastWithdrawal(){
       return $this->hasOne('App\ItemWithdrawal', 'ItemID')->latest();
     }
