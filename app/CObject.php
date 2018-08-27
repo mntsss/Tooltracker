@@ -5,8 +5,12 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Auth;
 
-class Object extends Model
+/////////////
+// Had to be renamed from Object because of PHP7.2 special names rule. Stands for construction objects...
+////////////
+class CObject extends Model
 {
+    protected $table = 'objects';
     protected $primaryKey = "ObjectID";
 
     protected $fillable = ['ObjectName', 'ObjectFinished', 'UserID'];

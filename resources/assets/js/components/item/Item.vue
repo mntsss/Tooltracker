@@ -35,7 +35,7 @@
                             :keyinput="keyinput"
                             :showclosebutton="showclosebutton" class="image">
                 </vueImages> -->
-                <img v-bind:src="'/media/uploads/'+item.ItemImage" class="image"/>
+                <img v-bind:src="'/media/items/'+item.ItemImage" class="image"/>
             </div>
             <div class="colt">
                 <p class="text-left h4">
@@ -102,7 +102,7 @@ import AddItemChipModal from '../modals/AddItemChip.vue'
       if(this.item.ItemImage == null || this.item.ItemImage == "null" || this.item.ItemImage == "")
         this.images.push({imageUrl: '/media/default_picture.png', caption: this.item.ItemName})
       else
-        this.images.push({imageUrl: '/media/uploads/'+this.item.ItemImage, caption: this.item.ItemName})
+        this.images.push({imageUrl: '/media/items/'+this.item.ItemImage, caption: this.item.ItemName})
     }
   },
   mounted(){
@@ -122,7 +122,7 @@ import AddItemChipModal from '../modals/AddItemChip.vue'
                 if(this.item.ItemImage == null || this.item.ItemImage == "null" || this.item.ItemImage == "")
                   this.images.push({imageUrl: '/media/default_picture.png', caption: this.item.ItemName})
                 else
-                  this.images.push({imageUrl: '/media/uploads/'+this.item.ItemImage, caption: this.item.ItemName})
+                  this.images.push({imageUrl: '/media/items/'+this.item.ItemImage, caption: this.item.ItemName})
             }
         }).catch(error => {
             if(error.response.status == 422){

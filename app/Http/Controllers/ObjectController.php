@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\AddObjectRequest;
 use App\Http\Controllers\Controller;
-use App\Object;
+use App\CObject;
 use App\Item;
 
 class ObjectController extends Controller
@@ -15,14 +15,14 @@ class ObjectController extends Controller
     }
 
     public function listObjects(){
-        $objects = Object::where('ObjectFinished', false)->with(['user','itemWithdrawals' => function ($query) {
+        $objects = CObject::where('ObjectFinished', false)->with(['user','itemWithdrawals' => function ($query) {
             $query->where('ItemWithdrawalReturned', false)->with('item');
         }])->get();
 
         return response()->json($objects, 200);
     }
     public function add(AddObjectRequest $request){
-        if(Object::create([
+        if(CObject::create([
             'ObjectName' => $request->name,
             'UserID' => $request->user
         ]))

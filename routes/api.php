@@ -32,6 +32,7 @@ Route::group(['middleware' => 'jwt.auth'], function(){
     Route::post('image', 'ItemController@changeImage');
     Route::get('delete/{id}', 'ItemController@delete');
     Route::post('addchip', 'ItemController@addchip');
+    Route::post('findcode', 'ItemController@findWithCode');
   });
   Route::prefix('user')->group(function(){
      Route::get('list', 'UserController@listUsers');
@@ -47,5 +48,4 @@ Route::group(['middleware' => 'jwt.auth'], function(){
      Route::post('add', 'ObjectController@add');
   });
 });
-
 Route::get('sendCode/{code}', 'HomeController@sendCode');

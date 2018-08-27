@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\CreateItemRequest;
 use App\Http\Requests\RenameItemRequest;
 use App\Http\Requests\AddItemChipRequest;
+use App\Http\Requests\FindItemWithCodeRequest;
 use App\Item;
 use App\ItemGroup;
 use App\RfidCode;
@@ -40,7 +41,7 @@ class ItemController extends Controller
           ])->validate();
         $image = $request->file('image');
         $input['imagename'] = time().'.'.$image->getClientOriginalExtension();
-        $destinationPath = public_path('/media/uploads/');
+        $destinationPath = public_path('/media/items/');
         $image->move($destinationPath, $input['imagename']);
       }else {
         $input['imagename'] = "";
@@ -103,7 +104,7 @@ class ItemController extends Controller
             ])->validate();
           $image = $request->file('image');
           $input['imagename'] = time().'.'.$image->getClientOriginalExtension();
-          $destinationPath = public_path('/media/uploads/');
+          $destinationPath = public_path('/media/items/');
           $image->move($destinationPath, $input['imagename']);
         }else {
           $input['imagename'] = "";
@@ -131,5 +132,9 @@ class ItemController extends Controller
       if(RfidCode::create(['Code' => $request->code, 'ItemID' => $request->id]))
         return response()->json(['message' => 'Atlikta', 'success' => 'Naujas čipas buvo sėkmingai priskirtas įrankiui!'],200);
       else return response()->json(['message' => 'Klaida', 'errors' => ['name' => ['Kažkur įvyko klaida siunčiant užklausą į duomenų bazę. Susisiekite su administracija.']]],422);
+    }
+
+    public function findWithCode(FindItemWithCodeRequest $request){
+      return response()->json(RfidCode::where('Code', $request->code)->first()->item);
     }
 }

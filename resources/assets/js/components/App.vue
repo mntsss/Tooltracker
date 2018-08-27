@@ -79,6 +79,15 @@
     <v-toolbar app fixed clipped-left v-if="$auth.check()">
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title><span class="headline shrink">Tool</span><span class="shrink headline text-danger">Tracker</span></v-toolbar-title>
+      <v-spacer></v-spacer>
+
+    <v-btn icon @click="$router.push({name: 'cart'})">
+      <v-icon >shopping_cart</v-icon>
+    </v-btn>
+
+    <v-btn icon>
+      <v-icon >more_vert</v-icon>
+    </v-btn>
     </v-toolbar>
     <v-content>
       <v-container fluid fill-height>
@@ -172,3 +181,11 @@ export default {
   }
 }
 </script>
+<style>
+.fa, .far, .fas {
+    font-family: "Font Awesome 5 Free" !important;
+}
+.fa, .fas {
+    font-weight: 900 !important;
+}
+</style>

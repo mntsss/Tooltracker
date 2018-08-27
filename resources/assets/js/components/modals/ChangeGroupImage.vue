@@ -49,8 +49,6 @@ export default {
         }).catch(error =>{
             if(error.response.status == 422)
             {
-                //this.$modal.hide('change-group-image-modal')
-
                 swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
             }
             else{

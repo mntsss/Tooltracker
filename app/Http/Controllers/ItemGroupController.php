@@ -33,7 +33,7 @@ class ItemGroupController extends Controller
           ])->validate();
         $image = $request->file('image');
         $input['imagename'] = time().'.'.$image->getClientOriginalExtension();
-        $destinationPath = public_path('/media/uploads/');
+        $destinationPath = public_path('/media/groups/');
         $image->move($destinationPath, $input['imagename']);
       }else {
         $input['imagename'] = "";
@@ -74,7 +74,7 @@ class ItemGroupController extends Controller
             ])->validate();
           $image = $request->file('image');
           $input['imagename'] = time().'.'.$image->getClientOriginalExtension();
-          $destinationPath = public_path('/media/uploads/');
+          $destinationPath = public_path('/media/groups/');
           $image->move($destinationPath, $input['imagename']);
         }else {
           $input['imagename'] = "";
