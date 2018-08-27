@@ -50,10 +50,10 @@
                         </div>
                 </div>
                 <v-layout row mx-0 align-center justify-center pa-3>
-                  <v-flex shrink v-if="code">
+                  <v-flex shrink v-if="code && !nocode">
                     <span class="text-success headline">Identifikacinis čipas nuskaitytas</span>
                   </v-flex>
-                  <v-flex shrink v-else-if="!code">
+                  <v-flex shrink v-else-if="!code && !nocode">
                     <span class="text-danger headline">Laukiama identifikacinio čipo...</span>
                   </v-flex>
                 </v-layout>

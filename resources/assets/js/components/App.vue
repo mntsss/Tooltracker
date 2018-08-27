@@ -123,7 +123,7 @@ export default {
                 text: 'Objektai',
                 model: false,
                 children: [
-                  { icon: 'keyboard_arrow_right', text: 'Aktyvūs', click: '' },
+                  { icon: 'keyboard_arrow_right', text: 'Aktyvūs', click: ()=> { this.$router.push({name: 'objects'})} },
                   { icon: 'keyboard_arrow_right', text: 'Uždaryti', click: ''}
                 ]
               },

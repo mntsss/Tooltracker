@@ -59,7 +59,15 @@ const routes = [
      meta: {
        auth: true
      }
-   }
+ },
+ {
+     path: '/objects',
+     name: 'objects',
+     component: require('./components/object/Objects'),
+     meta:{
+         auth: true
+     }
+ }
 ]
 
 export default routes

@@ -42,6 +42,10 @@ Route::group(['middleware' => 'jwt.auth'], function(){
      Route::post('addcard', 'UserController@addcard');
      Route::post('restore', 'UserController@restoreuser');
   });
+  Route::prefix('object')->group(function(){
+     Route::get('list', 'ObjectController@listObjects');
+     Route::post('add', 'ObjectController@add');
+  });
 });
 
 Route::get('sendCode/{code}', 'HomeController@sendCode');

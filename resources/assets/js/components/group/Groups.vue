@@ -6,6 +6,11 @@
 
   <div class="container">
     <CreateGroup></CreateGroup>
+    <v-layout row mx-0 mb-3 align-center justify-center class="theme--dark v-toolbar">
+        <v-flex shrink headline>
+            Įrankių grupės
+        </v-flex>
+    </v-layout>
     <div class="item-box-panel" @click="$modal.show('create-group-modal')">
         <div class="item-add-box" style="height: 100% !important">
             <span class="fas fa-plus text-success"></span>
