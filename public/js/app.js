@@ -91270,7 +91270,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n.loading-parent{\n  position: relative;\n}\n.overlay{\n  z-index: 5;\n  background-color: #303030 !important;\n}\n.loading-overlay{\n  z-index: 10 !important;\n}\n", ""]);
+exports.push([module.i, "\n.loading-parent{\n  position: relative;\n}\n.overlay{\n  z-index: 5;\n  background-color: #303030 !important;\n}\n.loading-overlay{\n  z-index: 10 !important;\n}\n.uploaded-image{\n  max-width: 576px;\n  padding: 10px;\n  max-height: 50vh;\n}\n", ""]);
 
 // exports
 
@@ -91362,6 +91362,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -91376,9 +91381,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       userCard: false,
       user: null,
       waitingImageDialog: false,
-      responseItem: null,
-      uploadedImage: null,
-      hasImage: false
+      imageLoadingDialog: false,
+      hasImage: false,
+      newItem: {
+        item: null,
+        image: null,
+        quantity: 1
+      },
+      reservedItems: []
     };
   },
   created: function created() {
@@ -91403,7 +91413,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           if (this.user.UserRFIDCode == this.RFIDCode) this.userCard = true;
         } else if (this.userCard) {
           this.$http.post('/item/findcode', { code: this.RFIDCode }).then(function (response) {
-            if (response.status == 200) _this.responseItem = response.data;
+            if (response.status == 200) _this.newItem.item = response.data;
             _this.waitingImageDialog = true;
           }).catch(function (error) {
             __WEBPACK_IMPORTED_MODULE_2_sweetalert___default()(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
@@ -91427,7 +91437,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     setImage: function setImage(file) {
       this.hasImage = true;
-      this.uploadedImage = file;
+      this.newItem.image = file;
+    },
+    loadingDialog: function loadingDialog() {
+      this.imageLoadingDialog = !this.imageLoadingDialog;
+    },
+    addToReservation: function addToReservation() {
+      this.reservedItems.push(JSON.parse(JSON.stringify(this.newItem)));
+      this.newItem.item = null;
+      this.newItem.image = null;
+      this.newItem.quantity = 1;
+      this.waitingImageDialog = false;
     }
   },
   components: {
@@ -93299,48 +93319,207 @@ var render = function() {
           }
         },
         [
-          _c(
-            "v-container",
-            [
-              _c(
-                "v-layout",
-                { attrs: { row: "", headline: "", "justify-center": "" } },
+          _vm.newItem.item
+            ? _c(
+                "v-container",
+                { staticStyle: { background: "#292929" } },
                 [
-                  _vm.responseItem
-                    ? _c("v-flex", { attrs: { shrink: "" } }, [
-                        _vm._v(_vm._s(_vm.responseItem.ItemName))
-                      ])
-                    : _vm._e()
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-layout",
-                { attrs: { row: "" } },
-                [
-                  _c("image-uploader", {
-                    attrs: {
-                      debug: 1,
-                      maxWidth: 1024,
-                      quality: 0.7,
-                      autoRotate: true,
-                      outputFormat: "verbose",
-                      preview: false,
-                      className: [
-                        "fileinput",
-                        { "fileinput--loaded": _vm.hasImage }
-                      ],
-                      capture: "environment"
+                  _c(
+                    "v-layout",
+                    {
+                      staticClass: "theme--dark v-toolbar",
+                      attrs: {
+                        row: "",
+                        headline: "",
+                        "justify-center": "",
+                        "mx-0": ""
+                      }
                     },
-                    on: { input: _vm.setImage }
-                  })
+                    [
+                      _c("v-flex", { attrs: { shrink: "" } }, [
+                        _vm._v(_vm._s(_vm.newItem.item.ItemName))
+                      ])
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("v-divider", { attrs: { light: "" } }),
+                  _vm._v(" "),
+                  _vm.newItem.item.ItemConsumable
+                    ? _c(
+                        "v-layout",
+                        { attrs: { row: "", wrap: "" } },
+                        [
+                          _c(
+                            "v-flex",
+                            { attrs: { shrink: "" } },
+                            [
+                              _c("v-text-field", {
+                                attrs: {
+                                  type: "number",
+                                  placeholder: "Paimamas kiekis"
+                                },
+                                model: {
+                                  value: _vm.newItem.quantity,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.newItem, "quantity", $$v)
+                                  },
+                                  expression: "newItem.quantity"
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  !_vm.newItem.item.ItemConsumable
+                    ? _c(
+                        "v-layout",
+                        {
+                          attrs: {
+                            row: "",
+                            "align-center": "",
+                            "justify-center": ""
+                          }
+                        },
+                        [
+                          !_vm.newItem.image
+                            ? _c(
+                                "v-flex",
+                                { attrs: { shrink: "" } },
+                                [
+                                  _c("image-uploader", {
+                                    attrs: {
+                                      debug: 1,
+                                      maxWidth: 1024,
+                                      quality: 0.7,
+                                      autoRotate: true,
+                                      outputFormat: "verbose",
+                                      preview: false,
+                                      className: [
+                                        "fileinput",
+                                        { "fileinput--loaded": _vm.hasImage }
+                                      ],
+                                      capture: "environment"
+                                    },
+                                    on: {
+                                      input: _vm.setImage,
+                                      onUpload: _vm.loadingDialog,
+                                      onComplete: _vm.loadingDialog
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            : _vm.newItem.image
+                              ? _c("v-flex", { attrs: { shrink: "" } }, [
+                                  _c("img", {
+                                    staticClass: "uploaded-image",
+                                    attrs: {
+                                      src: _vm.newItem.image.dataUrl,
+                                      alt: "uploaded_image"
+                                    }
+                                  })
+                                ])
+                              : _vm._e(),
+                          _vm._v(" "),
+                          _c(
+                            "v-dialog",
+                            {
+                              attrs: {
+                                "hide-overlay": "",
+                                persistent: "",
+                                width: "300"
+                              },
+                              model: {
+                                value: _vm.imageLoadingDialog,
+                                callback: function($$v) {
+                                  _vm.imageLoadingDialog = $$v
+                                },
+                                expression: "imageLoadingDialog"
+                              }
+                            },
+                            [
+                              _c(
+                                "v-card",
+                                {
+                                  staticClass: "border border-danger",
+                                  attrs: { dark: "" }
+                                },
+                                [
+                                  _c(
+                                    "v-card-text",
+                                    [
+                                      _vm._v(
+                                        "\n                  Kraunama...\n                  "
+                                      ),
+                                      _c("v-progress-linear", {
+                                        staticClass: "mb-0",
+                                        attrs: {
+                                          indeterminate: "",
+                                          color: "white"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c(
+                    "v-layout",
+                    {
+                      attrs: {
+                        row: "",
+                        wrap: "",
+                        "mx-0": "",
+                        "pa-3": "",
+                        "justify-center": "",
+                        "align-center": ""
+                      }
+                    },
+                    [
+                      _c(
+                        "v-flex",
+                        { attrs: { shrink: "" } },
+                        [
+                          _c(
+                            "v-btn",
+                            {
+                              attrs: { outline: "" },
+                              on: { click: _vm.addToReservation }
+                            },
+                            [
+                              _c(
+                                "v-icon",
+                                { staticClass: "text-danger headline mx-2" },
+                                [_vm._v("fa-plus")]
+                              ),
+                              _vm._v("Pridėti į rezervaciją")
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
                 ],
                 1
               )
-            ],
-            1
-          )
+            : _vm._e()
         ],
         1
       ),
