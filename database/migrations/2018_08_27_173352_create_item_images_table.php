@@ -17,7 +17,7 @@ class CreateItemImagesTable extends Migration
             $table->increments('ImageID');
             $table->string('ImageName');
             $table->integer('ItemID');
-            $table->integer('ReservationID')->nullable();
+            $table->integer('ReservationItemID')->nullable();
             $table->integer('ItemWithdrawalID')->nullable();
             $table->timestamps();
         });

@@ -83778,7 +83778,7 @@ var render = function() {
           _c(
             "div",
             { staticClass: "card-header theme--dark v-toolbar headline" },
-            [_vm._v("\n      Prisijungimas\n    ")]
+            [_vm._v("\r\n      Prisijungimas\r\n    ")]
           ),
           _vm._v(" "),
           _c(
@@ -91397,6 +91397,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -91429,7 +91435,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         align: 'left',
         sortable: false,
         value: 'item.ItemName'
-      }, { text: 'Kiekis (vnt.)', value: 'quantity' }]
+      }, { text: 'Kiekis (vnt.)', value: 'quantity' }, { text: '', value: 'value' }]
     };
   },
   created: function created() {
@@ -91512,12 +91518,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.newItem.quantity = 1;
       this.waitingImageDialog = false;
     },
+    cancelItemAddition: function cancelItemAddition() {
+      this.hasImage = false;
+      this.newItem.item = null;
+      this.newItem.image = null;
+      this.newItem.quantity = 1;
+      this.waitingImageDialog = false;
+    },
     save: function save() {
       this.$http.post('/reservation/create', {
         objectID: this.reservationObject,
         items: this.reservedItems
       }).then(function (response) {
-        alert('Done!');
+        __WEBPACK_IMPORTED_MODULE_2_sweetalert___default()(response.data.message, response.data.success, "success");
       }).catch(function (error) {
         if (error.response.status == 422) {
           __WEBPACK_IMPORTED_MODULE_2_sweetalert___default()(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
@@ -91525,6 +91538,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           __WEBPACK_IMPORTED_MODULE_2_sweetalert___default()("Klaida", error.response.data.message, "error");
         }
       });
+    },
+    deleteItem: function deleteItem(item) {
+      var index = this.reservedItems.indexOf(item);
+      this.reservedItems.splice(index, 1);
     }
   },
   components: {
@@ -93402,22 +93419,31 @@ var render = function() {
                 { staticStyle: { background: "#292929" } },
                 [
                   _c(
-                    "v-layout",
-                    {
-                      staticClass: "theme--dark v-toolbar",
-                      attrs: {
-                        row: "",
-                        headline: "",
-                        "justify-center": "",
-                        "mx-0": ""
-                      }
-                    },
+                    "div",
+                    { staticClass: "card-header bg-dark text-light headline" },
                     [
-                      _c("v-flex", { attrs: { shrink: "" } }, [
-                        _vm._v(_vm._s(_vm.newItem.item.ItemName))
-                      ])
-                    ],
-                    1
+                      _vm._v(
+                        "\n            " +
+                          _vm._s(_vm.newItem.item.ItemName) +
+                          " "
+                      ),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "float-right",
+                          on: {
+                            click: function($event) {
+                              _vm.cancelItemAddition()
+                            }
+                          }
+                        },
+                        [
+                          _c("span", {
+                            staticClass: "fas fa-times btn-func-misc"
+                          })
+                        ]
+                      )
+                    ]
                   ),
                   _vm._v(" "),
                   _c("v-divider", { attrs: { light: "" } }),
@@ -93691,9 +93717,36 @@ var render = function() {
                                     _vm._v(_vm._s(props.item.item.ItemName))
                                   ]),
                                   _vm._v(" "),
-                                  _c("td", { staticClass: "text-xs-right" }, [
+                                  _c("td", { staticClass: "text-xs-center" }, [
                                     _vm._v(_vm._s(props.item.quantity))
-                                  ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "td",
+                                    {
+                                      staticClass: "justify-center layout px-0"
+                                    },
+                                    [
+                                      _c(
+                                        "v-btn",
+                                        [
+                                          _c(
+                                            "v-icon",
+                                            {
+                                              on: {
+                                                click: function($event) {
+                                                  _vm.deleteItem(props.item)
+                                                }
+                                              }
+                                            },
+                                            [_vm._v("delete")]
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
                                 ]
                               }
                             }

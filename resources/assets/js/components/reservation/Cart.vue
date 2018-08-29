@@ -19,7 +19,10 @@
       </div>
     <v-dialog v-model="waitingImageDialog" persistent max-width="780" >
       <v-container v-if="newItem.item" style="background: #292929">
-        <v-layout row headline justify-center mx-0 class="theme--dark v-toolbar"><v-flex shrink >{{newItem.item.ItemName}}</v-flex></v-layout>
+        <!-- <v-layout row headline justify-center mx-0 class="theme--dark v-toolbar"><v-flex shrink >{{newItem.item.ItemName}}</v-flex><a @click="cancelItemAddition()" class="float-right"><span class="fas fa-times btn-func-misc"></span></a></v-layout> -->
+        <div class="card-header bg-dark text-light headline">
+            {{newItem.item.ItemName}} <a @click="cancelItemAddition()" class="float-right"><span class="fas fa-times btn-func-misc"></span></a>
+        </div>
         <v-divider light></v-divider>
         <v-layout row wrap v-if="newItem.item.ItemConsumable">
           <v-flex shrink>
@@ -84,7 +87,10 @@
             >
             <template slot="items" slot-scope="props">
               <td>{{ props.item.item.ItemName }}</td>
-              <td class="text-xs-right">{{ props.item.quantity }}</td>
+              <td class="text-xs-center">{{ props.item.quantity }}</td>
+              <td class="justify-center layout px-0">
+                  <v-btn><v-icon @click="deleteItem(props.item)">delete</v-icon></v-btn>
+              </td>
             </template>
             <template slot="no-data">
               <v-alert :value="true" class="bg-warning" icon="warning">
@@ -142,6 +148,7 @@ export default{
             value: 'item.ItemName'
           },
           { text: 'Kiekis (vnt.)', value: 'quantity' },
+          { text: '', value: 'value' }
         ],
     }
   },
@@ -228,12 +235,19 @@ export default{
       this.newItem.quantity = 1
       this.waitingImageDialog = false
     },
+    cancelItemAddition: function(){
+        this.hasImage = false
+        this.newItem.item = null
+        this.newItem.image = null
+        this.newItem.quantity = 1
+        this.waitingImageDialog = false
+    },
     save: function(){
       this.$http.post('/reservation/create', {
         objectID: this.reservationObject,
         items: this.reservedItems
       }).then((response) => {
-        alert('Done!')
+        swal(response.data.message, response.data.success, "success")
       }).catch(error => {
         if(error.response.status == 422)
         {
@@ -243,7 +257,11 @@ export default{
             swal("Klaida", error.response.data.message, "error");
         }
       })
-    }
+  },
+  deleteItem (item) {
+        const index = this.reservedItems.indexOf(item)
+        this.reservedItems.splice(index, 1)
+      },
   },
   components: {
     Loading,
