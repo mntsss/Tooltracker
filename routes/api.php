@@ -47,5 +47,8 @@ Route::group(['middleware' => 'jwt.auth'], function(){
      Route::get('list', 'ObjectController@listObjects');
      Route::post('add', 'ObjectController@add');
   });
+  Route::prefix('reservation')->group(function(){
+    Route::post('create', 'ReservationController@create');
+  });
 });
 Route::get('sendCode/{code}', 'HomeController@sendCode');

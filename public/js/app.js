@@ -91367,6 +91367,36 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -91378,20 +91408,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       isLoading: true,
       fullPage: false,
       tab: null,
-      userCard: false,
-      user: null,
       waitingImageDialog: false,
       imageLoadingDialog: false,
       hasImage: false,
+
+      userCard: false,
+      user: null,
+      objects: [],
+      reservationObject: null,
+
       newItem: {
         item: null,
         image: null,
         quantity: 1
       },
-      reservedItems: []
+      reservedItems: [],
+      //table setup
+      headers: [{
+        text: 'Įrankio (daikto) pavadinimas',
+        align: 'left',
+        sortable: false,
+        value: 'item.ItemName'
+      }, { text: 'Kiekis (vnt.)', value: 'quantity' }]
     };
   },
   created: function created() {
+    this.loadObjects();
     this.fetch();
   },
   mounted: function mounted() {
@@ -91402,6 +91444,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   computed: {
     RFIDCode: function RFIDCode() {
       return this.$store.state.recentCode;
+    },
+    addButtonDisabled: function addButtonDisabled() {
+      if (this.newItem.item.ItemConsumable) return false;else return !this.hasImage;
+    },
+    saveButtonDisabled: function saveButtonDisabled() {
+      if (this.reservationObject) {
+        if (this.reservedItems.length != 0) if (this.userCard) return false;
+      }
+      return true;
     }
   },
   watch: {
@@ -91435,6 +91486,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     },
 
+    loadObjects: function loadObjects() {
+      var _this2 = this;
+
+      this.$http.get('/object/list').then(function (response) {
+        if (response.status == 200) {
+          _this2.objects = response.data;
+        }
+      }).catch(function (error) {
+        __WEBPACK_IMPORTED_MODULE_2_sweetalert___default()('Klaida!', error.response.data.message, 'error');
+      });
+    },
     setImage: function setImage(file) {
       this.hasImage = true;
       this.newItem.image = file;
@@ -91444,10 +91506,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     addToReservation: function addToReservation() {
       this.reservedItems.push(JSON.parse(JSON.stringify(this.newItem)));
+      this.hasImage = false;
       this.newItem.item = null;
       this.newItem.image = null;
       this.newItem.quantity = 1;
       this.waitingImageDialog = false;
+    },
+    save: function save() {
+      this.$http.post('/reservation/create', {
+        objectID: this.reservationObject,
+        items: this.reservedItems
+      }).then(function (response) {
+        alert('Done!');
+      }).catch(function (error) {
+        if (error.response.status == 422) {
+          __WEBPACK_IMPORTED_MODULE_2_sweetalert___default()(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
+        } else {
+          __WEBPACK_IMPORTED_MODULE_2_sweetalert___default()("Klaida", error.response.data.message, "error");
+        }
+      });
     }
   },
   components: {
@@ -93497,7 +93574,10 @@ var render = function() {
                           _c(
                             "v-btn",
                             {
-                              attrs: { outline: "" },
+                              attrs: {
+                                outline: "",
+                                disabled: _vm.addButtonDisabled
+                              },
                               on: { click: _vm.addToReservation }
                             },
                             [
@@ -93567,12 +93647,125 @@ var render = function() {
                 [
                   _c(
                     "v-container",
-                    { attrs: { "fill-heigth": "", "justify-center": "" } },
+                    {
+                      staticClass: "remove-all-margin",
+                      attrs: { "fill-heigth": "", "justify-center": "" }
+                    },
                     [
+                      _c("v-select", {
+                        staticClass: "mb-4 mt-2",
+                        attrs: {
+                          items: _vm.objects,
+                          "menu-props": "auto",
+                          label: "Pasirinkite rezervacijos objektą",
+                          "hide-details": "",
+                          "item-text": "ObjectName",
+                          "item-value": "ObjectID",
+                          "prepend-icon": "fa-building",
+                          outline: ""
+                        },
+                        model: {
+                          value: _vm.reservationObject,
+                          callback: function($$v) {
+                            _vm.reservationObject = $$v
+                          },
+                          expression: "reservationObject"
+                        }
+                      }),
+                      _vm._v(" "),
                       _c(
-                        "v-flex",
-                        { attrs: { shrink: "", "align-center": "" } },
-                        [_vm._v("Rezervacijos tabas & stuff...")]
+                        "v-data-table",
+                        {
+                          staticClass: "elevation-1",
+                          attrs: {
+                            headers: _vm.headers,
+                            items: _vm.reservedItems,
+                            "hide-actions": ""
+                          },
+                          scopedSlots: _vm._u([
+                            {
+                              key: "items",
+                              fn: function(props) {
+                                return [
+                                  _c("td", [
+                                    _vm._v(_vm._s(props.item.item.ItemName))
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("td", { staticClass: "text-xs-right" }, [
+                                    _vm._v(_vm._s(props.item.quantity))
+                                  ])
+                                ]
+                              }
+                            }
+                          ])
+                        },
+                        [
+                          _c(
+                            "template",
+                            { slot: "no-data" },
+                            [
+                              _c(
+                                "v-alert",
+                                {
+                                  staticClass: "bg-warning",
+                                  attrs: { value: true, icon: "warning" }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                Laukiama rezervuojamų įrankių...\n              "
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        2
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-layout",
+                        {
+                          attrs: {
+                            row: "",
+                            wrap: "",
+                            "mx-0": "",
+                            "pa-3": "",
+                            "justify-center": "",
+                            "align-center": ""
+                          }
+                        },
+                        [
+                          _c(
+                            "v-flex",
+                            { attrs: { shrink: "" } },
+                            [
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: {
+                                    outline: "",
+                                    disabled: _vm.saveButtonDisabled
+                                  },
+                                  on: { click: _vm.save }
+                                },
+                                [
+                                  _c(
+                                    "v-icon",
+                                    {
+                                      staticClass: "text-danger headline mx-2"
+                                    },
+                                    [_vm._v("fa-save")]
+                                  ),
+                                  _vm._v("Išsaugoti rezervaciją")
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
                       )
                     ],
                     1

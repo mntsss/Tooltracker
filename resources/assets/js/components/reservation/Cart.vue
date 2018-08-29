@@ -47,7 +47,7 @@
 
         </v-layout>
         <v-layout row wrap mx-0 pa-3 justify-center align-center>
-          <v-flex shrink><v-btn outline @click="addToReservation"><v-icon class="text-danger headline mx-2">fa-plus</v-icon>Pridėti į rezervaciją</v-btn></v-flex>
+          <v-flex shrink><v-btn outline @click="addToReservation" :disabled="addButtonDisabled"><v-icon class="text-danger headline mx-2">fa-plus</v-icon>Pridėti į rezervaciją</v-btn></v-flex>
         </v-layout>
       </v-container>
     </v-dialog>
@@ -63,8 +63,38 @@
       </v-tabs>
       <v-tabs-items v-model="tab">
       <v-tab-item>
-        <v-container fill-heigth justify-center>
-          <v-flex shrink align-center>Rezervacijos tabas & stuff...</v-flex>
+        <v-container fill-heigth justify-center class="remove-all-margin">
+          <v-select
+            :items="objects"
+            v-model="reservationObject"
+            menu-props="auto"
+            label="Pasirinkite rezervacijos objektą"
+            hide-details
+            item-text="ObjectName"
+            item-value="ObjectID"
+            prepend-icon="fa-building"
+            outline
+            class="mb-4 mt-2"
+          ></v-select>
+          <v-data-table
+            :headers="headers"
+            :items="reservedItems"
+            hide-actions
+            class="elevation-1"
+            >
+            <template slot="items" slot-scope="props">
+              <td>{{ props.item.item.ItemName }}</td>
+              <td class="text-xs-right">{{ props.item.quantity }}</td>
+            </template>
+            <template slot="no-data">
+              <v-alert :value="true" class="bg-warning" icon="warning">
+                Laukiama rezervuojamų įrankių...
+              </v-alert>
+            </template>
+          </v-data-table>
+          <v-layout row wrap mx-0 pa-3 justify-center align-center>
+            <v-flex shrink><v-btn outline @click="save" :disabled="saveButtonDisabled"><v-icon class="text-danger headline mx-2">fa-save</v-icon>Išsaugoti rezervaciją</v-btn></v-flex>
+          </v-layout>
         </v-container>
       </v-tab-item>
       <v-tab-item>
@@ -88,20 +118,35 @@ export default{
       isLoading: true,
       fullPage: false,
       tab: null,
-      userCard: false,
-      user: null,
       waitingImageDialog: false,
       imageLoadingDialog: false,
       hasImage: false,
+
+      userCard: false,
+      user: null,
+      objects: [],
+      reservationObject: null,
+
       newItem: {
         item: null,
         image: null,
         quantity: 1
       },
-      reservedItems: []
+      reservedItems: [],
+      //table setup
+      headers: [
+          {
+            text: 'Įrankio (daikto) pavadinimas',
+            align: 'left',
+            sortable: false,
+            value: 'item.ItemName'
+          },
+          { text: 'Kiekis (vnt.)', value: 'quantity' },
+        ],
     }
   },
   created(){
+    this.loadObjects()
     this.fetch()
   },
   mounted(){
@@ -112,6 +157,19 @@ export default{
     RFIDCode: function(){
         return this.$store.state.recentCode
     },
+    addButtonDisabled: function(){
+      if(this.newItem.item.ItemConsumable)
+        return false
+      else return !this.hasImage;
+    },
+    saveButtonDisabled: function(){
+      if(this.reservationObject){
+        if(this.reservedItems.length != 0)
+          if(this.userCard)
+            return false
+      }
+      return true
+    }
   },
   watch: {
     RFIDCode(oldRFIDCode, newRFIDCode){
@@ -146,6 +204,15 @@ export default{
           }
       });
     },
+    loadObjects: function(){
+      this.$http.get('/object/list').then((response) => {
+        if(response.status == 200){
+          this.objects = response.data
+        }
+      }).catch(error => {
+        swal('Klaida!',error.response.data.message, 'error');
+      })
+    },
     setImage: function(file){
         this.hasImage = true
         this.newItem.image = file
@@ -155,10 +222,27 @@ export default{
     },
     addToReservation: function(){
       this.reservedItems.push(JSON.parse(JSON.stringify(this.newItem)))
+      this.hasImage = false
       this.newItem.item = null
       this.newItem.image = null
       this.newItem.quantity = 1
       this.waitingImageDialog = false
+    },
+    save: function(){
+      this.$http.post('/reservation/create', {
+        objectID: this.reservationObject,
+        items: this.reservedItems
+      }).then((response) => {
+        alert('Done!')
+      }).catch(error => {
+        if(error.response.status == 422)
+        {
+            swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
+        }
+        else{
+            swal("Klaida", error.response.data.message, "error");
+        }
+      })
     }
   },
   components: {
