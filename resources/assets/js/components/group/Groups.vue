@@ -18,7 +18,7 @@
     </div>
     <router-link tag="div" class="item-box-panel" :to="{ path: '/group/'+group.ItemGroupID}" v-for="group in itemGroups" :key="group.ItemGroupID">
         <div class="item-image-box" v-if="group.ItemGroupImage">
-            <img :src="'media/groups/'+group.ItemGroupImage" alt="item-img" class="item-img"/>
+            <img :src="group.ItemGroupImage" alt="item-img" class="item-img"/>
         </div>
         <div class="item-image-box" v-if="!group.ItemGroupImage">
           <div class="item-noimg">

@@ -16,7 +16,7 @@ class CreateItemGroupsTable extends Migration
         Schema::create('item_groups', function (Blueprint $table) {
             $table->increments('ItemGroupID');
             $table->string('ItemGroupName');
-            $table->string('ItemGroupImage');
+            $table->text('ItemGroupImage')->nullable();
             $table->timestamps();
         });
     }

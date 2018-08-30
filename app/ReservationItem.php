@@ -11,10 +11,10 @@ class ReservationItem extends Model
     protected $fillable = ['ReservationID', 'ItemID', 'ReservationItemQuantity'];
 
     public function reservation(){
-      return $this->hasOne('App\Reservation', 'ReservationID');
+      return $this->hasOne('App\Reservation', 'ReservationID', 'ReservationID');
     }
 
     public function item(){
-      return $this->hasOne('App\Item', 'ItemID');
+      return $this->hasOne('App\Item', 'ItemID', 'ItemID');
     }
 }

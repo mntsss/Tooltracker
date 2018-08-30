@@ -24,7 +24,10 @@ class CreateItemGroupRequest extends FormRequest
     public function rules()
     {
         return [
-          'name' => 'required|string|min:3|max:25'
+          'name' => 'required|string|min:3|max:50|unique:item_groups,ItemGroupName',
+          'image' => 'nullable',
+          'image.dataUrl' => 'sometimes|string|max:500000',
+          'image.name' => 'sometimes|string|max:128'
         ];
     }
     public function messages(){
@@ -32,7 +35,10 @@ class CreateItemGroupRequest extends FormRequest
         'name.required' => 'Neįvestas grupės pavadinimas.',
         'name.string' => 'Neįvestas grupės pavadinimas.',
         'name.min' => 'Grupės pavadinimas negali būti trumpesnis nei 3 simboliai.',
-        'name.max' => 'Grupės pavadinimas negali būti ilgesnis nei 25 simboliai.'
+        'name.max' => 'Grupės pavadinimas negali būti ilgesnis nei 50 simboliai.',
+        'name.unique' => 'Įrankių grupė tokiu pavadinimu jau yra.',
+        'image.dataUrl.max' => 'Nuotraukos dydis per didelis. Kameros nustatymuose sumažinkite nuotraukų dimensijas ar kokybę.',
+        'image.name.max' => 'Nuotraukos pavadinimo formatas netinkamas.'
       ];
     }
 }

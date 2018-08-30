@@ -19,7 +19,6 @@
       </div>
     <v-dialog v-model="waitingImageDialog" persistent max-width="780" >
       <v-container v-if="newItem.item" style="background: #292929">
-        <!-- <v-layout row headline justify-center mx-0 class="theme--dark v-toolbar"><v-flex shrink >{{newItem.item.ItemName}}</v-flex><a @click="cancelItemAddition()" class="float-right"><span class="fas fa-times btn-func-misc"></span></a></v-layout> -->
         <div class="card-header bg-dark text-light headline">
             {{newItem.item.ItemName}} <a @click="cancelItemAddition()" class="float-right"><span class="fas fa-times btn-func-misc"></span></a>
         </div>
@@ -31,7 +30,7 @@
         </v-layout>
         <v-layout row align-center justify-center v-if="!newItem.item.ItemConsumable">
           <v-flex shrink v-if="!newItem.image">
-            <image-uploader :debug="1" :maxWidth="1024" :quality="0.7" :autoRotate=true outputFormat="verbose" :preview=false :className="['fileinput', { 'fileinput--loaded' : hasImage }]"
+            <image-uploader :debug="0" :maxWidth="1024" :quality="0.7" :autoRotate=true outputFormat="verbose" :preview=false :className="['fileinput', { 'fileinput--loaded' : hasImage }]"
               capture="environment" @input="setImage" @onUpload="loadingDialog" @onComplete="loadingDialog"></image-uploader>
           </v-flex>
           <v-flex shrink v-else-if="newItem.image">
@@ -54,20 +53,8 @@
         </v-layout>
       </v-container>
     </v-dialog>
-  <v-container>
-      <v-tabs slot="extension" v-model="tab" color="dark" grow>
-        <v-tabs-slider color="red darken-3"></v-tabs-slider>
-        <v-tab>
-          Rezervacija
-        </v-tab>
-        <v-tab>
-          Priskyrimas
-        </v-tab>
-      </v-tabs>
-      <v-tabs-items v-model="tab">
-      <v-tab-item>
-        <v-container fill-heigth justify-center class="remove-all-margin">
-          <v-select
+    <v-container>
+        <v-select
             :items="objects"
             v-model="reservationObject"
             menu-props="auto"
@@ -78,13 +65,8 @@
             prepend-icon="fa-building"
             outline
             class="mb-4 mt-2"
-          ></v-select>
-          <v-data-table
-            :headers="headers"
-            :items="reservedItems"
-            hide-actions
-            class="elevation-1"
-            >
+        ></v-select>
+        <v-data-table :headers="headers" :items="reservedItems" hide-actions class="elevation-1">
             <template slot="items" slot-scope="props">
               <td>{{ props.item.item.ItemName }}</td>
               <td class="text-xs-center">{{ props.item.quantity }}</td>
@@ -101,14 +83,6 @@
           <v-layout row wrap mx-0 pa-3 justify-center align-center>
             <v-flex shrink><v-btn outline @click="save" :disabled="saveButtonDisabled"><v-icon class="text-danger headline mx-2">fa-save</v-icon>Išsaugoti rezervaciją</v-btn></v-flex>
           </v-layout>
-        </v-container>
-      </v-tab-item>
-      <v-tab-item>
-        <v-card flat>
-          <v-card-text>Priskyrimo tabas & stuffs</v-card-text>
-        </v-card>
-      </v-tab-item>
-    </v-tabs-items>
   </v-container>
 </div>
 </template>
@@ -123,7 +97,7 @@ export default{
     return {
       isLoading: true,
       fullPage: false,
-      tab: null,
+
       waitingImageDialog: false,
       imageLoadingDialog: false,
       hasImage: false,
@@ -188,8 +162,16 @@ export default{
             else if(this.userCard){
               this.$http.post('/item/findcode', {code: this.RFIDCode}).then((response) => {
                 if(response.status == 200)
-                  this.newItem.item = response.data
-                  this.waitingImageDialog = true
+                  if(response.data.status == null){
+                    this.newItem.item = response.data.item
+                    this.waitingImageDialog = true
+                  }
+                  else if(response.data.status == 'reserved')
+                    swal("Klaida!", 'Įrankis jau yra pridėtas aktyvioje rezervacijoje...', 'error')
+                  else if(response.data.status == 'withdrew')
+                    swal("Klaida!", 'Įrankis yra naudojamas ir negali būti pridėtas į rezervaciją!', 'error')
+                  else if(response.data.status == 'suspended')
+                    swal("Klaida!", 'Įrankis yra įšaldytas, todėl negali būti pridėtas į rezervaciją!', 'error')
               }).catch(error => {
                 swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
               })

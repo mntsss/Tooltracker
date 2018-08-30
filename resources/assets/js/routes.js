@@ -75,6 +75,14 @@ const routes = [
     meta: {
       auth: true
     }
+ },
+ {
+   path: '/reservation/active',
+   name: 'reservations',
+   component: require('./components/reservation/Active'),
+   meta: {
+     auth: true
+   }
  }
 ]
 

@@ -9,7 +9,7 @@ class Item extends Model
 {
     protected $primaryKey = 'ItemID';
 
-    protected $fillable = ['ItemName', 'ItemQuantity', 'ItemImage', 'ItemConsumable', 'ItemDeleted','ItemGroupID'];
+    protected $fillable = ['ItemName', 'ItemQuantity', 'ItemImage', 'ItemConsumable', 'ItemDeleted','ItemGroupID', 'ItemNote'];
 
     public function itemGroup(){
       return $this->belongsTo('App\ItemGroup', 'ItemGroupID');
@@ -21,6 +21,9 @@ class Item extends Model
 
     public function withdrawals(){
       return $this->hasMany('App\ItemWithdrawal', 'ItemID');
+    }
+    public function suspentions(){
+      return $this->hasMany('App\ItemSuspention', 'ItemID');
     }
     public function reservations(){
       return $this->hasMany('App\ReservationItem', 'ItemID');

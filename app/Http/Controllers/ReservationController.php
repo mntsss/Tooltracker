@@ -55,4 +55,11 @@ class ReservationController extends Controller
       }
       return response()->json(['message'=> 'Atlikta!', 'success' => 'Rezervacija sėkmingai sukurta!'],200);
     }
+
+    public function list(){
+      $reservations = Reservation::Active()->with(['items' => function($query){
+        $query->with('item');
+      }, 'user', 'cobject'])->get();
+      return response()->json($reservations, 200);
+    }
 }

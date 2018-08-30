@@ -80,14 +80,27 @@
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title><span class="headline shrink">Tool</span><span class="shrink headline text-danger">Tracker</span></v-toolbar-title>
       <v-spacer></v-spacer>
+      <v-menu offset-y>
+        <v-btn icon slot="activator">
+          <v-icon >shopping_cart</v-icon>
+        </v-btn>
+        <v-list>
+          <v-list-tile v-for="(item, index) in cartDropdownMeniu" :key="index" @click="item.click">
+            <v-list-tile-title>{{item.text}}</v-list-tile-title>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
+      <v-menu offset-y>
+        <v-btn icon slot="activator">
+          <v-icon >more_vert</v-icon>
+        </v-btn>
+        <v-list>
+          <v-list-tile v-for="(item, index) in settingsDropdownMeniu" :key="index" @click="item.click">
+            <v-list-tile-title>{{item.text}}</v-list-tile-title>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
 
-    <v-btn icon @click="$router.push({name: 'cart'})">
-      <v-icon >shopping_cart</v-icon>
-    </v-btn>
-
-    <v-btn icon>
-      <v-icon >more_vert</v-icon>
-    </v-btn>
     </v-toolbar>
     <v-content>
       <v-container fluid fill-height>
@@ -136,6 +149,16 @@ export default {
                   { icon: 'keyboard_arrow_right', text: 'Uždaryti', click: ''}
                 ]
               },
+              {
+                icon: 'fa-shipping-fast',
+                'icon-alt': 'keyboard_arrow_down',
+                text: 'Rezervacijos',
+                model: false,
+                children: [
+                  { icon: 'keyboard_arrow_right', text: 'Aktyvios', click: ()=> { this.$router.push({name: 'reservations'})} },
+                  { icon: 'keyboard_arrow_right', text: 'Atiduotos', click: ''}
+                ]
+              },
               { icon: 'fa-users', text: 'Vartotojai', click: '',
                 model: false,
                 children: [
@@ -143,14 +166,16 @@ export default {
                   { icon: 'keyboard_arrow_right', text: 'Ištrinti', click: ()=>{ this.$router.push({name: 'deletedUsers'})}}
                 ]
               },
-              {icon: 'fa-history', text: 'Istorija', click: ''},
-              {icon: 'fa-cogs', text: 'Nustatymai', click: '',
-                model: false,
-                children: [
-                  {icon: 'keyboard_arrow_right', text: 'Keisti slaptažodį', click: ''},
-                  {icon: 'keyboard_arrow_right', text: 'Atsijungti', click: ()=>{this.$auth.logout()}},
-                ]
-              }
+              {icon: 'fa-history', text: 'Istorija', click: ''}
+            ],
+            cartDropdownMeniu: [
+              {text: 'Nauja rezervacija', click: () =>{this.$router.push({name: 'cart'})}},
+              {text: 'Įrankių priskyrimas', click: ()=>{ alert('Įrankių priskyrimas...')}},
+              {text: 'Įrankių grąžinimas', click: ()=>{ alert('Įrankių grąžinimas...')}},
+            ],
+            settingsDropdownMeniu: [
+              {text: 'Keisti slaptažodį', click: () =>{ alert('Keisti slaptazodi...')}},
+              {text: 'Atsijungti', click: ()=>{ this.$auth.logout()}},
             ],
             snackbar: false,
             y: 'top',

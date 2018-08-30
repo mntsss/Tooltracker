@@ -116,14 +116,17 @@ class ItemController extends Controller
     }
 
     public function delete($id){
-      $reservationCheck = Item::find($id)->reservations()->get();
-      foreach($reservationCheck as $res){
-        if($res->reservation()->Active()->exists())
+
+      if($this->checkItemReservation($id))
           return response()->json(['message' => 'Klaida', 'errors' => ['name' => ['Įrankis priskirtas aktyviai rezercavijai, todėl negali būti ištrintas.']]],422);
-      }
-      if(Item::find($id)->withdrawals()->Active()->exists())
+
+      if($this->checkItemWithdrawal($id))
         return response()->json(['message' => 'Klaida', 'errors' => ['name' => ['Įrankis priskirtas vartotojui, todėl negali būti ištrintas.']]],422);
-      else if(Item::find($id)->update(['ItemDeleted' => true]))
+
+      if($this->checkItemSuspention($id))
+        return response()->json(['message' => 'Klaida', 'errors' => ['name' => ['Įrankis suspenduotas (įšaldytas), todėl negali būti ištrintas.']]],422);
+
+      if(Item::find($id)->update(['ItemDeleted' => true]))
         return response()->json(['message' => 'Atlikta!', 'success' => 'Įrankis sėkmingai ištrintas.'], 200);
     else return response()->json(['message' => 'Klaida', 'errors' => ['name' => ['Kažkur įvyko klaida siunčiant užklausą į duomenų bazę. Susisiekite su administracija.']]],422);
     }
@@ -135,6 +138,39 @@ class ItemController extends Controller
     }
 
     public function findWithCode(FindItemWithCodeRequest $request){
-      return response()->json(RfidCode::where('Code', $request->code)->first()->item);
+        $item = RfidCode::where('Code', $request->code)->first()->item;
+        $status = null;
+        if($this->checkItemSuspention($item->ItemID))
+          $status = 'suspended';
+        if($this->checkItemWithdrawal($item->ItemID))
+          $status = 'withdrew';
+        if($this->checkItemReservation($item->ItemID))
+          $status = "reserved";
+      return response()->json(['item' => $item, 'status' => $status], 200);
+    }
+
+    //checks if item is currently in reservation
+    public function checkItemReservation($id){
+      $reservationCheck = Item::find($id)->reservations()->get();
+      foreach($reservationCheck as $res){
+        if($res->reservation()->Active()->exists())
+          return true;
+      }
+      return false;
+    }
+
+    //checks if item is currently in use by someone
+    public function checkItemWithdrawal($id){
+      if(Item::find($id)->withdrawals()->Active()->exists())
+        return true;
+      else {
+        return false;
+      }
+    }
+    //checks if item is currently suspended
+    public function checkItemSuspention($id){
+      if(Item::find($id)->suspentions()->Active()->exists())
+        return true;
+      return false;
     }
 }

@@ -3,7 +3,16 @@
          :height="300"
          :adaptive="true"
          transition="pop-out"
-         :pivotY="0.3">
+         :pivotY="0.3"
+         @before-close="beforeClose">
+    <v-dialog v-model="imageLoadingDialog" hide-overlay persistent width="300">
+      <v-card dark class="border border-danger">
+        <v-card-text>
+          Kraunama...
+          <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
     <div class="card">
         <div class="card-header bg-dark text-light">
             Sukurti grupę
@@ -22,7 +31,8 @@
                         <label for="image" class="col-md-4 control-label text-dark">Nuotrauka</label>
 
                         <div class="col-md-6 text-right">
-                             <input name="image" type="file" id="image" ref="image" v-on:change="handleFileUpload" class="form-control" accept="image/*">
+                          <image-uploader :debug="1" :maxWidth="192" :quality="0.7" :autoRotate=true outputFormat="verbose" :preview=false :className="['fileinput', { 'fileinput--loaded' : hasImage }]"
+                            capture="environment" @input="setImage" @onUpload="loadingDialog" @onComplete="loadingDialog" class="form-control"></image-uploader>
                         </div>
                     </div>
 
@@ -38,35 +48,25 @@
 </template>
 <script>
 import swal from 'sweetalert'
+import { ImageUploader } from 'vue-image-upload-resize'
 export default {
     data(){
         return {
+            imageLoadingDialog: false,
+            hasImage: false,
             name: null,
             image: null
         }
     },
-    // computed:{
-    //     visibility: function(){
-    //         return this.$children[0].visibility.modal
-    //     }
-    // },
   methods: {
     save: function(){
-        var form = new FormData();
-
-        form.append('name', this.name)
-        form.append('image', this.image)
-
-        this.$http.post('/group/create', form,
-        {
-            headers: {'Content-Type': 'multipart/form-data'}
-        }).then((response)=>{
+        this.$http.post('/group/create', { image: this.image, name: this.name})
+        .then((response)=>{
             if(response.status == 200){
                 this.$modal.hide('create-group-modal')
                 swal(response.data.message, response.data.success, "success")
                 this.$parent.loadGroups();
-                this.name = null;
-                this.image= null
+
             }
         }).catch(error =>{
             if(error.response.status == 422)
@@ -82,9 +82,20 @@ export default {
             }
         })
     },
-    handleFileUpload: function(){
-        this.image = this.$refs.image.files[0];
+    setImage: function(file){
+        this.hasImage = true
+        this.image = file
+    },
+    loadingDialog: function(){
+      this.imageLoadingDialog = !this.imageLoadingDialog
+    },
+    beforeClose: function(){
+      this.name = null
+      this.image = null
     }
+  },
+  components: {
+    ImageUploader
   }
 }
 </script>

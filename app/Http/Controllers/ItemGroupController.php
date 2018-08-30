@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateItemGroupRequest;
 use App\Http\Requests\RenameItemGroupRequest;
+use App\Http\Requests\GroupChangeImageRequest;
 
 use Illuminate\Support\Facades\Validator;
 use App\ItemGroup;
@@ -21,26 +22,15 @@ class ItemGroupController extends Controller
     }
     public function create(CreateItemGroupRequest $request){
 
-      if(ItemGroup::where('ItemGroupName', $request->name)->exists()){
-        return response()->json(['message' => 'Klaida', 'errors' => ['name' => ['Grupė tokiu pavadinimu jau yra.']]], 422);
+      if($request->image == null)
+        $image = null;
+      else{
+        $image = $request->image['dataUrl'];
       }
-      if(!is_null($request->image) && $request->image != "null" && $request->image != ""){
-        Validator::make($request->all(), ['image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:40496'],
-        [
-          'image.image' => 'Galite įkelti tik nuotrauką ar paveikslėlį!',
-          'image.mimes' => 'Netinkamas failo plėtinys',
-          'image.max' => 'Failas per didelis.'
-          ])->validate();
-        $image = $request->file('image');
-        $input['imagename'] = time().'.'.$image->getClientOriginalExtension();
-        $destinationPath = public_path('/media/groups/');
-        $image->move($destinationPath, $input['imagename']);
-      }else {
-        $input['imagename'] = "";
-      }
+
       ItemGroup::create([
         'ItemGroupName' => $request->name,
-        'ItemGroupImage' => $input['imagename']
+        'ItemGroupImage' => $image
       ]);
       return response()->json(['message' => 'Atlikta!', 'success' => 'Nauja grupė sėkmingai sukurta.'], 200);
 
@@ -59,28 +49,15 @@ class ItemGroupController extends Controller
             return response()->json(['message'=>'Klaida', 'errors'=> ['name' => ['Įvyko klaida jungiantis į duomenų bazę. Susisiekite su administratoriumi.']]], 422);
     }
 
-    public function changeImage(Request $request){
+    public function changeImage(GroupChangeImageRequest $request){
 
-        Validator::make($request->all(), [ 'id' => 'required|numeric'], [
-          'id.required' => 'Įrankių grupė nežinoma. Apie klaidą praneškina administratoriui.',
-          'id.numeric' => 'Kažkur įvyko klaida identifikuojant įrankių grupę. Apie klaidą praneškite administratoriui.'
-        ])->validate();
+      if($request->image == null)
+        $image = null;
+      else{
+        $image = $request->image['dataUrl'];
+      }
 
-        if(!is_null($request->image) && $request->image != "null" && $request->image != ""){
-          Validator::make($request->all(), ['image' =>'image|mimes:jpg,jpeg,gif,png|max:4096'], [
-            'image.image' => 'Galite įkelti tik nuotrauką ar paveikslėlį!',
-            'image.mimes' => 'Netinkamas failo plėtinys',
-            'image.max' => 'Failas per didelis.'
-            ])->validate();
-          $image = $request->file('image');
-          $input['imagename'] = time().'.'.$image->getClientOriginalExtension();
-          $destinationPath = public_path('/media/groups/');
-          $image->move($destinationPath, $input['imagename']);
-        }else {
-          $input['imagename'] = "";
-        }
-
-        if(ItemGroup::find($request->id)->update(['ItemGroupImage' => $input['imagename']]))
+        if(ItemGroup::find($request->id)->update(['ItemGroupImage' => $image]))
             return response()->json(['message' => 'Atlikta!', 'success' => 'Grupės nuotrauka sėkmingai pakeista.'], 200);
         else return response()->json(['message' => 'Klaida', 'errors' => ['name' => ['Kažkur įvyko klaida siunčiant užklausą į duomenų bazę. Susisiekite su administracija.']]],422);
     }
