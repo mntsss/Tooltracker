@@ -3,9 +3,56 @@
       <Loading :active.sync="isLoading"
       :can-cancel="false"
       :is-full-page="fullPage"></Loading>
+      <ConfirmWithCard></ConfirmWithCard>
     <v-container>
       <v-layout row wrap mx-0 align-center justify-center class="theme--dark v-toolbar">
         <v-flex shrink headline>Aktyvios rezervacijos</v-flex>
+      </v-layout>
+      <v-layout row wrap align-center mx-0 mt-2 v-if="reservations">
+          <v-expansion-panel>
+              <v-expansion-panel-content v-for="(reservation, i) in reservations" :key="i">
+                  <div slot="header" v-if="reservation.cobject">
+                      {{reservation.cobject.ObjectName+' ('+reservation.cobject.user.Username+')'}}
+                  </div>
+                  <div slot="header" v-else-if="reservation.cobject == null">
+                      {{reservation.user.Username}}
+                  </div>
+                  <v-card>
+                      <v-card-text>
+                          <v-data-table :headers="headers" :items="reservation.items" hide-actions class="elevation-3 border border-danger">
+                              <template slot="items" slot-scope="props">
+                                <td>{{ props.item.item.ItemName }}</td>
+                                <td class="text-xs-center">{{ props.item.ReservationItemQuantity }}</td>
+                                <td class="justify-center layout px-0">
+                                    <v-btn @click="deleteItem(props.item, i)"><v-icon>delete</v-icon></v-btn>
+                                </td>
+                              </template>
+                              <template slot="no-data">
+                                <v-alert :value="true" class="bg-warning" icon="warning">
+                                  Rezervacija tuščia, arba įvyko klaida kraunant duomenis iš duombazės...
+                                </v-alert>
+                              </template>
+                            </v-data-table>
+                            <v-layout row wrap align-center pa-2 justify-end>
+                                  <v-btn outline @click="show('confirm-reservation-with-card-modal', {id: reservation.ReservationID, user: reservation.cobject.user.Username})">
+                                      <v-icon class="text-danger">fa-toolbox</v-icon>
+                                      <span class="mx-2">Patvirtinti kortele</span>
+                                  </v-btn>
+                                  <v-btn outline @click="">
+                                        <v-icon class="text-danger">fa-id-card</v-icon>
+                                        <span class="mx-2">Patvirtinti parašu</span>
+                                    </v-btn>
+                                  <v-btn outline @click="deleteReservation(reservation)">
+                                      <v-icon class="text-danger">fa-trash</v-icon>
+                                      <span class="mx-2">Ištrinti</span>
+                                  </v-btn>
+
+                                </v-flex>
+                            </v-layout>
+                      </v-card-text>
+                  </v-card>
+              </v-expansion-panel-content>
+          </v-expansion-panel>
       </v-layout>
     </v-container>
   </div>
@@ -14,11 +61,23 @@
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.min.css'
 import swal from 'sweetalert'
+import ConfirmWithCard from '../modals/ConfirmReservationWithCard.vue'
 export default{
   data(){
     return {
       isLoading: true,
-      fullPage: false
+      fullPage: false,
+      reservations: null,
+      headers: [
+          {
+            text: 'Įrankio (daikto) pavadinimas',
+            align: 'left',
+            sortable: false,
+            value: 'item.ItemName'
+          },
+          { text: 'Kiekis (vnt.)', value: 'quantity' },
+          { text: '', value: 'value' }
+        ],
     }
   },
   created(){
@@ -29,15 +88,67 @@ export default{
       this.$http.get('/reservation/list').then((response)=> {
         if(response.status == 200){
           this.isLoading = false
-          console.log(response.data)
+          this.reservations = response.data
         }
       }).catch(error => {
         swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
       })
+    },
+    deleteItem: function(item, i){
+        swal({
+          title: 'Ar tikrai norite iš rezervacijos pašalinti įrankį '+item.item.ItemName+'?',
+          text: 'Iš rezervacijos panaikintas įrankis bus automatiškai perkeltas į sandėlį.',
+          icon: 'warning',
+          dangerMode: true,
+          buttons: {
+            del: { text: 'Pašalinti', value: true},
+            cancel: {text: 'Atšaukti'}
+          }
+        }).then(value => {
+            this.$http.post('/reservation/removeitem', {item: item}).then((response)=> {
+                if(response.status == 200){
+                    var index = this.reservations[i].items.indexOf(item)
+                    this.reservations[i].items.splice(index, 1)
+                }
+            }).catch(error =>{
+                if(error.response.status == 422)
+                {
+                    swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
+                }
+            })
+        })
+    },
+    deleteReservation: function(reservation){
+        swal({
+          title: 'Ar tikrai norite ištrinti šią rezervaciją?',
+          text: 'Rezervacija bus panaikinta iš duomenų bazės ir visi rezervuoti įrankiai bus perkelti į sandėlį.',
+          icon: 'warning',
+          dangerMode: true,
+          buttons: {
+            del: { text: 'Trinti', value: true},
+            cancel: {text: 'Atšaukti'}
+          }
+        }).then(value => {
+            this.$http.get('/reservation/delete/'+reservation.ReservationID).then((response)=> {
+                if(response.status == 200){
+                    swal(response.data.message, response.data.success, "success")
+                    this.loadReservations()
+                }
+            }).catch(error =>{
+                if(error.response.status == 422)
+                {
+                    swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
+                }
+            })
+        })
+    },
+    show: function(name, param = {}){
+        this.$modal.show(name, param)
     }
   },
   components: {
-    Loading
+    Loading,
+    ConfirmWithCard
   }
 }
 </script>

@@ -172,6 +172,8 @@ export default{
                     swal("Klaida!", 'Įrankis yra naudojamas ir negali būti pridėtas į rezervaciją!', 'error')
                   else if(response.data.status == 'suspended')
                     swal("Klaida!", 'Įrankis yra įšaldytas, todėl negali būti pridėtas į rezervaciją!', 'error')
+                  else if(response.data.status == 'deleted')
+                    swal("Klaida!", 'Įrankis yra ištrintas, todėl negali būti pridėtas į rezervaciją!', 'error')
               }).catch(error => {
                 swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
               })
@@ -229,7 +231,7 @@ export default{
         objectID: this.reservationObject,
         items: this.reservedItems
       }).then((response) => {
-        swal(response.data.message, response.data.success, "success")
+        swal(response.data.message, response.data.success, "success").then(value => {this.$router.push({name: 'reservations'})})
       }).catch(error => {
         if(error.response.status == 422)
         {

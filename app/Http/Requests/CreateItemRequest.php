@@ -30,7 +30,10 @@ class CreateItemRequest extends FormRequest
           'consumable' => 'nullable|boolean',
           'warranty_date' => 'nullable|date',
           'purchase_date' => 'nullable|date',
-          'groupID' => 'required|numeric'
+          'groupID' => 'required|numeric',
+          'image' => 'nullable',
+          'image.dataUrl' => 'sometimes|string|max:500000',
+          'image.name' => 'sometimes|string|max:128'
         ];
     }
 
@@ -46,7 +49,9 @@ class CreateItemRequest extends FormRequest
         'code.unique' => 'Identifikacinis čipas jau priskirta kitam įrankiui! Nuskaitykite naują čipą.',
         'warranty_date.date' => 'Netinkamas garantinio laikotarpio formatas.',
         'purchase_date.date' => 'Neteisingas įsigijimo datos formatas.',
-        'groupID' => 'Severis neranda įrankių grupės identifikacijos. Apie klaidą praneškite administratoriui.'
+        'groupID.required' => 'Severis neranda įrankių grupės identifikacijos. Apie klaidą praneškite administratoriui.',
+        'image.dataUrl.max' => 'Nuotraukos dydis per didelis. Kameros nustatymuose sumažinkite nuotraukų dimensijas ar kokybę.',
+        'image.name.max' => 'Nuotraukos pavadinimo formatas netinkamas.'
       ];
     }
 }

@@ -1,22 +1,22 @@
 <template>
-<div class="row h-100 justify-content-center align-items-center">
-  <div class="card">
-    <div class="card-header theme--dark v-toolbar headline">
-      Prisijungimas
-    </div>
-    <v-layout row mx-0 class="card-body bg-dark">
-      <v-form v-model="valid">
-        <v-text-field prepend-icon="fa-user" v-model="email" :rules="[v => !!v || 'Neįvestas el. paštas']" label="El. paštas" required></v-text-field>
-        <v-text-field prepend-icon="fa-lock" type="password" v-model="password" :rules="[v => !!v || 'Neįvestas slaptažodis']" label="Slaptažodis" required></v-text-field>
-        <v-layout row mx-0 align-center justify-center pa-3>
-          <v-flex shrink>
-            <v-btn outline @click="login"><v-icon class="text-danger mx-2">fa-sign-in-alt</v-icon>Prisijungti</v-btn>
-          </v-flex>
-        </v-layout>
-      </v-form>
+<v-container fluid fill-height>
+    <v-layout justify-center align-center >
+        <v-flex shrink class="border border-danger">
+            <div class="w-100 theme--dark v-toolbar text-center pa-2 mb-5">
+                <span class="headline">Tool</span><span class="headline text-danger pr-5">Tracker</span>
+            </div>
+            <v-form v-model="valid" class="pt-1 pb-1 px-3">
+                <v-text-field prepend-icon="fa-user" v-model="email" :rules="[v => !!v || 'Neįvestas el. paštas']" label="El. paštas" required></v-text-field>
+                <v-text-field prepend-icon="fa-lock" type="password" v-model="password" :rules="[v => !!v || 'Neįvestas slaptažodis']" label="Slaptažodis" required></v-text-field>
+                <v-layout row mx-0 align-center justify-center pa-3>
+                    <v-flex shrink>
+                        <v-btn outline @click="login"><v-icon class="text-danger mx-2">fa-sign-in-alt</v-icon>Prisijungti</v-btn>
+                    </v-flex>
+                </v-layout>
+            </v-form>
+        </v-flex>
     </v-layout>
-  </div>
-</div>
+</v-container>
 </template>
 <script>
 export default{

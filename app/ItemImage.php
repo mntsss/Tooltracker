@@ -8,7 +8,7 @@ class ItemImage extends Model
 {
     protected $primaryKey = 'ImageID';
 
-    protected $fillable = ['ImageName', 'ItemID', 'ReservationID', 'ItemWithdrawalID'];
+    protected $fillable = ['ImageName', 'ItemID', 'ReservationID', 'ItemWithdrawalID', 'ReservationItemID'];
 
     public function item(){
       return $this->hasOne('App\Item', 'ItemID');

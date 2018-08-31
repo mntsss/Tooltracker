@@ -8,7 +8,7 @@
         <AddItemChipModal></AddItemChipModal>
     <div class="container">
 
-    <div class="card">
+    <div class="card" v-if="item">
       <v-layout row wrap align-content-center class="card-header pb-0 pt-0 mx-0 theme--dark v-toolbar">
           <v-flex headline shrink justify-start align-content-center>
               <a @click="$router.push({ path: '/group/'+item.ItemGroupID})" class="headline"><span class="fa fa-arrow-left text-danger remove-all-margin p-2 btn-func-misc"></span></a>
@@ -29,13 +29,13 @@
       </v-layout>
       <div class="card-body">
         <div class="row remove-side-margin">
-            <div class="col-auto" style="max-width:250px !important">
+            <div class="col-auto" style="max-width:250px !important" v-if="item.images[0]">
                 <!-- <vueImages :imgs="images"
                             :modalclose="modalclose"
                             :keyinput="keyinput"
                             :showclosebutton="showclosebutton" class="image">
                 </vueImages> -->
-                <img v-bind:src="'/media/items/'+item.ItemImage" class="image"/>
+                <img v-bind:src="'/media/items/'+item.images[0].ImageName" class="image"/>
             </div>
             <div class="colt">
                 <p class="text-left h4">

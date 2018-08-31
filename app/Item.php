@@ -19,6 +19,9 @@ class Item extends Model
       return $this->hasMany('App\RfidCode', 'ItemID');
     }
 
+    public function images(){
+        return $this->hasMany('App\ItemImage', 'ItemID', 'ItemID')->orderBy('created_at', 'DESC');
+    }
     public function withdrawals(){
       return $this->hasMany('App\ItemWithdrawal', 'ItemID');
     }

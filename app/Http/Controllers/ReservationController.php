@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateReservationRequest;
+use App\Http\Requests\ConfirmCardReservationRequest;
 use App\Reservation;
 use App\ReservationItem;
 use App\ItemImage;
+use App\ItemWithdrawal;
 use Auth;
 class ReservationController extends Controller
 {
@@ -22,6 +24,10 @@ class ReservationController extends Controller
       ]);
 
       foreach($request->items as $item){
+
+          if($item['item']['ItemDeleted']){
+              return response()->json(['message'=>'Klaida', 'errors'=> ['name' => ['Įrankis '.$item['item']['ItemName'].' yra ištrintas, ir negali būti pridėtas į rezervaciją!']]], 422);
+          }
 
           $reservationItem = ReservationItem::create([
               'ReservationID' => $reservation->ReservationID,
@@ -57,9 +63,65 @@ class ReservationController extends Controller
     }
 
     public function list(){
-      $reservations = Reservation::Active()->with(['items' => function($query){
+      $reservations = Reservation::Active()->where('UserID', Auth::user()->UserID)->with(['items' => function($query){
         $query->with('item');
-      }, 'user', 'cobject'])->get();
+    }, 'cobject' => function($query){ $query->with('user');}])->get();
       return response()->json($reservations, 200);
+    }
+
+    public function removeItemFromReservation(Request $request){
+        $reservation = Reservation::find($request->item['ReservationID']);
+        if($reservation->ReservationDelivered)
+            return response()->json(['message'=>'Klaida', 'errors'=> ['name' => ['Negalima ištrinti įrankių iš jau pristatytų rezervacijų...']]], 422);
+        if(ReservationItem::destroy($request->item['ReservationItemID']))
+            return response()->json(['message'=> 'Atlikta!', 'success' => 'Įrankis panaikintas iš rezervacijos!'],200);
+        else {
+            return response()->json(['message'=>'Klaida', 'errors'=> ['name' => ['Įvyko klaida jungiantis į duomenų bazę. Susisiekite su administratoriumi.']]], 422);
+        }
+    }
+
+    public function deleteReservation($id){
+        $reservation = Reservation::find($id);
+        if($reservation->ReservationDelivered)
+            return response()->json(['message'=>'Klaida', 'errors'=> ['name' => ['Negalima ištrinti jau pristatytų rezervacijų...']]], 422);
+
+        ReservationItem::where('ReservationID', $id)->delete();
+        if($reservation->delete()){
+            return response()->json(['message'=> 'Atlikta!', 'success' => 'Rezervacija sėkmingai ištrinta, visi rezervacijos įrankiai perkelti į sandėlį.'],200);
+        }
+        else {
+            return response()->json(['message'=>'Klaida', 'errors'=> ['name' => ['Įvyko klaida bandant ištrinti rezervaciją. Bandykite dar kartą, jei klaida kartojasi, susisiekite su administratoriumi.']]], 422);
+        }
+    }
+
+    public function confirmReservationWithCard(ConfirmCardReservationRequest $request){
+        $reservation = Reservation::with(['items' => function($query){ $query->with('image');}, 'cobject' => function($query){ $query->with('user');}])->find($request->id);
+
+        if($reservation->ReservationDelivered)
+            return response()->json(['message'=>'Klaida', 'errors'=> ['name' => ['Rezervacija jau pristatyta! Greičiausiai kažkur įsivėlė klaida, pabandykite perkrauti puslapį.']]], 422);
+
+
+        if($request->code != $reservation->cobject->user->UserRFIDCode)
+            return response()->json(['message'=>'Klaida', 'errors'=> ['name' => ['Nuskaityta neteisinga kortelė. Norėdami patvirtinti rezervaciją, nuskaitykite objekto, kuriam rezervacija sukurta, darbų vykdytojo identifikacinę kortelę.']]], 422);
+        else{
+            foreach($reservation->items as $item){
+                $withdrawal = ItemWithdrawal::create([
+                    'ItemWithdrawalQuantity' => $item->ReservationItemQuantity,
+                    'UserID' => $reservation->cobject->user->UserID,
+                    'ObjectID' => $reservation->ObjectID,
+                    'ItemID' => $item->ItemID
+                ]);
+                if($item->image){
+                    $image = ItemImage::find($item->image->ImageID);
+                    if($image)
+                        $image->update(['ItemWithdrawalID', $withdrawal->ItemWithdrawalID]);
+                }
+            }
+            $reservation->ReservationDelivered = true;
+            $reservation->ReservationReceivedByUserID = $reservation->cobject->user->UserID;
+            $reservation->save();
+
+            return response()->json(['message' => 'Atlikta!', 'success' => "Rezervuoti įrankiai perduoti vartotojui ".$reservation->cobject->user->Username.", rezervacija patvirtinta."], 200);
+        }
     }
 }

@@ -17,4 +17,8 @@ class ReservationItem extends Model
     public function item(){
       return $this->hasOne('App\Item', 'ItemID', 'ItemID');
     }
+
+    public function image(){
+        return $this->hasOne('App\ItemImage', 'ReservationItemID', 'ReservationItemID');
+    }
 }

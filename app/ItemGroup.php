@@ -9,7 +9,7 @@ class ItemGroup extends Model
 {
     protected $primaryKey = "ItemGroupID";
 
-    protected $fillable = ['ItemGroupName', 'ItemGroupImage'];
+    protected $fillable = ['ItemGroupName', 'ItemGroupImage', 'ReservationItemID'];
 
     public function items(){
       return $this->hasMany('App\Item', 'ItemGroupID');

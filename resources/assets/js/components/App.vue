@@ -78,7 +78,15 @@
     </v-navigation-drawer>
     <v-toolbar app fixed clipped-left v-if="$auth.check()">
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <v-toolbar-title><span class="headline shrink">Tool</span><span class="shrink headline text-danger">Tracker</span></v-toolbar-title>
+      <v-toolbar-title><span class="headline shrink">Tool</span><span class="shrink headline text-danger pr-5">Tracker</span></v-toolbar-title>
+      <v-text-field
+        flat
+        solo-inverted
+        hide-details
+        prepend-inner-icon="search"
+        label="Paieška..."
+        class="hidden-sm-and-down"
+      ></v-text-field>
       <v-spacer></v-spacer>
       <v-menu offset-y>
         <v-btn icon slot="activator">
@@ -136,6 +144,7 @@ export default {
                 children: [
                   {icon: 'keyboard_arrow_right', text: 'Visi', click: ()=> {this.$router.push({name: 'groups'})}},
                   {icon: 'keyboard_arrow_right', text: 'Įšaldyti', click: ''},
+                  {icon: 'keyboard_arrow_right', text: 'Nuomoti', click: ''},
                   {icon: 'keyboard_arrow_right', text: 'Ištrinti', click: ''}
                 ]
               },

@@ -6,6 +6,14 @@
          :pivotY="0.3"
          @before-open="beforeOpen"
          @before-close="beforeClose">
+         <v-dialog v-model="imageLoadingDialog" hide-overlay persistent width="300">
+           <v-card dark class="border border-danger">
+             <v-card-text>
+               Kraunama...
+               <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
+             </v-card-text>
+           </v-card>
+         </v-dialog>
     <div class="card">
         <div class="card-header theme--dark v-toolbar headline text-center">
             Pridėti įrankį <a @click="$modal.hide('create-item-modal')" class="float-right"><span class="fas fa-times btn-func-misc"></span></a>
@@ -46,7 +54,8 @@
                         <label for="image" class="col-md-4 control-label">Nuotrauka</label>
 
                         <div class="col-md-6 text-right">
-                             <input name="image" type="file" id="image" ref="image" v-on:change="handleFileUpload" class="form-control" accept="image/*">
+                            <image-uploader :debug="1" :maxWidth="192" :quality="0.7" :autoRotate=true outputFormat="verbose" :preview=false :className="['fileinput', { 'fileinput--loaded' : hasImage }]"
+                              capture="environment" @input="setImage" @onUpload="loadingDialog" @onComplete="loadingDialog" class="form-control"></image-uploader>
                         </div>
                 </div>
                 <v-layout row mx-0 align-center justify-center pa-3>
@@ -80,9 +89,13 @@
 <script>
 import swal from 'sweetalert'
 import DatePicker from 'vue2-datepicker'
+import { ImageUploader } from 'vue-image-upload-resize'
 export default {
     data(){
         return {
+            imageLoadingDialog: false,
+            hasImage: false,
+
             name: null,
             image: null,
             code: null,
@@ -119,22 +132,16 @@ export default {
     },
   methods: {
     save: function(){
-        var form = new FormData();
-
-        form.append('name', this.name)
-        form.append('image', this.image)
-        if(this.code != null && this.code != "")form.append('code', this.code)
-        if(this.consumable == true) form.append('consumable', 1)
-        if(this.consumable == false) form.append('consumable', 0)
-        if(this.nocode == true) form.append('nocode', 1)
-        if(this.nocode == false) form.append('nocode', 0)
-        if(this.warranty_date != null && this.warranty_date != "") form.append('warranty_date', this.format(this.warranty_date))
-        if(this.purchase_date != null && this.purchase_date != "") form.append('purchase_date', this.format(this.purchase_date))
-        form.append('groupID', this.groupID)
-        if(this.nocode)form.append('code', '')
-        this.$http.post('/item/create', form,
+        this.$http.post('/item/create',
         {
-            headers: {'Content-Type': 'multipart/form-data'}
+            name: this.name,
+            image: this.image,
+            code: this.code,
+            consumable: this.consumable,
+            nocode: this.nocode,
+            warranty_date: this.format(this.warranty_date),
+            purchase_date: this.format(this.purchase_date),
+            groupID: this.groupID,
         }
       ).then((response)=>{
             if(response.status == 200){
@@ -157,8 +164,12 @@ export default {
             }
         })
     },
-    handleFileUpload: function(){
-        this.image = this.$refs.image.files[0];
+    setImage: function(file){
+        this.hasImage = true
+        this.image = file
+    },
+    loadingDialog: function(){
+      this.imageLoadingDialog = !this.imageLoadingDialog
     },
     beforeOpen: function(event){
       this.groupID = event.params.groupID
@@ -185,7 +196,8 @@ export default {
     }
   },
   components: {
-    DatePicker
+    DatePicker,
+    ImageUploader
   }
 }
 </script>

@@ -50,6 +50,9 @@ Route::group(['middleware' => 'jwt.auth'], function(){
   Route::prefix('reservation')->group(function(){
     Route::post('create', 'ReservationController@create');
     Route::get('list', 'ReservationController@list');
+    Route::post('removeitem', 'ReservationController@removeItemFromReservation');
+    Route::get('delete/{id}', 'ReservationController@deleteReservation');
+    Route::post('confirm/card', 'ReservationController@confirmReservationWithCard');
   });
 });
 Route::get('sendCode/{code}', 'HomeController@sendCode');
