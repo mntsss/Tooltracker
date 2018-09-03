@@ -7,6 +7,7 @@ use App\Http\Requests\CreateItemRequest;
 use App\Http\Requests\RenameItemRequest;
 use App\Http\Requests\AddItemChipRequest;
 use App\Http\Requests\FindItemWithCodeRequest;
+use App\Http\Requests\ItemSearchRequest;
 use App\Item;
 use App\ItemGroup;
 use App\RfidCode;
@@ -40,7 +41,8 @@ class ItemController extends Controller
         'ItemConsumable' => $request->consumable,
         'ItemWarranty' => $request->warranty_date,
         'ItemPurchase' => $request->purchase_date,
-        'ItemGroupID' => $request->groupID
+        'ItemGroupID' => $request->groupID,
+        'ItemIdNumber' => $request->idnumber
       ]);
       if($item){
         if($request->code)
@@ -153,6 +155,15 @@ class ItemController extends Controller
         if($item->ItemDeleted)
           $status = "deleted";
       return response()->json(['item' => $item, 'status' => $status], 200);
+    }
+
+    public function search(ItemSearchRequest $request){
+      $items = Item::where('ItemName', 'like','%'.$request['query'].'%')->existing()->with(['lastWithdrawal', 'lastSuspention', 'lastReservation', 'images'])->limit(10)->get();
+      $response = [];
+      foreach($items as $item){
+        array_push($response, ['item'=> $item, 'state' => $this->GetItemState($item)]);
+      }
+      return response()->json($response, 200);
     }
 
     //checks if item is currently in reservation

@@ -83,6 +83,14 @@ const routes = [
    meta: {
      auth: true
    }
+ },
+ {
+   path: '/reservation/assing',
+   name: 'assign',
+   component: require('./components/reservation/Assign'),
+   meta: {
+     auth: true
+   }
  }
 ]
 

@@ -21,6 +21,7 @@ class CreateItemsTable extends Migration
             $table->string('ItemImage')->nullable();
             $table->boolean('ItemDeleted')->default(0);
             $table->integer('ItemGroupID');
+            $table->string('ItemIdNumber')->nullable();
             $table->text('ItemNote')->nullable();
             $table->timestamps();
         });

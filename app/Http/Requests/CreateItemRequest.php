@@ -31,6 +31,7 @@ class CreateItemRequest extends FormRequest
           'warranty_date' => 'nullable|date',
           'purchase_date' => 'nullable|date',
           'groupID' => 'required|numeric',
+          'idnumber' => 'string|nullable|max:190',
           'image' => 'nullable',
           'image.dataUrl' => 'sometimes|string|max:500000',
           'image.name' => 'sometimes|string|max:128'
@@ -51,7 +52,8 @@ class CreateItemRequest extends FormRequest
         'purchase_date.date' => 'Neteisingas įsigijimo datos formatas.',
         'groupID.required' => 'Severis neranda įrankių grupės identifikacijos. Apie klaidą praneškite administratoriui.',
         'image.dataUrl.max' => 'Nuotraukos dydis per didelis. Kameros nustatymuose sumažinkite nuotraukų dimensijas ar kokybę.',
-        'image.name.max' => 'Nuotraukos pavadinimo formatas netinkamas.'
+        'image.name.max' => 'Nuotraukos pavadinimo formatas netinkamas.',
+        'idnumber.max' => 'Įrankio identifikacinis numeris negali viršyti 190 simbolių.'
       ];
     }
 }

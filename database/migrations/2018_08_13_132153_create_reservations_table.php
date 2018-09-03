@@ -16,7 +16,7 @@ class CreateReservationsTable extends Migration
         Schema::create('reservations', function (Blueprint $table) {
             $table->increments('ReservationID');
             $table->boolean('ReservationDelivered')->default(0);
-            $table->integer('ReservationReceivedByUserID')->nullable();
+            $table->integer('ReservationRecipientUserID')->nullable();
             $table->integer('UserID');
             $table->integer('ObjectID')->nullable();
             $table->timestamps();

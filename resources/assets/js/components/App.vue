@@ -79,14 +79,17 @@
     <v-toolbar app fixed clipped-left v-if="$auth.check()">
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title><span class="headline shrink">Tool</span><span class="shrink headline text-danger pr-5">Tracker</span></v-toolbar-title>
+      <v-form @submit.prevent="search">
       <v-text-field
         flat
         solo-inverted
         hide-details
         prepend-inner-icon="search"
         label="Paieška..."
+        v-model = "searchQuery"
         class="hidden-sm-and-down"
       ></v-text-field>
+      </v-form>
       <v-spacer></v-spacer>
       <v-menu offset-y>
         <v-btn icon slot="activator">
@@ -179,7 +182,7 @@ export default {
             ],
             cartDropdownMeniu: [
               {text: 'Nauja rezervacija', click: () =>{this.$router.push({name: 'cart'})}},
-              {text: 'Įrankių priskyrimas', click: ()=>{ alert('Įrankių priskyrimas...')}},
+              {text: 'Įrankių priskyrimas', click: ()=>{ this.$router.push({name: 'assign'})}},
               {text: 'Įrankių grąžinimas', click: ()=>{ alert('Įrankių grąžinimas...')}},
             ],
             settingsDropdownMeniu: [
@@ -190,7 +193,8 @@ export default {
             y: 'top',
             x: 'right',
             mode: 'vertical',
-            timeout: 6000
+            timeout: 6000,
+            searchQuery: ''
             }
     },
     computed: {
@@ -207,6 +211,14 @@ export default {
     watch:{
       RFIDcode(oldRFIDcode, newRFIDcode){
         this.snackbar = true
+      }
+    },
+    methods: {
+      search: function(){
+        this.$http.post('/item/search', {query: this.searchQuery}).then(response =>{
+          if(response.status == 200)
+            console.log(response.data)
+        })
       }
     },
   components: {

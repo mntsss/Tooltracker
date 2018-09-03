@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateReservationRequest;
 use App\Http\Requests\ConfirmCardReservationRequest;
+use App\Http\Requests\CreateAssignReservationRequest;
 use App\Reservation;
 use App\ReservationItem;
 use App\ItemImage;
@@ -118,10 +119,14 @@ class ReservationController extends Controller
                 }
             }
             $reservation->ReservationDelivered = true;
-            $reservation->ReservationReceivedByUserID = $reservation->cobject->user->UserID;
+            $reservation->ReservationRecipientUserID = $reservation->cobject->user->UserID;
             $reservation->save();
 
             return response()->json(['message' => 'Atlikta!', 'success' => "Rezervuoti įrankiai perduoti vartotojui ".$reservation->cobject->user->Username.", rezervacija patvirtinta."], 200);
         }
+    }
+
+    public function createAssignmentReservation(CreateAssignReservationRequest $request){
+
     }
 }

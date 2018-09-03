@@ -19,7 +19,13 @@ Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
 Vue.use(vmodal);
 Vue.use(Vuex);
-Vue.use(Vuetify);
+Vue.use(Vuetify, {
+  theme: {
+    primary: '#00768E',
+    secondary: '#333333',
+    accent: '#8c9eff',
+    error: '#DC3545'
+  }});
 //api requests setup with jwt tokens
 const tokenProvider = require('axios-token-interceptor');
 axios.defaults.baseURL = window.location.href+'api';

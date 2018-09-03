@@ -8,7 +8,7 @@ class Reservation extends Model
 {
     protected $primaryKey = 'ReservationID';
 
-    protected $fillable = ['ReservationDelivered', 'ReservationReceivedByUserID', 'UserID', 'ObjectID'];
+    protected $fillable = ['ReservationDelivered', 'ReservationRecipientUserID', 'UserID', 'ObjectID'];
 
     public function items(){
       return $this->hasMany('App\ReservationItem', 'ReservationID');

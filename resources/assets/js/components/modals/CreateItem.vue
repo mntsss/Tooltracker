@@ -42,6 +42,15 @@
                         <DatePicker v-model="warranty_date" :lang="lang" format="YYYY-MM-DD"></DatePicker>
                     </div>
                 </div>
+
+                <div class="form-group mb-4">
+                    <label for="number" class="col-md-4 control-label">Identifikacinis numeris</label>
+
+                    <div class="col-md-6">
+                        <input id="idnumber" type="text" class="form-control" name="idnumber" v-model="idnumber" maxlength="190">
+                    </div>
+                </div>
+
                 <div class="form-group row remove-side-margin">
                   <label class="col-auto control-label mb-4" for="consumable">
                     Suvartojama
@@ -100,6 +109,7 @@ export default {
             image: null,
             code: null,
             nocode: false,
+            idnumber: null,
             consumable: false,
             warranty_date: '',
             purchase_date: '',
@@ -137,6 +147,7 @@ export default {
             name: this.name,
             image: this.image,
             code: this.code,
+            idnumber: this.idnumber,
             consumable: this.consumable,
             nocode: this.nocode,
             warranty_date: this.format(this.warranty_date),
