@@ -36,13 +36,13 @@
           <template v-if="items || isSearchLoading" >
             <v-progress-linear :indeterminate="true" v-if="isSearchLoading"></v-progress-linear >
             <v-list>
-              <v-list-tile v-for="(item, i) in items" class="cursor-pointer" :key="i" @click="addItemToReservation(item)">
+              <v-list-tile v-for="(item, i) in items" class="cursor-pointer" :key="i" @click="add(item)">
                 <v-list-tile-content >
                   <v-list-tile-title v-text="item.item.ItemName"></v-list-tile-title>
                   <v-list-tile-sub-title v-text="item.state"></v-list-tile-sub-title>
                 </v-list-tile-content>
-                <v-list-tile-avatar color="indigo" class="headline font-weight-light white--text">
-                  <v-icon>fa-arrow-alt-circle-right</v-icon>
+                <v-list-tile-avatar class="headline font-weight-light">
+                  <v-icon class="text-danger">fa-arrow-alt-circle-right</v-icon>
                 </v-list-tile-avatar>
               </v-list-tile>
             </v-list>
@@ -50,7 +50,7 @@
         </v-flex>
         <v-flex sm6 px-1>
           <v-card class="border border-light" scrollable>
-            <v-card-title color="primary" class="text-center theme--dark v-toolbar h5 mb-0">
+            <v-card-title class="text-center theme--dark v-toolbar h5 mb-0">
                   Priskyrimui rezervuojami įrankiai
             </v-card-title>
             <v-card-text class="pa-0">
@@ -60,8 +60,8 @@
                     <v-list-tile-title v-text="item.item.ItemName"></v-list-tile-title>
                     <v-list-tile-sub-title v-text="item.state"></v-list-tile-sub-title>
                   </v-list-tile-content>
-                  <v-list-tile-avatar color="indigo" class="headline font-weight-light white--text">
-                    <v-icon>fa-minus</v-icon>
+                  <v-list-tile-avatar class="headline font-weight-light cursor-pointer" @click="remove(item)">
+                    <v-icon class="text-danger">fa-minus-circle</v-icon>
                   </v-list-tile-avatar>
                 </v-list-tile>
               </v-list>
@@ -116,7 +116,7 @@ export default{
         swal("Klaida", error.response.data.message, "error");
       })
     },
-    addItemToReservation: function(item){
+    add: function(item){
       if(item.state != "Sandėlyje"){
         if(item.state == 'Rezervuotas')
           return swal("Klaida!", 'Įrankis jau yra pridėtas aktyvioje rezervacijoje...', 'error')
@@ -131,8 +131,24 @@ export default{
         this.reservedItems.push(item)
       }
     },
+    remove: function(item){
+        var index = this.reservedItems.indexOf(item);
+        this.reservedItems.splice(index, 1)
+    },
     save: function(){
-
+        this.$http.post('/reservation/assign', {
+            items: this.reservedItems,
+            user: this.reservationUser
+        }).then(response => {
+            if(response.status == 200){
+                swal(response.data.message, response.data.success, 'success').then(value => { this.$router.push({ name: 'reservations'})})
+            }
+        }).catch(err => {
+            if(err.response.status == 422){
+                swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
+            }else
+                swal('Klaida!', err.response.data.message, 'error')
+        })
     }
   },
   watch: {
@@ -142,7 +158,6 @@ export default{
 
       this.isSearchLoading = true
 
-      // Lazily load input items
       this.$http.post('/item/search', {query: this.searchQuery})
         .then(res => {
           this.items = res.data

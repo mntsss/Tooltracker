@@ -61,7 +61,7 @@
             label="Pasirinkite rezervacijos objektą"
             hide-details
             item-text="ObjectName"
-            item-value="ObjectID"
+            return-object
             prepend-icon="fa-building"
             outline
             class="mb-4 mt-2"
@@ -228,7 +228,7 @@ export default{
     },
     save: function(){
       this.$http.post('/reservation/create', {
-        objectID: this.reservationObject,
+        object: this.reservationObject,
         items: this.reservedItems
       }).then((response) => {
         swal(response.data.message, response.data.success, "success").then(value => {this.$router.push({name: 'reservations'})})

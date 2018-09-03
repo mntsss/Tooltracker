@@ -21,7 +21,8 @@ class ReservationController extends Controller
 
       $reservation = Reservation::create([
         'UserID' => Auth::user()->UserID,
-        'ObjectID' => $request->objectID
+        'ObjectID' => $request->object['ObjectID'],
+        'ReservationRecipientUserID' => $request->object['UserID']
       ]);
 
       foreach($request->items as $item){
@@ -66,7 +67,7 @@ class ReservationController extends Controller
     public function list(){
       $reservations = Reservation::Active()->where('UserID', Auth::user()->UserID)->with(['items' => function($query){
         $query->with('item');
-    }, 'cobject' => function($query){ $query->with('user');}])->get();
+    }, 'cobject' => function($query){ $query->with('user');}, 'recipient'])->get();
       return response()->json($reservations, 200);
     }
 
@@ -96,19 +97,19 @@ class ReservationController extends Controller
     }
 
     public function confirmReservationWithCard(ConfirmCardReservationRequest $request){
-        $reservation = Reservation::with(['items' => function($query){ $query->with('image');}, 'cobject' => function($query){ $query->with('user');}])->find($request->id);
+        $reservation = Reservation::with(['items' => function($query){ $query->with('image');}, 'recipient'])->find($request->id);
 
         if($reservation->ReservationDelivered)
             return response()->json(['message'=>'Klaida', 'errors'=> ['name' => ['Rezervacija jau pristatyta! Greičiausiai kažkur įsivėlė klaida, pabandykite perkrauti puslapį.']]], 422);
 
 
-        if($request->code != $reservation->cobject->user->UserRFIDCode)
+        if($request->code != $reservation->recipient[0]->UserRFIDCode)
             return response()->json(['message'=>'Klaida', 'errors'=> ['name' => ['Nuskaityta neteisinga kortelė. Norėdami patvirtinti rezervaciją, nuskaitykite objekto, kuriam rezervacija sukurta, darbų vykdytojo identifikacinę kortelę.']]], 422);
         else{
             foreach($reservation->items as $item){
                 $withdrawal = ItemWithdrawal::create([
                     'ItemWithdrawalQuantity' => $item->ReservationItemQuantity,
-                    'UserID' => $reservation->cobject->user->UserID,
+                    'UserID' => $reservation->recipient[0]->UserID,
                     'ObjectID' => $reservation->ObjectID,
                     'ItemID' => $item->ItemID
                 ]);
@@ -119,14 +120,29 @@ class ReservationController extends Controller
                 }
             }
             $reservation->ReservationDelivered = true;
-            $reservation->ReservationRecipientUserID = $reservation->cobject->user->UserID;
             $reservation->save();
 
-            return response()->json(['message' => 'Atlikta!', 'success' => "Rezervuoti įrankiai perduoti vartotojui ".$reservation->cobject->user->Username.", rezervacija patvirtinta."], 200);
+            return response()->json(['message' => 'Atlikta!', 'success' => "Rezervuoti įrankiai perduoti vartotojui ".$reservation->recipient[0]->Username.", rezervacija patvirtinta."], 200);
         }
     }
 
     public function createAssignmentReservation(CreateAssignReservationRequest $request){
+        $reservation = Reservation::create([
+            'UserID' => Auth::user()->UserID,
+            'ReservationRecipientUserID' => $request->user['UserID']
+        ]);
 
+        foreach($request->items as $item){
+            if($item['item']['ItemDeleted']){
+                return response()->json(['message'=>'Klaida', 'errors'=> ['name' => ['Įrankis '.$item['item']['ItemName'].' yra ištrintas, ir negali būti pridėtas į rezervaciją!']]], 422);
+            }
+
+            $reservationItem = ReservationItem::create([
+                'ReservationID' => $reservation->ReservationID,
+                'ItemID' => $item['item']['ItemID'],
+                'ReservationItemQuantity' => 1
+            ]);
+      }
+      return response()->json(['message'=> 'Atlikta!', 'success' => 'Įrankių priskyrimo rezervacija sėkmingai išsaugota!'],200);
     }
 }

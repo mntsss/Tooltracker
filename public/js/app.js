@@ -93549,7 +93549,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var _this3 = this;
 
       this.$http.post('/reservation/create', {
-        objectID: this.reservationObject,
+        object: this.reservationObject,
         items: this.reservedItems
       }).then(function (response) {
         __WEBPACK_IMPORTED_MODULE_2_sweetalert___default()(response.data.message, response.data.success, "success").then(function (value) {
@@ -93906,7 +93906,7 @@ var render = function() {
               label: "Pasirinkite rezervacijos objektą",
               "hide-details": "",
               "item-text": "ObjectName",
-              "item-value": "ObjectID",
+              "return-object": "",
               "prepend-icon": "fa-building",
               outline: ""
             },
@@ -94656,7 +94656,7 @@ var render = function() {
                                       _vm._s(
                                         reservation.cobject.ObjectName +
                                           " (" +
-                                          reservation.cobject.user.Username +
+                                          reservation.recipient[0].Username +
                                           ")"
                                       ) +
                                       "\n                "
@@ -94670,7 +94670,9 @@ var render = function() {
                                   [
                                     _vm._v(
                                       "\n                    " +
-                                        _vm._s(reservation.user.Username) +
+                                        _vm._s(
+                                          reservation.recipient[0].Username
+                                        ) +
                                         "\n                "
                                     )
                                   ]
@@ -94807,7 +94809,7 @@ var render = function() {
                                                 {
                                                   id: reservation.ReservationID,
                                                   user:
-                                                    reservation.cobject.user
+                                                    reservation.recipient[0]
                                                       .Username
                                                 }
                                               )
@@ -95129,30 +95131,50 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         __WEBPACK_IMPORTED_MODULE_2_sweetalert___default()("Klaida", error.response.data.message, "error");
       });
     },
-    addItemToReservation: function addItemToReservation(item) {
+    add: function add(item) {
       if (item.state != "Sandėlyje") {
         if (item.state == 'Rezervuotas') return __WEBPACK_IMPORTED_MODULE_2_sweetalert___default()("Klaida!", 'Įrankis jau yra pridėtas aktyvioje rezervacijoje...', 'error');else if (item.state == 'Naudojamas') return __WEBPACK_IMPORTED_MODULE_2_sweetalert___default()("Klaida!", 'Įrankis yra naudojamas ir negali būti pridėtas į rezervaciją!', 'error');else if (item.state == 'Ištrintas') return __WEBPACK_IMPORTED_MODULE_2_sweetalert___default()("Klaida!", 'Įrankis yra ištrintas, todėl negali būti pridėtas į rezervaciją!', 'error');else return __WEBPACK_IMPORTED_MODULE_2_sweetalert___default()("Klaida!", 'Įrankis yra įšaldytas, todėl negali būti pridėtas į rezervaciją!', 'error');
       } else {
         this.reservedItems.push(item);
       }
     },
-    save: function save() {}
+    remove: function remove(item) {
+      var index = this.reservedItems.indexOf(item);
+      this.reservedItems.splice(index, 1);
+    },
+    save: function save() {
+      var _this2 = this;
+
+      this.$http.post('/reservation/assign', {
+        items: this.reservedItems,
+        user: this.reservationUser
+      }).then(function (response) {
+        if (response.status == 200) {
+          __WEBPACK_IMPORTED_MODULE_2_sweetalert___default()(response.data.message, response.data.success, 'success').then(function (value) {
+            _this2.$router.push({ name: 'reservations' });
+          });
+        }
+      }).catch(function (err) {
+        if (err.response.status == 422) {
+          __WEBPACK_IMPORTED_MODULE_2_sweetalert___default()(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
+        } else __WEBPACK_IMPORTED_MODULE_2_sweetalert___default()('Klaida!', err.response.data.message, 'error');
+      });
+    }
   },
   watch: {
     searchQuery: function searchQuery(val) {
-      var _this2 = this;
+      var _this3 = this;
 
       if (this.searchQuery.length < 3) return;
 
       this.isSearchLoading = true;
 
-      // Lazily load input items
       this.$http.post('/item/search', { query: this.searchQuery }).then(function (res) {
-        _this2.items = res.data;
+        _this3.items = res.data;
       }).catch(function (err) {
         console.log(err);
       }).finally(function () {
-        return _this2.isSearchLoading = false;
+        return _this3.isSearchLoading = false;
       });
     }
   },
@@ -95281,7 +95303,7 @@ var render = function() {
                                     staticClass: "cursor-pointer",
                                     on: {
                                       click: function($event) {
-                                        _vm.addItemToReservation(item)
+                                        _vm.add(item)
                                       }
                                     }
                                   },
@@ -95310,13 +95332,14 @@ var render = function() {
                                       "v-list-tile-avatar",
                                       {
                                         staticClass:
-                                          "headline font-weight-light white--text",
-                                        attrs: { color: "indigo" }
+                                          "headline font-weight-light"
                                       },
                                       [
-                                        _c("v-icon", [
-                                          _vm._v("fa-arrow-alt-circle-right")
-                                        ])
+                                        _c(
+                                          "v-icon",
+                                          { staticClass: "text-danger" },
+                                          [_vm._v("fa-arrow-alt-circle-right")]
+                                        )
                                       ],
                                       1
                                     )
@@ -95346,8 +95369,7 @@ var render = function() {
                             "v-card-title",
                             {
                               staticClass:
-                                "text-center theme--dark v-toolbar h5 mb-0",
-                              attrs: { color: "primary" }
+                                "text-center theme--dark v-toolbar h5 mb-0"
                             },
                             [
                               _vm._v(
@@ -95391,10 +95413,20 @@ var render = function() {
                                         "v-list-tile-avatar",
                                         {
                                           staticClass:
-                                            "headline font-weight-light white--text",
-                                          attrs: { color: "indigo" }
+                                            "headline font-weight-light cursor-pointer",
+                                          on: {
+                                            click: function($event) {
+                                              _vm.remove(item)
+                                            }
+                                          }
                                         },
-                                        [_c("v-icon", [_vm._v("fa-minus")])],
+                                        [
+                                          _c(
+                                            "v-icon",
+                                            { staticClass: "text-danger" },
+                                            [_vm._v("fa-minus-circle")]
+                                          )
+                                        ],
                                         1
                                       )
                                     ],

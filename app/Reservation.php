@@ -16,6 +16,9 @@ class Reservation extends Model
     public function user(){
       return $this->hasOne('App\User', 'UserID', 'UserID');
     }
+    public function recipient(){
+        return $this->hasMany('App\User', 'UserID', 'ReservationRecipientUserID');
+    }
     public function cobject(){
       return $this->hasOne('App\CObject', 'ObjectID', 'ObjectID');
     }

@@ -62,6 +62,7 @@ Route::group(['middleware' => 'jwt.auth'], function(){
     Route::post('removeitem', 'ReservationController@removeItemFromReservation');
     Route::get('delete/{id}', 'ReservationController@deleteReservation');
     Route::post('confirm/card', 'ReservationController@confirmReservationWithCard');
+    Route::post('assign', 'ReservationController@createAssignmentReservation');
   });
 });
 Route::get('sendCode/{code}', 'HomeController@sendCode');

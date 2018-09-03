@@ -24,7 +24,8 @@ class CreateReservationRequest extends FormRequest
     public function rules()
     {
         return [
-            'objectID' => 'required|numeric|exists:objects,ObjectID',
+            'object' => 'required',
+            'object.ObjectID' => 'exists:objects,ObjectID',
             'items.*.item.ItemID' => 'required|distinct|exists:items,ItemID',
             'items.*.quantity' => 'required|numeric|min:1',
             'items.*.image' => 'nullable',
@@ -35,9 +36,8 @@ class CreateReservationRequest extends FormRequest
 
     public function messages(){
       return [
-        'objectID.required' => 'Nepavyko identifikuoti objekto, kuriam bandoma priskirti rezervaciją. Bandykite dar kartą!',
-        'objectID.exists' => 'Objektas, kuriam bandoma priskirti rezervaciją, nerastas duomenų bazėje. Patikrinkite ar objektas nebuvo ištrintas ir bandykite dar kartą.',
-        'objectID.number' => 'Klaida identifikuojant objektą!',
+        'object.required' => 'Nepavyko identifikuoti objekto, kuriam bandoma priskirti rezervaciją. Bandykite dar kartą!',
+        'object.ObjectID.exists' => 'Objektas, kuriam bandoma priskirti rezervaciją, nerastas duomenų bazėje. Patikrinkite ar objektas nebuvo ištrintas ir bandykite dar kartą.',
         'items.*.item.ItemID.required' => 'Rezervacija negali turėti neidentifikuojamų įrankių!',
         'items.*.item.ItemID.distinct' => 'Į rezervaciją negalima pridėti to paties įrankio kelis kartus!',
         'items.*.item.ItemID.exists' => 'Įrankio nepavyko identifikuoti duomenų bazėje. Bandykite dar kartą!',

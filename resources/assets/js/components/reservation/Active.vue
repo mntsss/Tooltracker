@@ -12,10 +12,10 @@
           <v-expansion-panel>
               <v-expansion-panel-content v-for="(reservation, i) in reservations" :key="i">
                   <div slot="header" v-if="reservation.cobject">
-                      {{reservation.cobject.ObjectName+' ('+reservation.cobject.user.Username+')'}}
+                      {{reservation.cobject.ObjectName+' ('+reservation.recipient[0].Username+')'}}
                   </div>
                   <div slot="header" v-else-if="reservation.cobject == null">
-                      {{reservation.user.Username}}
+                      {{reservation.recipient[0].Username}}
                   </div>
                   <v-card>
                       <v-card-text>
@@ -34,7 +34,7 @@
                               </template>
                             </v-data-table>
                             <v-layout row wrap align-center pa-2 justify-end>
-                                  <v-btn outline @click="show('confirm-reservation-with-card-modal', {id: reservation.ReservationID, user: reservation.cobject.user.Username})">
+                                  <v-btn outline @click="show('confirm-reservation-with-card-modal', {id: reservation.ReservationID, user: reservation.recipient[0].Username})">
                                       <v-icon class="text-danger">fa-toolbox</v-icon>
                                       <span class="mx-2">Patvirtinti kortele</span>
                                   </v-btn>
