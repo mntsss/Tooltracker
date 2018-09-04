@@ -4,7 +4,7 @@ import VueRouter from 'vue-router';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 import Vuex from 'vuex'
-
+import VueSignaturePad from 'vue-signature-pad';
 import vmodal from 'vue-js-modal'
 import swal from 'sweetalert'
 
@@ -19,6 +19,7 @@ Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
 Vue.use(vmodal);
 Vue.use(Vuex);
+Vue.use(VueSignaturePad);
 Vue.use(Vuetify, {
   theme: {
     primary: '#00768E',

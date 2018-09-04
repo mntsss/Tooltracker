@@ -183,7 +183,7 @@ export default {
             cartDropdownMeniu: [
               {text: 'Nauja rezervacija', click: () =>{this.$router.push({name: 'cart'})}},
               {text: 'Įrankių priskyrimas', click: ()=>{ this.$router.push({name: 'assign'})}},
-              {text: 'Įrankių grąžinimas', click: ()=>{ alert('Įrankių grąžinimas...')}},
+              {text: 'Įrankių grąžinimas', click: ()=>{ this.$router.push({name: 'return'})}},
             ],
             settingsDropdownMeniu: [
               {text: 'Keisti slaptažodį', click: () =>{ alert('Keisti slaptazodi...')}},

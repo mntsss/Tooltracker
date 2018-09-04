@@ -4,6 +4,7 @@
       :can-cancel="false"
       :is-full-page="fullPage"></Loading>
       <ConfirmWithCard></ConfirmWithCard>
+      <ConfirmWithSign></ConfirmWithSign>
     <v-container>
       <v-layout row wrap mx-0 align-center justify-center class="theme--dark v-toolbar">
         <v-flex shrink headline>Aktyvios rezervacijos</v-flex>
@@ -35,11 +36,11 @@
                             </v-data-table>
                             <v-layout row wrap align-center pa-2 justify-end>
                                   <v-btn outline @click="show('confirm-reservation-with-card-modal', {id: reservation.ReservationID, user: reservation.recipient[0].Username})">
-                                      <v-icon class="text-danger">fa-toolbox</v-icon>
+                                      <v-icon class="text-danger">fa-id-card</v-icon>
                                       <span class="mx-2">Patvirtinti kortele</span>
                                   </v-btn>
-                                  <v-btn outline @click="">
-                                        <v-icon class="text-danger">fa-id-card</v-icon>
+                                  <v-btn outline @click="show('confirm-reservation-with-sign-modal', {id: reservation.ReservationID, user: reservation.recipient[0].Username})">
+                                        <v-icon class="text-danger">fa-signature</v-icon>
                                         <span class="mx-2">Patvirtinti parašu</span>
                                     </v-btn>
                                   <v-btn outline @click="deleteReservation(reservation)">
@@ -62,6 +63,7 @@ import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.min.css'
 import swal from 'sweetalert'
 import ConfirmWithCard from '../modals/ConfirmReservationWithCard.vue'
+import ConfirmWithSign from '../modals/ConfirmReservationWithSignature.vue'
 export default{
   data(){
     return {
@@ -151,7 +153,8 @@ export default{
   },
   components: {
     Loading,
-    ConfirmWithCard
+    ConfirmWithCard,
+    ConfirmWithSign
   }
 }
 </script>

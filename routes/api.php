@@ -53,16 +53,26 @@ Route::group(['middleware' => 'jwt.auth'], function(){
      Route::post('restore', 'UserController@restoreuser');
   });
   Route::prefix('object')->group(function(){
+    // returns json list of all active objects
      Route::get('list', 'ObjectController@listObjects');
+     // adds new object
      Route::post('add', 'ObjectController@add');
   });
   Route::prefix('reservation')->group(function(){
+    //create new item reservation for object
     Route::post('create', 'ReservationController@create');
+    // returns json list with all active reservations
     Route::get('list', 'ReservationController@list');
+    // removes item from active reservation
     Route::post('removeitem', 'ReservationController@removeItemFromReservation');
+    // deletes entine active reservation
     Route::get('delete/{id}', 'ReservationController@deleteReservation');
+    // confirm reservation with card
     Route::post('confirm/card', 'ReservationController@confirmReservationWithCard');
+    // create new item reservation for user
     Route::post('assign', 'ReservationController@createAssignmentReservation');
+    // confirm reservation with user signature
+    Route::post('confirm/sign', 'ReservationController@confirmReservationWithSignature');
   });
 });
 Route::get('sendCode/{code}', 'HomeController@sendCode');

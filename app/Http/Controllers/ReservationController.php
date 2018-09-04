@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\CreateReservationRequest;
 use App\Http\Requests\ConfirmCardReservationRequest;
 use App\Http\Requests\CreateAssignReservationRequest;
+use App\Http\Requests\ConfirmSignReservationRequest;
 use App\Reservation;
 use App\ReservationItem;
 use App\ItemImage;
@@ -120,12 +121,38 @@ class ReservationController extends Controller
                 }
             }
             $reservation->ReservationDelivered = true;
+            $reservation->ReservationConfirmCardNr = $request->code;
             $reservation->save();
 
             return response()->json(['message' => 'Atlikta!', 'success' => "Rezervuoti įrankiai perduoti vartotojui ".$reservation->recipient[0]->Username.", rezervacija patvirtinta."], 200);
         }
     }
 
+    public function confirmReservationWithSignature(ConfirmSignReservationRequest $request){
+      $reservation = Reservation::with(['items' => function($query){ $query->with('image');}, 'recipient'])->find($request->id);
+
+      if($reservation->ReservationDelivered)
+          return response()->json(['message'=>'Klaida', 'errors'=> ['name' => ['Rezervacija jau pristatyta! Greičiausiai kažkur įsivėlė klaida, pabandykite perkrauti puslapį.']]], 422);
+
+      foreach($reservation->items as $item){
+          $withdrawal = ItemWithdrawal::create([
+              'ItemWithdrawalQuantity' => $item->ReservationItemQuantity,
+              'UserID' => $reservation->recipient[0]->UserID,
+              'ObjectID' => $reservation->ObjectID,
+              'ItemID' => $item->ItemID
+            ]);
+          if($item->image){
+            $image = ItemImage::find($item->image->ImageID);
+            if($image)
+                $image->update(['ItemWithdrawalID', $withdrawal->ItemWithdrawalID]);
+          }
+        }
+        $reservation->ReservationDelivered = true;
+        $reservation->ReservationConfirmSignature = $request->sign;
+        $reservation->save();
+
+        return response()->json(['message' => 'Atlikta!', 'success' => "Rezervuoti įrankiai perduoti vartotojui ".$reservation->recipient[0]->Username.", rezervacija patvirtinta."], 200);
+    }
     public function createAssignmentReservation(CreateAssignReservationRequest $request){
         $reservation = Reservation::create([
             'UserID' => Auth::user()->UserID,

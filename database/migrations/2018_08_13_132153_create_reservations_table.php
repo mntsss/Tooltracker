@@ -17,6 +17,8 @@ class CreateReservationsTable extends Migration
             $table->increments('ReservationID');
             $table->boolean('ReservationDelivered')->default(0);
             $table->integer('ReservationRecipientUserID')->nullable();
+            $table->text('ReservationConfirmSignature')->nullable();
+            $table->string('ReservationConfirmCardNr')->nullable();
             $table->integer('UserID');
             $table->integer('ObjectID')->nullable();
             $table->timestamps();

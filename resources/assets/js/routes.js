@@ -91,6 +91,14 @@ const routes = [
    meta: {
      auth: true
    }
+ },
+ {
+   path: '/item/return',
+   name: 'return',
+   component: require('./components/item/Return'),
+   meta: {
+     auth: true
+   }
  }
 ]
 
