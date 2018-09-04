@@ -14,6 +14,9 @@ class ItemWithdrawal extends Model
     public function item(){
       return $this->belongsTo('App\Item', 'ItemID');
     }
+    public function image(){
+        return $this->hasOne('App\ItemImage', 'ItemWithdrawalID');
+    }
     public function user(){
       return $this->belongsTo('App\Worker', 'UserID');
     }

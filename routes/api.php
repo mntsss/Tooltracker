@@ -32,9 +32,12 @@ Route::group(['middleware' => 'jwt.auth'], function(){
     Route::post('image', 'ItemController@changeImage');
     Route::get('delete/{id}', 'ItemController@delete');
     Route::post('addchip', 'ItemController@addchip');
+    // returns item with given chip code and its state
     Route::post('findcode', 'ItemController@findWithCode');
     // returns json item list up to 10 items with similar name as query
     Route::post('search', 'ItemController@search');
+    // return item with withdrawal info and images
+    Route::post('withdrawal', 'ItemController@itemWithdrawalInfo');
   });
   Route::prefix('user')->group(function(){
       // returns active users list in json

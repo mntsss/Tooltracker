@@ -8,6 +8,7 @@ use App\Http\Requests\RenameItemRequest;
 use App\Http\Requests\AddItemChipRequest;
 use App\Http\Requests\FindItemWithCodeRequest;
 use App\Http\Requests\ItemSearchRequest;
+use App\Http\Requests\GetItemWithdrawalInfo;
 use App\Item;
 use App\ItemGroup;
 use App\RfidCode;
@@ -80,13 +81,13 @@ class ItemController extends Controller
       }
       return response()->json(['message' => 'Atlikta!', 'success'=>'Įrankis pridėtas į grupę.'], 200);
     }
-
+    // returns item and its state by provided ID
     public function get($id){
 
         $item = Item::where('ItemID', $id)->existing()->with('lastWithdrawal', 'lastSuspention', 'lastReservation')->first();
           return response()->json(['item'=> $item, 'state' => $this->GetItemState($item)], 200);
     }
-
+    // renames item
     public function rename(RenameItemRequest $request){
 
         if(Item::find($request->id)->update(['ItemName' => $request->name]))
@@ -121,6 +122,7 @@ class ItemController extends Controller
         else return response()->json(['message' => 'Klaida', 'errors' => ['name' => ['Kažkur įvyko klaida siunčiant užklausą į duomenų bazę. Susisiekite su administracija.']]],422);
     }
 
+    // marks item as deleted
     public function delete($id){
 
       if($this->checkItemReservation($id))
@@ -137,12 +139,13 @@ class ItemController extends Controller
     else return response()->json(['message' => 'Klaida', 'errors' => ['name' => ['Kažkur įvyko klaida siunčiant užklausą į duomenų bazę. Susisiekite su administracija.']]],422);
     }
 
+    // add new RFID chip for item
     public function addchip(AddItemChipRequest $request){
       if(RfidCode::create(['Code' => $request->code, 'ItemID' => $request->id]))
         return response()->json(['message' => 'Atlikta', 'success' => 'Naujas čipas buvo sėkmingai priskirtas įrankiui!'],200);
       else return response()->json(['message' => 'Klaida', 'errors' => ['name' => ['Kažkur įvyko klaida siunčiant užklausą į duomenų bazę. Susisiekite su administracija.']]],422);
     }
-
+    // finds item which is assigned to provided RFID code
     public function findWithCode(FindItemWithCodeRequest $request){
         $item = RfidCode::where('Code', $request->code)->first()->item;
         $status = null;
@@ -155,6 +158,14 @@ class ItemController extends Controller
         if($item->ItemDeleted)
           $status = "deleted";
       return response()->json(['item' => $item, 'status' => $status], 200);
+    }
+
+    // returns item's withdrawal info for return confirmation
+    public function itemWithdrawalInfo(GetItemWithdrawalInfo $request){
+        $item = Item::with(['lastWithdrawal' => function($query){
+            $query->with('image');
+        }])->find($request->id);
+        return response()->json($item, 200);
     }
 
     public function search(ItemSearchRequest $request){

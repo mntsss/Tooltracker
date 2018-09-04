@@ -29,7 +29,8 @@ export default{
   data(){
     return {
       isLoading: true,
-      fullPage: false
+      fullPage: false,
+      item: null
     }
   },
   created(){
@@ -45,13 +46,55 @@ export default{
     RfidCode(val){
       if(this.RfidCode != null)
       {
-        alert(this.RfidCode)
+        this.getItemInfo(this.RfidCode)
         this.$store.commit('resetCode')
       }
     }
   },
   methods: {
-
+      getItemInfo: function(code){
+          this.$http.post('/item/findcode', {
+              code: code
+          }).then(response => {
+              if(response.status == 200){
+                  if(response.data.status != "withdrew")
+                  {
+                      if(response.data.status == "suspended")
+                        swal('Klaida', 'Įrankis suspenduotas!', 'error')
+                      if(response.data.status == "reserved")
+                        swal('Klaida', 'Įrankis yra aktyvioje rezervacijoje!', 'error')
+                      if(response.data.status == "deleted")
+                        swal('Klaida', 'Įrankis ištrintas!', 'error')
+                  }else{
+                      this.getWithdrawalInfo(response.data.item.ItemID)
+                  }
+              }
+          }).catch(err => {
+              if(err.response.status == 422)
+              {
+                  swal(err.response.data.message, Object.values(err.response.data.errors)[0][0], "error");
+              }
+              else{
+                  swal("Klaida", err.response.data.message, "error");
+              }
+          })
+      },
+      getWithdrawalInfo: function(id){
+          this.$http.post('/item/withdrawal', {id: id}).then(response => {
+              if(response.status == 200){
+                  this.item = response.data
+                  console.log(this.item)
+              }
+          }).catch(err => {
+              if(err.response.status == 422)
+              {
+                  swal(err.response.data.message, Object.values(err.response.data.errors)[0][0], "error");
+              }
+              else{
+                  swal("Klaida", err.response.data.message, "error");
+              }
+          })
+      }
   },
   components: {
     Loading
