@@ -9,10 +9,10 @@ class ItemWithdrawal extends Model
 {
     protected $primaryKey = "ItemWithdrawalID";
 
-    protected $fillable = ['ItemWithdrawalQuantity', 'ItemWithdrawalReturned', 'ItemWithdrawalReturnedQuantity', 'ItemID', 'UserID', 'ObjectID'];
+    protected $fillable = ['ItemWithdrawalQuantity', 'ItemWithdrawalReturned', 'ItemWithdrawalReturnedQuantity', 'ItemWithdrawalReturnConfirmedBy', 'ItemWithdrawalReturnConfirmCard', 'ItemID', 'UserID', 'ObjectID'];
 
     public function item(){
-      return $this->belongsTo('App\Item', 'ItemID');
+      return $this->hasOne('App\Item', 'ItemID');
     }
     public function image(){
         return $this->hasOne('App\ItemImage', 'ItemWithdrawalID');

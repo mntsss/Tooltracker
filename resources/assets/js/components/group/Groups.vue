@@ -4,7 +4,7 @@
       :can-cancel="false"
       :is-full-page="fullPage"></Loading>
 
-  <div class="container">
+  <div class="container" style="overflow: auto !important">
     <CreateGroup></CreateGroup>
     <v-layout row mx-0 mb-3 align-center justify-center class="theme--dark v-toolbar">
         <v-flex shrink headline>

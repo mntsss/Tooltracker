@@ -28,7 +28,7 @@
               </v-menu>
           </v-flex>
       </v-layout>
-      <div class="card-body">
+      <div class="card-body" v-if="items.length > 0">
         <router-link tag="div" class="row remove-side-margin cursor-pointer text-dark" :to="{ name: 'item', params: { itemProp: item}}" v-for="item in items" :key="item.item.ItemID">
           <div class="col-6">
             {{item.item.ItemName}}
@@ -37,6 +37,11 @@
             {{item.state}}
           </div>
       </router-link>
+      </div>
+      <div class="card-body bg-dark mt-1 border border-dark" v-else-if="items.length == 0">
+        <div class="text-center text-light h5 pa-5">
+          Grupėje įrankių nėra...
+        </div>
       </div>
     </div>
   </div>

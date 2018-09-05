@@ -3,6 +3,7 @@
       <Loading :active.sync="isLoading"
           :can-cancel="false"
           :is-full-page="fullPage"></Loading>
+      <ReturnConfirmModal></ReturnConfirmModal>
       <v-container>
         <v-layout wrap row class="theme--dark v-toolbar mb-5" justify-center><v-flex shrink headline>Įrankių grąžinimas</v-flex></v-layout>
         <v-layout class="" align-center justify-center>
@@ -25,6 +26,7 @@
 import swal from 'sweetalert'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.min.css'
+import ReturnConfirmModal from '../modals/ItemReturnConfirmationModal.vue'
 export default{
   data(){
     return {
@@ -44,7 +46,7 @@ export default{
   watch:
   {
     RfidCode(val){
-      if(this.RfidCode != null)
+      if(this.RfidCode != null && this.item == null)
       {
         this.getItemInfo(this.RfidCode)
         this.$store.commit('resetCode')
@@ -65,6 +67,8 @@ export default{
                         swal('Klaida', 'Įrankis yra aktyvioje rezervacijoje!', 'error')
                       if(response.data.status == "deleted")
                         swal('Klaida', 'Įrankis ištrintas!', 'error')
+                      if(response.data.status == null)
+                        swal('Klaida', 'Įrankis sandėlyje!', 'error')
                   }else{
                       this.getWithdrawalInfo(response.data.item.ItemID)
                   }
@@ -83,7 +87,7 @@ export default{
           this.$http.post('/item/withdrawal', {id: id}).then(response => {
               if(response.status == 200){
                   this.item = response.data
-                  console.log(this.item)
+                  this.show('item-return-confirm-modal', {item: this.item})
               }
           }).catch(err => {
               if(err.response.status == 422)
@@ -94,10 +98,14 @@ export default{
                   swal("Klaida", err.response.data.message, "error");
               }
           })
-      }
+      },
+      show: function(name, params={}){
+        this.$modal.show(name, params)
+      },
   },
   components: {
-    Loading
+    Loading,
+    ReturnConfirmModal
   }
 }
 </script>

@@ -18,6 +18,8 @@ class CreateItemWithdrawalsTable extends Migration
             $table->integer('ItemWithdrawalQuantity')->default(1);
             $table->boolean('ItemWithdrawalReturned')->default(0);
             $table->integer('ItemWithdrawalReturnedQuantity')->nullable();
+            $table->integer('ItemWithdrawalReturnConfirmedBy')->nullable();
+            $table->string('ItemWithdrawalReturnConfirmCard')->nullable();
             $table->integer('UserID')->nullable();
             $table->integer('ObjectID')->nullable();
             $table->integer('ItemID');

@@ -115,9 +115,9 @@ class ReservationController extends Controller
                     'ItemID' => $item->ItemID
                 ]);
                 if($item->image){
-                    $image = ItemImage::find($item->image->ImageID);
-                    if($image)
-                        $image->update(['ItemWithdrawalID', $withdrawal->ItemWithdrawalID]);
+                  $image = ItemImage::find($item->image->ImageID);
+                  if($image)
+                      $image->update(['ItemWithdrawalID'=> $withdrawal->ItemWithdrawalID]);
                 }
             }
             $reservation->ReservationDelivered = true;
@@ -144,7 +144,7 @@ class ReservationController extends Controller
           if($item->image){
             $image = ItemImage::find($item->image->ImageID);
             if($image)
-                $image->update(['ItemWithdrawalID', $withdrawal->ItemWithdrawalID]);
+                $image->update(['ItemWithdrawalID'=> $withdrawal->ItemWithdrawalID]);
           }
         }
         $reservation->ReservationDelivered = true;

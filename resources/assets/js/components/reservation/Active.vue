@@ -9,7 +9,7 @@
       <v-layout row wrap mx-0 align-center justify-center class="theme--dark v-toolbar">
         <v-flex shrink headline>Aktyvios rezervacijos</v-flex>
       </v-layout>
-      <v-layout row wrap align-center mx-0 mt-2 v-if="reservations">
+      <v-layout row wrap align-center mx-0 mt-2 v-if="reservations.length > 0">
           <v-expansion-panel>
               <v-expansion-panel-content v-for="(reservation, i) in reservations" :key="i">
                   <div slot="header" v-if="reservation.cobject">
@@ -54,6 +54,13 @@
                   </v-card>
               </v-expansion-panel-content>
           </v-expansion-panel>
+      </v-layout>
+      <v-layout v-else-if="reservations.length == 0">
+        <div class="card-body border border-dark mt-1">
+          <div class="text-center text-light h5 pa-5">
+            Aktyvių rezervacijų nėra...
+          </div>
+        </div>
       </v-layout>
     </v-container>
   </div>

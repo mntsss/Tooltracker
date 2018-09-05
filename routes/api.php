@@ -38,6 +38,8 @@ Route::group(['middleware' => 'jwt.auth'], function(){
     Route::post('search', 'ItemController@search');
     // return item with withdrawal info and images
     Route::post('withdrawal', 'ItemController@itemWithdrawalInfo');
+    // marks item withdrawal as returned if request has valid administrator card id
+    Route::post('return/card', 'ItemController@returnItemWithCard');
   });
   Route::prefix('user')->group(function(){
       // returns active users list in json

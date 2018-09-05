@@ -61,6 +61,10 @@ Echo.channel('code-channel')
     store.commit('newcode', e.code)
   });
 
+//Define global variable
+
+Vue.prototype.$uploadPath = '/media/items/'
+
 //main app init
 App.router = Vue.router;
 App.store = Vue.store;

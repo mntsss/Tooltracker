@@ -15,6 +15,7 @@
 
 body{
   height: 100% !important;
+  overflow: auto;
 }
 .navbar-laravel {
   background-color: #fff;
@@ -296,5 +297,11 @@ body{
 @media screen and (max-width: 770px) {
   .item-add-box {
      font-size: 65px;
+  }
+}
+@media screen and (max-width: 383px) {
+  .item-box-panel{
+      margin: 20px auto;
+      float: none;
   }
 }
