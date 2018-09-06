@@ -40,6 +40,8 @@ Route::group(['middleware' => 'jwt.auth'], function(){
     Route::post('withdrawal', 'ItemController@itemWithdrawalInfo');
     // marks item withdrawal as returned if request has valid administrator card id
     Route::post('return/card', 'ItemController@returnItemWithCard');
+    // created unconfirmed return item suspention
+    Route::post('suspend/unconfirmedreturn', 'ItemController@suspendUnconfirmedReturn');
   });
   Route::prefix('user')->group(function(){
       // returns active users list in json

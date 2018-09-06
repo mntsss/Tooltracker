@@ -77,7 +77,8 @@ export default{
     data(){
         return {
             objects: null,
-            isLoading: true
+            isLoading: true,
+            fullPage: false
         }
     },
     created(){
@@ -95,7 +96,6 @@ export default{
                 if(response.status == 200){
                     this.objects = response.data
                     this.isLoading = false
-                    console.log(this.objects);
                 }
             }).catch(error => {
                 swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], 'error')

@@ -10,11 +10,13 @@ use App\Http\Requests\FindItemWithCodeRequest;
 use App\Http\Requests\ItemSearchRequest;
 use App\Http\Requests\GetItemWithdrawalInfo;
 use App\Http\Requests\ReturnItemWithCardRequest;
+use App\Http\Requests\SuspendItemUnconfirmedRequest;
 use App\Item;
 use App\ItemGroup;
 use App\RfidCode;
 use App\ItemWithdrawal;
 use App\ItemImage;
+use App\ItemSuspention;
 use Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\ItemInfo;
@@ -152,9 +154,12 @@ class ItemController extends Controller
         $item = RfidCode::where('Code', $request->code)->first()->item;
         $status = null;
         if($this->checkItemSuspention($item->ItemID))
-          $status = 'suspended';
-        if($this->checkItemWithdrawal($item->ItemID))
-          $status = 'withdrew';
+
+        if($this->checkItemWithdrawal($item->ItemID)){
+          if($this->checkItemSuspention($item->ItemID))
+            $status = 'suspended';
+          else $status = 'withdrew';
+        }
         if($this->checkItemReservation($item->ItemID))
           $status = "reserved";
         if($item->ItemDeleted)
@@ -194,6 +199,24 @@ class ItemController extends Controller
         return response()->json(['message'=> 'Atlikta!', 'success' => 'Įrankis sėkmingai grąžintas į sandėlį.'], 200);
       }else{
         return response()->json(['message' => 'Klaida', 'errors' => ['name' => ['Kažkur įvyko klaida siunčiant užklausą į duomenų bazę. Susisiekite su administracija.']]],422);
+      }
+    }
+
+    // creates item suspention as unconfirmed return
+    public function suspendUnconfirmedReturn(SuspendItemUnconfirmedRequest $request){
+      $withdrawal = ItemWithdrawal::where('ItemID', $request->id)->orderBy('created_at', 'DESC')->first();
+      if($withdrawal){
+        $suspention = ItemSuspention::create([
+          'ItemID' => $request->id,
+          'UserID' => $withdrawal->UserID,
+          'SuspentionNote' => $request->note,
+          'SuspentionUnconfirmedReturn' => true
+        ]);
+        if($suspention)
+          return response()->json(['message'=> 'Atlikta', 'success' => 'Įrankis įšaldytas.'], 200);
+      }
+      else{
+          return respone()->json(['message'=> 'Klaida','errors' => ['name' => ['Nepavyko rasti įrankio priskyrimo informacijos. Įvyko duomenų bazės klaida, arba įrankis nėra naudojamas.']]],422);
       }
     }
 

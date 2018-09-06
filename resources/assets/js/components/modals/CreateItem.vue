@@ -193,6 +193,7 @@ export default {
       this.nocode= false
       this.warranty_date = ''
       this.purchase_date= ''
+      this.idnumber = null
     },
     format: function(date){
       if(date == null || date == "") return null

@@ -13,7 +13,7 @@
                         </div>
                     </v-flex>
                 </v-layout>
-                <v-container class="card-body">
+                <v-container class="card-body" v-if="users.length > 0">
                     <v-layout row wrap align-center>
                         <v-expansion-panel>
                             <v-expansion-panel-content v-for="(user, i) in users" :key="i">
@@ -90,8 +90,12 @@
                         </v-expansion-panel>
                     </v-layout>
                 </v-container>
+                <div class="card-body bg-dark mt-1 border border-dark" v-else-if="users.length == 0">
+                  <div class="text-center text-light h5 pa-5">
+                    Ištrintų vartotojų nėra...
+                  </div>
+                </div>
             </div>
-
         </div>
     </div>
 </template>

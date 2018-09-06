@@ -45,6 +45,12 @@ const router = new VueRouter({
   routes
 });
 
+router.beforeEach((to, from, next) => {
+  var currentRoute = from.name
+  var currentParams = from.params
+  store.commit('addRouteToHistory', {'route': currentRoute, 'params': currentParams})
+  next()
+})
 Vue.router = router;
 Vue.store = store;
 //jwt auth init

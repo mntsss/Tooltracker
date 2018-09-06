@@ -26,7 +26,7 @@
 import swal from 'sweetalert'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.min.css'
-import ReturnConfirmModal from '../modals/ItemReturnConfirmationModal.vue'
+import ReturnConfirmModal from '../modals/ItemReturnConfirmation.vue'
 export default{
   data(){
     return {

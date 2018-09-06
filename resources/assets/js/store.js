@@ -6,7 +6,8 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
       recentCode: null,
-      user: null
+      user: null,
+      routesHistory: []
     },
     mutations: {
       newcode(state, code){
@@ -17,6 +18,11 @@ const store = new Vuex.Store({
       },
       userInfo(state, user){
         state.user = user
+      },
+      addRouteToHistory(state, route){
+        state.routeHistory.unshift(route)
+        if(state.routeHistory.length > 10)
+          state.routeHistory.splice(-1, 1)
       }
     },
     actions: {},

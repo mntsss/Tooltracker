@@ -7,8 +7,12 @@
          :clickToClose="false"
          @before-open="beforeOpen"
          @before-close="beforeClose">
+         <ItemSuspend></ItemSuspend>
     <div v-if="item" class="card d-flex bg-dark pt-0 mt-0 px-0">
       <div class="overlay position-absolute h-100 w-100 bg-dark" v-if="waitingDialog">
+        <div class="headline text-light">
+               <a @click="$modal.hide('item-return-confirm-modal')" class="float-right"><span class="fas fa-times btn-func-misc"></span></a>
+          </div>
         <v-container>
           <v-layout align-center justify-center row fill-height mt-5>
             <v-flex shrink mt-5>
@@ -54,7 +58,7 @@
       </v-layout>
       <v-layout align-center>
         <v-flex shrink>
-          <v-btn @click="" class="ma-3"><v-icon class="text-danger mr-2">fa-lock</v-icon>Įšaldyti (įrankis sugadintas)</v-btn>
+          <v-btn @click="suspend()" class="ma-3"><v-icon class="text-danger mr-2">fa-lock</v-icon>Įšaldyti (įrankis sugadintas)</v-btn>
           <v-btn @click="confirm()" class="ma-3"><v-icon class="text-danger mr-2">fa-check</v-icon>Patvirtinti grąžinimą</v-btn>
         </v-flex>
       </v-layout>
@@ -64,6 +68,7 @@
 <script>
 import vueImages from 'vue-images'
 import swal from 'sweetalert'
+import ItemSuspend from './ItemSuspendUnconfirmedReturn.vue'
 export default{
   data(){
     return {
@@ -131,10 +136,15 @@ watch: {
               swal("Klaida", error.response.data.message, "error").then(value => { this.$modal.hide('item-return-confirm-modal')})
           }
       })
+    },
+    suspend: function(){
+      this.$modal.show('item-suspend-unconfirmed-modal', {item: this.item})
+
     }
   },
   components:{
-    vueImages
+    vueImages,
+    ItemSuspend
   }
 }
 </script>

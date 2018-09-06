@@ -15,12 +15,14 @@ class ItemSuspentionsTable extends Migration
     {
         Schema::create('item_suspentions', function (Blueprint $table) {
             $table->increments('SuspentionID');
-            $table->boolean('SuspentionWarrantyFix');
-            $table->boolean('SuspentionUnwarrantedFix');
-            $table->boolean('SuspentionReturned');
-            $table->boolean('SuspentionWarningShowed');
-            $table->boolean('SuspentionUnconfirmedReturn');
-            $table->text('SuspentionNote');
+            $table->boolean('SuspentionWarrantyFix')->defaut(0);
+            $table->boolean('SuspentionUnwarrantedFix')->defaut(0);
+            $table->boolean('SuspentionReturned')->defaut(0);
+            $table->boolean('SuspentionWarningShowed')->defaut(0);
+            $table->boolean('SuspentionUnconfirmedReturn')->defaut(0);
+            $table->text('SuspentionNote')->nullable();
+            $table->string('SuspentionConfirmCode')->nullable();
+            $table->integer('UserID')->nullable();
             $table->integer('ItemID');
             $table->timestamps();
         });

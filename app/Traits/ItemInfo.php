@@ -9,11 +9,6 @@ trait ItemInfo{
     if($item->ItemDeleted){
       return "Ištrintas";
     }
-    if(!is_null($item->lastWithdrawal)){
-      if($item->lastWithdrawal->ItemWithdrawalReturned == false){
-        return "Naudojamas";
-      }
-    }
     if(!is_null($item->lastSuspention))
       if(!$item->lastSuspention->SuspentionReturned){
         if($item->lastSuspention->SuspentionWarrantyFix)
@@ -23,6 +18,11 @@ trait ItemInfo{
         if($item->lastSuspention->SuspentionUnconfirmedReturn)
           return "Laukia patvirtinimo";
       }
+    if(!is_null($item->lastWithdrawal)){
+      if($item->lastWithdrawal->ItemWithdrawalReturned == false){
+        return "Naudojamas";
+      }
+    }
     if(!is_null($item->lastReservation))
       if(!$item->lastReservation->reservation->ReservationDelivered)
         return "Rezervuotas";
