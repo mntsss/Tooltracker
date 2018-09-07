@@ -7,7 +7,7 @@
          @before-open="beforeOpen">
     <div class="card">
         <div class="card-header bg-dark text-light">
-            Pervadinti grupę
+            Pervadinti įrankį
         </div>
         <div class="card-body">
             <form method="post" @submit.prevent="save">
@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     save: function(){
-        this.$http.post('/item/rename', {
+        this.$http.post('/item/edit/name', {
             'id': this.itemID,
             'name': this.name
         }).then((response)=>{

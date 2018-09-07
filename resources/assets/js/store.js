@@ -20,9 +20,9 @@ const store = new Vuex.Store({
         state.user = user
       },
       addRouteToHistory(state, route){
-        state.routeHistory.unshift(route)
-        if(state.routeHistory.length > 10)
-          state.routeHistory.splice(-1, 1)
+        state.routesHistory.unshift(route)
+        if(state.routesHistory.length > 10)
+          state.routesHistory.splice(-1, 1)
       }
     },
     actions: {},

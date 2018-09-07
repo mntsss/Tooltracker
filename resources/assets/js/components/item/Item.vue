@@ -4,14 +4,14 @@
         :can-cancel="false"
         :is-full-page="fullPage"></Loading>
         <RenameItemModal></RenameItemModal>
-        <ChangeItemImageModal></ChangeItemImageModal>
+        <ChangeItemIdnumberModal></ChangeItemIdnumberModal>
         <AddItemChipModal></AddItemChipModal>
     <div class="container">
 
     <div class="card" v-if="item">
       <v-layout row wrap align-content-center class="card-header pb-0 pt-0 mx-0 theme--dark v-toolbar">
           <v-flex headline shrink justify-start align-content-center>
-              <a @click="$router.push({ path: '/group/'+item.ItemGroupID})" class="headline"><span class="fa fa-arrow-left text-danger remove-all-margin p-2 btn-func-misc"></span></a>
+              <a @click="back()" class="headline"><span class="fa fa-arrow-left text-danger remove-all-margin p-2 btn-func-misc"></span></a>
           </v-flex>
           <v-flex>
               <div class="text-center headline">{{item.ItemName}}</div>
@@ -27,31 +27,35 @@
               </v-menu>
           </v-flex>
       </v-layout>
-      <div class="card-body">
-        <div class="row remove-side-margin">
-            <div class="col-auto" style="max-width:250px !important" v-if="item.images[0]">
-                <!-- <vueImages :imgs="images"
-                            :modalclose="modalclose"
-                            :keyinput="keyinput"
-                            :showclosebutton="showclosebutton" class="image">
-                </vueImages> -->
-                <img v-bind:src="'/media/items/'+item.images[0].ImageName" class="image"/>
-            </div>
-            <div class="colt">
-                <p class="text-left h4">
-                    <span class="fab fa-ethereum"></span>&nbsp;Būsena:&nbsp;{{itemStatus}}
-                </p>
-                <p class="text-left h4" v-if="item.ItemPurchase != null">
-                    <span class="fas fa-calendar-alt"></span>&nbsp;Įsigijimo data:&nbsp;{{item.ItemPurchase}}
-                </p>
-                <p class="text-left h4" v-if="item.ItemWarranty != null">
-                    <span class="fas fa-calendar-alt"></span>&nbsp;Garantinis iki:&nbsp;{{item.ItemWarranty}}
-                </p>
-                <p class="text-left h4" v-if="item.ItemConsumable">
-                    <span class="fas fa-check"></span>&nbsp;Suvartojama
-                </p>
-            </div>
-        </div>
+      <div class="card-body bg-dark">
+        <v-container>
+            <v-layout>
+                <div class="colt">
+                    <p class="text-left h4">
+                        <span class="fab fa-ethereum"></span>&nbsp;Būsena:&nbsp;{{itemStatus}}
+                    </p>
+                    <p class="text-left h4" v-if="item.ItemPurchase != null">
+                        <span class="fas fa-calendar-alt"></span>&nbsp;Įsigijimo data:&nbsp;{{item.ItemPurchase}}
+                    </p>
+                    <p class="text-left h4" v-if="item.ItemWarranty != null">
+                        <span class="fas fa-calendar-alt"></span>&nbsp;Garantinis iki:&nbsp;{{item.ItemWarranty}}
+                    </p>
+                    <p class="text-left h4" v-if="item.ItemConsumable">
+                        <span class="fas fa-check"></span>&nbsp;Suvartojama
+                    </p>
+                </div>
+            </v-layout>
+            <v-layout v-if="item.images[0]">
+                <v-flex shrink>
+                    <vueImages :imgs="images"
+                            :modalclose="true"
+                            :keyinput="true"
+                            :showcaption="true"
+                            :showclosebutton="true" class="image">
+                    </vueImages>
+                </v-flex>
+            </v-layout>
+        </v-container>
       </div>
     </div>
   </div>
@@ -63,7 +67,7 @@ import swal from 'sweetalert'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.min.css'
 import RenameItemModal from '../modals/RenameItem.vue'
-import ChangeItemImageModal from '../modals/ChangeItemImage.vue'
+import ChangeItemIdnumberModal from '../modals/ChangeItemIdnumber.vue'
 import AddItemChipModal from '../modals/AddItemChip.vue'
   export default {
     data(){
@@ -71,17 +75,13 @@ import AddItemChipModal from '../modals/AddItemChip.vue'
           item: '',
           itemStatus: '',
           images: [],
-          modalclose: true,
-          keyinput: true,
-          mousescroll: true,
-          showclosebutton: true,
-          showcaption: true,
+
           isLoading: true,
           fullPage: false,
           dropdownMeniu: [
             {text: 'Priskirti čipą', click: () =>{this.show('add-item-chip-modal')}},
             {text: 'Pervadinti', click: ()=>{this.show('rename-item-modal')}},
-            {text: 'Keisti nuotrauką', click: ()=>{this.show('change-item-image-modal')}},
+            {text: 'Keisti identifikacinį numerį', click: ()=>{this.show('change-item-idnumber-modal')}},
             {text: 'Ištrinti', click: ()=>{this.deleteItem()}}
           ]
       }
@@ -93,16 +93,23 @@ import AddItemChipModal from '../modals/AddItemChip.vue'
       }
   },
   created(){
+      console.log(this.itemProp)
     if(this.itemProp == null){
       this.loadItem()
     }
     else {
       this.item =  this.itemProp.item
       this.itemStatus = this.itemProp.state
-      if(this.item.ItemImage == null || this.item.ItemImage == "null" || this.item.ItemImage == "")
-        this.images.push({imageUrl: '/media/default_picture.png', caption: this.item.ItemName})
+      if(this.item.images.length == 0){
+          this.images.push({imageUrl: '/media/default_picture.png', caption: this.item.ItemName})
+      }
       else
-        this.images.push({imageUrl: '/media/items/'+this.item.ItemImage, caption: this.item.ItemName})
+      {
+          this.item.images.forEach(image => {
+              this.images.push({imageUrl: this.$uploadPath+image.ImageName, caption: image.created_at})
+          })
+      }
+
     }
   },
   mounted(){
@@ -118,11 +125,16 @@ import AddItemChipModal from '../modals/AddItemChip.vue'
             if(response.status == 200){
                 this.itemStatus = response.data.state
                 this.item = response.data.item
-                this.images =[];
-                if(this.item.ItemImage == null || this.item.ItemImage == "null" || this.item.ItemImage == "")
-                  this.images.push({imageUrl: '/media/default_picture.png', caption: this.item.ItemName})
+                this.images = [];
+                if(this.item.images.length == 0){
+                    this.images.push({imageUrl: '/media/default_picture.png', caption: this.item.ItemName})
+                }
                 else
-                  this.images.push({imageUrl: '/media/items/'+this.item.ItemImage, caption: this.item.ItemName})
+                {
+                    this.item.images.forEach(image => {
+                        this.images.push({imageUrl: this.$uploadPath+image.ImageName, caption: image.created_at})
+                    })
+                }
             }
         }).catch(error => {
             if(error.response.status == 422){
@@ -156,22 +168,22 @@ import AddItemChipModal from '../modals/AddItemChip.vue'
           }
         })
     },
+    back: function(){
+        var previousRoute = this.$store.state.routesHistory[0].route
+        var previousRouteParams = this.$store.state.routesHistory[0].params
+        this.$router.push({name:previousRoute, params:previousRouteParams})
+    }
   },
   components: {
       vueImages,
       Loading,
       RenameItemModal,
-      ChangeItemImageModal,
+      ChangeItemIdnumberModal,
       AddItemChipModal
   }
 }
 </script>
 <style>
-    .image{
-        width: 100%;
-        height: auto;
-        overflow: hidden;
-    }
     .loading-parent{
         position: relative;
     }

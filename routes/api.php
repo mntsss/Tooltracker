@@ -26,9 +26,11 @@ Route::group(['middleware' => 'jwt.auth'], function(){
   });
   Route::prefix('item')->group(function(){
     Route::get('list/{groupID}', 'ItemController@items');
+    Route::get('deleted', 'ItemController@deletedItems');
     Route::post('create', 'ItemController@create');
     Route::get('get/{id}', 'ItemController@get');
-    Route::post('rename', 'ItemController@rename');
+    Route::post('edit/name', 'ItemController@rename');
+    Route::post('edit/ident', 'ItemController@changeIdentificationNumber');
     Route::post('image', 'ItemController@changeImage');
     Route::get('delete/{id}', 'ItemController@delete');
     Route::post('addchip', 'ItemController@addchip');

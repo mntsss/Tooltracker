@@ -146,9 +146,9 @@ export default {
                 model: false,
                 children: [
                   {icon: 'keyboard_arrow_right', text: 'Visi', click: ()=> {this.$router.push({name: 'groups'})}},
-                  {icon: 'keyboard_arrow_right', text: 'Įšaldyti', click: ''},
+                  {icon: 'keyboard_arrow_right', text: 'Įšaldyti', click: ()=> {this.$router.push({name: 'suspendedItems'})}},
                   {icon: 'keyboard_arrow_right', text: 'Nuomoti', click: ''},
-                  {icon: 'keyboard_arrow_right', text: 'Ištrinti', click: ''}
+                  {icon: 'keyboard_arrow_right', text: 'Ištrinti', click: ()=> {this.$router.push({name: 'deletedItems'})}}
                 ]
               },
               {

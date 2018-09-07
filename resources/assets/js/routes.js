@@ -45,6 +45,22 @@ const routes = [
        }
    },
    {
+     path: '/item/deleted',
+     name: 'deletedItems',
+     component: require('./components/group/Deleted'),
+     meta: {
+         auth: true
+     }
+   },
+   {
+     path: '/item/suspended',
+     name: 'suspendedItems',
+     component: require('./components/group/Suspended'),
+     meta: {
+         auth: true
+     }
+   },
+   {
        path: '/users',
        name: 'users',
        component: require('./components/user/Users'),

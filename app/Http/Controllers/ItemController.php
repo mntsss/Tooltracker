@@ -11,6 +11,7 @@ use App\Http\Requests\ItemSearchRequest;
 use App\Http\Requests\GetItemWithdrawalInfo;
 use App\Http\Requests\ReturnItemWithCardRequest;
 use App\Http\Requests\SuspendItemUnconfirmedRequest;
+use App\Http\Requests\ChangeItemIdentRequest;
 use App\Item;
 use App\ItemGroup;
 use App\RfidCode;
@@ -36,6 +37,11 @@ class ItemController extends Controller
         array_push($response, ['item'=> $item, 'state' => $this->GetItemState($item)]);
       }
       return response()->json($response);
+    }
+
+    public function deletedItems(){
+        $items = Item::where('ItemDeleted', true)->with(['lastWithdrawal', 'lastSuspention', 'lastReservation', 'images'])->orderBy('updated_at', 'DESC')->get();
+        return response()->json($items, 200);
     }
 
     public function create(CreateItemRequest $request){
@@ -88,7 +94,7 @@ class ItemController extends Controller
     // returns item and its state by provided ID
     public function get($id){
 
-        $item = Item::where('ItemID', $id)->existing()->with('lastWithdrawal', 'lastSuspention', 'lastReservation')->first();
+        $item = Item::where('ItemID', $id)->existing()->with(['lastWithdrawal', 'lastSuspention', 'lastReservation', 'images'])->first();
           return response()->json(['item'=> $item, 'state' => $this->GetItemState($item)], 200);
     }
     // renames item
@@ -99,32 +105,14 @@ class ItemController extends Controller
         else
             return response()->json(['message'=>'Klaida', 'errors'=> ['name' => ['Įvyko klaida jungiantis į duomenų bazę. Susisiekite su administratoriumi.']]], 422);
     }
-
-    public function changeImage(Request $request){
-
-        Validator::make($request->all(), [ 'id' => 'required|numeric'], [
-          'id.required' => 'Įrankis nežinomas. Apie klaidą praneškina administratoriui.',
-          'id.numeric' => 'Kažkur įvyko klaida identifikuojant įranki. Apie klaidą praneškite administratoriui.'
-        ])->validate();
-
-        if(!is_null($request->image) && $request->image != "null" && $request->image != ""){
-          Validator::make($request->all(), ['image' =>'image|mimes:jpg,jpeg,gif,png|max:4096'], [
-            'image.image' => 'Galite įkelti tik nuotrauką ar paveikslėlį!',
-            'image.mimes' => 'Netinkamas failo plėtinys',
-            'image.max' => 'Failas per didelis.'
-            ])->validate();
-          $image = $request->file('image');
-          $input['imagename'] = time().'.'.$image->getClientOriginalExtension();
-          $destinationPath = public_path('/media/items/');
-          $image->move($destinationPath, $input['imagename']);
-        }else {
-          $input['imagename'] = "";
-        }
-
-        if(Item::find($request->id)->update(['ItemImage' => $input['imagename']]))
-            return response()->json(['message' => 'Atlikta!', 'success' => 'Įrankio nuotrauka sėkmingai pakeista.'], 200);
-        else return response()->json(['message' => 'Klaida', 'errors' => ['name' => ['Kažkur įvyko klaida siunčiant užklausą į duomenų bazę. Susisiekite su administracija.']]],422);
+    //change item identification number
+    public function changeIdentificationNumber(ChangeItemIdentRequest $request){
+        if(Item::find($request->id)->update(['ItemIdNumber' => $request->ident]))
+            return response()->json(['message' => 'Atlikta!', 'success' => 'Įrankio identifikacinis numeris pakeistas.'], 200);
+        else
+            return response()->json(['message'=>'Klaida', 'errors'=> ['name' => ['Įvyko klaida jungiantis į duomenų bazę. Susisiekite su administratoriumi.']]], 422);
     }
+
 
     // marks item as deleted
     public function delete($id){
