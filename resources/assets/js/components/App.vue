@@ -197,6 +197,10 @@ export default {
             searchQuery: ''
             }
     },
+    mounted(){
+      if(window.innerWidth < 1265)
+        this.drawer = false
+    },
     computed: {
     isLoading: function(){
           return !(this.$auth.ready())

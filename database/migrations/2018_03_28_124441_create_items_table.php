@@ -20,6 +20,8 @@ class CreateItemsTable extends Migration
             $table->boolean('ItemConsumable')->default(0);
             $table->string('ItemImage')->nullable();
             $table->boolean('ItemDeleted')->default(0);
+            $table->string('ItemWarranty')->nullable();
+            $table->string('ItemPurchase')->nullable();
             $table->integer('ItemGroupID');
             $table->string('ItemIdNumber')->nullable();
             $table->text('ItemNote')->nullable();

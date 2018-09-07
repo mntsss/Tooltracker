@@ -12,6 +12,8 @@ use App\Http\Requests\GetItemWithdrawalInfo;
 use App\Http\Requests\ReturnItemWithCardRequest;
 use App\Http\Requests\SuspendItemUnconfirmedRequest;
 use App\Http\Requests\ChangeItemIdentRequest;
+use App\Http\Requests\EditItemNoteRequest;
+use App\Http\Requests\SuspendFixRequest;
 use App\Item;
 use App\ItemGroup;
 use App\RfidCode;
@@ -31,7 +33,7 @@ class ItemController extends Controller
    }
 
     public function items($groupID){
-      $items = Item::where('ItemGroupID', $groupID)->existing()->with(['lastWithdrawal', 'lastSuspention', 'lastReservation', 'images'])->get();
+      $items = Item::where('ItemGroupID', $groupID)->existing()->with(['lastWithdrawal' => function($query){ $query->with(['user', 'object']);}, 'lastSuspention' => function($query){ $query->with(['user']);}, 'lastReservation', 'images'])->get();
       $response = [];
       foreach($items as $item){
         array_push($response, ['item'=> $item, 'state' => $this->GetItemState($item)]);
@@ -94,7 +96,7 @@ class ItemController extends Controller
     // returns item and its state by provided ID
     public function get($id){
 
-        $item = Item::where('ItemID', $id)->existing()->with(['lastWithdrawal', 'lastSuspention', 'lastReservation', 'images'])->first();
+        $item = Item::where('ItemID', $id)->existing()->with(['lastWithdrawal' => function($query){ $query->with(['user', 'object']);}, 'lastSuspention' => function($query){ $query->with(['user']); }, 'lastReservation', 'images'])->first();
           return response()->json(['item'=> $item, 'state' => $this->GetItemState($item)], 200);
     }
     // renames item
@@ -112,7 +114,13 @@ class ItemController extends Controller
         else
             return response()->json(['message'=>'Klaida', 'errors'=> ['name' => ['Įvyko klaida jungiantis į duomenų bazę. Susisiekite su administratoriumi.']]], 422);
     }
-
+    //change item note
+    public function changeNote(EditItemNoteRequest $request){
+        if(Item::find($request->id)->update(['ItemNote' => $request->note]))
+            return response()->json(['message' => 'Atlikta!', 'success' => 'Įrankio komentaras pakeistas.'], 200);
+        else
+            return response()->json(['message'=>'Klaida', 'errors'=> ['name' => ['Įvyko klaida jungiantis į duomenų bazę. Susisiekite su administratoriumi.']]], 422);
+    }
 
     // marks item as deleted
     public function delete($id){
@@ -206,6 +214,33 @@ class ItemController extends Controller
       else{
           return respone()->json(['message'=> 'Klaida','errors' => ['name' => ['Nepavyko rasti įrankio priskyrimo informacijos. Įvyko duomenų bazės klaida, arba įrankis nėra naudojamas.']]],422);
       }
+    }
+
+    // suspend item for warranted or unwarranted fix
+
+    public function suspendWarrantedFix(SuspendFixRequest $request){
+      $suspention = ItemSuspention::create([
+        'ItemID' => $request->id,
+        'SuspentionNote' => $request->note,
+        'SuspentionWarrantyFix' => true
+      ]);
+      if($suspention)
+        return response()->json(['message'=> 'Atlikta', 'success' => 'Įrankis įšaldytas.'], 200);
+      else{
+        return response()->json(['message'=> 'Klaida','errors' => ['name' => ['Įvyko duomenų bazės klaida, arba įrankis nėra naudojamas.']]],422);
+      }
+    }
+
+    public function suspendUnwarrantedFix(SuspendFixRequest $request){
+
+      if(ItemSuspention::create([
+        'ItemID' => $request->id,
+        'SuspentionNote' => $request->note,
+        'SuspentionUnwarrantedFix' => true
+      ]))
+        return response()->json(['message' => 'Atlikta!', 'success' => 'Įrankis įšaldytas taisymui.'], 200);
+      else
+        return response()->json(['message'=>'Klaida', 'errors'=> ['name' => ['Įvyko klaida jungiantis į duomenų bazę. Susisiekite su administratoriumi.']]], 422);
     }
 
     //checks if item is currently in reservation

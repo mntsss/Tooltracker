@@ -31,6 +31,7 @@ Route::group(['middleware' => 'jwt.auth'], function(){
     Route::get('get/{id}', 'ItemController@get');
     Route::post('edit/name', 'ItemController@rename');
     Route::post('edit/ident', 'ItemController@changeIdentificationNumber');
+    Route::post('edit/note', 'ItemController@changeNote');
     Route::post('image', 'ItemController@changeImage');
     Route::get('delete/{id}', 'ItemController@delete');
     Route::post('addchip', 'ItemController@addchip');
@@ -44,6 +45,8 @@ Route::group(['middleware' => 'jwt.auth'], function(){
     Route::post('return/card', 'ItemController@returnItemWithCard');
     // created unconfirmed return item suspention
     Route::post('suspend/unconfirmedreturn', 'ItemController@suspendUnconfirmedReturn');
+    Route::post('suspend/warrantedfix', 'ItemController@suspendWarrantedFix');
+    Route::post('suspend/fix', 'ItemController@suspendUnwarrantedFix');
   });
   Route::prefix('user')->group(function(){
       // returns active users list in json

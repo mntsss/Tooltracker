@@ -49,7 +49,6 @@ export default {
   },
   created(){
     this.loadGroups()
-    console.log(this.code)
   },
   computed: {
     username: function(){

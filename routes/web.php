@@ -24,17 +24,3 @@ $this->get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm
 $this->post('password/reset', 'Auth\ResetPasswordController@reset');*/
 
 Route::get('/', 'HomeController@home')->name('home');
-
-Route::prefix('appointment')->group(function(){
-  Route::get('/in', 'HomeController@appointmentIn')->name('appointment.in');
-  Route::post('/vehicles/models', 'OrderController@fillModels')->name('vehicle.models');
-});
-
-Route::prefix('user')->group(function(){
-  Route::get('/password', 'UserController@changePassword')->name('user.settings.password');
-});
-
-Route::prefix('/group')->group(function(){
-  Route::post('/create', 'ItemGroupController@createItemGroup')->name('itemgroup.create');
-  Route::get('/view/{ItemGroupID}', 'ItemController@items')->name('itemgroup.view');
-});

@@ -15,8 +15,10 @@ class ObjectController extends Controller
     }
 
     public function listObjects(){
-        $objects = CObject::where('ObjectFinished', false)->with(['user','itemWithdrawals' => function ($query) {
-            $query->where('ItemWithdrawalReturned', false)->with('item');
+        $objects = CObject::where('ObjectFinished', false)->with(['user','itemWithdrawals' => function ($quer) {
+            $quer->where('ItemWithdrawalReturned', false)->with(['item' => function($q){
+              $q->with(['lastWithdrawal' => function($query){ $query->with(['user', 'object']);}, 'lastSuspention' => function($query){ $query->with(['user']);}, 'lastReservation', 'images']);
+            }]);
         }])->get();
 
         return response()->json($objects, 200);

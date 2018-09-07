@@ -26,6 +26,7 @@ export default {
   },
   created(){
     this.loadGroups()
+
   },
   computed: {
     username: function(){

@@ -18,10 +18,10 @@ class ItemWithdrawal extends Model
         return $this->hasOne('App\ItemImage', 'ItemWithdrawalID', 'ItemWithdrawalID');
     }
     public function user(){
-      return $this->belongsTo('App\User', 'UserID');
+      return $this->hasOne('App\User', 'UserID', 'UserID');
     }
     public function object(){
-      return $this->belongsTo('App\Object', 'ObjectID');
+      return $this->hasOne('App\CObject', 'ObjectID', 'ObjectID');
     }
     public function scopeActive($query){
         return $query->where('ItemWithdrawalReturned', false);
