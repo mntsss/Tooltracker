@@ -46,6 +46,7 @@ export default{
       .then(response => {
         if(response.status == 200){
           swal(response.data.message, response.data.success, 'success').then(val => {this.$modal.hide('item-return-confirm-modal')})
+          this.$emit('reload')
         }
       }).catch(error =>{
 

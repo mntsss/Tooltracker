@@ -7,8 +7,8 @@
          :clickToClose="false"
          @before-open="beforeOpen"
          @before-close="beforeClose">
-         <ItemSuspend></ItemSuspend>
-    <div v-if="item" class="card d-flex bg-dark pt-0 mt-0 px-0">
+         <ItemSuspend v-on:reload="parentReload()"></ItemSuspend>
+    <div v-if="item" class="card d-flex bg-dark pt-0 mt-0 px-0" style="min-height: 275px !important">
       <div class="overlay position-absolute h-100 w-100 bg-dark" v-if="waitingDialog">
         <div class="headline text-light">
                <a @click="$modal.hide('item-return-confirm-modal')" class="float-right"><span class="fas fa-times btn-func-misc"></span></a>
@@ -125,6 +125,7 @@ watch: {
       }).then(response => {
         if(response.status == 200){
           swal(response.data.message, response.data.success, 'success').then(value => { this.$modal.hide('item-return-confirm-modal')})
+          this.parentReload()
         }
       }).catch(error =>{
 
@@ -140,6 +141,9 @@ watch: {
     suspend: function(){
       this.$modal.show('item-suspend-unconfirmed-modal', {item: this.item})
 
+    },
+    parentReload: function(){
+        this.$emit('reload')
     }
   },
   components:{

@@ -8,15 +8,16 @@
         <AddItemChipModal></AddItemChipModal>
         <ItemWarrantyFixModal></ItemWarrantyFixModal>
         <ItemUnwarrantedFixModal></ItemUnwarrantedFixModal>
+        <ItemReturnConfirmation v-on:reload="loadItem()"></ItemReturnConfirmation>
     <div class="container">
 
-    <div class="card" v-if="item">
+    <div class="card" v-if="itemData">
       <v-layout row wrap align-content-center class="card-header pb-0 pt-0 mx-0 theme--dark v-toolbar">
           <v-flex headline shrink justify-start align-content-center>
               <a @click="back()" class="headline"><span class="fa fa-arrow-left text-danger remove-all-margin p-2 btn-func-misc"></span></a>
           </v-flex>
           <v-flex>
-              <div class="text-center headline">{{item.ItemName}}</div>
+              <div class="text-center headline">{{itemData.ItemName}}</div>
           </v-flex>
           <v-flex shrink headline justify-end align-content-center>
               <v-menu offset-y>
@@ -40,40 +41,42 @@
                           </v-flex>
                           <v-flex shrink px-2>Būsena:</v-flex>
                           <v-flex px-2 shrink>{{itemStatus}}</v-flex>
-                          <v-flex v-if="itemStatus == 'Naudojamas' && item.last_withdrawal.object">({{item.last_withdrawal.object.ObjectName}})</v-flex>
-                          <v-flex v-else-if="itemStatus == 'Naudojamas' && item.last_withdrawal.user">({{item.last_withdrawal.user.Username}})</v-flex>
-                          <v-flex v-else-if="itemStatus == 'Laukia patvirtinimo' && item.last_withdrawal.user">({{item.last_withdrawal.user.Username}})</v-flex>
+                          <v-flex v-if="itemStatus == 'Naudojamas' && itemData.last_withdrawal.object">({{itemData.last_withdrawal.object.ObjectName}})</v-flex>
+                          <v-flex v-else-if="itemStatus == 'Naudojamas' && itemData.last_withdrawal.user">({{itemData.last_withdrawal.user.Username}})</v-flex>
+                          <v-flex v-else-if="itemStatus == 'Laukia patvirtinimo' && itemData.last_withdrawal.user">({{itemData.last_withdrawal.user.Username}})</v-flex>
                           <v-flex v-else-if="itemStatus == 'Ištrintas'"><v-btn icon class="text-warning px-3"><v-icon>fa-undo</v-icon></v-btn></v-flex>
+                          <v-flex v-if="itemStatus == 'Taisomas' || itemStatus == 'Garantinis taisymas'"><v-btn outline class="mx-2" @click="fixed()"><v-icon class="text-danger pr-3">fa-check</v-icon>Sutaisyta</v-btn></v-flex>
+                          <v-flex v-else-if="itemStatus == 'Naudojamas'"><v-btn outline class="mx-2" @click="returnItem()"><v-icon class="text-danger pr-3">fa-sign-in-alt</v-icon>Grąžinti į sandėlį</v-btn></v-flex>
                       </v-layout>
-                      <v-layout row wrap align-center v-if="item.ItemIdNumber">
+                      <v-layout row wrap align-center v-if="itemData.ItemIdNumber">
                           <v-flex shrink pa-2 style="width: 40px !important">
                               <v-icon headline class="text-danger">fa-fingerprint</v-icon>
                           </v-flex>
                           <v-flex shrink px-2>Identifikacinis numeris:</v-flex>
-                          <v-flex px-2>{{item.ItemIdNumber}}</v-flex>
+                          <v-flex px-2>{{itemData.ItemIdNumber}}</v-flex>
                       </v-layout>
                       <v-layout row wrap align-center >
                           <v-flex shrink pa-2 style="width: 40px !important">
                               <v-icon headline class="text-danger">fa-calendar-plus</v-icon>
                           </v-flex>
                           <v-flex px-2 shrink>Pridėjimo data:</v-flex>
-                          <v-flex px-2>{{item.created_at}}</v-flex>
+                          <v-flex px-2>{{itemData.created_at}}</v-flex>
                       </v-layout>
-                      <v-layout row wrap align-center v-if="item.ItemPurchase">
+                      <v-layout row wrap align-center v-if="itemData.ItemPurchase">
                           <v-flex shrink pa-2 style="width: 40px !important">
                               <v-icon headline class="text-danger">fa-calendar-alt</v-icon>
                           </v-flex>
                           <v-flex px-2 shrink>Įsigijimo data:</v-flex>
-                          <v-flex px-2>{{item.ItemPurchase}}</v-flex>
+                          <v-flex px-2>{{itemData.ItemPurchase}}</v-flex>
                       </v-layout>
-                      <v-layout row wrap align-center v-if="item.ItemWarranty">
+                      <v-layout row wrap align-center v-if="itemData.ItemWarranty">
                           <v-flex shrink pa-2 style="width: 40px !important">
                               <v-icon headline class="text-danger">fa-calendar-check</v-icon>
                           </v-flex>
                           <v-flex px-2 shrink>Garantinis iki:</v-flex>
-                          <v-flex px-2>{{item.ItemWarranty}}</v-flex>
+                          <v-flex px-2>{{itemData.ItemWarranty}}</v-flex>
                       </v-layout>
-                      <v-layout row wrap align-center v-if="item.ItemConsumable">
+                      <v-layout row wrap align-center v-if="itemData.ItemConsumable">
                           <v-flex shrink pa-2 style="width: 40px !important">
                               <v-icon headline class="text-danger">fa-check</v-icon>
                           </v-flex>
@@ -97,15 +100,15 @@
                       </v-layout>
                       <v-layout row wrap align-center pa-2 justify-end>
                           <v-flex shrink justify-end>
-                            <v-btn outline v-if="!item.ItemDeleted && warrantyFix && itemStatus == 'Sandėlyje'" @click="show('item-warranty-fix-modal')">
+                            <v-btn outline v-if="!itemData.ItemDeleted && warrantyFix && itemStatus == 'Sandėlyje'" @click="show('item-warranty-fix-modal')">
                                 <v-icon class="text-danger">fa-wrench</v-icon>
                                 <span class="mx-2">Garantinis taisymas</span>
                             </v-btn>
-                            <v-btn outline v-if="!item.ItemDeleted && itemStatus == 'Sandėlyje'" @click="show('item-unwarranted-fix-modal')">
+                            <v-btn outline v-if="!itemData.ItemDeleted && itemStatus == 'Sandėlyje'" @click="show('item-unwarranted-fix-modal')">
                                 <v-icon class="text-danger">fa-wrench</v-icon>
                                 <span class="mx-2">Taisymas</span>
                             </v-btn>
-                            <v-btn outline @click="show('edit-user-modal', {user: user})" v-if="!item.ItemDeleted && itemStatus == 'Sandėlyje'">
+                            <v-btn outline @click="show('edit-user-modal', {user: user})" v-if="!itemData.ItemDeleted && itemStatus == 'Sandėlyje'">
                                   <v-icon class="text-danger">fa-user-tag</v-icon>
                                   <span class="mx-2">Priskirti vartotojui</span>
                               </v-btn>
@@ -118,7 +121,7 @@
                   </v-card-text>
               </v-card>
             </v-layout>
-            <v-layout v-if="item.images[0]">
+            <v-layout v-if="itemData.images[0]">
                 <v-flex shrink>
                     <vueImages :imgs="images"
                             :modalclose="true"
@@ -144,10 +147,11 @@ import ChangeItemIdnumberModal from '../modals/ChangeItemIdnumber.vue'
 import AddItemChipModal from '../modals/AddItemChip.vue'
 import ItemWarrantyFixModal from '../modals/ItemWarrantyFix.vue'
 import ItemUnwarrantedFixModal from '../modals/ItemUnwarrantedFix.vue'
+import ItemReturnConfirmation from '../modals/ItemReturnConfirmation.vue'
   export default {
     data(){
       return {
-          item: '',
+          itemData: '',
           itemStatus: '',
           images: [],
           note: '',
@@ -158,7 +162,8 @@ import ItemUnwarrantedFixModal from '../modals/ItemUnwarrantedFix.vue'
             {text: 'Priskirti čipą', click: () =>{this.show('add-item-chip-modal')}},
             {text: 'Pervadinti', click: ()=>{this.show('rename-item-modal')}},
             {text: 'Keisti identifikacinį numerį', click: ()=>{this.show('change-item-idnumber-modal')}},
-            {text: 'Ištrinti', click: ()=>{this.deleteItem()}}
+            {text: 'Keisti garantinį laikotarpį', click: ()=>{this.show('change-item-idnumber-modal')}},
+            {text: 'Ištrinti', click: ()=>{this.deleteItem()}},
           ]
       }
   },
@@ -173,15 +178,15 @@ import ItemUnwarrantedFixModal from '../modals/ItemUnwarrantedFix.vue'
       this.loadItem()
     }
     else {
-      this.item =  this.itemProp.item
+      this.itemData =  this.itemProp.item
       this.itemStatus = this.itemProp.state
-      this.note = this.item.ItemNote
-      if(this.item.images.length == 0){
-          this.images.push({imageUrl: '/media/default_picture.png', caption: this.item.ItemName})
+      this.note = this.itemData.ItemNote
+      if(this.itemData.images.length == 0){
+          this.images.push({imageUrl: '/media/default_picture.png', caption: this.itemData.ItemName})
       }
       else
       {
-          this.item.images.forEach(image => {
+          this.itemData.images.forEach(image => {
               this.images.push({imageUrl: this.$uploadPath+image.ImageName, caption: image.created_at})
           })
       }
@@ -193,12 +198,12 @@ import ItemUnwarrantedFixModal from '../modals/ItemUnwarrantedFix.vue'
   },
   computed: {
     warrantyFix: function(){
-      if(!this.item.ItemWarranty)
+      if(!this.itemData.ItemWarranty)
         return false
       else{
         var now = new Date()
         console.log(now)
-        var formatedWarranty = new Date(this.item.ItemWarranty)
+        var formatedWarranty = new Date(this.itemData.ItemWarranty)
         console.log(formatedWarranty)
         if(now.getTime() < formatedWarranty.getTime())
           return true
@@ -209,22 +214,27 @@ import ItemUnwarrantedFixModal from '../modals/ItemUnwarrantedFix.vue'
   },
   methods: {
     show: function(name){
-      this.$modal.show(name, {itemID: this.item.ItemID})
+      this.$modal.show(name, {itemID: this.itemData.ItemID})
+    },
+    returnItem: function(){
+        var item = this.itemData
+        item.last_withdrawal.image = item.images[0]
+        this.$modal.show('item-return-confirm-modal', {item: item})
     },
     loadItem: function(){
             //this.isLoading = true
-        return this.$http.get('/item/get/'+this.item.ItemID).then((response)=>{
+        return this.$http.get('/item/get/'+this.itemData.ItemID).then((response)=>{
             if(response.status == 200){
                 this.itemStatus = response.data.state
-                this.item = response.data.item
+                this.itemData = response.data.item
                 this.images = [];
-                this.note = this.item.note
-                if(this.item.images.length == 0){
-                    this.images.push({imageUrl: '/media/default_picture.png', caption: this.item.ItemName})
+                this.note = this.itemData.note
+                if(this.itemData.images.length == 0){
+                    this.images.push({imageUrl: '/media/default_picture.png', caption: this.itemData.ItemName})
                 }
                 else
                 {
-                    this.item.images.forEach(image => {
+                    this.itemData.images.forEach(image => {
                         this.images.push({imageUrl: this.$uploadPath+image.ImageName, caption: image.created_at})
                     })
                 }
@@ -236,8 +246,25 @@ import ItemUnwarrantedFixModal from '../modals/ItemUnwarrantedFix.vue'
             }
         })
     },
+    fixed: function(){
+        this.$http.post('/item/suspend/return', {id: this.itemData.ItemID})
+        .then(response => {
+            if(response.status == 200){
+                swal(response.data.message, response.data.success, "success")
+                this.loadItem()
+            }
+        }).catch(error =>{
+            if(error.response.status == 422)
+            {
+              swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
+            }
+            else{
+                swal("Klaida", error.response.data.message, "error");
+            }
+        })
+    },
     editNote: function(){
-      this.$http.post('/item/edit/note', {id: this.item.ItemID, note: this.note})
+      this.$http.post('/item/edit/note', {id: this.itemData.ItemID, note: this.note})
       .then(response => {
         if(response.status == 200)
         {
@@ -265,9 +292,9 @@ import ItemUnwarrantedFixModal from '../modals/ItemUnwarrantedFix.vue'
           }
         }).then(value => {
           if(value){
-            this.$http.get('/item/delete/'+this.item.ItemID).then((response)=>{
+            this.$http.get('/item/delete/'+this.itemData.ItemID).then((response)=>{
                 if(response.status == 200){
-                    swal(response.data.message, response.data.success, "success").then(value => { this.$router.push({ path: '/group/'+this.item.ItemGroupID})})
+                    swal(response.data.message, response.data.success, "success").then(value => { this.$router.push({ path: '/group/'+this.itemData.ItemGroupID})})
                 }
             }).catch(error =>{
                 if(error.response.status == 422)
@@ -291,7 +318,8 @@ import ItemUnwarrantedFixModal from '../modals/ItemUnwarrantedFix.vue'
       ChangeItemIdnumberModal,
       AddItemChipModal,
       ItemWarrantyFixModal,
-      ItemUnwarrantedFixModal
+      ItemUnwarrantedFixModal,
+      ItemReturnConfirmation
   }
 }
 </script>

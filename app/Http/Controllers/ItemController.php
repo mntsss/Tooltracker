@@ -14,6 +14,7 @@ use App\Http\Requests\SuspendItemUnconfirmedRequest;
 use App\Http\Requests\ChangeItemIdentRequest;
 use App\Http\Requests\EditItemNoteRequest;
 use App\Http\Requests\SuspendFixRequest;
+use App\Http\Requests\ReturnSuspentionRequest;
 use App\Item;
 use App\ItemGroup;
 use App\RfidCode;
@@ -241,6 +242,18 @@ class ItemController extends Controller
         return response()->json(['message' => 'Atlikta!', 'success' => 'Įrankis įšaldytas taisymui.'], 200);
       else
         return response()->json(['message'=>'Klaida', 'errors'=> ['name' => ['Įvyko klaida jungiantis į duomenų bazę. Susisiekite su administratoriumi.']]], 422);
+    }
+
+    // marks item suspention as returned
+    public function suspentionReturn(ReturnSuspentionRequest $request){
+        $suspention = ItemSuspention::where('ItemID', $request->id)->orderBy('created_at', 'DESC')->first();
+        if($suspention){
+            $suspention->SuspentionReturned = true;
+            $suspention->save();
+            return response()->json(['message' => 'Atlikta!', 'success' => 'Įrankis grąžintas į sandėlį.'], 200);
+        }
+        else
+          return response()->json(['message'=>'Klaida', 'errors'=> ['name' => ['Įvyko klaida jungiantis į duomenų bazę. Susisiekite su administratoriumi.']]], 422);
     }
 
     //checks if item is currently in reservation

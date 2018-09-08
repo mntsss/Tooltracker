@@ -47,6 +47,8 @@ Route::group(['middleware' => 'jwt.auth'], function(){
     Route::post('suspend/unconfirmedreturn', 'ItemController@suspendUnconfirmedReturn');
     Route::post('suspend/warrantedfix', 'ItemController@suspendWarrantedFix');
     Route::post('suspend/fix', 'ItemController@suspendUnwarrantedFix');
+
+    Route::post('suspend/return', 'ItemController@suspentionReturn');
   });
   Route::prefix('user')->group(function(){
       // returns active users list in json
@@ -85,6 +87,20 @@ Route::group(['middleware' => 'jwt.auth'], function(){
     Route::post('assign', 'ReservationController@createAssignmentReservation');
     // confirm reservation with user signature
     Route::post('confirm/sign', 'ReservationController@confirmReservationWithSignature');
+  });
+
+  Route::prefix('history')->group(function(){
+     Route::prefix('item')->group(function(){
+         Route::get('suspentions/{id}', function(){ return 1;});
+         Route::get('withdrawals/{id}', function(){ return 1;});
+     });
+     Route::prefix('user')->group(function(){
+
+     });
+     Route::prefix('object')->group(function(){
+
+     });
+
   });
 });
 Route::get('sendCode/{code}', 'HomeController@sendCode');
