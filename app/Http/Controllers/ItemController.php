@@ -15,6 +15,9 @@ use App\Http\Requests\ChangeItemIdentRequest;
 use App\Http\Requests\EditItemNoteRequest;
 use App\Http\Requests\SuspendFixRequest;
 use App\Http\Requests\ReturnSuspentionRequest;
+use App\Http\Requests\ChangeItemWarrantyRequest;
+use App\Http\Requests\RestoreItemRequest;
+use App\Http\Requests\DeleteItemRequest;
 use App\Item;
 use App\ItemGroup;
 use App\RfidCode;
@@ -123,9 +126,27 @@ class ItemController extends Controller
             return response()->json(['message'=>'Klaida', 'errors'=> ['name' => ['Įvyko klaida jungiantis į duomenų bazę. Susisiekite su administratoriumi.']]], 422);
     }
 
-    // marks item as deleted
-    public function delete($id){
+    // restore item marked as deleted to selected item group
 
+    public function restore(RestoreItemRequest $request){
+        if(Item::find($request->id)->update(['ItemDeleted' => false, 'ItemGroupID' => $request->groupID]))
+            return response()->json(['message' => 'Atlikta!', 'success' => 'Įrankis sėkmingai atkurtas į pasirinktą grupę.'], 200);
+        else
+            return response()->json(['message'=>'Klaida', 'errors'=> ['name' => ['Įvyko klaida jungiantis į duomenų bazę. Susisiekite su administratoriumi.']]], 422);
+    }
+
+    // change item warranty date
+    public function changeWarranty(ChangeItemWarrantyRequest $request){
+        if(Item::find($request->id)->update(['ItemWarranty' => $request->warranty]))
+            return response()->json(['message' => 'Atlikta!', 'success' => 'Įrankio garantinis laikotarpis pakeistas.'], 200);
+        else
+            return response()->json(['message'=>'Klaida', 'errors'=> ['name' => ['Įvyko klaida jungiantis į duomenų bazę. Susisiekite su administratoriumi.']]], 422);
+    }
+
+    // marks item as deleted
+    public function delete(DeleteItemRequest $request){
+
+      $id = $request->id;
       if($this->checkItemReservation($id))
           return response()->json(['message' => 'Klaida', 'errors' => ['name' => ['Įrankis priskirtas aktyviai rezercavijai, todėl negali būti ištrintas.']]],422);
 

@@ -8,6 +8,8 @@
         <AddItemChipModal></AddItemChipModal>
         <ItemWarrantyFixModal></ItemWarrantyFixModal>
         <ItemUnwarrantedFixModal></ItemUnwarrantedFixModal>
+        <ChangeItemWarrantyModal></ChangeItemWarrantyModal>
+        <RestoreItemModal></RestoreItemModal>
         <ItemReturnConfirmation v-on:reload="loadItem()"></ItemReturnConfirmation>
     <div class="container">
 
@@ -44,7 +46,7 @@
                           <v-flex v-if="itemStatus == 'Naudojamas' && itemData.last_withdrawal.object">({{itemData.last_withdrawal.object.ObjectName}})</v-flex>
                           <v-flex v-else-if="itemStatus == 'Naudojamas' && itemData.last_withdrawal.user">({{itemData.last_withdrawal.user.Username}})</v-flex>
                           <v-flex v-else-if="itemStatus == 'Laukia patvirtinimo' && itemData.last_withdrawal.user">({{itemData.last_withdrawal.user.Username}})</v-flex>
-                          <v-flex v-else-if="itemStatus == 'Ištrintas'"><v-btn icon class="text-warning px-3"><v-icon>fa-undo</v-icon></v-btn></v-flex>
+                          <v-flex v-else-if="itemStatus == 'Ištrintas'"><v-btn icon class="text-warning px-3" @click="show('restore-item-modal')"><v-icon>fa-undo</v-icon></v-btn></v-flex>
                           <v-flex v-if="itemStatus == 'Taisomas' || itemStatus == 'Garantinis taisymas'"><v-btn outline class="mx-2" @click="fixed()"><v-icon class="text-danger pr-3">fa-check</v-icon>Sutaisyta</v-btn></v-flex>
                           <v-flex v-else-if="itemStatus == 'Naudojamas'"><v-btn outline class="mx-2" @click="returnItem()"><v-icon class="text-danger pr-3">fa-sign-in-alt</v-icon>Grąžinti į sandėlį</v-btn></v-flex>
                       </v-layout>
@@ -148,6 +150,8 @@ import AddItemChipModal from '../modals/AddItemChip.vue'
 import ItemWarrantyFixModal from '../modals/ItemWarrantyFix.vue'
 import ItemUnwarrantedFixModal from '../modals/ItemUnwarrantedFix.vue'
 import ItemReturnConfirmation from '../modals/ItemReturnConfirmation.vue'
+import ChangeItemWarrantyModal from '../modals/ChangeItemWarranty.vue'
+import RestoreItemModal from '../modals/RestoreItem.vue'
   export default {
     data(){
       return {
@@ -162,7 +166,7 @@ import ItemReturnConfirmation from '../modals/ItemReturnConfirmation.vue'
             {text: 'Priskirti čipą', click: () =>{this.show('add-item-chip-modal')}},
             {text: 'Pervadinti', click: ()=>{this.show('rename-item-modal')}},
             {text: 'Keisti identifikacinį numerį', click: ()=>{this.show('change-item-idnumber-modal')}},
-            {text: 'Keisti garantinį laikotarpį', click: ()=>{this.show('change-item-idnumber-modal')}},
+            {text: 'Keisti garantinį laikotarpį', click: ()=>{this.$modal.show('change-item-warranty-modal', {itemID: this.itemData.ItemID, warranty: this.itemData.ItemWarranty})}},
             {text: 'Ištrinti', click: ()=>{this.deleteItem()}},
           ]
       }
@@ -202,9 +206,7 @@ import ItemReturnConfirmation from '../modals/ItemReturnConfirmation.vue'
         return false
       else{
         var now = new Date()
-        console.log(now)
         var formatedWarranty = new Date(this.itemData.ItemWarranty)
-        console.log(formatedWarranty)
         if(now.getTime() < formatedWarranty.getTime())
           return true
         else
@@ -292,7 +294,7 @@ import ItemReturnConfirmation from '../modals/ItemReturnConfirmation.vue'
           }
         }).then(value => {
           if(value){
-            this.$http.get('/item/delete/'+this.itemData.ItemID).then((response)=>{
+            this.$http.post('/item/delete', {id: this.itemData.ItemID}).then((response)=>{
                 if(response.status == 200){
                     swal(response.data.message, response.data.success, "success").then(value => { this.$router.push({ path: '/group/'+this.itemData.ItemGroupID})})
                 }
@@ -319,7 +321,9 @@ import ItemReturnConfirmation from '../modals/ItemReturnConfirmation.vue'
       AddItemChipModal,
       ItemWarrantyFixModal,
       ItemUnwarrantedFixModal,
-      ItemReturnConfirmation
+      ItemReturnConfirmation,
+      ChangeItemWarrantyModal,
+      RestoreItemModal
   }
 }
 </script>

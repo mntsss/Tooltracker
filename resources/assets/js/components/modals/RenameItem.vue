@@ -40,7 +40,7 @@ export default {
             'name': this.name
         }).then((response)=>{
             if(response.status == 200){
-                this.$parent.item.ItemName = this.name;
+                this.$parent.itemData.ItemName = this.name;
                 this.$modal.hide('rename-item-modal')
                 swal(response.data.message, response.data.success, "success")
             }

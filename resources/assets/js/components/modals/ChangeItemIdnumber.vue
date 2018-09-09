@@ -42,7 +42,7 @@ export default {
             'ident': this.ident
         }).then((response)=>{
             if(response.status == 200){
-                this.$parent.item.ItemIdNumber = this.ident;
+                this.$parent.itemData.ItemIdNumber = this.ident;
                 this.$modal.hide('change-item-idnumber-modal')
                 swal(response.data.message, response.data.success, "success")
             }

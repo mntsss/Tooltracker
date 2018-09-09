@@ -32,8 +32,10 @@ Route::group(['middleware' => 'jwt.auth'], function(){
     Route::post('edit/name', 'ItemController@rename');
     Route::post('edit/ident', 'ItemController@changeIdentificationNumber');
     Route::post('edit/note', 'ItemController@changeNote');
+    Route::post('edit/warranty', 'ItemController@changeWarranty');
     Route::post('image', 'ItemController@changeImage');
-    Route::get('delete/{id}', 'ItemController@delete');
+    Route::post('delete', 'ItemController@delete');
+    Route::post('restore', 'ItemController@restore');
     Route::post('addchip', 'ItemController@addchip');
     // returns item with given chip code and its state
     Route::post('findcode', 'ItemController@findWithCode');
