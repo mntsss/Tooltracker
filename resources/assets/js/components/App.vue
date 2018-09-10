@@ -161,7 +161,7 @@ export default {
                 children: [
                   {icon: 'keyboard_arrow_right', text: 'Visi', click: ()=> {this.$router.push({name: 'groups'})}},
                   {icon: 'keyboard_arrow_right', text: 'Įšaldyti', click: ()=> {this.$router.push({name: 'suspendedItems'})}},
-                  {icon: 'keyboard_arrow_right', text: 'Nuomoti', click: ''},
+                  {icon: 'keyboard_arrow_right', text: 'Nuomoti', click:  ()=> {this.$router.push({name: 'rentedItems'})}},
                   {icon: 'keyboard_arrow_right', text: 'Ištrinti', click: ()=> {this.$router.push({name: 'deletedItems'})}}
                 ]
               },

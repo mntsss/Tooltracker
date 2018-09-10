@@ -6,7 +6,7 @@ use App\Http\Requests\RentedItemRequest;
 use Illuminate\Http\Request;
 
 use App\RentedItem;
-use App\Object;
+use App\CObject;
 use Auth;
 
 class RentedItemController extends Controller
@@ -26,7 +26,7 @@ class RentedItemController extends Controller
         return response()->json(['message' => 'Atlikta', 'success' => 'Išnuomotas įrankis išsaugotas.']);
     }
 
-    public function get($id){
+    public function get($id = null){
       if($id == null || $id == ""){
         $items = RentedItem::Active()->with('cobject')->get();
       }

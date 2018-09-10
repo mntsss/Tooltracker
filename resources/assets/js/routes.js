@@ -114,8 +114,25 @@ const routes = [
    component: require('./components/item/Return'),
    meta: {
      auth: true
+  }
+},
+{
+   path: '/rented',
+   name: 'rentedItems',
+   component: require('./components/group/Rented'),
+   meta: {
+     auth: true
    }
- }
+},
+{
+   path: '/rented/item',
+   name: 'rentedItem',
+   component: require('./components/item/Rented'),
+   props: true,
+   meta: {
+      auth: true
+   }
+}
 ]
 
 export default routes

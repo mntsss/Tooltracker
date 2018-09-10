@@ -1,0 +1,83 @@
+<template>
+    <div class="loading-parent">
+        <Loading :active.sync="isLoading"
+        :can-cancel="false"
+        :is-full-page="fullPage"></Loading>
+
+  <div class="container" style="min-height: 70vh !important" v-if="items">
+    <div class="card">
+      <v-layout row wrap align-center class="card-header pb-0 pt-0 mx-0 theme--dark v-toolbar">
+          <v-flex>
+              <div class="text-center headline">Nuomoti įrankiai</div>
+          </v-flex>
+          <v-flex shrink headline justify-end align-content-center>
+            <a @click="show('')" class="headline"><span class="fas fa-plus text-danger p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"></span></a>
+          </v-flex>
+      </v-layout>
+      <div class="card-body bg-dark" v-if="items.length > 0">
+        <router-link tag="div" class="row remove-side-margin cursor-pointer" :to="{ name: 'item', params: { itemProp: item}}" v-for="(item, index) in items" :key="index">
+          <div class="col-6">
+            {{item.RentedItemName}}
+          </div>
+          <div class="col text-center">
+            {{itemState(item)}}
+          </div>
+      </router-link>
+      </div>
+      <div class="card-body bg-dark mt-1 border border-dark" v-else-if="items.length == 0">
+        <div class="text-center text-light h5 pa-5">
+          Išnuomotų įrankių nėra...
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</template>
+<script>
+import swal from 'sweetalert'
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/vue-loading.min.css'
+
+  export default {
+    data(){
+      return {
+        items: [],
+        isLoading: true,
+        fullPage: false
+      }
+    },
+    async created(){
+        this.loadItems()
+    },
+    methods: {
+        show (name) {
+            this.$modal.show(name);
+        },
+        loadItems: function(){
+          return this.$http.get('/rented/get/').then((response)=>{
+              if(response.status==200){
+                  this.items = response.data;
+                  this.isLoading = false;
+              }
+          }).catch(error => {
+            swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
+          })
+        },
+        itemState: function(item){
+          if(!item.ObjectID)
+            return "Sandėlyje"
+          else{
+            return "bbz..."
+          }
+        }
+    },
+    components: {
+      Loading
+    }
+}
+</script>
+<style>
+    .loading-parent{
+        position: relative;
+    }
+</style>
