@@ -50,8 +50,9 @@ Route::group(['middleware' => 'jwt.auth'], function(){
     Route::post('suspend/unconfirmedreturn', 'ItemController@suspendUnconfirmedReturn');
     Route::post('suspend/warrantedfix', 'ItemController@suspendWarrantedFix');
     Route::post('suspend/fix', 'ItemController@suspendUnwarrantedFix');
-
-    Route::post('suspend/return', 'ItemController@suspentionReturn');
+    // confirm suspended item for unconfirmed return
+    Route::post('suspend/return/unconfirmed', 'ItemController@returnSuspentionConfirm');
+    Route::post('suspend/return/fixed', 'ItemController@suspentionReturn');
   });
   Route::prefix('user')->group(function(){
       // returns active users list in json
@@ -104,6 +105,13 @@ Route::group(['middleware' => 'jwt.auth'], function(){
 
      });
 
+  });
+  Route::prefix('rented')->group(function(){
+    Route::get('get/{?id}', 'RentedItemController@get');
+    Route::post('create', 'RentedItemController@create');
+    Route::post('edit', 'RentedItemController@edit');
+    Route::post('assign', 'RentedItemController@assign');
+    Route::post('return', 'RentedItemController@return');
   });
 });
 Route::get('sendCode/{code}', 'HomeController@sendCode');

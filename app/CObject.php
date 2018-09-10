@@ -22,7 +22,8 @@ class CObject extends Model
     public function user(){
         return $this->hasOne('App\User', 'UserID', 'UserID');
     }
-    // public function scopeClient($query){
-    //   return $query->where('ClientID', Auth::user()->ClientID);
-    // }
+
+    public function rentedItems(){
+      return $this->hasMany('App\RentedItem', 'ObjectID', 'ObjectID');
+    }
 }

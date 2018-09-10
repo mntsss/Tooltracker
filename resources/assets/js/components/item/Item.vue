@@ -11,6 +11,7 @@
         <ChangeItemWarrantyModal></ChangeItemWarrantyModal>
         <RestoreItemModal></RestoreItemModal>
         <ItemReturnConfirmation v-on:reload="loadItem()"></ItemReturnConfirmation>
+        <ConfirmReturnItemSuspentionModal></ConfirmReturnItemSuspentionModal>
     <div class="container">
 
     <div class="card" v-if="itemData">
@@ -49,9 +50,10 @@
                           <v-flex v-else-if="itemStatus == 'Ištrintas'"><v-btn icon class="text-warning px-3" @click="show('restore-item-modal')"><v-icon>fa-undo</v-icon></v-btn></v-flex>
                           <v-flex v-if="itemStatus == 'Taisomas' || itemStatus == 'Garantinis taisymas'"><v-btn outline class="mx-2" @click="fixed()"><v-icon class="text-danger pr-3">fa-check</v-icon>Sutaisyta</v-btn></v-flex>
                           <v-flex v-else-if="itemStatus == 'Naudojamas'"><v-btn outline class="mx-2" @click="returnItem()"><v-icon class="text-danger pr-3">fa-sign-in-alt</v-icon>Grąžinti į sandėlį</v-btn></v-flex>
+                          <v-flex v-else-if="itemStatus == 'Laukia patvirtinimo'"><v-btn outline class="mx-2" @click="$modal.show('confirm-return-item-suspention-modal', {itemID: itemData.ItemID})"><v-icon class="text-danger pr-3">fa-check</v-icon>Patvirtinti grąžinimą</v-btn></v-flex>
                       </v-layout>
-                      <v-layout row align-center v-if="!itemData.last_suspention.SuspentionReturned && itemData.last_suspention.SuspentionNote">
-                          <v-flex pa-2 xs10>
+                      <v-layout row align-center v-if="itemData.last_suspention">
+                          <v-flex pa-2 xs10 v-if="!itemData.last_suspention.SuspentionReturned && itemData.last_suspention.SuspentionNote">
                             <v-textarea
                               name="note"
                               :disabled = 'true'
@@ -122,10 +124,6 @@
                                 <v-icon class="text-danger">fa-wrench</v-icon>
                                 <span class="mx-2">Taisymas</span>
                             </v-btn>
-                            <v-btn outline @click="show('edit-user-modal', {user: user})" v-if="!itemData.ItemDeleted && itemStatus == 'Sandėlyje'">
-                                  <v-icon class="text-danger">fa-user-tag</v-icon>
-                                  <span class="mx-2">Priskirti vartotojui</span>
-                              </v-btn>
                               <v-btn outline @click="show('add-user-card-modal', {id: user.UserID})">
                                   <v-icon class="text-danger">fa-history</v-icon>
                                   <span class="mx-2">Istorija</span>
@@ -164,6 +162,7 @@ import ItemUnwarrantedFixModal from '../modals/ItemUnwarrantedFix.vue'
 import ItemReturnConfirmation from '../modals/ItemReturnConfirmation.vue'
 import ChangeItemWarrantyModal from '../modals/ChangeItemWarranty.vue'
 import RestoreItemModal from '../modals/RestoreItem.vue'
+import ConfirmReturnItemSuspentionModal from '../modals/ConfirmReturnItemSuspention.vue'
   export default {
     data(){
       return {
@@ -206,7 +205,6 @@ import RestoreItemModal from '../modals/RestoreItem.vue'
               this.images.push({imageUrl: this.$uploadPath+image.ImageName, caption: image.created_at})
           })
       }
-
     }
   },
   mounted(){
@@ -261,21 +259,32 @@ import RestoreItemModal from '../modals/RestoreItem.vue'
         })
     },
     fixed: function(){
-        this.$http.post('/item/suspend/return', {id: this.itemData.ItemID})
-        .then(response => {
-            if(response.status == 200){
-                swal(response.data.message, response.data.success, "success")
-                this.loadItem()
-            }
-        }).catch(error =>{
-            if(error.response.status == 422)
-            {
-              swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
-            }
-            else{
-                swal("Klaida", error.response.data.message, "error");
-            }
-        })
+      swal({
+        title: 'Patvirtinti įrankio sutvarkymą ir gražinimą į sandėlį',
+        icon: 'warning',
+        dangerMode: true,
+        buttons: {
+          del: { text: 'Patvirtinti', value: true},
+          cancel: {text: 'Atšaukti'}
+        }
+      }).then(value => {
+        if(value){
+          this.$http.post('/item/suspend/return/fixed', {id: this.itemData.ItemID})
+          .then(response => {
+              if(response.status == 200){
+                  swal(response.data.message, response.data.success, "success")
+                  this.loadItem()
+              }
+          }).catch(error =>{
+              if(error.response.status == 422)
+              {
+                swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
+              }
+              else{
+                  swal("Klaida", error.response.data.message, "error");
+              }
+          })
+        }})
     },
     editNote: function(){
       this.$http.post('/item/edit/note', {id: this.itemData.ItemID, note: this.note})
@@ -335,7 +344,8 @@ import RestoreItemModal from '../modals/RestoreItem.vue'
       ItemUnwarrantedFixModal,
       ItemReturnConfirmation,
       ChangeItemWarrantyModal,
-      RestoreItemModal
+      RestoreItemModal,
+      ConfirmReturnItemSuspentionModal
   }
 }
 </script>

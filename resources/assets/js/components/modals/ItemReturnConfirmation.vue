@@ -7,7 +7,6 @@
          :clickToClose="false"
          @before-open="beforeOpen"
          @before-close="beforeClose">
-         <ItemSuspend v-on:reload="parentReload()"></ItemSuspend>
     <div v-if="item" class="card d-flex bg-dark pt-0 mt-0 px-0" style="min-height: 275px !important">
       <div class="overlay position-absolute h-100 w-100 bg-dark" v-if="waitingDialog">
         <div class="headline text-light">
@@ -31,6 +30,25 @@
           </v-layout>
         </v-container>
       </div>
+
+      <div class="overlay position-absolute h-100 w-100 bg-dark" v-if="suspentionComment">
+        <div class="card bg-dark" v-if="item">
+          <div class="card-header h5 bg-dark text-light">
+              Įrankio {{item.ItemName}} įšaldymas dėl apgadinimo <a @click="$modal.hide('item-return-confirm-modal')" class="float-right"><span class="fas fa-times btn-func-misc"></span></a>
+          </div>
+          <v-layout>
+            <v-flex xs12>
+              <v-textarea v-model="note" box label="Komentaras" type="text" max="500" counter="500" class="mx-2"></v-textarea>
+            </v-flex>
+          </v-layout>
+          <v-layout justify-center align-bottom>
+            <v-flex shrink>
+              <v-btn class="ma-5" @click="suspendSave()"><v-icon class="text-danger mr-3">fa-lock</v-icon>Įšaldyti</v-btn>
+            </v-flex>
+          </v-layout>
+        </div>
+      </div>
+
       <div class="card-header headline bg-dark text-light">
           Grąžinamo įrankio patvirtinimas <a @click="$modal.hide('item-return-confirm-modal')" class="float-right"><span class="fas fa-times btn-func-misc"></span></a>
       </div>
@@ -73,8 +91,10 @@ export default{
   data(){
     return {
       item: null,
+      note: null,
       quantity: null,
       waitingDialog: false,
+      suspentionComment: false,
       code: null,
       loading: false
     }
@@ -116,6 +136,9 @@ watch: {
     confirm: function(){
       this.waitingDialog = true
     },
+    suspend: function(){
+      this.suspentionComment = true
+    },
     save: function(){
       this.loading = true
       this.$http.post('/item/return/card', {
@@ -138,17 +161,30 @@ watch: {
           }
       })
     },
-    suspend: function(){
-      this.$modal.show('item-suspend-unconfirmed-modal', {item: this.item})
+    suspendSave: function(){
+      this.$http.post('/item/suspend/unconfirmedreturn', {id: this.item.ItemID, note: this.note})
+      .then(response => {
+        if(response.status == 200){
+          swal(response.data.message, response.data.success, 'success').then(val => {this.$modal.hide('item-return-confirm-modal')})
+          parentReload()
+        }
+      }).catch(error =>{
 
+          if(error.response.status == 422)
+          {
+              swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error")
+          }
+          else{
+              swal("Klaida", error.response.data.message, "error").then(value => { this.$modal.hide('item-return-confirm-modal')})
+          }
+      })
     },
     parentReload: function(){
         this.$emit('reload')
     }
   },
   components:{
-    vueImages,
-    ItemSuspend
+    vueImages
   }
 }
 </script>

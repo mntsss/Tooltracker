@@ -79,7 +79,7 @@
     <v-toolbar app fixed clipped-left v-if="$auth.check()">
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title><span class="headline shrink">Tool</span><span class="shrink headline text-danger pr-5">Tracker</span></v-toolbar-title>
-      <v-form @submit.prevent="search">
+      <div>
       <v-text-field
         flat
         solo-inverted
@@ -87,12 +87,23 @@
         prepend-inner-icon="search"
         label="Paieška..."
         v-model = "searchQuery"
+        v-on:keydown="search"
         class="hidden-sm-and-down"
       ></v-text-field>
-      <div class="search-result-wrapper">
-          Rezultatai...
+      <div class="search-result-wrapper bg-dark" v-if="resultBox && searchResults">
+        <v-list>
+          <template v-for="(item, index) in searchResults">
+            <v-list-tile :key="index" @click="searchItem(item)">
+              <v-list-tile-content>
+                <v-list-tile-title>{{ item.item.ItemName }}</v-list-tile-title>
+                <v-list-tile-sub-title class="text--primary">{{ item.state }}</v-list-tile-sub-title>
+              </v-list-tile-content>
+            </v-list-tile>
+            <v-divider v-if="index + 1 < searchResults.length" :key="`divider-${index}`" class="ma-0"></v-divider>
+          </template>
+        </v-list>
       </div>
-      </v-form>
+    </div>
       <v-spacer></v-spacer>
       <v-menu offset-y>
         <v-btn icon slot="activator">
@@ -197,7 +208,8 @@ export default {
             x: 'right',
             mode: 'vertical',
             timeout: 6000,
-            searchQuery: ''
+            searchQuery: '',
+            searchResults: null
             }
     },
     mounted(){
@@ -213,8 +225,16 @@ export default {
       },
     snackbarText: function(){
       return 'Nuskaitytas kodas: '+this.RFIDcode
-      }
     },
+    resultBox: function(){
+        if(this.searchQuery.length < 3 || this.searchResults == null)
+          return false
+        else if(this.searchResults.length == 0)
+          return false
+        else
+          return true
+    }
+  },
     watch:{
       RFIDcode(oldRFIDcode, newRFIDcode){
         this.snackbar = true
@@ -222,10 +242,23 @@ export default {
     },
     methods: {
       search: function(){
-        this.$http.post('/item/search', {query: this.searchQuery}).then(response =>{
-          if(response.status == 200)
-            console.log(response.data)
-        })
+        if(this.searchQuery.length >= 3)
+        {
+          this.searchResults = null
+          this.$http.post('/item/search', {query: this.searchQuery}).then(response =>{
+            if(response.status == 200)
+            {
+              this.searchResults = response.data
+            }
+          })
+        }
+        else
+          this.searchResults = null
+      },
+      searchItem: function(item){
+        this.searchResults = null
+        this.searchQuery = ''
+        this.$router.push({name: 'item', params: { itemProp: item}})
       }
     },
   components: {
@@ -245,10 +278,14 @@ export default {
     position: absolute;
     bottom: auto;
     z-index: 100;
-    height: 250px;
-    overflow-y: scroll;
+    height: auto;
+    max-height: 250px;
+    overflow-y: auto;
     width: 80%;
-    max-width: 576px;
-    background-color: white;
+    max-width: 320px;
+    min-width: 180px;
+    ::-webkit-scrollbar {
+    display: none;
+  }
 }
 </style>

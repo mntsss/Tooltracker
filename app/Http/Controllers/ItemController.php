@@ -18,6 +18,7 @@ use App\Http\Requests\ReturnSuspentionRequest;
 use App\Http\Requests\ChangeItemWarrantyRequest;
 use App\Http\Requests\RestoreItemRequest;
 use App\Http\Requests\DeleteItemRequest;
+use App\Http\Requests\ConfirmReturnSuspentionRequest;
 use App\Item;
 use App\ItemGroup;
 use App\RfidCode;
@@ -290,6 +291,26 @@ class ItemController extends Controller
           return response()->json(['message'=>'Klaida', 'errors'=> ['name' => ['Įvyko klaida jungiantis į duomenų bazę. Susisiekite su administratoriumi.']]], 422);
     }
 
+    // marks item suspention of unconfirmed return as returned and completes item withdrawal return
+    public function returnSuspentionConfirm(ConfirmReturnSuspentionRequest $request){
+      if(Auth::user()->UserRFIDCode != $request->code)
+        return response()->json(['message' => 'Klaida', 'errors' => ['name' => ['Nuskaityta kortelė priklauso ne jums. Nuskaitykite savo kortelę.']]], 422);
+      $suspention = ItemSuspention::where('ItemID', $request->id)->orderBy('created_at', 'DESC')->first();
+      if($suspention)
+        {
+          $suspention->SuspentionReturned = true;
+          $suspention->save();
+        }
+      $withdrawal = ItemWithdrawal::where('ItemID', $request->id)->orderBy('created_at', 'DESC')->first();
+      if($withdrawal){
+        $withdrawal->ItemWithdrawalReturned = true;
+        $withdrawal->ItemWithdrawalReturnedQuantity = $withdrawal->ItemWithdrawalQuantity;
+        $withdrawal->ItemWithdrawalReturnConfirmCard = $request->code;
+        $withdrawal->ItemWithdrawalReturnConfirmedBy = Auth::user()->UserID;
+        $withdrawal->save();
+      }
+      return response()->json(['message' => 'Atlikta', 'success' => 'Įrankio įšaldymas panaikintas, įrankis grąžintas į sandėlį.'], 200);
+    }
     //checks if item is currently in reservation
     public function checkItemReservation($id){
       $reservationCheck = Item::find($id)->reservations()->get();
