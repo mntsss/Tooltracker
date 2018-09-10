@@ -89,6 +89,9 @@
         v-model = "searchQuery"
         class="hidden-sm-and-down"
       ></v-text-field>
+      <div class="search-result-wrapper">
+          Rezultatai...
+      </div>
       </v-form>
       <v-spacer></v-spacer>
       <v-menu offset-y>
@@ -237,5 +240,15 @@ export default {
 }
 .fa, .fas {
     font-weight: 900 !important;
+}
+.search-result-wrapper{
+    position: absolute;
+    bottom: auto;
+    z-index: 100;
+    height: 250px;
+    overflow-y: scroll;
+    width: 80%;
+    max-width: 576px;
+    background-color: white;
 }
 </style>

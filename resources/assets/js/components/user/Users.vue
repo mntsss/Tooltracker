@@ -7,8 +7,8 @@
         :can-cancel="false"
         :is-full-page="fullPage"></Loading>
         <div class="container" style="min-height: 70vh !important">
-            <div class="card">
-                <v-layout row wrap align-center class="card-header pb-0 pt-0 theme--dark v-toolbar mx-0">
+            <div class="card bg-dark" v-if="users">
+                <v-layout row wrap align-center class="card-header pb-0 pt-0 mb-0 theme--dark v-toolbar mx-0">
                     <v-flex headline align-center>
                         <div class="text-center mb-0">
                             Vartotojai
@@ -18,7 +18,7 @@
                         <a @click="show('create-user-modal')" class="headline"><span class="fas fa-plus text-danger p-2 btn-func-misc ml-2 mr-2 mb-0 mt-0"></span></a>
                     </v-flex>
                 </v-layout>
-                <v-container class="card-body">
+                <v-container class="card-body bg-dark mt-0 pt-4" v-if="users.length > 0">
                     <v-layout row wrap align-center>
                         <v-expansion-panel>
                             <v-expansion-panel-content v-for="(user, i) in users" :key="i">
@@ -103,6 +103,11 @@
                         </v-expansion-panel>
                     </v-layout>
                 </v-container>
+                <div class="card-body bg-dark mt-1 border border-dark" v-else-if="users.length == 0">
+                  <div class="text-center text-light h5 pa-5">
+                    Vartotojų nėra...
+                  </div>
+                </div>
             </div>
 
         </div>

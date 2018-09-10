@@ -5,10 +5,10 @@
         :can-cancel="false"
         :is-full-page="fullPage"></Loading>
         <div class="container" style="min-height: 70vh !important">
-            <div class="card">
+            <div class="card bg-dark" v-if="users">
                 <v-layout row wrap align-center class="card-header pb-0 pt-0 theme--dark v-toolbar mx-0">
                     <v-flex headline align-center>
-                        <div class="text-center mb-0">
+                        <div class="text-center mb-0 pa-1">
                             Ištrinti vartotojai
                         </div>
                     </v-flex>

@@ -9,7 +9,7 @@
     <ChangeImageModal></ChangeImageModal>
     <CreateItemModal></CreateItemModal>
     <div class="card">
-      <v-layout row wrap align-center class="card-header pb-0 pt-0 mx-0 theme--dark v-toolbar">
+      <v-layout row wrap align-center class="card-header pb-0 pt-0 mx-0 theme--dark v-toolbar" v-if="items">
           <v-flex headline shrink justify-start align-content-center>
               <a @click="$router.push({name: 'groups'})" class="headline"><span class="fa fa-arrow-left text-danger remove-all-margin p-2 btn-func-misc"></span></a>
           </v-flex>
@@ -28,8 +28,8 @@
               </v-menu>
           </v-flex>
       </v-layout>
-      <div class="card-body" v-if="items.length > 0">
-        <router-link tag="div" class="row remove-side-margin cursor-pointer text-dark" :to="{ name: 'item', params: { itemProp: item}}" v-for="item in items" :key="item.item.ItemID">
+      <div class="card-body bg-dark" v-if="items.length > 0">
+        <router-link tag="div" class="row remove-side-margin cursor-pointer" :to="{ name: 'item', params: { itemProp: item}}" v-for="item in items" :key="item.item.ItemID">
           <div class="col-6">
             {{item.item.ItemName}}
           </div>

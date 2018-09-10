@@ -5,7 +5,7 @@
         :can-cancel="false"
         :is-full-page="fullPage"></Loading>
     <v-container>
-        <v-layout row>
+        <v-layout row v-if="objects">
                 <v-layout row mb-3 class="theme--dark v-toolbar">
                     <v-flex headline align-center>
                         <div class="text-center mb-0">
@@ -16,7 +16,7 @@
                         <a @click="show('add-object-modal')" class="headline"><span class="fas fa-plus text-danger p-2 btn-func-misc ml-2 mr-2 mb-0 mt-0"></span></a>
                     </v-flex>
                 </v-layout>
-                <v-card-text>
+                <v-card-text v-if="objects.length > 0">
                     <v-layout row mx-0>
                         <v-expansion-panel>
                             <v-expansion-panel-content v-for="(object, i) in objects" :key="i">
@@ -62,6 +62,11 @@
                         </v-expansion-panel>
                     </v-layout>
                 </v-card-text>
+                <div class="card-body bg-dark mt-1 border border-dark" v-else-if="objects.length == 0">
+                  <div class="text-center text-light h5 pa-5">
+                    Objektų nėra...
+                  </div>
+                </div>
         </v-layout>
     </v-container>
 </div>

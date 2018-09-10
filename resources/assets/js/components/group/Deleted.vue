@@ -4,25 +4,15 @@
         :can-cancel="false"
         :is-full-page="fullPage"></Loading>
 
-  <div class="container" style="min-height: 70vh !important">
+  <div class="container" style="min-height: 70vh !important" v-if="items">
     <div class="card">
       <v-layout row wrap align-center class="card-header pb-0 pt-0 mx-0 theme--dark v-toolbar">
           <v-flex>
               <div class="text-center headline">Ištrinti įrankiai</div>
           </v-flex>
-          <!-- <v-flex shrink headline justify-end align-content-center>
-              <v-menu offset-y>
-                <a slot="activator" class="headline"><span class="fas fa-ellipsis-v text-danger p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"></span></a>
-                <v-list>
-                  <v-list-tile v-for="(item, index) in dropdownMeniu" :key="index" @click="item.click">
-                    <v-list-tile-title>{{item.text}}</v-list-tile-title>
-                  </v-list-tile>
-                </v-list>
-              </v-menu>
-          </v-flex> -->
       </v-layout>
-      <div class="card-body" v-if="items.length > 0">
-        <router-link tag="div" class="row remove-side-margin cursor-pointer text-dark" :to="{ name: 'item', params: { itemProp: {item: item, state: 'Ištrintas'}}}" v-for="item in items" :key="item.ItemID">
+      <div class="card-body bg-dark" v-if="items.length > 0">
+        <router-link tag="div" class="row remove-side-margin cursor-pointer" :to="{ name: 'item', params: { itemProp: {item: item, state: 'Ištrintas'}}}" v-for="item in items" :key="item.ItemID">
           <div class="col-6">
             {{item.ItemName}}
           </div>

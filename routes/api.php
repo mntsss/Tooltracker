@@ -26,6 +26,7 @@ Route::group(['middleware' => 'jwt.auth'], function(){
   });
   Route::prefix('item')->group(function(){
     Route::get('list/{groupID}', 'ItemController@items');
+    Route::get('suspended', 'ItemController@suspendedItems');
     Route::get('deleted', 'ItemController@deletedItems');
     Route::post('create', 'ItemController@create');
     Route::get('get/{id}', 'ItemController@get');

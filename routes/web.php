@@ -24,3 +24,7 @@ $this->get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm
 $this->post('password/reset', 'Auth\ResetPasswordController@reset');*/
 
 Route::get('/', 'HomeController@home')->name('home');
+
+// Route::get('/{catchall?}', function () {
+//     return response()->view('layouts/main');
+// })->where('catchall', '(.*)');

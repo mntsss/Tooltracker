@@ -15,18 +15,11 @@ class HomeController extends Controller
 {
     public function __construct()
     {
-      // $this->middleware('auth');
     }
 
     public function home()
     {
-      /*$param['itemGroups'] = ItemGroup::client()->get();
-      $items = [];
-      foreach($param['itemGroups'] as $group){
-          $items[$group->ItemGroupID] = Item::client()->where('ItemGroupID', $group->ItemGroupID)->get()->toArray();
-      }
-      $param['items'] = json_encode($items);*/
-      return view('layouts/main')->with('param', []);
+      return view('layouts/main');
     }
 
     public function sendCode($code){

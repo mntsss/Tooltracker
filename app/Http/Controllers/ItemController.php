@@ -36,6 +36,7 @@ class ItemController extends Controller
        $this->middleware('auth');
    }
 
+   // returns item list for provided group id
     public function items($groupID){
       $items = Item::where('ItemGroupID', $groupID)->existing()->with(['lastWithdrawal' => function($query){ $query->with(['user', 'object']);}, 'lastSuspention' => function($query){ $query->with(['user']);}, 'lastReservation', 'images'])->get();
       $response = [];
@@ -44,6 +45,18 @@ class ItemController extends Controller
       }
       return response()->json($response);
     }
+
+    // returns suspended item list
+    public function suspendedItems(){
+        $items = Item::existing()->with(['lastWithdrawal' => function($query){ $query->with(['user', 'object']);}, 'lastSuspention' => function($query){ $query->Active()->with(['user']);}, 'lastReservation', 'images'])->get();
+        $response = [];
+        foreach($items as $item){
+            if($item->lastSuspention)
+                array_push($response, ['item'=> $item, 'state' => $this->GetItemState($item)]);
+        }
+        return response()->json($response);
+    }
+
 
     public function deletedItems(){
         $items = Item::where('ItemDeleted', true)->with(['lastWithdrawal', 'lastSuspention', 'lastReservation', 'images'])->orderBy('updated_at', 'DESC')->get();

@@ -50,6 +50,18 @@
                           <v-flex v-if="itemStatus == 'Taisomas' || itemStatus == 'Garantinis taisymas'"><v-btn outline class="mx-2" @click="fixed()"><v-icon class="text-danger pr-3">fa-check</v-icon>Sutaisyta</v-btn></v-flex>
                           <v-flex v-else-if="itemStatus == 'Naudojamas'"><v-btn outline class="mx-2" @click="returnItem()"><v-icon class="text-danger pr-3">fa-sign-in-alt</v-icon>Grąžinti į sandėlį</v-btn></v-flex>
                       </v-layout>
+                      <v-layout row align-center v-if="!itemData.last_suspention.SuspentionReturned && itemData.last_suspention.SuspentionNote">
+                          <v-flex pa-2 xs10>
+                            <v-textarea
+                              name="note"
+                              :disabled = 'true'
+                              box
+                              label="Įšaldymo komentaras"
+                              auto-grow
+                              v-model= "itemData.last_suspention.SuspentionNote"
+                            ></v-textarea>
+                          </v-flex>
+                      </v-layout>
                       <v-layout row wrap align-center v-if="itemData.ItemIdNumber">
                           <v-flex shrink pa-2 style="width: 40px !important">
                               <v-icon headline class="text-danger">fa-fingerprint</v-icon>

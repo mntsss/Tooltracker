@@ -533,7 +533,7 @@ if(false) {
 "use strict";
 
 
-var bind = __webpack_require__(19);
+var bind = __webpack_require__(16);
 var isBuffer = __webpack_require__(39);
 
 /*global toString:true*/
@@ -12483,10 +12483,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(21);
+    adapter = __webpack_require__(18);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(21);
+    adapter = __webpack_require__(18);
   }
   return adapter;
 }
@@ -12561,7 +12561,7 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(17)))
 
 /***/ }),
 /* 12 */
@@ -12572,147 +12572,6 @@ module.exports = __webpack_require__(91);
 
 /***/ }),
 /* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(0)
-/* script */
-var __vue_script__ = __webpack_require__(93)
-/* template */
-var __vue_template__ = __webpack_require__(94)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources\\assets\\js\\components\\modals\\RenameGroup.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-1a80ff3c", Component.options)
-  } else {
-    hotAPI.reload("data-v-1a80ff3c", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(0)
-/* script */
-var __vue_script__ = __webpack_require__(95)
-/* template */
-var __vue_template__ = __webpack_require__(96)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources\\assets\\js\\components\\modals\\ChangeGroupImage.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-e448788a", Component.options)
-  } else {
-    hotAPI.reload("data-v-e448788a", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(0)
-/* script */
-var __vue_script__ = __webpack_require__(97)
-/* template */
-var __vue_template__ = __webpack_require__(98)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources\\assets\\js\\components\\modals\\CreateItem.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-2ede83be", Component.options)
-  } else {
-    hotAPI.reload("data-v-2ede83be", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15253,7 +15112,7 @@ Popper.Defaults = Defaults;
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(7)))
 
 /***/ }),
-/* 17 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -25624,13 +25483,13 @@ return jQuery;
 
 
 /***/ }),
-/* 18 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(38);
 
 /***/ }),
-/* 19 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25648,7 +25507,7 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 20 */
+/* 17 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -25838,7 +25697,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 21 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25849,7 +25708,7 @@ var settle = __webpack_require__(42);
 var buildURL = __webpack_require__(44);
 var parseHeaders = __webpack_require__(45);
 var isURLSameOrigin = __webpack_require__(46);
-var createError = __webpack_require__(22);
+var createError = __webpack_require__(19);
 var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(47);
 
 module.exports = function xhrAdapter(config) {
@@ -26025,7 +25884,7 @@ module.exports = function xhrAdapter(config) {
 
 
 /***/ }),
-/* 22 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26050,7 +25909,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-/* 23 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26062,7 +25921,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 24 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26088,7 +25947,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 25 */
+/* 22 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -27033,7 +26892,7 @@ var index_esm = {
 
 
 /***/ }),
-/* 26 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
@@ -27080,7 +26939,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 27 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
@@ -27117,6 +26976,147 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-01e7f602", Component.options)
   } else {
     hotAPI.reload("data-v-01e7f602", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(93)
+/* template */
+var __vue_template__ = __webpack_require__(94)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\modals\\RenameGroup.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1a80ff3c", Component.options)
+  } else {
+    hotAPI.reload("data-v-1a80ff3c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(95)
+/* template */
+var __vue_template__ = __webpack_require__(96)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\modals\\ChangeGroupImage.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-e448788a", Component.options)
+  } else {
+    hotAPI.reload("data-v-e448788a", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(97)
+/* template */
+var __vue_template__ = __webpack_require__(98)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\modals\\CreateItem.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-2ede83be", Component.options)
+  } else {
+    hotAPI.reload("data-v-2ede83be", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -27258,7 +27258,7 @@ module.exports = (function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(33);
-module.exports = __webpack_require__(216);
+module.exports = __webpack_require__(219);
 
 
 /***/ }),
@@ -27270,11 +27270,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(59);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_axios__ = __webpack_require__(60);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_vue_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vuex__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vuex__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vue_signature_pad__ = __webpack_require__(61);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vue_js_modal__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vue_js_modal___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_vue_js_modal__);
@@ -27283,8 +27283,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_vuetify__ = __webpack_require__(65);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_vuetify___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_vuetify__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__routes__ = __webpack_require__(66);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__store__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_App_vue__ = __webpack_require__(199);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__store__ = __webpack_require__(201);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_App_vue__ = __webpack_require__(202);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_App_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__components_App_vue__);
 __webpack_require__(34);
 
@@ -27316,7 +27316,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_8_vuet
     error: '#DC3545'
   } });
 //api requests setup with jwt tokens
-var tokenProvider = __webpack_require__(206);
+var tokenProvider = __webpack_require__(209);
 __WEBPACK_IMPORTED_MODULE_2_axios___default.a.defaults.baseURL = window.location.href + 'api';
 var instance = __WEBPACK_IMPORTED_MODULE_2_axios___default.a.create({
   baseURL: window.location.href + 'api'
@@ -27343,10 +27343,10 @@ router.beforeEach(function (to, from, next) {
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.router = router;
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.store = __WEBPACK_IMPORTED_MODULE_10__store__["a" /* default */];
 //jwt auth init
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__webpack_require__(209), {
-  auth: __webpack_require__(213),
-  http: __webpack_require__(214),
-  router: __webpack_require__(215),
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__webpack_require__(212), {
+  auth: __webpack_require__(216),
+  http: __webpack_require__(217),
+  router: __webpack_require__(218),
   tokenDefaultName: 'access_token'
 });
 
@@ -27374,7 +27374,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_laravel_echo__);
 
 window._ = __webpack_require__(35);
-window.Popper = __webpack_require__(16).default;
+window.Popper = __webpack_require__(13).default;
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -27383,7 +27383,7 @@ window.Popper = __webpack_require__(16).default;
  */
 
 try {
-    window.$ = window.jQuery = __webpack_require__(17);
+    window.$ = window.jQuery = __webpack_require__(14);
 
     __webpack_require__(37);
 } catch (e) {}
@@ -27394,7 +27394,7 @@ try {
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = __webpack_require__(18);
+window.axios = __webpack_require__(15);
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
@@ -44580,7 +44580,7 @@ module.exports = function(module) {
   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
   */
 (function (global, factory) {
-   true ? factory(exports, __webpack_require__(17), __webpack_require__(16)) :
+   true ? factory(exports, __webpack_require__(14), __webpack_require__(13)) :
   typeof define === 'function' && define.amd ? define(['exports', 'jquery', 'popper.js'], factory) :
   (factory((global.bootstrap = {}),global.jQuery,global.Popper));
 }(this, (function (exports,$,Popper) { 'use strict';
@@ -48528,7 +48528,7 @@ module.exports = function(module) {
 
 
 var utils = __webpack_require__(6);
-var bind = __webpack_require__(19);
+var bind = __webpack_require__(16);
 var Axios = __webpack_require__(40);
 var defaults = __webpack_require__(11);
 
@@ -48563,9 +48563,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(24);
+axios.Cancel = __webpack_require__(21);
 axios.CancelToken = __webpack_require__(54);
-axios.isCancel = __webpack_require__(23);
+axios.isCancel = __webpack_require__(20);
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -48718,7 +48718,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 "use strict";
 
 
-var createError = __webpack_require__(22);
+var createError = __webpack_require__(19);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -49151,7 +49151,7 @@ module.exports = InterceptorManager;
 
 var utils = __webpack_require__(6);
 var transformData = __webpack_require__(51);
-var isCancel = __webpack_require__(23);
+var isCancel = __webpack_require__(20);
 var defaults = __webpack_require__(11);
 var isAbsoluteURL = __webpack_require__(52);
 var combineURLs = __webpack_require__(53);
@@ -49311,7 +49311,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 "use strict";
 
 
-var Cancel = __webpack_require__(24);
+var Cancel = __webpack_require__(21);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -59377,7 +59377,7 @@ return /******/ (function(modules) { // webpackBootstrap
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7), __webpack_require__(20)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7), __webpack_require__(17)))
 
 /***/ }),
 /* 59 */
@@ -83839,7 +83839,7 @@ var routes = [{
 }, {
   path: '/login',
   name: 'login',
-  component: __webpack_require__(27),
+  component: __webpack_require__(24),
   meta: {
     auth: false
   }
@@ -83862,63 +83862,63 @@ var routes = [{
 }, {
   path: '/item/deleted',
   name: 'deletedItems',
-  component: __webpack_require__(132),
+  component: __webpack_require__(135),
   meta: {
     auth: true
   }
 }, {
   path: '/item/suspended',
   name: 'suspendedItems',
-  component: __webpack_require__(137),
+  component: __webpack_require__(140),
   meta: {
     auth: true
   }
 }, {
   path: '/users',
   name: 'users',
-  component: __webpack_require__(142),
+  component: __webpack_require__(145),
   meta: {
     auth: true
   }
 }, {
   path: '/users/deleted',
   name: 'deletedUsers',
-  component: __webpack_require__(156),
+  component: __webpack_require__(159),
   meta: {
     auth: true
   }
 }, {
   path: '/objects',
   name: 'objects',
-  component: __webpack_require__(164),
+  component: __webpack_require__(167),
   meta: {
     auth: true
   }
 }, {
   path: '/reservation/cart',
   name: 'cart',
-  component: __webpack_require__(172),
+  component: __webpack_require__(175),
   meta: {
     auth: true
   }
 }, {
   path: '/reservation/active',
   name: 'reservations',
-  component: __webpack_require__(177),
+  component: __webpack_require__(180),
   meta: {
     auth: true
   }
 }, {
   path: '/reservation/assing',
   name: 'assign',
-  component: __webpack_require__(188),
+  component: __webpack_require__(191),
   meta: {
     auth: true
   }
 }, {
   path: '/item/return',
   name: 'return',
-  component: __webpack_require__(193),
+  component: __webpack_require__(196),
   meta: {
     auth: true
   }
@@ -84056,7 +84056,7 @@ module.exports = function listToStyles (parentId, list) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__modals_CreateGroup_vue__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__modals_CreateGroup_vue__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__modals_CreateGroup_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__modals_CreateGroup_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_loading_overlay__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_loading_overlay___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_loading_overlay__);
@@ -86251,7 +86251,7 @@ exports.push([module.i, "\n.loading-parent{\n    position: relative;\n}\n", ""])
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__modals_CreateGroup_vue__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__modals_CreateGroup_vue__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__modals_CreateGroup_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__modals_CreateGroup_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_loading_overlay__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_loading_overlay___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_loading_overlay__);
@@ -86797,11 +86797,11 @@ exports.push([module.i, "\n.loading-parent{\n    position: relative;\n}\n", ""])
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modals_RenameGroup_vue__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modals_RenameGroup_vue__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modals_RenameGroup_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__modals_RenameGroup_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modals_ChangeGroupImage_vue__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modals_ChangeGroupImage_vue__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modals_ChangeGroupImage_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__modals_ChangeGroupImage_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modals_CreateItem_vue__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modals_CreateItem_vue__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modals_CreateItem_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__modals_CreateItem_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_sweetalert__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_sweetalert___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_sweetalert__);
@@ -88914,115 +88914,122 @@ var render = function() {
             "div",
             { staticClass: "card" },
             [
-              _c(
-                "v-layout",
-                {
-                  staticClass:
-                    "card-header pb-0 pt-0 mx-0 theme--dark v-toolbar",
-                  attrs: { row: "", wrap: "", "align-center": "" }
-                },
-                [
-                  _c(
-                    "v-flex",
+              _vm.items
+                ? _c(
+                    "v-layout",
                     {
-                      attrs: {
-                        headline: "",
-                        shrink: "",
-                        "justify-start": "",
-                        "align-content-center": ""
-                      }
+                      staticClass:
+                        "card-header pb-0 pt-0 mx-0 theme--dark v-toolbar",
+                      attrs: { row: "", wrap: "", "align-center": "" }
                     },
                     [
                       _c(
-                        "a",
+                        "v-flex",
                         {
-                          staticClass: "headline",
-                          on: {
-                            click: function($event) {
-                              _vm.$router.push({ name: "groups" })
-                            }
+                          attrs: {
+                            headline: "",
+                            shrink: "",
+                            "justify-start": "",
+                            "align-content-center": ""
                           }
                         },
-                        [
-                          _c("span", {
-                            staticClass:
-                              "fa fa-arrow-left text-danger remove-all-margin p-2 btn-func-misc"
-                          })
-                        ]
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("v-flex", [
-                    _vm.itemGroup
-                      ? _c("div", { staticClass: "text-center headline" }, [
-                          _vm._v(_vm._s(_vm.itemGroup.ItemGroupName))
-                        ])
-                      : _vm._e()
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "v-flex",
-                    {
-                      attrs: {
-                        shrink: "",
-                        headline: "",
-                        "justify-end": "",
-                        "align-content-center": ""
-                      }
-                    },
-                    [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "headline",
-                          on: {
-                            click: function($event) {
-                              _vm.show("create-item-modal")
-                            }
-                          }
-                        },
-                        [
-                          _c("span", {
-                            staticClass:
-                              "fas fa-plus text-danger p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"
-                          })
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-menu",
-                        { attrs: { "offset-y": "" } },
                         [
                           _c(
                             "a",
                             {
                               staticClass: "headline",
-                              attrs: { slot: "activator" },
-                              slot: "activator"
+                              on: {
+                                click: function($event) {
+                                  _vm.$router.push({ name: "groups" })
+                                }
+                              }
                             },
                             [
                               _c("span", {
                                 staticClass:
-                                  "fas fa-ellipsis-v text-danger p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"
+                                  "fa fa-arrow-left text-danger remove-all-margin p-2 btn-func-misc"
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("v-flex", [
+                        _vm.itemGroup
+                          ? _c("div", { staticClass: "text-center headline" }, [
+                              _vm._v(_vm._s(_vm.itemGroup.ItemGroupName))
+                            ])
+                          : _vm._e()
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "v-flex",
+                        {
+                          attrs: {
+                            shrink: "",
+                            headline: "",
+                            "justify-end": "",
+                            "align-content-center": ""
+                          }
+                        },
+                        [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "headline",
+                              on: {
+                                click: function($event) {
+                                  _vm.show("create-item-modal")
+                                }
+                              }
+                            },
+                            [
+                              _c("span", {
+                                staticClass:
+                                  "fas fa-plus text-danger p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"
                               })
                             ]
                           ),
                           _vm._v(" "),
                           _c(
-                            "v-list",
-                            _vm._l(_vm.dropdownMeniu, function(item, index) {
-                              return _c(
-                                "v-list-tile",
-                                { key: index, on: { click: item.click } },
+                            "v-menu",
+                            { attrs: { "offset-y": "" } },
+                            [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "headline",
+                                  attrs: { slot: "activator" },
+                                  slot: "activator"
+                                },
                                 [
-                                  _c("v-list-tile-title", [
-                                    _vm._v(_vm._s(item.text))
-                                  ])
-                                ],
-                                1
+                                  _c("span", {
+                                    staticClass:
+                                      "fas fa-ellipsis-v text-danger p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"
+                                  })
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-list",
+                                _vm._l(_vm.dropdownMeniu, function(
+                                  item,
+                                  index
+                                ) {
+                                  return _c(
+                                    "v-list-tile",
+                                    { key: index, on: { click: item.click } },
+                                    [
+                                      _c("v-list-tile-title", [
+                                        _vm._v(_vm._s(item.text))
+                                      ])
+                                    ],
+                                    1
+                                  )
+                                })
                               )
-                            })
+                            ],
+                            1
                           )
                         ],
                         1
@@ -89030,21 +89037,18 @@ var render = function() {
                     ],
                     1
                   )
-                ],
-                1
-              ),
+                : _vm._e(),
               _vm._v(" "),
               _vm.items.length > 0
                 ? _c(
                     "div",
-                    { staticClass: "card-body" },
+                    { staticClass: "card-body bg-dark" },
                     _vm._l(_vm.items, function(item) {
                       return _c(
                         "router-link",
                         {
                           key: item.item.ItemID,
-                          staticClass:
-                            "row remove-side-margin cursor-pointer text-dark",
+                          staticClass: "row remove-side-margin cursor-pointer",
                           attrs: {
                             tag: "div",
                             to: { name: "item", params: { itemProp: item } }
@@ -89122,7 +89126,7 @@ var normalizeComponent = __webpack_require__(0)
 /* script */
 var __vue_script__ = __webpack_require__(103)
 /* template */
-var __vue_template__ = __webpack_require__(131)
+var __vue_template__ = __webpack_require__(134)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -89228,8 +89232,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__modals_ItemReturnConfirmation_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__modals_ItemReturnConfirmation_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__modals_ChangeItemWarranty_vue__ = __webpack_require__(126);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__modals_ChangeItemWarranty_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__modals_ChangeItemWarranty_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__modals_RestoreItem_vue__ = __webpack_require__(219);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__modals_RestoreItem_vue__ = __webpack_require__(131);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__modals_RestoreItem_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__modals_RestoreItem_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -91907,6 +91923,294 @@ if (false) {
 /* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(132)
+/* template */
+var __vue_template__ = __webpack_require__(133)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\modals\\RestoreItem.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-68fe3542", Component.options)
+  } else {
+    hotAPI.reload("data-v-68fe3542", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 132 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_sweetalert__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_sweetalert___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_sweetalert__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            groupID: '',
+            itemID: null,
+            groups: null
+        };
+    },
+    created: function created() {
+        this.loadGroups();
+    },
+
+    methods: {
+        save: function save() {
+            var _this = this;
+
+            this.$http.post('/item/restore', {
+                'id': this.itemID,
+                'groupID': this.groupID
+            }).then(function (response) {
+                if (response.status == 200) {
+                    _this.$parent.loadItem();
+                    _this.$modal.hide('restore-item-modal');
+                    __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()(response.data.message, response.data.success, "success");
+                }
+            }).catch(function (error) {
+                if (error.response.status == 422) {
+                    __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
+                } else {
+                    __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()("Klaida", error.response.data.message, "error");
+                }
+            });
+        },
+        loadGroups: function loadGroups() {
+            var _this2 = this;
+
+            this.$http.get('group/list').then(function (response) {
+                _this2.groups = response.data;
+            }).catch(function (error) {
+                if (error.response.status == 422) {
+                    __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
+                } else {
+                    __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()("Klaida", error.response.data.message, "error");
+                }
+            });
+        },
+        beforeOpen: function beforeOpen(event) {
+            this.itemID = event.params.itemID;
+        },
+        beforeClose: function beforeClose() {
+            this.groupID = null;
+            this.itemID = null;
+        }
+    }
+});
+
+/***/ }),
+/* 133 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "modal",
+    {
+      attrs: {
+        name: "restore-item-modal",
+        height: "auto",
+        adaptive: true,
+        transition: "pop-out",
+        pivotY: 0.3,
+        clickToClose: false
+      },
+      on: { "before-open": _vm.beforeOpen, "before-close": _vm.beforeClose }
+    },
+    [
+      _c(
+        "div",
+        { staticClass: "card bg-dark" },
+        [
+          _c("div", { staticClass: "card-header h5 bg-dark text-light" }, [
+            _vm._v("\n        Atkurti ištrintą įrankį "),
+            _c(
+              "a",
+              {
+                staticClass: "float-right mr-3",
+                on: {
+                  click: function($event) {
+                    _vm.$modal.hide("restore-item-modal")
+                  }
+                }
+              },
+              [_c("span", { staticClass: "fas fa-times btn-func-misc" })]
+            )
+          ]),
+          _vm._v(" "),
+          _c(
+            "v-form",
+            [
+              _c(
+                "v-layout",
+                [
+                  _vm.groups
+                    ? _c(
+                        "v-flex",
+                        { staticClass: "pa-2", attrs: { xs12: "" } },
+                        [
+                          _c("v-select", {
+                            staticClass: "mb-4 mt-2",
+                            attrs: {
+                              items: _vm.groups,
+                              "persistent-hint": true,
+                              "menu-props": "auto",
+                              label:
+                                "Pasirinkite grupę, į kurią atkursite įrankį",
+                              "hide-details": "",
+                              "item-text": "ItemGroupName",
+                              "item-value": "ItemGroupID",
+                              "prepend-icon": "fa-folder",
+                              outline: ""
+                            },
+                            model: {
+                              value: _vm.groupID,
+                              callback: function($$v) {
+                                _vm.groupID = $$v
+                              },
+                              expression: "groupID"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    : _vm._e()
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-layout",
+                { attrs: { "justify-center": "", "align-bottom": "" } },
+                [
+                  _c(
+                    "v-flex",
+                    { attrs: { shrink: "" } },
+                    [
+                      _c(
+                        "v-btn",
+                        {
+                          staticClass: "ma-2",
+                          attrs: { disabled: !_vm.groupID },
+                          on: {
+                            click: function($event) {
+                              _vm.save()
+                            }
+                          }
+                        },
+                        [
+                          _c("v-icon", { staticClass: "text-danger mr-3" }, [
+                            _vm._v("fa-undo")
+                          ]),
+                          _vm._v("Atkurti")
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-68fe3542", module.exports)
+  }
+}
+
+/***/ }),
+/* 134 */
+/***/ (function(module, exports, __webpack_require__) {
+
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -92259,6 +92563,58 @@ var render = function() {
                                       ],
                                       1
                                     ),
+                                    _vm._v(" "),
+                                    !_vm.itemData.last_suspention
+                                      .SuspentionReturned &&
+                                    _vm.itemData.last_suspention.SuspentionNote
+                                      ? _c(
+                                          "v-layout",
+                                          {
+                                            attrs: {
+                                              row: "",
+                                              "align-center": ""
+                                            }
+                                          },
+                                          [
+                                            _c(
+                                              "v-flex",
+                                              {
+                                                attrs: { "pa-2": "", xs10: "" }
+                                              },
+                                              [
+                                                _c("v-textarea", {
+                                                  attrs: {
+                                                    name: "note",
+                                                    disabled: true,
+                                                    box: "",
+                                                    label:
+                                                      "Įšaldymo komentaras",
+                                                    "auto-grow": ""
+                                                  },
+                                                  model: {
+                                                    value:
+                                                      _vm.itemData
+                                                        .last_suspention
+                                                        .SuspentionNote,
+                                                    callback: function($$v) {
+                                                      _vm.$set(
+                                                        _vm.itemData
+                                                          .last_suspention,
+                                                        "SuspentionNote",
+                                                        $$v
+                                                      )
+                                                    },
+                                                    expression:
+                                                      "itemData.last_suspention.SuspentionNote"
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            )
+                                          ],
+                                          1
+                                        )
+                                      : _vm._e(),
                                     _vm._v(" "),
                                     _vm.itemData.ItemIdNumber
                                       ? _c(
@@ -92874,19 +93230,19 @@ if (false) {
 }
 
 /***/ }),
-/* 132 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(133)
+  __webpack_require__(136)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(135)
+var __vue_script__ = __webpack_require__(138)
 /* template */
-var __vue_template__ = __webpack_require__(136)
+var __vue_template__ = __webpack_require__(139)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -92925,13 +93281,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 133 */
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(134);
+var content = __webpack_require__(137);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -92951,7 +93307,7 @@ if(false) {
 }
 
 /***/ }),
-/* 134 */
+/* 137 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -92965,18 +93321,18 @@ exports.push([module.i, "\n.loading-parent{\n    position: relative;\n}\n", ""])
 
 
 /***/ }),
-/* 135 */
+/* 138 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modals_RenameGroup_vue__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modals_RenameGroup_vue__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modals_RenameGroup_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__modals_RenameGroup_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modals_ChangeGroupImage_vue__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modals_ChangeGroupImage_vue__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modals_ChangeGroupImage_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__modals_ChangeGroupImage_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modals_CreateItem_vue__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modals_CreateItem_vue__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modals_CreateItem_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__modals_CreateItem_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_sweetalert__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_sweetalert___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_sweetalert__);
@@ -92988,16 +93344,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -93092,7 +93438,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 });
 
 /***/ }),
-/* 136 */
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -93116,99 +93462,102 @@ var render = function() {
         }
       }),
       _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "container",
-          staticStyle: { "min-height": "70vh !important" }
-        },
-        [
-          _c(
+      _vm.items
+        ? _c(
             "div",
-            { staticClass: "card" },
+            {
+              staticClass: "container",
+              staticStyle: { "min-height": "70vh !important" }
+            },
             [
               _c(
-                "v-layout",
-                {
-                  staticClass:
-                    "card-header pb-0 pt-0 mx-0 theme--dark v-toolbar",
-                  attrs: { row: "", wrap: "", "align-center": "" }
-                },
+                "div",
+                { staticClass: "card" },
                 [
-                  _c("v-flex", [
-                    _c("div", { staticClass: "text-center headline" }, [
-                      _vm._v("Ištrinti įrankiai")
-                    ])
-                  ])
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _vm.items.length > 0
-                ? _c(
-                    "div",
-                    { staticClass: "card-body" },
-                    _vm._l(_vm.items, function(item) {
-                      return _c(
-                        "router-link",
-                        {
-                          key: item.ItemID,
-                          staticClass:
-                            "row remove-side-margin cursor-pointer text-dark",
-                          attrs: {
-                            tag: "div",
-                            to: {
-                              name: "item",
-                              params: {
-                                itemProp: { item: item, state: "Ištrintas" }
+                  _c(
+                    "v-layout",
+                    {
+                      staticClass:
+                        "card-header pb-0 pt-0 mx-0 theme--dark v-toolbar",
+                      attrs: { row: "", wrap: "", "align-center": "" }
+                    },
+                    [
+                      _c("v-flex", [
+                        _c("div", { staticClass: "text-center headline" }, [
+                          _vm._v("Ištrinti įrankiai")
+                        ])
+                      ])
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _vm.items.length > 0
+                    ? _c(
+                        "div",
+                        { staticClass: "card-body bg-dark" },
+                        _vm._l(_vm.items, function(item) {
+                          return _c(
+                            "router-link",
+                            {
+                              key: item.ItemID,
+                              staticClass:
+                                "row remove-side-margin cursor-pointer",
+                              attrs: {
+                                tag: "div",
+                                to: {
+                                  name: "item",
+                                  params: {
+                                    itemProp: { item: item, state: "Ištrintas" }
+                                  }
+                                }
                               }
-                            }
-                          }
-                        },
-                        [
-                          _c("div", { staticClass: "col-6" }, [
-                            _vm._v(
-                              "\n            " +
-                                _vm._s(item.ItemName) +
-                                "\n          "
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col text-center" }, [
-                            _vm._v(
-                              "\n            " +
-                                _vm._s(item.state) +
-                                "\n          "
-                            )
-                          ])
-                        ]
+                            },
+                            [
+                              _c("div", { staticClass: "col-6" }, [
+                                _vm._v(
+                                  "\n            " +
+                                    _vm._s(item.ItemName) +
+                                    "\n          "
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col text-center" }, [
+                                _vm._v(
+                                  "\n            " +
+                                    _vm._s(item.state) +
+                                    "\n          "
+                                )
+                              ])
+                            ]
+                          )
+                        })
                       )
-                    })
-                  )
-                : _vm.items.length == 0
-                  ? _c(
-                      "div",
-                      {
-                        staticClass: "card-body bg-dark mt-1 border border-dark"
-                      },
-                      [
-                        _c(
+                    : _vm.items.length == 0
+                      ? _c(
                           "div",
-                          { staticClass: "text-center text-light h5 pa-5" },
+                          {
+                            staticClass:
+                              "card-body bg-dark mt-1 border border-dark"
+                          },
                           [
-                            _vm._v(
-                              "\n          Ištrintų įrankių nėra...\n        "
+                            _c(
+                              "div",
+                              { staticClass: "text-center text-light h5 pa-5" },
+                              [
+                                _vm._v(
+                                  "\n          Ištrintų įrankių nėra...\n        "
+                                )
+                              ]
                             )
                           ]
                         )
-                      ]
-                    )
-                  : _vm._e()
-            ],
-            1
+                      : _vm._e()
+                ],
+                1
+              )
+            ]
           )
-        ]
-      )
+        : _vm._e()
     ],
     1
   )
@@ -93224,19 +93573,19 @@ if (false) {
 }
 
 /***/ }),
-/* 137 */
+/* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(138)
+  __webpack_require__(141)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(140)
+var __vue_script__ = __webpack_require__(143)
 /* template */
-var __vue_template__ = __webpack_require__(141)
+var __vue_template__ = __webpack_require__(144)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -93275,13 +93624,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 138 */
+/* 141 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(139);
+var content = __webpack_require__(142);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -93301,7 +93650,7 @@ if(false) {
 }
 
 /***/ }),
-/* 139 */
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -93315,25 +93664,19 @@ exports.push([module.i, "\n.loading-parent{\n    position: relative;\n}\n", ""])
 
 
 /***/ }),
-/* 140 */
+/* 143 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modals_RenameGroup_vue__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modals_RenameGroup_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__modals_RenameGroup_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modals_ChangeGroupImage_vue__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modals_ChangeGroupImage_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__modals_ChangeGroupImage_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modals_CreateItem_vue__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modals_CreateItem_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__modals_CreateItem_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_sweetalert__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_sweetalert___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_sweetalert__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vue_loading_overlay__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vue_loading_overlay___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_vue_loading_overlay__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vue_loading_overlay_dist_vue_loading_min_css__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vue_loading_overlay_dist_vue_loading_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_vue_loading_overlay_dist_vue_loading_min_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_sweetalert__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_sweetalert___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_sweetalert__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_loading_overlay__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_loading_overlay___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vue_loading_overlay__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_loading_overlay_dist_vue_loading_min_css__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_loading_overlay_dist_vue_loading_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_vue_loading_overlay_dist_vue_loading_min_css__);
 
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
@@ -93370,148 +93713,69 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
 
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        var _this = this;
+  data: function data() {
+    return {
+      items: [],
+      itemGroup: null,
+      isLoading: true,
+      fullPage: false
+    };
+  },
+  created: function () {
+    var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+      return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              this.loadItems();
 
-        return {
-            items: [],
-            itemGroup: null,
-            isLoading: true,
-            fullPage: false,
-            dropdownMeniu: [{ text: 'Pervadinti', click: function click() {
-                    _this.show('rename-group-modal');
-                } }, { text: 'Keisti nuotrauką', click: function click() {
-                    _this.show('change-group-image-modal');
-                } }, { text: 'Ištrinti', click: function click() {
-                    _this.deleteGroup();
-                } }]
-        };
-    },
-
-    props: {
-        group: {
-            required: true,
-            type: String
+            case 1:
+            case 'end':
+              return _context.stop();
+          }
         }
-    },
-    created: function () {
-        var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
-            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
-                while (1) {
-                    switch (_context.prev = _context.next) {
-                        case 0:
-                            this.loadGroup().then(this.loadItems);
+      }, _callee, this);
+    }));
 
-                        case 1:
-                        case 'end':
-                            return _context.stop();
-                    }
-                }
-            }, _callee, this);
-        }));
-
-        function created() {
-            return _ref.apply(this, arguments);
-        }
-
-        return created;
-    }(),
-
-    computed: {},
-    methods: {
-        show: function show(name) {
-            this.$modal.show(name, { groupID: this.itemGroup.ItemGroupID });
-        },
-
-        deleteGroup: function deleteGroup() {
-            var _this2 = this;
-
-            __WEBPACK_IMPORTED_MODULE_4_sweetalert___default()({
-                title: 'Ar tikrai norite ištrinti šią grupę?',
-                text: 'Ištrinti galima tik grupes, kurios neturi naudojamų, rezervuotų ar taisomų įrankių. Ištrynus grupę, visi jai priskirti įrankiai taip pat bus ištrinti.',
-                icon: 'warning',
-                dangerMode: true,
-                buttons: {
-                    del: { text: 'Trinti', value: true },
-                    cancel: { text: 'Atšaukti' }
-                }
-            }).then(function (value) {
-                if (value) {
-                    _this2.$http.get('/group/delete/' + _this2.itemGroup.ItemGroupID).then(function (response) {
-                        if (response.status == 200) {
-                            __WEBPACK_IMPORTED_MODULE_4_sweetalert___default()(response.data.message, response.data.success, "success").then(function (value) {
-                                _this2.$router.push({ name: 'groups' });
-                            });
-                        }
-                    }).catch(function (error) {
-                        if (error.response.status == 422) {
-                            __WEBPACK_IMPORTED_MODULE_4_sweetalert___default()(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
-                        }
-                    });
-                }
-            });
-        },
-        loadGroup: function loadGroup() {
-            var _this3 = this;
-
-            return this.$http.get('/group/get/' + this.group).then(function (response) {
-                if (response.status == 200) {
-                    _this3.itemGroup = response.data;
-                }
-            }).catch(function (error) {
-                __WEBPACK_IMPORTED_MODULE_4_sweetalert___default()(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
-            });
-        },
-        loadItems: function loadItems() {
-            var _this4 = this;
-
-            return this.$http.get('/item/list/' + this.itemGroup.ItemGroupID).then(function (response) {
-                if (response.status == 200) {
-                    _this4.items = response.data;
-                    _this4.isLoading = false;
-                }
-            }).catch(function (error) {
-                __WEBPACK_IMPORTED_MODULE_4_sweetalert___default()(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
-            });
-        }
-    },
-    components: {
-        RenameModal: __WEBPACK_IMPORTED_MODULE_1__modals_RenameGroup_vue___default.a,
-        ChangeImageModal: __WEBPACK_IMPORTED_MODULE_2__modals_ChangeGroupImage_vue___default.a,
-        CreateItemModal: __WEBPACK_IMPORTED_MODULE_3__modals_CreateItem_vue___default.a,
-        Loading: __WEBPACK_IMPORTED_MODULE_5_vue_loading_overlay___default.a
+    function created() {
+      return _ref.apply(this, arguments);
     }
+
+    return created;
+  }(),
+
+  computed: {},
+  methods: {
+    show: function show(name) {
+      this.$modal.show(name);
+    },
+
+    loadItems: function loadItems() {
+      var _this = this;
+
+      return this.$http.get('/item/suspended').then(function (response) {
+        if (response.status == 200) {
+          _this.items = response.data;
+          _this.isLoading = false;
+        }
+      }).catch(function (error) {
+        __WEBPACK_IMPORTED_MODULE_1_sweetalert___default()(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
+      });
+    }
+  },
+  components: {
+    Loading: __WEBPACK_IMPORTED_MODULE_2_vue_loading_overlay___default.a
+  }
 });
 
 /***/ }),
-/* 141 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -93535,204 +93799,97 @@ var render = function() {
         }
       }),
       _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "container",
-          staticStyle: { "min-height": "70vh !important" }
-        },
-        [
-          _c("RenameModal"),
-          _vm._v(" "),
-          _c("ChangeImageModal"),
-          _vm._v(" "),
-          _c("CreateItemModal"),
-          _vm._v(" "),
-          _c(
+      _vm.items
+        ? _c(
             "div",
-            { staticClass: "card" },
+            {
+              staticClass: "container",
+              staticStyle: { "min-height": "70vh !important" }
+            },
             [
               _c(
-                "v-layout",
-                {
-                  staticClass:
-                    "card-header pb-0 pt-0 mx-0 theme--dark v-toolbar",
-                  attrs: { row: "", wrap: "", "align-center": "" }
-                },
+                "div",
+                { staticClass: "card" },
                 [
                   _c(
-                    "v-flex",
+                    "v-layout",
                     {
-                      attrs: {
-                        headline: "",
-                        shrink: "",
-                        "justify-start": "",
-                        "align-content-center": ""
-                      }
+                      staticClass:
+                        "card-header pb-0 pt-0 mx-0 theme--dark v-toolbar",
+                      attrs: { row: "", wrap: "", "align-center": "" }
                     },
                     [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "headline",
-                          on: {
-                            click: function($event) {
-                              _vm.$router.push({ name: "groups" })
-                            }
-                          }
-                        },
-                        [
-                          _c("span", {
-                            staticClass:
-                              "fa fa-arrow-left text-danger remove-all-margin p-2 btn-func-misc"
-                          })
-                        ]
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("v-flex", [
-                    _vm.itemGroup
-                      ? _c("div", { staticClass: "text-center headline" }, [
-                          _vm._v(_vm._s(_vm.itemGroup.ItemGroupName))
+                      _c("v-flex", [
+                        _c("div", { staticClass: "text-center headline" }, [
+                          _vm._v("Įšaldyti įrankiai")
                         ])
-                      : _vm._e()
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "v-flex",
-                    {
-                      attrs: {
-                        shrink: "",
-                        headline: "",
-                        "justify-end": "",
-                        "align-content-center": ""
-                      }
-                    },
-                    [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "headline",
-                          on: {
-                            click: function($event) {
-                              _vm.show("create-item-modal")
-                            }
-                          }
-                        },
-                        [
-                          _c("span", {
-                            staticClass:
-                              "fas fa-plus text-danger p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"
-                          })
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-menu",
-                        { attrs: { "offset-y": "" } },
-                        [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "headline",
-                              attrs: { slot: "activator" },
-                              slot: "activator"
-                            },
-                            [
-                              _c("span", {
-                                staticClass:
-                                  "fas fa-ellipsis-v text-danger p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"
-                              })
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-list",
-                            _vm._l(_vm.dropdownMeniu, function(item, index) {
-                              return _c(
-                                "v-list-tile",
-                                { key: index, on: { click: item.click } },
-                                [
-                                  _c("v-list-tile-title", [
-                                    _vm._v(_vm._s(item.text))
-                                  ])
-                                ],
-                                1
-                              )
-                            })
-                          )
-                        ],
-                        1
-                      )
+                      ])
                     ],
                     1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _vm.items.length > 0
-                ? _c(
-                    "div",
-                    { staticClass: "card-body" },
-                    _vm._l(_vm.items, function(item) {
-                      return _c(
-                        "router-link",
-                        {
-                          key: item.item.ItemID,
-                          staticClass:
-                            "row remove-side-margin cursor-pointer text-dark",
-                          attrs: {
-                            tag: "div",
-                            to: { name: "item", params: { itemProp: item } }
-                          }
-                        },
-                        [
-                          _c("div", { staticClass: "col-6" }, [
-                            _vm._v(
-                              "\n            " +
-                                _vm._s(item.item.ItemName) +
-                                "\n          "
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col text-center" }, [
-                            _vm._v(
-                              "\n            " +
-                                _vm._s(item.state) +
-                                "\n          "
-                            )
-                          ])
-                        ]
+                  ),
+                  _vm._v(" "),
+                  _vm.items.length > 0
+                    ? _c(
+                        "div",
+                        { staticClass: "card-body bg-dark" },
+                        _vm._l(_vm.items, function(item) {
+                          return _c(
+                            "router-link",
+                            {
+                              key: item.item.ItemID,
+                              staticClass:
+                                "row remove-side-margin cursor-pointer",
+                              attrs: {
+                                tag: "div",
+                                to: { name: "item", params: { itemProp: item } }
+                              }
+                            },
+                            [
+                              _c("div", { staticClass: "col-6" }, [
+                                _vm._v(
+                                  "\n            " +
+                                    _vm._s(item.item.ItemName) +
+                                    "\n          "
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col text-center" }, [
+                                _vm._v(
+                                  "\n            " +
+                                    _vm._s(item.state) +
+                                    "\n          "
+                                )
+                              ])
+                            ]
+                          )
+                        })
                       )
-                    })
-                  )
-                : _vm.items.length == 0
-                  ? _c(
-                      "div",
-                      {
-                        staticClass: "card-body bg-dark mt-1 border border-dark"
-                      },
-                      [
-                        _c(
+                    : _vm.items.length == 0
+                      ? _c(
                           "div",
-                          { staticClass: "text-center text-light h5 pa-5" },
+                          {
+                            staticClass:
+                              "card-body bg-dark mt-1 border border-dark"
+                          },
                           [
-                            _vm._v(
-                              "\n          Grupėje įrankių nėra...\n        "
+                            _c(
+                              "div",
+                              { staticClass: "text-center text-light h5 pa-5" },
+                              [
+                                _vm._v(
+                                  "\n          Grupėje įrankių nėra...\n        "
+                                )
+                              ]
                             )
                           ]
                         )
-                      ]
-                    )
-                  : _vm._e()
-            ],
-            1
+                      : _vm._e()
+                ],
+                1
+              )
+            ]
           )
-        ],
-        1
-      )
+        : _vm._e()
     ],
     1
   )
@@ -93748,19 +93905,19 @@ if (false) {
 }
 
 /***/ }),
-/* 142 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(143)
+  __webpack_require__(146)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(145)
+var __vue_script__ = __webpack_require__(148)
 /* template */
-var __vue_template__ = __webpack_require__(155)
+var __vue_template__ = __webpack_require__(158)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -93799,13 +93956,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 143 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(144);
+var content = __webpack_require__(147);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -93825,7 +93982,7 @@ if(false) {
 }
 
 /***/ }),
-/* 144 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -93839,16 +93996,16 @@ exports.push([module.i, "\n.loading-parent{\n    position: relative;\n}\n", ""])
 
 
 /***/ }),
-/* 145 */
+/* 148 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__modals_CreateUser_vue__ = __webpack_require__(146);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__modals_CreateUser_vue__ = __webpack_require__(149);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__modals_CreateUser_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__modals_CreateUser_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modals_EditUser_vue__ = __webpack_require__(149);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modals_EditUser_vue__ = __webpack_require__(152);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modals_EditUser_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__modals_EditUser_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modals_AddUserCard_vue__ = __webpack_require__(152);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modals_AddUserCard_vue__ = __webpack_require__(155);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modals_AddUserCard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__modals_AddUserCard_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_loading_overlay__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_loading_overlay___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_vue_loading_overlay__);
@@ -93856,6 +94013,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_loading_overlay_dist_vue_loading_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_vue_loading_overlay_dist_vue_loading_min_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_sweetalert__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_sweetalert___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_sweetalert__);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -94043,15 +94205,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 146 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(147)
+var __vue_script__ = __webpack_require__(150)
 /* template */
-var __vue_template__ = __webpack_require__(148)
+var __vue_template__ = __webpack_require__(151)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -94090,7 +94252,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 147 */
+/* 150 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -94232,7 +94394,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 148 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -94446,15 +94608,15 @@ if (false) {
 }
 
 /***/ }),
-/* 149 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(150)
+var __vue_script__ = __webpack_require__(153)
 /* template */
-var __vue_template__ = __webpack_require__(151)
+var __vue_template__ = __webpack_require__(154)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -94493,7 +94655,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 150 */
+/* 153 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -94577,7 +94739,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 151 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -94689,15 +94851,15 @@ if (false) {
 }
 
 /***/ }),
-/* 152 */
+/* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(153)
+var __vue_script__ = __webpack_require__(156)
 /* template */
-var __vue_template__ = __webpack_require__(154)
+var __vue_template__ = __webpack_require__(157)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -94736,7 +94898,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 153 */
+/* 156 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -94830,7 +94992,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 154 */
+/* 157 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -94943,7 +95105,7 @@ if (false) {
 }
 
 /***/ }),
-/* 155 */
+/* 158 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -94980,549 +95142,724 @@ var render = function() {
           staticStyle: { "min-height": "70vh !important" }
         },
         [
-          _c(
-            "div",
-            { staticClass: "card" },
-            [
-              _c(
-                "v-layout",
-                {
-                  staticClass:
-                    "card-header pb-0 pt-0 theme--dark v-toolbar mx-0",
-                  attrs: { row: "", wrap: "", "align-center": "" }
-                },
-                [
-                  _c(
-                    "v-flex",
-                    { attrs: { headline: "", "align-center": "" } },
-                    [
-                      _c("div", { staticClass: "text-center mb-0" }, [
-                        _vm._v(
-                          "\n                        Vartotojai\n                    "
-                        )
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("v-flex", { attrs: { shrink: "" } }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "headline",
-                        on: {
-                          click: function($event) {
-                            _vm.show("create-user-modal")
-                          }
-                        }
-                      },
-                      [
-                        _c("span", {
-                          staticClass:
-                            "fas fa-plus text-danger p-2 btn-func-misc ml-2 mr-2 mb-0 mt-0"
-                        })
-                      ]
-                    )
-                  ])
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-container",
-                { staticClass: "card-body" },
+          _vm.users
+            ? _c(
+                "div",
+                { staticClass: "card bg-dark" },
                 [
                   _c(
                     "v-layout",
-                    { attrs: { row: "", wrap: "", "align-center": "" } },
+                    {
+                      staticClass:
+                        "card-header pb-0 pt-0 mb-0 theme--dark v-toolbar mx-0",
+                      attrs: { row: "", wrap: "", "align-center": "" }
+                    },
                     [
                       _c(
-                        "v-expansion-panel",
-                        _vm._l(_vm.users, function(user, i) {
-                          return _c(
-                            "v-expansion-panel-content",
-                            { key: i },
+                        "v-flex",
+                        { attrs: { headline: "", "align-center": "" } },
+                        [
+                          _c("div", { staticClass: "text-center mb-0" }, [
+                            _vm._v(
+                              "\n                        Vartotojai\n                    "
+                            )
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("v-flex", { attrs: { shrink: "" } }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "headline",
+                            on: {
+                              click: function($event) {
+                                _vm.show("create-user-modal")
+                              }
+                            }
+                          },
+                          [
+                            _c("span", {
+                              staticClass:
+                                "fas fa-plus text-danger p-2 btn-func-misc ml-2 mr-2 mb-0 mt-0"
+                            })
+                          ]
+                        )
+                      ])
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _vm.users.length > 0
+                    ? _c(
+                        "v-container",
+                        { staticClass: "card-body bg-dark mt-0 pt-4" },
+                        [
+                          _c(
+                            "v-layout",
+                            {
+                              attrs: { row: "", wrap: "", "align-center": "" }
+                            },
                             [
                               _c(
-                                "div",
-                                { attrs: { slot: "header" }, slot: "header" },
-                                [
-                                  _vm._v(
-                                    "\n                                " +
-                                      _vm._s(user.Username) +
-                                      "\n                            "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-card",
-                                [
-                                  _c(
-                                    "v-card-text",
+                                "v-expansion-panel",
+                                _vm._l(_vm.users, function(user, i) {
+                                  return _c(
+                                    "v-expansion-panel-content",
+                                    { key: i },
                                     [
                                       _c(
-                                        "v-layout",
+                                        "div",
                                         {
-                                          attrs: {
-                                            row: "",
-                                            wrap: "",
-                                            "align-center": ""
-                                          }
+                                          attrs: { slot: "header" },
+                                          slot: "header"
                                         },
                                         [
-                                          _c(
-                                            "v-flex",
-                                            {
-                                              staticStyle: {
-                                                width: "40px !important"
-                                              },
-                                              attrs: { shrink: "", "pa-2": "" }
-                                            },
-                                            [
-                                              _c(
-                                                "v-icon",
-                                                {
-                                                  staticClass: "text-danger",
-                                                  attrs: { headline: "" }
-                                                },
-                                                [_vm._v("fa-phone")]
-                                              )
-                                            ],
-                                            1
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-flex",
-                                            {
-                                              attrs: { shrink: "", "px-2": "" }
-                                            },
-                                            [_vm._v("Telefonas:")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-flex",
-                                            { attrs: { "px-2": "" } },
-                                            [_vm._v(_vm._s(user.UserPhone))]
+                                          _vm._v(
+                                            "\n                                " +
+                                              _vm._s(user.Username) +
+                                              "\n                            "
                                           )
-                                        ],
-                                        1
+                                        ]
                                       ),
                                       _vm._v(" "),
                                       _c(
-                                        "v-layout",
-                                        {
-                                          attrs: {
-                                            row: "",
-                                            wrap: "",
-                                            "align-center": ""
-                                          }
-                                        },
+                                        "v-card",
                                         [
                                           _c(
-                                            "v-flex",
-                                            {
-                                              staticStyle: {
-                                                width: "40px !important"
-                                              },
-                                              attrs: { shrink: "", "pa-2": "" }
-                                            },
+                                            "v-card-text",
                                             [
                                               _c(
-                                                "v-icon",
+                                                "v-layout",
                                                 {
-                                                  staticClass: "text-danger",
-                                                  attrs: { headline: "" }
+                                                  attrs: {
+                                                    row: "",
+                                                    wrap: "",
+                                                    "align-center": ""
+                                                  }
                                                 },
-                                                [_vm._v("fa-envelope")]
-                                              )
-                                            ],
-                                            1
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-flex",
-                                            {
-                                              attrs: { shrink: "", "px-2": "" }
-                                            },
-                                            [_vm._v("El. paštas:")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-flex",
-                                            { attrs: { "px-2": "" } },
-                                            [_vm._v(_vm._s(user.email))]
-                                          )
-                                        ],
-                                        1
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-layout",
-                                        {
-                                          attrs: {
-                                            row: "",
-                                            wrap: "",
-                                            "align-center": ""
-                                          }
-                                        },
-                                        [
-                                          _c(
-                                            "v-flex",
-                                            {
-                                              staticStyle: {
-                                                width: "40px !important"
-                                              },
-                                              attrs: { shrink: "", "pa-2": "" }
-                                            },
-                                            [
-                                              _c(
-                                                "v-icon",
-                                                {
-                                                  staticClass: "text-danger",
-                                                  attrs: { headline: "" }
-                                                },
-                                                [_vm._v("fa-crown")]
-                                              )
-                                            ],
-                                            1
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-flex",
-                                            {
-                                              attrs: { "px-2": "", shrink: "" }
-                                            },
-                                            [_vm._v("Vartotojo tipas:")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-flex",
-                                            { attrs: { "px-2": "" } },
-                                            [_vm._v(_vm._s(user.UserRole))]
-                                          )
-                                        ],
-                                        1
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-layout",
-                                        {
-                                          attrs: {
-                                            row: "",
-                                            wrap: "",
-                                            "align-center": ""
-                                          }
-                                        },
-                                        [
-                                          _c(
-                                            "v-flex",
-                                            {
-                                              staticStyle: {
-                                                width: "40px !important"
-                                              },
-                                              attrs: { shrink: "", "pa-2": "" }
-                                            },
-                                            [
-                                              _c(
-                                                "v-icon",
-                                                {
-                                                  staticClass: "text-danger",
-                                                  attrs: { headline: "" }
-                                                },
-                                                [_vm._v("fa-calendar-alt")]
-                                              )
-                                            ],
-                                            1
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-flex",
-                                            {
-                                              attrs: { "px-2": "", shrink: "" }
-                                            },
-                                            [_vm._v("Paskutinis aktyvumas:")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-flex",
-                                            { attrs: { "px-2": "" } },
-                                            [_vm._v(_vm._s(user.UserLastSeen))]
-                                          )
-                                        ],
-                                        1
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-layout",
-                                        {
-                                          attrs: {
-                                            row: "",
-                                            wrap: "",
-                                            "align-center": ""
-                                          }
-                                        },
-                                        [
-                                          _c(
-                                            "v-flex",
-                                            {
-                                              staticStyle: {
-                                                width: "40px !important"
-                                              },
-                                              attrs: { shrink: "", "pa-2": "" }
-                                            },
-                                            [
-                                              _c(
-                                                "v-icon",
-                                                {
-                                                  staticClass: "text-danger",
-                                                  attrs: { headline: "" }
-                                                },
-                                                [_vm._v("fa-calendar-check")]
-                                              )
-                                            ],
-                                            1
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-flex",
-                                            {
-                                              attrs: { "px-2": "", shrink: "" }
-                                            },
-                                            [_vm._v("Registracijos data:")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-flex",
-                                            { attrs: { "px-2": "" } },
-                                            [_vm._v(_vm._s(user.created_at))]
-                                          )
-                                        ],
-                                        1
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-layout",
-                                        {
-                                          attrs: {
-                                            row: "",
-                                            wrap: "",
-                                            "align-center": ""
-                                          }
-                                        },
-                                        [
-                                          _c(
-                                            "v-flex",
-                                            {
-                                              staticStyle: {
-                                                width: "40px !important"
-                                              },
-                                              attrs: { shrink: "", "pa-2": "" }
-                                            },
-                                            [
-                                              _c(
-                                                "v-icon",
-                                                {
-                                                  staticClass: "text-danger",
-                                                  attrs: { headline: "" }
-                                                },
-                                                [_vm._v("fa-address-card")]
-                                              )
-                                            ],
-                                            1
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-flex",
-                                            {
-                                              attrs: { "px-2": "", shrink: "" }
-                                            },
-                                            [
-                                              _vm._v(
-                                                "Priskirta identifikacinė kortelė:"
-                                              )
-                                            ]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-flex",
-                                            { attrs: { "px-2": "" } },
-                                            [
-                                              user.UserRFIDCode
-                                                ? _c(
-                                                    "v-icon",
+                                                [
+                                                  _c(
+                                                    "v-flex",
                                                     {
-                                                      staticClass:
-                                                        "text-success",
-                                                      attrs: { headline: "" }
-                                                    },
-                                                    [_vm._v("fa-check")]
-                                                  )
-                                                : user.UserRFIDCode == null
-                                                  ? _c(
-                                                      "v-icon",
-                                                      {
-                                                        staticClass:
-                                                          "text-warning",
-                                                        attrs: { headline: "" }
+                                                      staticStyle: {
+                                                        width: "40px !important"
                                                       },
-                                                      [_vm._v("fa-times")]
-                                                    )
-                                                  : _vm._e()
-                                            ],
-                                            1
-                                          )
-                                        ],
-                                        1
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-layout",
-                                        {
-                                          attrs: {
-                                            row: "",
-                                            wrap: "",
-                                            "align-center": "",
-                                            "pa-2": "",
-                                            "justify-end": ""
-                                          }
-                                        },
-                                        [
-                                          _c(
-                                            "v-flex",
-                                            {
-                                              attrs: {
-                                                shrink: "",
-                                                "justify-end": ""
-                                              }
-                                            },
-                                            [
-                                              _c(
-                                                "v-btn",
-                                                { attrs: { outline: "" } },
-                                                [
-                                                  _c(
-                                                    "v-icon",
-                                                    {
-                                                      staticClass: "text-danger"
+                                                      attrs: {
+                                                        shrink: "",
+                                                        "pa-2": ""
+                                                      }
                                                     },
-                                                    [_vm._v("fa-history")]
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "span",
-                                                    { staticClass: "mx-2" },
-                                                    [_vm._v("Istorija")]
-                                                  )
-                                                ],
-                                                1
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "v-btn",
-                                                { attrs: { outline: "" } },
-                                                [
-                                                  _c(
-                                                    "v-icon",
-                                                    {
-                                                      staticClass: "text-danger"
-                                                    },
-                                                    [_vm._v("fa-toolbox")]
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "span",
-                                                    { staticClass: "mx-2" },
-                                                    [_vm._v("Įrankiai")]
-                                                  )
-                                                ],
-                                                1
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "v-btn",
-                                                {
-                                                  attrs: { outline: "" },
-                                                  on: {
-                                                    click: function($event) {
-                                                      _vm.show(
-                                                        "edit-user-modal",
-                                                        { user: user }
+                                                    [
+                                                      _c(
+                                                        "v-icon",
+                                                        {
+                                                          staticClass:
+                                                            "text-danger",
+                                                          attrs: {
+                                                            headline: ""
+                                                          }
+                                                        },
+                                                        [_vm._v("fa-phone")]
                                                       )
-                                                    }
-                                                  }
-                                                },
-                                                [
-                                                  _c(
-                                                    "v-icon",
-                                                    {
-                                                      staticClass: "text-danger"
-                                                    },
-                                                    [_vm._v("fa-edit")]
+                                                    ],
+                                                    1
                                                   ),
                                                   _vm._v(" "),
                                                   _c(
-                                                    "span",
-                                                    { staticClass: "mx-2" },
-                                                    [_vm._v("Redaguoti")]
-                                                  )
-                                                ],
-                                                1
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "v-btn",
-                                                {
-                                                  attrs: { outline: "" },
-                                                  on: {
-                                                    click: function($event) {
-                                                      _vm.show(
-                                                        "add-user-card-modal",
-                                                        { id: user.UserID }
+                                                    "v-flex",
+                                                    {
+                                                      attrs: {
+                                                        shrink: "",
+                                                        "px-2": ""
+                                                      }
+                                                    },
+                                                    [_vm._v("Telefonas:")]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "v-flex",
+                                                    { attrs: { "px-2": "" } },
+                                                    [
+                                                      _vm._v(
+                                                        _vm._s(user.UserPhone)
                                                       )
-                                                    }
-                                                  }
-                                                },
-                                                [
-                                                  _c(
-                                                    "v-icon",
-                                                    {
-                                                      staticClass: "text-danger"
-                                                    },
-                                                    [_vm._v("fa-id-card")]
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "span",
-                                                    { staticClass: "mx-2" },
-                                                    [_vm._v("Nauja kortelė")]
+                                                    ]
                                                   )
                                                 ],
                                                 1
                                               ),
                                               _vm._v(" "),
                                               _c(
-                                                "v-btn",
+                                                "v-layout",
                                                 {
-                                                  attrs: { outline: "" },
-                                                  on: {
-                                                    click: function($event) {
-                                                      _vm.deleteUser(user)
-                                                    }
+                                                  attrs: {
+                                                    row: "",
+                                                    wrap: "",
+                                                    "align-center": ""
                                                   }
                                                 },
                                                 [
                                                   _c(
-                                                    "v-icon",
+                                                    "v-flex",
                                                     {
-                                                      staticClass: "text-danger"
+                                                      staticStyle: {
+                                                        width: "40px !important"
+                                                      },
+                                                      attrs: {
+                                                        shrink: "",
+                                                        "pa-2": ""
+                                                      }
                                                     },
-                                                    [_vm._v("fa-trash")]
+                                                    [
+                                                      _c(
+                                                        "v-icon",
+                                                        {
+                                                          staticClass:
+                                                            "text-danger",
+                                                          attrs: {
+                                                            headline: ""
+                                                          }
+                                                        },
+                                                        [_vm._v("fa-envelope")]
+                                                      )
+                                                    ],
+                                                    1
                                                   ),
                                                   _vm._v(" "),
                                                   _c(
-                                                    "span",
-                                                    { staticClass: "mx-2" },
-                                                    [_vm._v("Ištrinti")]
+                                                    "v-flex",
+                                                    {
+                                                      attrs: {
+                                                        shrink: "",
+                                                        "px-2": ""
+                                                      }
+                                                    },
+                                                    [_vm._v("El. paštas:")]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "v-flex",
+                                                    { attrs: { "px-2": "" } },
+                                                    [_vm._v(_vm._s(user.email))]
+                                                  )
+                                                ],
+                                                1
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-layout",
+                                                {
+                                                  attrs: {
+                                                    row: "",
+                                                    wrap: "",
+                                                    "align-center": ""
+                                                  }
+                                                },
+                                                [
+                                                  _c(
+                                                    "v-flex",
+                                                    {
+                                                      staticStyle: {
+                                                        width: "40px !important"
+                                                      },
+                                                      attrs: {
+                                                        shrink: "",
+                                                        "pa-2": ""
+                                                      }
+                                                    },
+                                                    [
+                                                      _c(
+                                                        "v-icon",
+                                                        {
+                                                          staticClass:
+                                                            "text-danger",
+                                                          attrs: {
+                                                            headline: ""
+                                                          }
+                                                        },
+                                                        [_vm._v("fa-crown")]
+                                                      )
+                                                    ],
+                                                    1
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "v-flex",
+                                                    {
+                                                      attrs: {
+                                                        "px-2": "",
+                                                        shrink: ""
+                                                      }
+                                                    },
+                                                    [_vm._v("Vartotojo tipas:")]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "v-flex",
+                                                    { attrs: { "px-2": "" } },
+                                                    [
+                                                      _vm._v(
+                                                        _vm._s(user.UserRole)
+                                                      )
+                                                    ]
+                                                  )
+                                                ],
+                                                1
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-layout",
+                                                {
+                                                  attrs: {
+                                                    row: "",
+                                                    wrap: "",
+                                                    "align-center": ""
+                                                  }
+                                                },
+                                                [
+                                                  _c(
+                                                    "v-flex",
+                                                    {
+                                                      staticStyle: {
+                                                        width: "40px !important"
+                                                      },
+                                                      attrs: {
+                                                        shrink: "",
+                                                        "pa-2": ""
+                                                      }
+                                                    },
+                                                    [
+                                                      _c(
+                                                        "v-icon",
+                                                        {
+                                                          staticClass:
+                                                            "text-danger",
+                                                          attrs: {
+                                                            headline: ""
+                                                          }
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            "fa-calendar-alt"
+                                                          )
+                                                        ]
+                                                      )
+                                                    ],
+                                                    1
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "v-flex",
+                                                    {
+                                                      attrs: {
+                                                        "px-2": "",
+                                                        shrink: ""
+                                                      }
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "Paskutinis aktyvumas:"
+                                                      )
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "v-flex",
+                                                    { attrs: { "px-2": "" } },
+                                                    [
+                                                      _vm._v(
+                                                        _vm._s(
+                                                          user.UserLastSeen
+                                                        )
+                                                      )
+                                                    ]
+                                                  )
+                                                ],
+                                                1
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-layout",
+                                                {
+                                                  attrs: {
+                                                    row: "",
+                                                    wrap: "",
+                                                    "align-center": ""
+                                                  }
+                                                },
+                                                [
+                                                  _c(
+                                                    "v-flex",
+                                                    {
+                                                      staticStyle: {
+                                                        width: "40px !important"
+                                                      },
+                                                      attrs: {
+                                                        shrink: "",
+                                                        "pa-2": ""
+                                                      }
+                                                    },
+                                                    [
+                                                      _c(
+                                                        "v-icon",
+                                                        {
+                                                          staticClass:
+                                                            "text-danger",
+                                                          attrs: {
+                                                            headline: ""
+                                                          }
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            "fa-calendar-check"
+                                                          )
+                                                        ]
+                                                      )
+                                                    ],
+                                                    1
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "v-flex",
+                                                    {
+                                                      attrs: {
+                                                        "px-2": "",
+                                                        shrink: ""
+                                                      }
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "Registracijos data:"
+                                                      )
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "v-flex",
+                                                    { attrs: { "px-2": "" } },
+                                                    [
+                                                      _vm._v(
+                                                        _vm._s(user.created_at)
+                                                      )
+                                                    ]
+                                                  )
+                                                ],
+                                                1
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-layout",
+                                                {
+                                                  attrs: {
+                                                    row: "",
+                                                    wrap: "",
+                                                    "align-center": ""
+                                                  }
+                                                },
+                                                [
+                                                  _c(
+                                                    "v-flex",
+                                                    {
+                                                      staticStyle: {
+                                                        width: "40px !important"
+                                                      },
+                                                      attrs: {
+                                                        shrink: "",
+                                                        "pa-2": ""
+                                                      }
+                                                    },
+                                                    [
+                                                      _c(
+                                                        "v-icon",
+                                                        {
+                                                          staticClass:
+                                                            "text-danger",
+                                                          attrs: {
+                                                            headline: ""
+                                                          }
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            "fa-address-card"
+                                                          )
+                                                        ]
+                                                      )
+                                                    ],
+                                                    1
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "v-flex",
+                                                    {
+                                                      attrs: {
+                                                        "px-2": "",
+                                                        shrink: ""
+                                                      }
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "Priskirta identifikacinė kortelė:"
+                                                      )
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "v-flex",
+                                                    { attrs: { "px-2": "" } },
+                                                    [
+                                                      user.UserRFIDCode
+                                                        ? _c(
+                                                            "v-icon",
+                                                            {
+                                                              staticClass:
+                                                                "text-success",
+                                                              attrs: {
+                                                                headline: ""
+                                                              }
+                                                            },
+                                                            [_vm._v("fa-check")]
+                                                          )
+                                                        : user.UserRFIDCode ==
+                                                          null
+                                                          ? _c(
+                                                              "v-icon",
+                                                              {
+                                                                staticClass:
+                                                                  "text-warning",
+                                                                attrs: {
+                                                                  headline: ""
+                                                                }
+                                                              },
+                                                              [
+                                                                _vm._v(
+                                                                  "fa-times"
+                                                                )
+                                                              ]
+                                                            )
+                                                          : _vm._e()
+                                                    ],
+                                                    1
+                                                  )
+                                                ],
+                                                1
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-layout",
+                                                {
+                                                  attrs: {
+                                                    row: "",
+                                                    wrap: "",
+                                                    "align-center": "",
+                                                    "pa-2": "",
+                                                    "justify-end": ""
+                                                  }
+                                                },
+                                                [
+                                                  _c(
+                                                    "v-flex",
+                                                    {
+                                                      attrs: {
+                                                        shrink: "",
+                                                        "justify-end": ""
+                                                      }
+                                                    },
+                                                    [
+                                                      _c(
+                                                        "v-btn",
+                                                        {
+                                                          attrs: { outline: "" }
+                                                        },
+                                                        [
+                                                          _c(
+                                                            "v-icon",
+                                                            {
+                                                              staticClass:
+                                                                "text-danger"
+                                                            },
+                                                            [
+                                                              _vm._v(
+                                                                "fa-history"
+                                                              )
+                                                            ]
+                                                          ),
+                                                          _vm._v(" "),
+                                                          _c(
+                                                            "span",
+                                                            {
+                                                              staticClass:
+                                                                "mx-2"
+                                                            },
+                                                            [_vm._v("Istorija")]
+                                                          )
+                                                        ],
+                                                        1
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "v-btn",
+                                                        {
+                                                          attrs: { outline: "" }
+                                                        },
+                                                        [
+                                                          _c(
+                                                            "v-icon",
+                                                            {
+                                                              staticClass:
+                                                                "text-danger"
+                                                            },
+                                                            [
+                                                              _vm._v(
+                                                                "fa-toolbox"
+                                                              )
+                                                            ]
+                                                          ),
+                                                          _vm._v(" "),
+                                                          _c(
+                                                            "span",
+                                                            {
+                                                              staticClass:
+                                                                "mx-2"
+                                                            },
+                                                            [_vm._v("Įrankiai")]
+                                                          )
+                                                        ],
+                                                        1
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "v-btn",
+                                                        {
+                                                          attrs: {
+                                                            outline: ""
+                                                          },
+                                                          on: {
+                                                            click: function(
+                                                              $event
+                                                            ) {
+                                                              _vm.show(
+                                                                "edit-user-modal",
+                                                                { user: user }
+                                                              )
+                                                            }
+                                                          }
+                                                        },
+                                                        [
+                                                          _c(
+                                                            "v-icon",
+                                                            {
+                                                              staticClass:
+                                                                "text-danger"
+                                                            },
+                                                            [_vm._v("fa-edit")]
+                                                          ),
+                                                          _vm._v(" "),
+                                                          _c(
+                                                            "span",
+                                                            {
+                                                              staticClass:
+                                                                "mx-2"
+                                                            },
+                                                            [
+                                                              _vm._v(
+                                                                "Redaguoti"
+                                                              )
+                                                            ]
+                                                          )
+                                                        ],
+                                                        1
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "v-btn",
+                                                        {
+                                                          attrs: {
+                                                            outline: ""
+                                                          },
+                                                          on: {
+                                                            click: function(
+                                                              $event
+                                                            ) {
+                                                              _vm.show(
+                                                                "add-user-card-modal",
+                                                                {
+                                                                  id:
+                                                                    user.UserID
+                                                                }
+                                                              )
+                                                            }
+                                                          }
+                                                        },
+                                                        [
+                                                          _c(
+                                                            "v-icon",
+                                                            {
+                                                              staticClass:
+                                                                "text-danger"
+                                                            },
+                                                            [
+                                                              _vm._v(
+                                                                "fa-id-card"
+                                                              )
+                                                            ]
+                                                          ),
+                                                          _vm._v(" "),
+                                                          _c(
+                                                            "span",
+                                                            {
+                                                              staticClass:
+                                                                "mx-2"
+                                                            },
+                                                            [
+                                                              _vm._v(
+                                                                "Nauja kortelė"
+                                                              )
+                                                            ]
+                                                          )
+                                                        ],
+                                                        1
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "v-btn",
+                                                        {
+                                                          attrs: {
+                                                            outline: ""
+                                                          },
+                                                          on: {
+                                                            click: function(
+                                                              $event
+                                                            ) {
+                                                              _vm.deleteUser(
+                                                                user
+                                                              )
+                                                            }
+                                                          }
+                                                        },
+                                                        [
+                                                          _c(
+                                                            "v-icon",
+                                                            {
+                                                              staticClass:
+                                                                "text-danger"
+                                                            },
+                                                            [_vm._v("fa-trash")]
+                                                          ),
+                                                          _vm._v(" "),
+                                                          _c(
+                                                            "span",
+                                                            {
+                                                              staticClass:
+                                                                "mx-2"
+                                                            },
+                                                            [_vm._v("Ištrinti")]
+                                                          )
+                                                        ],
+                                                        1
+                                                      )
+                                                    ],
+                                                    1
                                                   )
                                                 ],
                                                 1
@@ -95536,23 +95873,38 @@ var render = function() {
                                     ],
                                     1
                                   )
-                                ],
-                                1
+                                })
                               )
                             ],
                             1
                           )
-                        })
+                        ],
+                        1
                       )
-                    ],
-                    1
-                  )
+                    : _vm.users.length == 0
+                      ? _c(
+                          "div",
+                          {
+                            staticClass:
+                              "card-body bg-dark mt-1 border border-dark"
+                          },
+                          [
+                            _c(
+                              "div",
+                              { staticClass: "text-center text-light h5 pa-5" },
+                              [
+                                _vm._v(
+                                  "\n                Vartotojų nėra...\n              "
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      : _vm._e()
                 ],
                 1
               )
-            ],
-            1
-          )
+            : _vm._e()
         ]
       )
     ],
@@ -95570,19 +95922,19 @@ if (false) {
 }
 
 /***/ }),
-/* 156 */
+/* 159 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(157)
+  __webpack_require__(160)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(159)
+var __vue_script__ = __webpack_require__(162)
 /* template */
-var __vue_template__ = __webpack_require__(163)
+var __vue_template__ = __webpack_require__(166)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -95621,13 +95973,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 157 */
+/* 160 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(158);
+var content = __webpack_require__(161);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -95647,7 +95999,7 @@ if(false) {
 }
 
 /***/ }),
-/* 158 */
+/* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -95661,14 +96013,14 @@ exports.push([module.i, "\n.loading-parent{\n    position: relative;\n}\n", ""])
 
 
 /***/ }),
-/* 159 */
+/* 162 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_loading_overlay__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_loading_overlay___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_loading_overlay__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modals_RestoreDeletedUser_vue__ = __webpack_require__(160);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modals_RestoreDeletedUser_vue__ = __webpack_require__(163);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modals_RestoreDeletedUser_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__modals_RestoreDeletedUser_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_loading_overlay_dist_vue_loading_min_css__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_loading_overlay_dist_vue_loading_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vue_loading_overlay_dist_vue_loading_min_css__);
@@ -95821,15 +96173,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 160 */
+/* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(161)
+var __vue_script__ = __webpack_require__(164)
 /* template */
-var __vue_template__ = __webpack_require__(162)
+var __vue_template__ = __webpack_require__(165)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -95868,7 +96220,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 161 */
+/* 164 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -95941,7 +96293,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 162 */
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -96070,7 +96422,7 @@ if (false) {
 }
 
 /***/ }),
-/* 163 */
+/* 166 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -96103,326 +96455,127 @@ var render = function() {
           staticStyle: { "min-height": "70vh !important" }
         },
         [
-          _c(
-            "div",
-            { staticClass: "card" },
-            [
-              _c(
-                "v-layout",
-                {
-                  staticClass:
-                    "card-header pb-0 pt-0 theme--dark v-toolbar mx-0",
-                  attrs: { row: "", wrap: "", "align-center": "" }
-                },
+          _vm.users
+            ? _c(
+                "div",
+                { staticClass: "card bg-dark" },
                 [
                   _c(
-                    "v-flex",
-                    { attrs: { headline: "", "align-center": "" } },
-                    [
-                      _c("div", { staticClass: "text-center mb-0" }, [
-                        _vm._v(
-                          "\n                        Ištrinti vartotojai\n                    "
-                        )
-                      ])
-                    ]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _vm.users.length > 0
-                ? _c(
-                    "v-container",
-                    { staticClass: "card-body" },
+                    "v-layout",
+                    {
+                      staticClass:
+                        "card-header pb-0 pt-0 theme--dark v-toolbar mx-0",
+                      attrs: { row: "", wrap: "", "align-center": "" }
+                    },
                     [
                       _c(
-                        "v-layout",
-                        { attrs: { row: "", wrap: "", "align-center": "" } },
+                        "v-flex",
+                        { attrs: { headline: "", "align-center": "" } },
+                        [
+                          _c("div", { staticClass: "text-center mb-0 pa-1" }, [
+                            _vm._v(
+                              "\n                        Ištrinti vartotojai\n                    "
+                            )
+                          ])
+                        ]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _vm.users.length > 0
+                    ? _c(
+                        "v-container",
+                        { staticClass: "card-body" },
                         [
                           _c(
-                            "v-expansion-panel",
-                            _vm._l(_vm.users, function(user, i) {
-                              return _c(
-                                "v-expansion-panel-content",
-                                { key: i },
-                                [
-                                  _c(
-                                    "div",
-                                    {
-                                      attrs: { slot: "header" },
-                                      slot: "header"
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                                " +
-                                          _vm._s(user.Username) +
-                                          "\n                            "
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "v-card",
+                            "v-layout",
+                            {
+                              attrs: { row: "", wrap: "", "align-center": "" }
+                            },
+                            [
+                              _c(
+                                "v-expansion-panel",
+                                _vm._l(_vm.users, function(user, i) {
+                                  return _c(
+                                    "v-expansion-panel-content",
+                                    { key: i },
                                     [
                                       _c(
-                                        "v-card-text",
+                                        "div",
+                                        {
+                                          attrs: { slot: "header" },
+                                          slot: "header"
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                " +
+                                              _vm._s(user.Username) +
+                                              "\n                            "
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-card",
                                         [
                                           _c(
-                                            "v-layout",
-                                            {
-                                              attrs: {
-                                                row: "",
-                                                wrap: "",
-                                                "align-center": ""
-                                              }
-                                            },
+                                            "v-card-text",
                                             [
                                               _c(
-                                                "v-flex",
+                                                "v-layout",
                                                 {
-                                                  staticStyle: {
-                                                    width: "40px !important"
-                                                  },
                                                   attrs: {
-                                                    shrink: "",
-                                                    "pa-2": ""
+                                                    row: "",
+                                                    wrap: "",
+                                                    "align-center": ""
                                                   }
                                                 },
                                                 [
                                                   _c(
-                                                    "v-icon",
+                                                    "v-flex",
                                                     {
-                                                      staticClass:
-                                                        "text-danger",
-                                                      attrs: { headline: "" }
-                                                    },
-                                                    [_vm._v("fa-phone")]
-                                                  )
-                                                ],
-                                                1
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "v-flex",
-                                                {
-                                                  attrs: {
-                                                    shrink: "",
-                                                    "px-2": ""
-                                                  }
-                                                },
-                                                [_vm._v("Telefonas:")]
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "v-flex",
-                                                { attrs: { "px-2": "" } },
-                                                [_vm._v(_vm._s(user.UserPhone))]
-                                              )
-                                            ],
-                                            1
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-layout",
-                                            {
-                                              attrs: {
-                                                row: "",
-                                                wrap: "",
-                                                "align-center": ""
-                                              }
-                                            },
-                                            [
-                                              _c(
-                                                "v-flex",
-                                                {
-                                                  staticStyle: {
-                                                    width: "40px !important"
-                                                  },
-                                                  attrs: {
-                                                    shrink: "",
-                                                    "pa-2": ""
-                                                  }
-                                                },
-                                                [
-                                                  _c(
-                                                    "v-icon",
-                                                    {
-                                                      staticClass:
-                                                        "text-danger",
-                                                      attrs: { headline: "" }
-                                                    },
-                                                    [_vm._v("fa-envelope")]
-                                                  )
-                                                ],
-                                                1
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "v-flex",
-                                                {
-                                                  attrs: {
-                                                    shrink: "",
-                                                    "px-2": ""
-                                                  }
-                                                },
-                                                [_vm._v("El. paštas:")]
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "v-flex",
-                                                { attrs: { "px-2": "" } },
-                                                [_vm._v(_vm._s(user.email))]
-                                              )
-                                            ],
-                                            1
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-layout",
-                                            {
-                                              attrs: {
-                                                row: "",
-                                                wrap: "",
-                                                "align-center": ""
-                                              }
-                                            },
-                                            [
-                                              _c(
-                                                "v-flex",
-                                                {
-                                                  staticStyle: {
-                                                    width: "40px !important"
-                                                  },
-                                                  attrs: {
-                                                    shrink: "",
-                                                    "pa-2": ""
-                                                  }
-                                                },
-                                                [
-                                                  _c(
-                                                    "v-icon",
-                                                    {
-                                                      staticClass:
-                                                        "text-danger",
-                                                      attrs: { headline: "" }
-                                                    },
-                                                    [_vm._v("fa-crown")]
-                                                  )
-                                                ],
-                                                1
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "v-flex",
-                                                {
-                                                  attrs: {
-                                                    "px-2": "",
-                                                    shrink: ""
-                                                  }
-                                                },
-                                                [_vm._v("Vartotojo tipas:")]
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "v-flex",
-                                                { attrs: { "px-2": "" } },
-                                                [_vm._v(_vm._s(user.UserRole))]
-                                              )
-                                            ],
-                                            1
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-layout",
-                                            {
-                                              attrs: {
-                                                row: "",
-                                                wrap: "",
-                                                "align-center": ""
-                                              }
-                                            },
-                                            [
-                                              _c(
-                                                "v-flex",
-                                                {
-                                                  staticStyle: {
-                                                    width: "40px !important"
-                                                  },
-                                                  attrs: {
-                                                    shrink: "",
-                                                    "pa-2": ""
-                                                  }
-                                                },
-                                                [
-                                                  _c(
-                                                    "v-icon",
-                                                    {
-                                                      staticClass:
-                                                        "text-danger",
-                                                      attrs: { headline: "" }
-                                                    },
-                                                    [_vm._v("fa-trash")]
-                                                  )
-                                                ],
-                                                1
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "v-flex",
-                                                {
-                                                  attrs: {
-                                                    "px-2": "",
-                                                    shrink: ""
-                                                  }
-                                                },
-                                                [_vm._v("Ištrynimo data:")]
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "v-flex",
-                                                { attrs: { "px-2": "" } },
-                                                [
-                                                  _vm._v(
-                                                    _vm._s(user.updated_at)
-                                                  )
-                                                ]
-                                              )
-                                            ],
-                                            1
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-layout",
-                                            {
-                                              attrs: {
-                                                row: "",
-                                                wrap: "",
-                                                "align-center": ""
-                                              }
-                                            },
-                                            [
-                                              _c(
-                                                "v-flex",
-                                                {
-                                                  staticStyle: {
-                                                    width: "40px !important"
-                                                  },
-                                                  attrs: {
-                                                    shrink: "",
-                                                    "pa-2": ""
-                                                  }
-                                                },
-                                                [
-                                                  _c(
-                                                    "v-icon",
-                                                    {
-                                                      staticClass:
-                                                        "text-danger",
-                                                      attrs: { headline: "" }
+                                                      staticStyle: {
+                                                        width: "40px !important"
+                                                      },
+                                                      attrs: {
+                                                        shrink: "",
+                                                        "pa-2": ""
+                                                      }
                                                     },
                                                     [
+                                                      _c(
+                                                        "v-icon",
+                                                        {
+                                                          staticClass:
+                                                            "text-danger",
+                                                          attrs: {
+                                                            headline: ""
+                                                          }
+                                                        },
+                                                        [_vm._v("fa-phone")]
+                                                      )
+                                                    ],
+                                                    1
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "v-flex",
+                                                    {
+                                                      attrs: {
+                                                        shrink: "",
+                                                        "px-2": ""
+                                                      }
+                                                    },
+                                                    [_vm._v("Telefonas:")]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "v-flex",
+                                                    { attrs: { "px-2": "" } },
+                                                    [
                                                       _vm._v(
-                                                        "fa-calendar-check"
+                                                        _vm._s(user.UserPhone)
                                                       )
                                                     ]
                                                   )
@@ -96431,193 +96584,24 @@ var render = function() {
                                               ),
                                               _vm._v(" "),
                                               _c(
-                                                "v-flex",
+                                                "v-layout",
                                                 {
                                                   attrs: {
-                                                    "px-2": "",
-                                                    shrink: ""
-                                                  }
-                                                },
-                                                [_vm._v("Registracijos data:")]
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "v-flex",
-                                                { attrs: { "px-2": "" } },
-                                                [
-                                                  _vm._v(
-                                                    _vm._s(user.created_at)
-                                                  )
-                                                ]
-                                              )
-                                            ],
-                                            1
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-layout",
-                                            {
-                                              attrs: {
-                                                row: "",
-                                                wrap: "",
-                                                "align-center": ""
-                                              }
-                                            },
-                                            [
-                                              _c(
-                                                "v-flex",
-                                                {
-                                                  staticStyle: {
-                                                    width: "40px !important"
-                                                  },
-                                                  attrs: {
-                                                    shrink: "",
-                                                    "pa-2": ""
+                                                    row: "",
+                                                    wrap: "",
+                                                    "align-center": ""
                                                   }
                                                 },
                                                 [
                                                   _c(
-                                                    "v-icon",
+                                                    "v-flex",
                                                     {
-                                                      staticClass:
-                                                        "text-danger",
-                                                      attrs: { headline: "" }
-                                                    },
-                                                    [_vm._v("fa-address-card")]
-                                                  )
-                                                ],
-                                                1
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "v-flex",
-                                                {
-                                                  attrs: {
-                                                    "px-2": "",
-                                                    shrink: ""
-                                                  }
-                                                },
-                                                [
-                                                  _vm._v(
-                                                    "Priskirta identifikacinė kortelė:"
-                                                  )
-                                                ]
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "v-flex",
-                                                { attrs: { "px-2": "" } },
-                                                [
-                                                  user.UserRFIDCode
-                                                    ? _c(
-                                                        "v-icon",
-                                                        {
-                                                          staticClass:
-                                                            "text-success",
-                                                          attrs: {
-                                                            headline: ""
-                                                          }
-                                                        },
-                                                        [_vm._v("fa-check")]
-                                                      )
-                                                    : user.UserRFIDCode == null
-                                                      ? _c(
-                                                          "v-icon",
-                                                          {
-                                                            staticClass:
-                                                              "text-warning",
-                                                            attrs: {
-                                                              headline: ""
-                                                            }
-                                                          },
-                                                          [_vm._v("fa-times")]
-                                                        )
-                                                      : _vm._e()
-                                                ],
-                                                1
-                                              )
-                                            ],
-                                            1
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-layout",
-                                            {
-                                              attrs: {
-                                                row: "",
-                                                wrap: "",
-                                                "align-center": "",
-                                                "pa-2": "",
-                                                "justify-end": ""
-                                              }
-                                            },
-                                            [
-                                              _c(
-                                                "v-flex",
-                                                {
-                                                  attrs: {
-                                                    shrink: "",
-                                                    "justify-end": ""
-                                                  }
-                                                },
-                                                [
-                                                  _c(
-                                                    "v-btn",
-                                                    { attrs: { outline: "" } },
-                                                    [
-                                                      _c(
-                                                        "v-icon",
-                                                        {
-                                                          staticClass:
-                                                            "text-danger"
-                                                        },
-                                                        [_vm._v("fa-history")]
-                                                      ),
-                                                      _vm._v(" "),
-                                                      _c(
-                                                        "span",
-                                                        { staticClass: "mx-2" },
-                                                        [_vm._v("Istorija")]
-                                                      )
-                                                    ],
-                                                    1
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "v-btn",
-                                                    { attrs: { outline: "" } },
-                                                    [
-                                                      _c(
-                                                        "v-icon",
-                                                        {
-                                                          staticClass:
-                                                            "text-danger"
-                                                        },
-                                                        [_vm._v("fa-toolbox")]
-                                                      ),
-                                                      _vm._v(" "),
-                                                      _c(
-                                                        "span",
-                                                        { staticClass: "mx-2" },
-                                                        [_vm._v("Įrankiai")]
-                                                      )
-                                                    ],
-                                                    1
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "v-btn",
-                                                    {
-                                                      attrs: { outline: "" },
-                                                      on: {
-                                                        click: function(
-                                                          $event
-                                                        ) {
-                                                          _vm.show(
-                                                            "restore-user-modal",
-                                                            { id: user.UserID }
-                                                          )
-                                                        }
+                                                      staticStyle: {
+                                                        width: "40px !important"
+                                                      },
+                                                      attrs: {
+                                                        shrink: "",
+                                                        "pa-2": ""
                                                       }
                                                     },
                                                     [
@@ -96625,15 +96609,448 @@ var render = function() {
                                                         "v-icon",
                                                         {
                                                           staticClass:
-                                                            "text-danger"
+                                                            "text-danger",
+                                                          attrs: {
+                                                            headline: ""
+                                                          }
                                                         },
-                                                        [_vm._v("fa-undo")]
+                                                        [_vm._v("fa-envelope")]
+                                                      )
+                                                    ],
+                                                    1
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "v-flex",
+                                                    {
+                                                      attrs: {
+                                                        shrink: "",
+                                                        "px-2": ""
+                                                      }
+                                                    },
+                                                    [_vm._v("El. paštas:")]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "v-flex",
+                                                    { attrs: { "px-2": "" } },
+                                                    [_vm._v(_vm._s(user.email))]
+                                                  )
+                                                ],
+                                                1
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-layout",
+                                                {
+                                                  attrs: {
+                                                    row: "",
+                                                    wrap: "",
+                                                    "align-center": ""
+                                                  }
+                                                },
+                                                [
+                                                  _c(
+                                                    "v-flex",
+                                                    {
+                                                      staticStyle: {
+                                                        width: "40px !important"
+                                                      },
+                                                      attrs: {
+                                                        shrink: "",
+                                                        "pa-2": ""
+                                                      }
+                                                    },
+                                                    [
+                                                      _c(
+                                                        "v-icon",
+                                                        {
+                                                          staticClass:
+                                                            "text-danger",
+                                                          attrs: {
+                                                            headline: ""
+                                                          }
+                                                        },
+                                                        [_vm._v("fa-crown")]
+                                                      )
+                                                    ],
+                                                    1
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "v-flex",
+                                                    {
+                                                      attrs: {
+                                                        "px-2": "",
+                                                        shrink: ""
+                                                      }
+                                                    },
+                                                    [_vm._v("Vartotojo tipas:")]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "v-flex",
+                                                    { attrs: { "px-2": "" } },
+                                                    [
+                                                      _vm._v(
+                                                        _vm._s(user.UserRole)
+                                                      )
+                                                    ]
+                                                  )
+                                                ],
+                                                1
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-layout",
+                                                {
+                                                  attrs: {
+                                                    row: "",
+                                                    wrap: "",
+                                                    "align-center": ""
+                                                  }
+                                                },
+                                                [
+                                                  _c(
+                                                    "v-flex",
+                                                    {
+                                                      staticStyle: {
+                                                        width: "40px !important"
+                                                      },
+                                                      attrs: {
+                                                        shrink: "",
+                                                        "pa-2": ""
+                                                      }
+                                                    },
+                                                    [
+                                                      _c(
+                                                        "v-icon",
+                                                        {
+                                                          staticClass:
+                                                            "text-danger",
+                                                          attrs: {
+                                                            headline: ""
+                                                          }
+                                                        },
+                                                        [_vm._v("fa-trash")]
+                                                      )
+                                                    ],
+                                                    1
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "v-flex",
+                                                    {
+                                                      attrs: {
+                                                        "px-2": "",
+                                                        shrink: ""
+                                                      }
+                                                    },
+                                                    [_vm._v("Ištrynimo data:")]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "v-flex",
+                                                    { attrs: { "px-2": "" } },
+                                                    [
+                                                      _vm._v(
+                                                        _vm._s(user.updated_at)
+                                                      )
+                                                    ]
+                                                  )
+                                                ],
+                                                1
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-layout",
+                                                {
+                                                  attrs: {
+                                                    row: "",
+                                                    wrap: "",
+                                                    "align-center": ""
+                                                  }
+                                                },
+                                                [
+                                                  _c(
+                                                    "v-flex",
+                                                    {
+                                                      staticStyle: {
+                                                        width: "40px !important"
+                                                      },
+                                                      attrs: {
+                                                        shrink: "",
+                                                        "pa-2": ""
+                                                      }
+                                                    },
+                                                    [
+                                                      _c(
+                                                        "v-icon",
+                                                        {
+                                                          staticClass:
+                                                            "text-danger",
+                                                          attrs: {
+                                                            headline: ""
+                                                          }
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            "fa-calendar-check"
+                                                          )
+                                                        ]
+                                                      )
+                                                    ],
+                                                    1
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "v-flex",
+                                                    {
+                                                      attrs: {
+                                                        "px-2": "",
+                                                        shrink: ""
+                                                      }
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "Registracijos data:"
+                                                      )
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "v-flex",
+                                                    { attrs: { "px-2": "" } },
+                                                    [
+                                                      _vm._v(
+                                                        _vm._s(user.created_at)
+                                                      )
+                                                    ]
+                                                  )
+                                                ],
+                                                1
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-layout",
+                                                {
+                                                  attrs: {
+                                                    row: "",
+                                                    wrap: "",
+                                                    "align-center": ""
+                                                  }
+                                                },
+                                                [
+                                                  _c(
+                                                    "v-flex",
+                                                    {
+                                                      staticStyle: {
+                                                        width: "40px !important"
+                                                      },
+                                                      attrs: {
+                                                        shrink: "",
+                                                        "pa-2": ""
+                                                      }
+                                                    },
+                                                    [
+                                                      _c(
+                                                        "v-icon",
+                                                        {
+                                                          staticClass:
+                                                            "text-danger",
+                                                          attrs: {
+                                                            headline: ""
+                                                          }
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            "fa-address-card"
+                                                          )
+                                                        ]
+                                                      )
+                                                    ],
+                                                    1
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "v-flex",
+                                                    {
+                                                      attrs: {
+                                                        "px-2": "",
+                                                        shrink: ""
+                                                      }
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "Priskirta identifikacinė kortelė:"
+                                                      )
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "v-flex",
+                                                    { attrs: { "px-2": "" } },
+                                                    [
+                                                      user.UserRFIDCode
+                                                        ? _c(
+                                                            "v-icon",
+                                                            {
+                                                              staticClass:
+                                                                "text-success",
+                                                              attrs: {
+                                                                headline: ""
+                                                              }
+                                                            },
+                                                            [_vm._v("fa-check")]
+                                                          )
+                                                        : user.UserRFIDCode ==
+                                                          null
+                                                          ? _c(
+                                                              "v-icon",
+                                                              {
+                                                                staticClass:
+                                                                  "text-warning",
+                                                                attrs: {
+                                                                  headline: ""
+                                                                }
+                                                              },
+                                                              [
+                                                                _vm._v(
+                                                                  "fa-times"
+                                                                )
+                                                              ]
+                                                            )
+                                                          : _vm._e()
+                                                    ],
+                                                    1
+                                                  )
+                                                ],
+                                                1
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-layout",
+                                                {
+                                                  attrs: {
+                                                    row: "",
+                                                    wrap: "",
+                                                    "align-center": "",
+                                                    "pa-2": "",
+                                                    "justify-end": ""
+                                                  }
+                                                },
+                                                [
+                                                  _c(
+                                                    "v-flex",
+                                                    {
+                                                      attrs: {
+                                                        shrink: "",
+                                                        "justify-end": ""
+                                                      }
+                                                    },
+                                                    [
+                                                      _c(
+                                                        "v-btn",
+                                                        {
+                                                          attrs: { outline: "" }
+                                                        },
+                                                        [
+                                                          _c(
+                                                            "v-icon",
+                                                            {
+                                                              staticClass:
+                                                                "text-danger"
+                                                            },
+                                                            [
+                                                              _vm._v(
+                                                                "fa-history"
+                                                              )
+                                                            ]
+                                                          ),
+                                                          _vm._v(" "),
+                                                          _c(
+                                                            "span",
+                                                            {
+                                                              staticClass:
+                                                                "mx-2"
+                                                            },
+                                                            [_vm._v("Istorija")]
+                                                          )
+                                                        ],
+                                                        1
                                                       ),
                                                       _vm._v(" "),
                                                       _c(
-                                                        "span",
-                                                        { staticClass: "mx-2" },
-                                                        [_vm._v("Atkurti")]
+                                                        "v-btn",
+                                                        {
+                                                          attrs: { outline: "" }
+                                                        },
+                                                        [
+                                                          _c(
+                                                            "v-icon",
+                                                            {
+                                                              staticClass:
+                                                                "text-danger"
+                                                            },
+                                                            [
+                                                              _vm._v(
+                                                                "fa-toolbox"
+                                                              )
+                                                            ]
+                                                          ),
+                                                          _vm._v(" "),
+                                                          _c(
+                                                            "span",
+                                                            {
+                                                              staticClass:
+                                                                "mx-2"
+                                                            },
+                                                            [_vm._v("Įrankiai")]
+                                                          )
+                                                        ],
+                                                        1
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "v-btn",
+                                                        {
+                                                          attrs: {
+                                                            outline: ""
+                                                          },
+                                                          on: {
+                                                            click: function(
+                                                              $event
+                                                            ) {
+                                                              _vm.show(
+                                                                "restore-user-modal",
+                                                                {
+                                                                  id:
+                                                                    user.UserID
+                                                                }
+                                                              )
+                                                            }
+                                                          }
+                                                        },
+                                                        [
+                                                          _c(
+                                                            "v-icon",
+                                                            {
+                                                              staticClass:
+                                                                "text-danger"
+                                                            },
+                                                            [_vm._v("fa-undo")]
+                                                          ),
+                                                          _vm._v(" "),
+                                                          _c(
+                                                            "span",
+                                                            {
+                                                              staticClass:
+                                                                "mx-2"
+                                                            },
+                                                            [_vm._v("Atkurti")]
+                                                          )
+                                                        ],
+                                                        1
                                                       )
                                                     ],
                                                     1
@@ -96650,39 +97067,38 @@ var render = function() {
                                     ],
                                     1
                                   )
-                                ],
-                                1
+                                })
                               )
-                            })
+                            ],
+                            1
                           )
                         ],
                         1
                       )
-                    ],
-                    1
-                  )
-                : _vm.users.length == 0
-                  ? _c(
-                      "div",
-                      {
-                        staticClass: "card-body bg-dark mt-1 border border-dark"
-                      },
-                      [
-                        _c(
+                    : _vm.users.length == 0
+                      ? _c(
                           "div",
-                          { staticClass: "text-center text-light h5 pa-5" },
+                          {
+                            staticClass:
+                              "card-body bg-dark mt-1 border border-dark"
+                          },
                           [
-                            _vm._v(
-                              "\n                Ištrintų vartotojų nėra...\n              "
+                            _c(
+                              "div",
+                              { staticClass: "text-center text-light h5 pa-5" },
+                              [
+                                _vm._v(
+                                  "\n                Ištrintų vartotojų nėra...\n              "
+                                )
+                              ]
                             )
                           ]
                         )
-                      ]
-                    )
-                  : _vm._e()
-            ],
-            1
-          )
+                      : _vm._e()
+                ],
+                1
+              )
+            : _vm._e()
         ]
       )
     ],
@@ -96700,19 +97116,19 @@ if (false) {
 }
 
 /***/ }),
-/* 164 */
+/* 167 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(165)
+  __webpack_require__(168)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(167)
+var __vue_script__ = __webpack_require__(170)
 /* template */
-var __vue_template__ = __webpack_require__(171)
+var __vue_template__ = __webpack_require__(174)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -96751,13 +97167,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 165 */
+/* 168 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(166);
+var content = __webpack_require__(169);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -96777,7 +97193,7 @@ if(false) {
 }
 
 /***/ }),
-/* 166 */
+/* 169 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -96791,19 +97207,24 @@ exports.push([module.i, "\n.loading-parent{\n    position: relative;\n}\n", ""])
 
 
 /***/ }),
-/* 167 */
+/* 170 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_loading_overlay__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_loading_overlay___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_loading_overlay__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modals_AddObject_vue__ = __webpack_require__(168);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modals_AddObject_vue__ = __webpack_require__(171);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modals_AddObject_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__modals_AddObject_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_loading_overlay_dist_vue_loading_min_css__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_loading_overlay_dist_vue_loading_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vue_loading_overlay_dist_vue_loading_min_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_sweetalert__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_sweetalert___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_sweetalert__);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -96919,15 +97340,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 168 */
+/* 171 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(169)
+var __vue_script__ = __webpack_require__(172)
 /* template */
-var __vue_template__ = __webpack_require__(170)
+var __vue_template__ = __webpack_require__(173)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -96966,7 +97387,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 169 */
+/* 172 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -97067,7 +97488,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 170 */
+/* 173 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -97208,7 +97629,7 @@ if (false) {
 }
 
 /***/ }),
-/* 171 */
+/* 174 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -97237,277 +97658,330 @@ var render = function() {
       _c(
         "v-container",
         [
-          _c(
-            "v-layout",
-            { attrs: { row: "" } },
-            [
-              _c(
+          _vm.objects
+            ? _c(
                 "v-layout",
-                {
-                  staticClass: "theme--dark v-toolbar",
-                  attrs: { row: "", "mb-3": "" }
-                },
-                [
-                  _c(
-                    "v-flex",
-                    { attrs: { headline: "", "align-center": "" } },
-                    [
-                      _c("div", { staticClass: "text-center mb-0" }, [
-                        _vm._v(
-                          "\n                            Objektai\n                        "
-                        )
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("v-flex", { attrs: { shrink: "" } }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "headline",
-                        on: {
-                          click: function($event) {
-                            _vm.show("add-object-modal")
-                          }
-                        }
-                      },
-                      [
-                        _c("span", {
-                          staticClass:
-                            "fas fa-plus text-danger p-2 btn-func-misc ml-2 mr-2 mb-0 mt-0"
-                        })
-                      ]
-                    )
-                  ])
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-card-text",
+                { attrs: { row: "" } },
                 [
                   _c(
                     "v-layout",
-                    { attrs: { row: "", "mx-0": "" } },
+                    {
+                      staticClass: "theme--dark v-toolbar",
+                      attrs: { row: "", "mb-3": "" }
+                    },
                     [
                       _c(
-                        "v-expansion-panel",
-                        _vm._l(_vm.objects, function(object, i) {
-                          return _c(
-                            "v-expansion-panel-content",
-                            { key: i },
+                        "v-flex",
+                        { attrs: { headline: "", "align-center": "" } },
+                        [
+                          _c("div", { staticClass: "text-center mb-0" }, [
+                            _vm._v(
+                              "\n                            Objektai\n                        "
+                            )
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("v-flex", { attrs: { shrink: "" } }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "headline",
+                            on: {
+                              click: function($event) {
+                                _vm.show("add-object-modal")
+                              }
+                            }
+                          },
+                          [
+                            _c("span", {
+                              staticClass:
+                                "fas fa-plus text-danger p-2 btn-func-misc ml-2 mr-2 mb-0 mt-0"
+                            })
+                          ]
+                        )
+                      ])
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _vm.objects.length > 0
+                    ? _c(
+                        "v-card-text",
+                        [
+                          _c(
+                            "v-layout",
+                            { attrs: { row: "", "mx-0": "" } },
                             [
                               _c(
-                                "div",
-                                { attrs: { slot: "header" }, slot: "header" },
-                                [
-                                  _c("span", { staticClass: "h5" }, [
-                                    _vm._v(_vm._s(object.ObjectName))
-                                  ])
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-card",
-                                [
-                                  _c(
-                                    "v-card-text",
+                                "v-expansion-panel",
+                                _vm._l(_vm.objects, function(object, i) {
+                                  return _c(
+                                    "v-expansion-panel-content",
+                                    { key: i },
                                     [
                                       _c(
-                                        "v-layout",
+                                        "div",
                                         {
-                                          attrs: {
-                                            row: "",
-                                            wrap: "",
-                                            "align-center": ""
-                                          }
+                                          attrs: { slot: "header" },
+                                          slot: "header"
                                         },
                                         [
-                                          _c(
-                                            "v-flex",
-                                            {
-                                              staticStyle: {
-                                                width: "40px !important"
-                                              },
-                                              attrs: { shrink: "", "pa-2": "" }
-                                            },
-                                            [
-                                              _c(
-                                                "v-icon",
-                                                {
-                                                  staticClass: "text-danger",
-                                                  attrs: { headline: "" }
-                                                },
-                                                [_vm._v("fa-user-tie")]
-                                              )
-                                            ],
-                                            1
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-flex",
-                                            {
-                                              attrs: { "px-2": "", shrink: "" }
-                                            },
-                                            [_vm._v("Darbų vygdytojas:")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-flex",
-                                            { attrs: { "px-2": "" } },
-                                            [
-                                              _vm._v(
-                                                _vm._s(object.user.Username)
-                                              )
-                                            ]
-                                          )
-                                        ],
-                                        1
+                                          _c("span", { staticClass: "h5" }, [
+                                            _vm._v(_vm._s(object.ObjectName))
+                                          ])
+                                        ]
                                       ),
                                       _vm._v(" "),
                                       _c(
-                                        "v-layout",
-                                        {
-                                          attrs: {
-                                            row: "",
-                                            wrap: "",
-                                            "align-center": ""
-                                          }
-                                        },
+                                        "v-card",
                                         [
                                           _c(
-                                            "v-flex",
-                                            {
-                                              staticStyle: {
-                                                width: "40px !important"
-                                              },
-                                              attrs: { shrink: "", "pa-2": "" }
-                                            },
+                                            "v-card-text",
                                             [
                                               _c(
-                                                "v-icon",
+                                                "v-layout",
                                                 {
-                                                  staticClass: "text-danger",
-                                                  attrs: { headline: "" }
-                                                },
-                                                [_vm._v("fa-calendar-plus")]
-                                              )
-                                            ],
-                                            1
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-flex",
-                                            {
-                                              attrs: { "px-2": "", shrink: "" }
-                                            },
-                                            [_vm._v("Objektas pridėtas:")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-flex",
-                                            { attrs: { "px-2": "" } },
-                                            [_vm._v(_vm._s(object.created_at))]
-                                          )
-                                        ],
-                                        1
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-layout",
-                                        {
-                                          attrs: {
-                                            row: "",
-                                            wrap: "",
-                                            "align-center": "",
-                                            "justify-center": ""
-                                          }
-                                        },
-                                        [
-                                          _c(
-                                            "v-container",
-                                            [
-                                              _c(
-                                                "v-card-title",
-                                                {
-                                                  staticClass:
-                                                    "theme--dark v-toolbar mx-auto "
+                                                  attrs: {
+                                                    row: "",
+                                                    wrap: "",
+                                                    "align-center": ""
+                                                  }
                                                 },
                                                 [
-                                                  _c("h5", [
-                                                    _vm._v(
-                                                      "Naudojami įrankiai / išdavimo data"
-                                                    )
-                                                  ])
-                                                ]
+                                                  _c(
+                                                    "v-flex",
+                                                    {
+                                                      staticStyle: {
+                                                        width: "40px !important"
+                                                      },
+                                                      attrs: {
+                                                        shrink: "",
+                                                        "pa-2": ""
+                                                      }
+                                                    },
+                                                    [
+                                                      _c(
+                                                        "v-icon",
+                                                        {
+                                                          staticClass:
+                                                            "text-danger",
+                                                          attrs: {
+                                                            headline: ""
+                                                          }
+                                                        },
+                                                        [_vm._v("fa-user-tie")]
+                                                      )
+                                                    ],
+                                                    1
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "v-flex",
+                                                    {
+                                                      attrs: {
+                                                        "px-2": "",
+                                                        shrink: ""
+                                                      }
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "Darbų vygdytojas:"
+                                                      )
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "v-flex",
+                                                    { attrs: { "px-2": "" } },
+                                                    [
+                                                      _vm._v(
+                                                        _vm._s(
+                                                          object.user.Username
+                                                        )
+                                                      )
+                                                    ]
+                                                  )
+                                                ],
+                                                1
                                               ),
                                               _vm._v(" "),
                                               _c(
-                                                "v-card-text",
-                                                _vm._l(
-                                                  object.item_withdrawals,
-                                                  function(withdrawal, i) {
-                                                    return _c(
-                                                      "router-link",
-                                                      {
-                                                        key: i,
-                                                        staticClass:
-                                                          "row remove-side-margin cursor-pointer h6",
-                                                        attrs: {
-                                                          tag: "div",
-                                                          to: {
-                                                            name: "item",
-                                                            params: {
-                                                              itemProp: {
-                                                                item:
-                                                                  withdrawal.item,
-                                                                state:
-                                                                  "Naudojamas"
-                                                              }
-                                                            }
-                                                          }
-                                                        }
-                                                      },
-                                                      [
-                                                        _c(
-                                                          "div",
-                                                          {
-                                                            staticClass:
-                                                              "col-6 h6"
-                                                          },
-                                                          [
-                                                            _vm._v(
-                                                              "\n                                                        " +
-                                                                _vm._s(
-                                                                  withdrawal
-                                                                    .item
-                                                                    .ItemName
-                                                                ) +
-                                                                "\n                                                      "
-                                                            )
-                                                          ]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "div",
-                                                          {
-                                                            staticClass:
-                                                              "col text-center h6"
-                                                          },
-                                                          [
-                                                            _vm._v(
-                                                              "\n                                                        " +
-                                                                _vm._s(
-                                                                  withdrawal.created_at
-                                                                ) +
-                                                                "\n                                                      "
-                                                            )
-                                                          ]
-                                                        )
-                                                      ]
-                                                    )
+                                                "v-layout",
+                                                {
+                                                  attrs: {
+                                                    row: "",
+                                                    wrap: "",
+                                                    "align-center": ""
                                                   }
-                                                )
+                                                },
+                                                [
+                                                  _c(
+                                                    "v-flex",
+                                                    {
+                                                      staticStyle: {
+                                                        width: "40px !important"
+                                                      },
+                                                      attrs: {
+                                                        shrink: "",
+                                                        "pa-2": ""
+                                                      }
+                                                    },
+                                                    [
+                                                      _c(
+                                                        "v-icon",
+                                                        {
+                                                          staticClass:
+                                                            "text-danger",
+                                                          attrs: {
+                                                            headline: ""
+                                                          }
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            "fa-calendar-plus"
+                                                          )
+                                                        ]
+                                                      )
+                                                    ],
+                                                    1
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "v-flex",
+                                                    {
+                                                      attrs: {
+                                                        "px-2": "",
+                                                        shrink: ""
+                                                      }
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "Objektas pridėtas:"
+                                                      )
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "v-flex",
+                                                    { attrs: { "px-2": "" } },
+                                                    [
+                                                      _vm._v(
+                                                        _vm._s(
+                                                          object.created_at
+                                                        )
+                                                      )
+                                                    ]
+                                                  )
+                                                ],
+                                                1
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-layout",
+                                                {
+                                                  attrs: {
+                                                    row: "",
+                                                    wrap: "",
+                                                    "align-center": "",
+                                                    "justify-center": ""
+                                                  }
+                                                },
+                                                [
+                                                  _c(
+                                                    "v-container",
+                                                    [
+                                                      _c(
+                                                        "v-card-title",
+                                                        {
+                                                          staticClass:
+                                                            "theme--dark v-toolbar mx-auto "
+                                                        },
+                                                        [
+                                                          _c("h5", [
+                                                            _vm._v(
+                                                              "Naudojami įrankiai / išdavimo data"
+                                                            )
+                                                          ])
+                                                        ]
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "v-card-text",
+                                                        _vm._l(
+                                                          object.item_withdrawals,
+                                                          function(
+                                                            withdrawal,
+                                                            i
+                                                          ) {
+                                                            return _c(
+                                                              "router-link",
+                                                              {
+                                                                key: i,
+                                                                staticClass:
+                                                                  "row remove-side-margin cursor-pointer h6",
+                                                                attrs: {
+                                                                  tag: "div",
+                                                                  to: {
+                                                                    name:
+                                                                      "item",
+                                                                    params: {
+                                                                      itemProp: {
+                                                                        item:
+                                                                          withdrawal.item,
+                                                                        state:
+                                                                          "Naudojamas"
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                }
+                                                              },
+                                                              [
+                                                                _c(
+                                                                  "div",
+                                                                  {
+                                                                    staticClass:
+                                                                      "col-6 h6"
+                                                                  },
+                                                                  [
+                                                                    _vm._v(
+                                                                      "\n                                                        " +
+                                                                        _vm._s(
+                                                                          withdrawal
+                                                                            .item
+                                                                            .ItemName
+                                                                        ) +
+                                                                        "\n                                                      "
+                                                                    )
+                                                                  ]
+                                                                ),
+                                                                _vm._v(" "),
+                                                                _c(
+                                                                  "div",
+                                                                  {
+                                                                    staticClass:
+                                                                      "col text-center h6"
+                                                                  },
+                                                                  [
+                                                                    _vm._v(
+                                                                      "\n                                                        " +
+                                                                        _vm._s(
+                                                                          withdrawal.created_at
+                                                                        ) +
+                                                                        "\n                                                      "
+                                                                    )
+                                                                  ]
+                                                                )
+                                                              ]
+                                                            )
+                                                          }
+                                                        )
+                                                      )
+                                                    ],
+                                                    1
+                                                  )
+                                                ],
+                                                1
                                               )
                                             ],
                                             1
@@ -97518,23 +97992,38 @@ var render = function() {
                                     ],
                                     1
                                   )
-                                ],
-                                1
+                                })
                               )
                             ],
                             1
                           )
-                        })
+                        ],
+                        1
                       )
-                    ],
-                    1
-                  )
+                    : _vm.objects.length == 0
+                      ? _c(
+                          "div",
+                          {
+                            staticClass:
+                              "card-body bg-dark mt-1 border border-dark"
+                          },
+                          [
+                            _c(
+                              "div",
+                              { staticClass: "text-center text-light h5 pa-5" },
+                              [
+                                _vm._v(
+                                  "\n                    Objektų nėra...\n                  "
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      : _vm._e()
                 ],
                 1
               )
-            ],
-            1
-          )
+            : _vm._e()
         ],
         1
       )
@@ -97553,19 +98042,19 @@ if (false) {
 }
 
 /***/ }),
-/* 172 */
+/* 175 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(173)
+  __webpack_require__(176)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(175)
+var __vue_script__ = __webpack_require__(178)
 /* template */
-var __vue_template__ = __webpack_require__(176)
+var __vue_template__ = __webpack_require__(179)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -97604,13 +98093,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 173 */
+/* 176 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(174);
+var content = __webpack_require__(177);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -97630,7 +98119,7 @@ if(false) {
 }
 
 /***/ }),
-/* 174 */
+/* 177 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -97644,7 +98133,7 @@ exports.push([module.i, "\n.loading-parent{\n  position: relative;\n}\n.overlay{
 
 
 /***/ }),
-/* 175 */
+/* 178 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -97899,7 +98388,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 176 */
+/* 179 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -98373,19 +98862,19 @@ if (false) {
 }
 
 /***/ }),
-/* 177 */
+/* 180 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(178)
+  __webpack_require__(181)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(180)
+var __vue_script__ = __webpack_require__(183)
 /* template */
-var __vue_template__ = __webpack_require__(187)
+var __vue_template__ = __webpack_require__(190)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -98424,13 +98913,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 178 */
+/* 181 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(179);
+var content = __webpack_require__(182);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -98450,7 +98939,7 @@ if(false) {
 }
 
 /***/ }),
-/* 179 */
+/* 182 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -98464,7 +98953,7 @@ exports.push([module.i, "\n.loading-parent{\n  position: relative;\n}\n", ""]);
 
 
 /***/ }),
-/* 180 */
+/* 183 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -98475,12 +98964,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_loading_overlay_dist_vue_loading_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_loading_overlay_dist_vue_loading_min_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_sweetalert__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_sweetalert___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_sweetalert__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modals_ConfirmReservationWithCard_vue__ = __webpack_require__(181);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modals_ConfirmReservationWithCard_vue__ = __webpack_require__(184);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modals_ConfirmReservationWithCard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__modals_ConfirmReservationWithCard_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modals_ConfirmReservationWithSignature_vue__ = __webpack_require__(184);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modals_ConfirmReservationWithSignature_vue__ = __webpack_require__(187);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modals_ConfirmReservationWithSignature_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__modals_ConfirmReservationWithSignature_vue__);
-//
-//
 //
 //
 //
@@ -98649,15 +99136,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 181 */
+/* 184 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(182)
+var __vue_script__ = __webpack_require__(185)
 /* template */
-var __vue_template__ = __webpack_require__(183)
+var __vue_template__ = __webpack_require__(186)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -98696,7 +99183,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 182 */
+/* 185 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -98796,7 +99283,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 183 */
+/* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -98913,15 +99400,15 @@ if (false) {
 }
 
 /***/ }),
-/* 184 */
+/* 187 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(185)
+var __vue_script__ = __webpack_require__(188)
 /* template */
-var __vue_template__ = __webpack_require__(186)
+var __vue_template__ = __webpack_require__(189)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -98960,7 +99447,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 185 */
+/* 188 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -99068,7 +99555,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 186 */
+/* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -99211,7 +99698,7 @@ if (false) {
 }
 
 /***/ }),
-/* 187 */
+/* 190 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -99239,285 +99726,308 @@ var render = function() {
       _vm._v(" "),
       _c("ConfirmWithSign"),
       _vm._v(" "),
-      _c(
-        "v-container",
-        [
-          _c(
-            "v-layout",
-            {
-              staticClass: "theme--dark v-toolbar",
-              attrs: {
-                row: "",
-                wrap: "",
-                "mx-0": "",
-                "align-center": "",
-                "justify-center": ""
-              }
-            },
+      _vm.reservations
+        ? _c(
+            "v-container",
             [
-              _c("v-flex", { attrs: { shrink: "", headline: "" } }, [
-                _vm._v("Aktyvios rezervacijos")
-              ])
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _vm.reservations.length > 0
-            ? _c(
+              _c(
                 "v-layout",
                 {
+                  staticClass: "theme--dark v-toolbar",
                   attrs: {
                     row: "",
                     wrap: "",
-                    "align-center": "",
                     "mx-0": "",
-                    "mt-2": ""
+                    "align-center": "",
+                    "justify-center": ""
                   }
                 },
                 [
-                  _c(
-                    "v-expansion-panel",
-                    _vm._l(_vm.reservations, function(reservation, i) {
-                      return _c(
-                        "v-expansion-panel-content",
-                        { key: i },
-                        [
-                          reservation.cobject
-                            ? _c(
-                                "div",
-                                { attrs: { slot: "header" }, slot: "header" },
-                                [
-                                  _vm._v(
-                                    "\n                    " +
-                                      _vm._s(
-                                        reservation.cobject.ObjectName +
-                                          " (" +
-                                          reservation.recipient[0].Username +
-                                          ")"
-                                      ) +
-                                      "\n                "
-                                  )
-                                ]
-                              )
-                            : reservation.cobject == null
-                              ? _c(
-                                  "div",
-                                  { attrs: { slot: "header" }, slot: "header" },
-                                  [
-                                    _vm._v(
-                                      "\n                    " +
-                                        _vm._s(
-                                          reservation.recipient[0].Username
-                                        ) +
-                                        "\n                "
-                                    )
-                                  ]
-                                )
-                              : _vm._e(),
-                          _vm._v(" "),
-                          _c(
-                            "v-card",
+                  _c("v-flex", { attrs: { shrink: "", headline: "" } }, [
+                    _vm._v("Aktyvios rezervacijos")
+                  ])
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _vm.reservations.length > 0
+                ? _c(
+                    "v-layout",
+                    {
+                      staticClass: "bg-dark",
+                      attrs: {
+                        row: "",
+                        wrap: "",
+                        "align-center": "",
+                        "mx-0": "",
+                        "mt-2": ""
+                      }
+                    },
+                    [
+                      _c(
+                        "v-expansion-panel",
+                        _vm._l(_vm.reservations, function(reservation, i) {
+                          return _c(
+                            "v-expansion-panel-content",
+                            { key: i },
                             [
+                              reservation.cobject
+                                ? _c(
+                                    "div",
+                                    {
+                                      attrs: { slot: "header" },
+                                      slot: "header"
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                    " +
+                                          _vm._s(
+                                            reservation.cobject.ObjectName +
+                                              " (" +
+                                              reservation.recipient[0]
+                                                .Username +
+                                              ")"
+                                          ) +
+                                          "\n                "
+                                      )
+                                    ]
+                                  )
+                                : reservation.cobject == null
+                                  ? _c(
+                                      "div",
+                                      {
+                                        attrs: { slot: "header" },
+                                        slot: "header"
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                    " +
+                                            _vm._s(
+                                              reservation.recipient[0].Username
+                                            ) +
+                                            "\n                "
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e(),
+                              _vm._v(" "),
                               _c(
-                                "v-card-text",
+                                "v-card",
                                 [
                                   _c(
-                                    "v-data-table",
-                                    {
-                                      staticClass:
-                                        "elevation-3 border border-danger",
-                                      attrs: {
-                                        headers: _vm.headers,
-                                        items: reservation.items,
-                                        "hide-actions": ""
-                                      },
-                                      scopedSlots: _vm._u([
+                                    "v-card-text",
+                                    [
+                                      _c(
+                                        "v-data-table",
                                         {
-                                          key: "items",
-                                          fn: function(props) {
-                                            return [
-                                              _c("td", [
-                                                _vm._v(
-                                                  _vm._s(
-                                                    props.item.item.ItemName
-                                                  )
-                                                )
-                                              ]),
-                                              _vm._v(" "),
-                                              _c(
-                                                "td",
-                                                {
-                                                  staticClass: "text-xs-center"
-                                                },
-                                                [
-                                                  _vm._v(
-                                                    _vm._s(
-                                                      props.item
-                                                        .ReservationItemQuantity
+                                          staticClass:
+                                            "elevation-3 border border-danger",
+                                          attrs: {
+                                            headers: _vm.headers,
+                                            items: reservation.items,
+                                            "hide-actions": ""
+                                          },
+                                          scopedSlots: _vm._u([
+                                            {
+                                              key: "items",
+                                              fn: function(props) {
+                                                return [
+                                                  _c("td", [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        props.item.item.ItemName
+                                                      )
                                                     )
-                                                  )
-                                                ]
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "td",
-                                                {
-                                                  staticClass:
-                                                    "justify-center layout px-0"
-                                                },
-                                                [
+                                                  ]),
+                                                  _vm._v(" "),
                                                   _c(
-                                                    "v-btn",
+                                                    "td",
                                                     {
-                                                      on: {
-                                                        click: function(
-                                                          $event
-                                                        ) {
-                                                          _vm.deleteItem(
-                                                            props.item,
-                                                            i
-                                                          )
-                                                        }
-                                                      }
+                                                      staticClass:
+                                                        "text-xs-center"
                                                     },
                                                     [
-                                                      _c("v-icon", [
-                                                        _vm._v("delete")
-                                                      ])
+                                                      _vm._v(
+                                                        _vm._s(
+                                                          props.item
+                                                            .ReservationItemQuantity
+                                                        )
+                                                      )
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "td",
+                                                    {
+                                                      staticClass:
+                                                        "justify-center layout px-0"
+                                                    },
+                                                    [
+                                                      _c(
+                                                        "v-btn",
+                                                        {
+                                                          on: {
+                                                            click: function(
+                                                              $event
+                                                            ) {
+                                                              _vm.deleteItem(
+                                                                props.item,
+                                                                i
+                                                              )
+                                                            }
+                                                          }
+                                                        },
+                                                        [
+                                                          _c("v-icon", [
+                                                            _vm._v("delete")
+                                                          ])
+                                                        ],
+                                                        1
+                                                      )
                                                     ],
                                                     1
                                                   )
-                                                ],
-                                                1
-                                              )
-                                            ]
-                                          }
-                                        }
-                                      ])
-                                    },
-                                    [
-                                      _c(
-                                        "template",
-                                        { slot: "no-data" },
+                                                ]
+                                              }
+                                            }
+                                          ])
+                                        },
                                         [
                                           _c(
-                                            "v-alert",
+                                            "template",
+                                            { slot: "no-data" },
+                                            [
+                                              _c(
+                                                "v-alert",
+                                                {
+                                                  staticClass: "bg-warning",
+                                                  attrs: {
+                                                    value: true,
+                                                    icon: "warning"
+                                                  }
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "\n                                Rezervacija tuščia, arba įvyko klaida kraunant duomenis iš duombazės...\n                              "
+                                                  )
+                                                ]
+                                              )
+                                            ],
+                                            1
+                                          )
+                                        ],
+                                        2
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-layout",
+                                        {
+                                          attrs: {
+                                            row: "",
+                                            wrap: "",
+                                            "align-center": "",
+                                            "pa-2": "",
+                                            "justify-end": ""
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "v-btn",
                                             {
-                                              staticClass: "bg-warning",
-                                              attrs: {
-                                                value: true,
-                                                icon: "warning"
+                                              attrs: { outline: "" },
+                                              on: {
+                                                click: function($event) {
+                                                  _vm.show(
+                                                    "confirm-reservation-with-card-modal",
+                                                    {
+                                                      id:
+                                                        reservation.ReservationID,
+                                                      user:
+                                                        reservation.recipient[0]
+                                                          .Username
+                                                    }
+                                                  )
+                                                }
                                               }
                                             },
                                             [
-                                              _vm._v(
-                                                "\n                                Rezervacija tuščia, arba įvyko klaida kraunant duomenis iš duombazės...\n                              "
+                                              _c(
+                                                "v-icon",
+                                                { staticClass: "text-danger" },
+                                                [_vm._v("fa-id-card")]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "span",
+                                                { staticClass: "mx-2" },
+                                                [_vm._v("Patvirtinti kortele")]
                                               )
-                                            ]
+                                            ],
+                                            1
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-btn",
+                                            {
+                                              attrs: { outline: "" },
+                                              on: {
+                                                click: function($event) {
+                                                  _vm.show(
+                                                    "confirm-reservation-with-sign-modal",
+                                                    {
+                                                      id:
+                                                        reservation.ReservationID,
+                                                      user:
+                                                        reservation.recipient[0]
+                                                          .Username
+                                                    }
+                                                  )
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _c(
+                                                "v-icon",
+                                                { staticClass: "text-danger" },
+                                                [_vm._v("fa-signature")]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "span",
+                                                { staticClass: "mx-2" },
+                                                [_vm._v("Patvirtinti parašu")]
+                                              )
+                                            ],
+                                            1
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-btn",
+                                            {
+                                              attrs: { outline: "" },
+                                              on: {
+                                                click: function($event) {
+                                                  _vm.deleteReservation(
+                                                    reservation
+                                                  )
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _c(
+                                                "v-icon",
+                                                { staticClass: "text-danger" },
+                                                [_vm._v("fa-trash")]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "span",
+                                                { staticClass: "mx-2" },
+                                                [_vm._v("Ištrinti")]
+                                              )
+                                            ],
+                                            1
                                           )
-                                        ],
-                                        1
-                                      )
-                                    ],
-                                    2
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "v-layout",
-                                    {
-                                      attrs: {
-                                        row: "",
-                                        wrap: "",
-                                        "align-center": "",
-                                        "pa-2": "",
-                                        "justify-end": ""
-                                      }
-                                    },
-                                    [
-                                      _c(
-                                        "v-btn",
-                                        {
-                                          attrs: { outline: "" },
-                                          on: {
-                                            click: function($event) {
-                                              _vm.show(
-                                                "confirm-reservation-with-card-modal",
-                                                {
-                                                  id: reservation.ReservationID,
-                                                  user:
-                                                    reservation.recipient[0]
-                                                      .Username
-                                                }
-                                              )
-                                            }
-                                          }
-                                        },
-                                        [
-                                          _c(
-                                            "v-icon",
-                                            { staticClass: "text-danger" },
-                                            [_vm._v("fa-id-card")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c("span", { staticClass: "mx-2" }, [
-                                            _vm._v("Patvirtinti kortele")
-                                          ])
-                                        ],
-                                        1
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-btn",
-                                        {
-                                          attrs: { outline: "" },
-                                          on: {
-                                            click: function($event) {
-                                              _vm.show(
-                                                "confirm-reservation-with-sign-modal",
-                                                {
-                                                  id: reservation.ReservationID,
-                                                  user:
-                                                    reservation.recipient[0]
-                                                      .Username
-                                                }
-                                              )
-                                            }
-                                          }
-                                        },
-                                        [
-                                          _c(
-                                            "v-icon",
-                                            { staticClass: "text-danger" },
-                                            [_vm._v("fa-signature")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c("span", { staticClass: "mx-2" }, [
-                                            _vm._v("Patvirtinti parašu")
-                                          ])
-                                        ],
-                                        1
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-btn",
-                                        {
-                                          attrs: { outline: "" },
-                                          on: {
-                                            click: function($event) {
-                                              _vm.deleteReservation(reservation)
-                                            }
-                                          }
-                                        },
-                                        [
-                                          _c(
-                                            "v-icon",
-                                            { staticClass: "text-danger" },
-                                            [_vm._v("fa-trash")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c("span", { staticClass: "mx-2" }, [
-                                            _vm._v("Ištrinti")
-                                          ])
                                         ],
                                         1
                                       )
@@ -99530,36 +100040,34 @@ var render = function() {
                             ],
                             1
                           )
-                        ],
-                        1
+                        })
                       )
-                    })
+                    ],
+                    1
                   )
-                ],
-                1
-              )
-            : _vm.reservations.length == 0
-              ? _c("v-layout", [
-                  _c(
-                    "div",
-                    { staticClass: "card-body border border-dark mt-1" },
-                    [
-                      _c(
-                        "div",
-                        { staticClass: "text-center text-light h5 pa-5" },
-                        [
-                          _vm._v(
-                            "\n          Aktyvių rezervacijų nėra...\n        "
-                          )
-                        ]
-                      )
-                    ]
-                  )
-                ])
-              : _vm._e()
-        ],
-        1
-      )
+                : _vm.reservations.length == 0
+                  ? _c(
+                      "div",
+                      {
+                        staticClass: "card-body bg-dark mt-1 border border-dark"
+                      },
+                      [
+                        _c(
+                          "div",
+                          { staticClass: "text-center text-light h5 pa-5" },
+                          [
+                            _vm._v(
+                              "\n        Aktyvių rezervacijų nėra...\n      "
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  : _vm._e()
+            ],
+            1
+          )
+        : _vm._e()
     ],
     1
   )
@@ -99575,19 +100083,19 @@ if (false) {
 }
 
 /***/ }),
-/* 188 */
+/* 191 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(189)
+  __webpack_require__(192)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(191)
+var __vue_script__ = __webpack_require__(194)
 /* template */
-var __vue_template__ = __webpack_require__(192)
+var __vue_template__ = __webpack_require__(195)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -99626,13 +100134,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 189 */
+/* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(190);
+var content = __webpack_require__(193);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -99652,7 +100160,7 @@ if(false) {
 }
 
 /***/ }),
-/* 190 */
+/* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -99666,7 +100174,7 @@ exports.push([module.i, "\n.loading-parent{\n  position: relative;\n}\n", ""]);
 
 
 /***/ }),
-/* 191 */
+/* 194 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -99850,7 +100358,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 192 */
+/* 195 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -100178,19 +100686,19 @@ if (false) {
 }
 
 /***/ }),
-/* 193 */
+/* 196 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(194)
+  __webpack_require__(197)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(196)
+var __vue_script__ = __webpack_require__(199)
 /* template */
-var __vue_template__ = __webpack_require__(197)
+var __vue_template__ = __webpack_require__(200)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -100229,13 +100737,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 194 */
+/* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(195);
+var content = __webpack_require__(198);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -100255,7 +100763,7 @@ if(false) {
 }
 
 /***/ }),
-/* 195 */
+/* 198 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -100269,7 +100777,7 @@ exports.push([module.i, "\n.loading-parent{\n    position: relative;\n}\n", ""])
 
 
 /***/ }),
-/* 196 */
+/* 199 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -100390,7 +100898,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 197 */
+/* 200 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -100505,11 +101013,11 @@ if (false) {
 }
 
 /***/ }),
-/* 198 */
+/* 201 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue__);
 
@@ -100549,20 +101057,20 @@ var store = new __WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* default */].Store({
 /* harmony default export */ __webpack_exports__["a"] = (store);
 
 /***/ }),
-/* 199 */
+/* 202 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(200)
-  __webpack_require__(202)
+  __webpack_require__(203)
+  __webpack_require__(205)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(204)
+var __vue_script__ = __webpack_require__(207)
 /* template */
-var __vue_template__ = __webpack_require__(205)
+var __vue_template__ = __webpack_require__(208)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -100601,13 +101109,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 200 */
+/* 203 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(201);
+var content = __webpack_require__(204);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -100627,7 +101135,7 @@ if(false) {
 }
 
 /***/ }),
-/* 201 */
+/* 204 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -100641,13 +101149,13 @@ exports.push([module.i, "\n", ""]);
 
 
 /***/ }),
-/* 202 */
+/* 205 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(203);
+var content = __webpack_require__(206);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -100667,7 +101175,7 @@ if(false) {
 }
 
 /***/ }),
-/* 203 */
+/* 206 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -100675,23 +101183,26 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.fa, .far, .fas {\r\n    font-family: \"Font Awesome 5 Free\" !important;\n}\n.fa, .fas {\r\n    font-weight: 900 !important;\n}\r\n", ""]);
+exports.push([module.i, "\n.fa, .far, .fas {\r\n    font-family: \"Font Awesome 5 Free\" !important;\n}\n.fa, .fas {\r\n    font-weight: 900 !important;\n}\n.search-result-wrapper{\r\n    position: absolute;\r\n    bottom: auto;\r\n    z-index: 100;\r\n    height: 250px;\r\n    overflow-y: scroll;\r\n    width: 80%;\r\n    max-width: 576px;\r\n    background-color: white;\n}\r\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 204 */
+/* 207 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Login_vue__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Login_vue__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Login_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Login_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_loading_overlay__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_loading_overlay___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_loading_overlay__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_loading_overlay_dist_vue_loading_min_css__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_loading_overlay_dist_vue_loading_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vue_loading_overlay_dist_vue_loading_min_css__);
+//
+//
+//
 //
 //
 //
@@ -100927,7 +101438,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 205 */
+/* 208 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -101199,7 +101710,11 @@ var render = function() {
                           },
                           expression: "searchQuery"
                         }
-                      })
+                      }),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "search-result-wrapper" }, [
+                        _vm._v("\n          Rezultatai...\n      ")
+                      ])
                     ],
                     1
                   ),
@@ -101340,10 +101855,10 @@ if (false) {
 }
 
 /***/ }),
-/* 206 */
+/* 209 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const tokenCache = __webpack_require__(207);
+const tokenCache = __webpack_require__(210);
 
 function getToken(options) {
   if (options.token) {
@@ -101377,10 +101892,10 @@ module.exports.tokenCache = tokenCache;
 
 
 /***/ }),
-/* 207 */
+/* 210 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const Lock = __webpack_require__(208);
+const Lock = __webpack_require__(211);
 
 module.exports = (getToken, options) => {
   const lock = Lock();
@@ -101432,7 +101947,7 @@ module.exports = (getToken, options) => {
 
 
 /***/ }),
-/* 208 */
+/* 211 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(setImmediate) {
@@ -101521,10 +102036,10 @@ module.exports = function () {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9).setImmediate))
 
 /***/ }),
-/* 209 */
+/* 212 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Auth = __webpack_require__(210)();
+var Auth = __webpack_require__(213)();
 
 module.exports = (function () {
 
@@ -101565,11 +102080,11 @@ module.exports = (function () {
 })();
 
 /***/ }),
-/* 210 */
+/* 213 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __utils  = __webpack_require__(211),
-    __token  = __webpack_require__(212),
+var __utils  = __webpack_require__(214),
+    __token  = __webpack_require__(215),
     __cookie = __webpack_require__(31)
 
 module.exports = function () {
@@ -102279,7 +102794,7 @@ module.exports = function () {
 
 
 /***/ }),
-/* 211 */
+/* 214 */
 /***/ (function(module, exports) {
 
 module.exports = (function (){
@@ -102361,7 +102876,7 @@ module.exports = (function (){
 
 
 /***/ }),
-/* 212 */
+/* 215 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __cookie = __webpack_require__(31);
@@ -102441,7 +102956,7 @@ module.exports = (function () {
 })();
 
 /***/ }),
-/* 213 */
+/* 216 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -102463,7 +102978,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 214 */
+/* 217 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -102529,7 +103044,7 @@ module.exports = {
 
 
 /***/ }),
-/* 215 */
+/* 218 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -102597,300 +103112,10 @@ module.exports = {
 };
 
 /***/ }),
-/* 216 */
+/* 219 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 217 */,
-/* 218 */,
-/* 219 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(0)
-/* script */
-var __vue_script__ = __webpack_require__(220)
-/* template */
-var __vue_template__ = __webpack_require__(221)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources\\assets\\js\\components\\modals\\RestoreItem.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-68fe3542", Component.options)
-  } else {
-    hotAPI.reload("data-v-68fe3542", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 220 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_sweetalert__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_sweetalert___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_sweetalert__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {
-            groupID: '',
-            itemID: null,
-            groups: null
-        };
-    },
-    created: function created() {
-        this.loadGroups();
-    },
-
-    methods: {
-        save: function save() {
-            var _this = this;
-
-            this.$http.post('/item/restore', {
-                'id': this.itemID,
-                'groupID': this.groupID
-            }).then(function (response) {
-                if (response.status == 200) {
-                    _this.$parent.loadItem();
-                    _this.$modal.hide('restore-item-modal');
-                    __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()(response.data.message, response.data.success, "success");
-                }
-            }).catch(function (error) {
-                if (error.response.status == 422) {
-                    __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
-                } else {
-                    __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()("Klaida", error.response.data.message, "error");
-                }
-            });
-        },
-        loadGroups: function loadGroups() {
-            var _this2 = this;
-
-            this.$http.get('group/list').then(function (response) {
-                _this2.groups = response.data;
-            }).catch(function (error) {
-                if (error.response.status == 422) {
-                    __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
-                } else {
-                    __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()("Klaida", error.response.data.message, "error");
-                }
-            });
-        },
-        beforeOpen: function beforeOpen(event) {
-            this.itemID = event.params.itemID;
-        },
-        beforeClose: function beforeClose() {
-            this.groupID = null;
-            this.itemID = null;
-        }
-    }
-});
-
-/***/ }),
-/* 221 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "modal",
-    {
-      attrs: {
-        name: "restore-item-modal",
-        height: "auto",
-        adaptive: true,
-        transition: "pop-out",
-        pivotY: 0.3,
-        clickToClose: false
-      },
-      on: { "before-open": _vm.beforeOpen, "before-close": _vm.beforeClose }
-    },
-    [
-      _c(
-        "div",
-        { staticClass: "card bg-dark" },
-        [
-          _c("div", { staticClass: "card-header h5 bg-dark text-light" }, [
-            _vm._v("\n        Atkurti ištrintą įrankį "),
-            _c(
-              "a",
-              {
-                staticClass: "float-right mr-3",
-                on: {
-                  click: function($event) {
-                    _vm.$modal.hide("restore-item-modal")
-                  }
-                }
-              },
-              [_c("span", { staticClass: "fas fa-times btn-func-misc" })]
-            )
-          ]),
-          _vm._v(" "),
-          _c(
-            "v-form",
-            [
-              _c(
-                "v-layout",
-                [
-                  _vm.groups
-                    ? _c(
-                        "v-flex",
-                        { staticClass: "pa-2", attrs: { xs12: "" } },
-                        [
-                          _c("v-select", {
-                            staticClass: "mb-4 mt-2",
-                            attrs: {
-                              items: _vm.groups,
-                              "persistent-hint": true,
-                              "menu-props": "auto",
-                              label:
-                                "Pasirinkite grupę, į kurią atkursite įrankį",
-                              "hide-details": "",
-                              "item-text": "ItemGroupName",
-                              "item-value": "ItemGroupID",
-                              "prepend-icon": "fa-folder",
-                              outline: ""
-                            },
-                            model: {
-                              value: _vm.groupID,
-                              callback: function($$v) {
-                                _vm.groupID = $$v
-                              },
-                              expression: "groupID"
-                            }
-                          })
-                        ],
-                        1
-                      )
-                    : _vm._e()
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-layout",
-                { attrs: { "justify-center": "", "align-bottom": "" } },
-                [
-                  _c(
-                    "v-flex",
-                    { attrs: { shrink: "" } },
-                    [
-                      _c(
-                        "v-btn",
-                        {
-                          staticClass: "ma-2",
-                          attrs: { disabled: !_vm.groupID },
-                          on: {
-                            click: function($event) {
-                              _vm.save()
-                            }
-                          }
-                        },
-                        [
-                          _c("v-icon", { staticClass: "text-danger mr-3" }, [
-                            _vm._v("fa-undo")
-                          ]),
-                          _vm._v("Atkurti")
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          )
-        ],
-        1
-      )
-    ]
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-68fe3542", module.exports)
-  }
-}
 
 /***/ })
 /******/ ]);
