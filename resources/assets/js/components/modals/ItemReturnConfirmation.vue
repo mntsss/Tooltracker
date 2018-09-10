@@ -2,6 +2,7 @@
   <modal name="item-return-confirm-modal"
          height="auto"
          :adaptive="true"
+         :scrollable="true"
          transition="pop-out"
          :pivotY="0.3"
          :clickToClose="false"

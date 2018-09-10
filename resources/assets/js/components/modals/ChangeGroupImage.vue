@@ -4,6 +4,7 @@
          :adaptive="true"
          transition="pop-out"
          :pivotY="0.3"
+         :scrollable="true"
          @before-open="beforeOpen"
          @before-close="beforeClose">
          <v-dialog v-model="imageLoadingDialog" hide-overlay persistent width="300">

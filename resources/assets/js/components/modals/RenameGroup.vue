@@ -2,6 +2,7 @@
   <modal name="rename-group-modal"
          :height="180"
          :adaptive="true"
+         :scrollable="true"
          transition="pop-out"
          :pivotY="0.3"
          @before-open="beforeOpen">

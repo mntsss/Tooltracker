@@ -19,7 +19,7 @@
       </v-layout>
       <v-layout justify-center align-bottom>
         <v-flex shrink>
-          <v-btn class="ma-2" type="submit" @click="save()"><v-icon class="text-danger mr-3">fa-save</v-icon>Išsaugoti</v-btn>
+          <v-btn class="ma-2" @click="save()"><v-icon class="text-danger mr-3">fa-save</v-icon>Išsaugoti</v-btn>
         </v-flex>
       </v-layout>
       </v-form>

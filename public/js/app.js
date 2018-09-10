@@ -84472,52 +84472,119 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      itemGroups: [],
-      isLoading: true,
-      fullPage: false
-    };
-  },
-  created: function created() {
-    this.loadGroups();
-  },
-
-  computed: {
-    username: function username() {
-      return this.$auth.user().UserName;
+    data: function data() {
+        return {
+            itemGroups: [],
+            isLoading: true,
+            fullPage: false
+        };
     },
-    code: {
-      get: function get() {
-        return this.$store.state.recentCode;
-      },
-      set: function set(value) {
-        return this.$store.commit('newcode', value);
-      }
-    }
-  },
-  methods: {
-    loadGroups: function loadGroups() {
-      var _this = this;
+    mounted: function mounted() {
+        this.isLoading = false;
+    },
 
-      this.$http.get('/group/list').then(function (response) {
-        if (response.status == 200) _this.itemGroups = response.data;
-        _this.isLoading = false;
-      }).catch(function (error) {
-        __WEBPACK_IMPORTED_MODULE_3_sweetalert___default()(error.response.data.message, Object.values(error.response.data.errors)[0][0], 'error');
-      });
+    computed: {
+        username: function username() {
+            return this.$auth.user().UserName;
+        },
+        RfidCode: function RfidCode() {
+            return this.$store.state.recentCode;
+        }
+    },
+    watch: {
+        RfidCode: function RfidCode(val) {
+            if (this.RfidCode != null && this.item == null) {
+                this.getItemInfo(this.RfidCode);
+                this.$store.commit('resetCode');
+            }
+        }
+    },
+    methods: {
+        getItemInfo: function getItemInfo(code) {
+            var _this = this;
+
+            this.$http.post('/item/findcode', {
+                code: code
+            }).then(function (response) {
+                if (response.status == 200) {
+                    _this.$router.push({ name: 'item', params: { itemProp: { item: response.data.item, state: null } } });
+                }
+            }).catch(function (err) {
+                if (err.response.status == 422) {
+                    __WEBPACK_IMPORTED_MODULE_3_sweetalert___default()(err.response.data.message, Object.values(err.response.data.errors)[0][0], "error");
+                } else {
+                    __WEBPACK_IMPORTED_MODULE_3_sweetalert___default()("Klaida", err.response.data.message, "error");
+                }
+            });
+        }
+    },
+    components: {
+        CreateGroup: __WEBPACK_IMPORTED_MODULE_0__modals_CreateGroup_vue___default.a,
+        Loading: __WEBPACK_IMPORTED_MODULE_1_vue_loading_overlay___default.a
     }
-  },
-  components: {
-    CreateGroup: __WEBPACK_IMPORTED_MODULE_0__modals_CreateGroup_vue___default.a,
-    Loading: __WEBPACK_IMPORTED_MODULE_1_vue_loading_overlay___default.a
-  }
 });
 
 /***/ }),
@@ -84530,6 +84597,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_sweetalert___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_sweetalert__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_image_upload_resize__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_image_upload_resize___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_image_upload_resize__);
+//
 //
 //
 //
@@ -85842,6 +85910,7 @@ var render = function() {
         name: "create-group-modal",
         height: 300,
         adaptive: true,
+        scrollable: true,
         transition: "pop-out",
         pivotY: 0.3
       },
@@ -86517,18 +86586,274 @@ var render = function() {
         [
           _c(
             "v-layout",
-            {
-              attrs: {
-                row: "",
-                "mx-0": "",
-                "align-center": "",
-                "justify-center": ""
-              }
-            },
+            { attrs: { row: "", "mx-0": "", "justify-center": "" } },
             [
-              _c("v-flex", { attrs: { shrink: "", headline: "" } }, [
-                _vm._v("Cia bus main puslapis...")
-              ])
+              _c(
+                "v-flex",
+                { staticClass: "px-4 pb-3", attrs: { "sm-6": "" } },
+                [
+                  _c(
+                    "v-card",
+                    { attrs: { tile: "" } },
+                    [
+                      _c(
+                        "v-card-title",
+                        { staticClass: "theme--dark v-toolbar h5 text-light" },
+                        [
+                          _vm._v(
+                            "\n                  Įrankiai laukiantys patvirtinimo\n              "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-card-text",
+                        {
+                          staticClass: "bg-dark",
+                          staticStyle: { "min-height": "25vh" }
+                        },
+                        [
+                          _c(
+                            "v-layout",
+                            {
+                              attrs: {
+                                "align-center": "",
+                                "mt-5": "",
+                                "justify-center": "",
+                                row: "",
+                                "fill-height": ""
+                              }
+                            },
+                            [
+                              _c(
+                                "v-flex",
+                                { attrs: { shrink: "" } },
+                                [
+                                  _c("v-progress-circular", {
+                                    attrs: {
+                                      size: 100,
+                                      width: 7,
+                                      color: "white",
+                                      indeterminate: ""
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                { staticClass: "px-4 pb-3", attrs: { "sm-6": "" } },
+                [
+                  _c(
+                    "v-card",
+                    { attrs: { tile: "" } },
+                    [
+                      _c(
+                        "v-card-title",
+                        { staticClass: "theme--dark v-toolbar h5 text-light" },
+                        [
+                          _vm._v(
+                            "\n                  Ilgiausiai nuomojami įrankiai\n              "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-card-text",
+                        {
+                          staticClass: "bg-dark",
+                          staticStyle: { "min-height": "25vh" }
+                        },
+                        [
+                          _c(
+                            "v-layout",
+                            {
+                              attrs: {
+                                "align-center": "",
+                                "mt-5": "",
+                                "justify-center": "",
+                                row: "",
+                                "fill-height": ""
+                              }
+                            },
+                            [
+                              _c(
+                                "v-flex",
+                                { attrs: { shrink: "" } },
+                                [
+                                  _c("v-progress-circular", {
+                                    attrs: {
+                                      size: 100,
+                                      width: 7,
+                                      color: "white",
+                                      indeterminate: ""
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-layout",
+            { attrs: { row: "", "mx-0": "", "justify-center": "" } },
+            [
+              _c(
+                "v-flex",
+                { staticClass: "px-4 pb-3", attrs: { "sm-6": "" } },
+                [
+                  _c(
+                    "v-card",
+                    { attrs: { tile: "" } },
+                    [
+                      _c(
+                        "v-card-title",
+                        { staticClass: "theme--dark v-toolbar h5 text-light" },
+                        [
+                          _vm._v(
+                            "\n                  Taisomi įrankiai\n              "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-card-text",
+                        {
+                          staticClass: "bg-dark d-flex",
+                          staticStyle: { "min-height": "25vh" }
+                        },
+                        [
+                          _c(
+                            "v-layout",
+                            {
+                              attrs: {
+                                "align-center": "",
+                                "mt-5": "",
+                                "justify-center": "",
+                                row: "",
+                                "fill-height": ""
+                              }
+                            },
+                            [
+                              _c(
+                                "v-flex",
+                                { attrs: { shrink: "" } },
+                                [
+                                  _c("v-progress-circular", {
+                                    attrs: {
+                                      size: 100,
+                                      width: 7,
+                                      color: "white",
+                                      indeterminate: ""
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                { staticClass: "px-4", attrs: { "sm-6": "" } },
+                [
+                  _c(
+                    "v-card",
+                    { attrs: { tile: "" } },
+                    [
+                      _c(
+                        "v-card-title",
+                        { staticClass: "theme--dark v-toolbar h5 text-light" },
+                        [
+                          _vm._v(
+                            "\n                  Jūsų aktyvios rezervacijos\n              "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-card-text",
+                        {
+                          staticClass: "bg-dark",
+                          staticStyle: { "min-height": "25vh" }
+                        },
+                        [
+                          _c(
+                            "v-layout",
+                            {
+                              attrs: {
+                                "align-center": "",
+                                "mt-5": "",
+                                "justify-center": "",
+                                row: "",
+                                "fill-height": ""
+                              }
+                            },
+                            [
+                              _c(
+                                "v-flex",
+                                { attrs: { shrink: "" } },
+                                [
+                                  _c("v-progress-circular", {
+                                    attrs: {
+                                      size: 100,
+                                      width: 7,
+                                      color: "white",
+                                      indeterminate: ""
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
             ],
             1
           )
@@ -88186,6 +88511,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -88239,6 +88565,7 @@ var render = function() {
         name: "rename-group-modal",
         height: 180,
         adaptive: true,
+        scrollable: true,
         transition: "pop-out",
         pivotY: 0.3
       },
@@ -88368,6 +88695,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -88437,7 +88765,8 @@ var render = function() {
         height: 180,
         adaptive: true,
         transition: "pop-out",
-        pivotY: 0.3
+        pivotY: 0.3,
+        scrollable: true
       },
       on: { "before-open": _vm.beforeOpen, "before-close": _vm.beforeClose }
     },
@@ -88665,6 +88994,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -88795,6 +89125,7 @@ var render = function() {
         name: "create-item-modal",
         height: "auto",
         adaptive: true,
+        scrollable: true,
         transition: "pop-out",
         pivotY: 0.3
       },
@@ -89782,6 +90113,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -89835,14 +90168,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.loadItem();
         } else {
             this.itemData = this.itemProp.item;
-            this.itemStatus = this.itemProp.state;
-            this.note = this.itemData.ItemNote;
-            if (this.itemData.images.length == 0) {
-                this.images.push({ imageUrl: '/media/default_picture.png', caption: this.itemData.ItemName });
+            if (this.itemProp.state == null) {
+                this.loadItem();
             } else {
-                this.itemData.images.forEach(function (image) {
-                    _this2.images.push({ imageUrl: _this2.$uploadPath + image.ImageName, caption: image.created_at });
-                });
+                this.itemStatus = this.itemProp.state;
+                this.note = this.itemData.ItemNote;
+                if (this.itemData.images.length == 0) {
+                    this.images.push({ imageUrl: '/media/default_picture.png', caption: this.itemData.ItemName });
+                } else {
+                    this.itemData.images.forEach(function (image) {
+                        _this2.images.push({ imageUrl: _this2.$uploadPath + image.ImageName, caption: image.created_at });
+                    });
+                }
             }
         }
     },
@@ -90017,6 +90354,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -90071,6 +90409,7 @@ var render = function() {
         height: 180,
         adaptive: true,
         transition: "pop-out",
+        scrollable: true,
         pivotY: 0.3
       },
       on: { "before-open": _vm.beforeOpen }
@@ -90317,7 +90656,6 @@ var render = function() {
                         "v-btn",
                         {
                           staticClass: "ma-2",
-                          attrs: { type: "submit" },
                           on: {
                             click: function($event) {
                               _vm.save()
@@ -90365,6 +90703,7 @@ if (false) {
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_sweetalert__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_sweetalert___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_sweetalert__);
+//
 //
 //
 //
@@ -90473,6 +90812,7 @@ var render = function() {
         height: "auto",
         adaptive: true,
         transition: "pop-out",
+        scrollable: true,
         pivotY: 0.3
       },
       on: { "before-open": _vm.beforeOpen, "before-close": _vm.beforeClose }
@@ -90634,6 +90974,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -90689,6 +91030,7 @@ var render = function() {
         name: "item-warranty-fix-modal",
         height: "auto",
         adaptive: true,
+        scrollable: true,
         transition: "pop-out",
         pivotY: 0.3,
         clickToClose: false
@@ -90835,6 +91177,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -90890,6 +91233,7 @@ var render = function() {
         name: "item-unwarranted-fix-modal",
         height: "auto",
         adaptive: true,
+        scrollable: true,
         transition: "pop-out",
         pivotY: 0.3,
         clickToClose: false
@@ -91052,6 +91396,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_sweetalert___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_sweetalert__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ItemSuspendUnconfirmedReturn_vue__ = __webpack_require__(125);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ItemSuspendUnconfirmedReturn_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__ItemSuspendUnconfirmedReturn_vue__);
+//
 //
 //
 //
@@ -91332,6 +91677,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -91390,6 +91736,7 @@ var render = function() {
         name: "item-suspend-unconfirmed-modal",
         height: "auto",
         adaptive: true,
+        scrollable: true,
         transition: "pop-out",
         pivotY: 0.3,
         clickToClose: false
@@ -91518,6 +91865,7 @@ var render = function() {
         name: "item-return-confirm-modal",
         height: "auto",
         adaptive: true,
+        scrollable: true,
         transition: "pop-out",
         pivotY: 0.3,
         clickToClose: false
@@ -92007,6 +92355,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -92092,6 +92441,7 @@ var render = function() {
         height: "auto",
         width: "320px",
         adaptive: true,
+        scrollable: true,
         transition: "pop-out",
         pivotY: 0.3,
         clickToClose: false
@@ -92246,6 +92596,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -92319,6 +92670,7 @@ var render = function() {
         name: "restore-item-modal",
         height: "auto",
         adaptive: true,
+        scrollable: true,
         transition: "pop-out",
         pivotY: 0.3,
         clickToClose: false
@@ -92472,6 +92824,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -92552,6 +92905,7 @@ var render = function() {
         height: "auto",
         adaptive: true,
         transition: "pop-out",
+        scrollable: true,
         pivotY: 0.3
       },
       on: { "before-open": _vm.beforeOpen, "before-close": _vm.beforeClose }
@@ -93635,27 +93989,35 @@ var render = function() {
                           1
                         ),
                         _vm._v(" "),
-                        _vm.itemData.images[0]
+                        _vm.itemData.images
                           ? _c(
-                              "v-layout",
+                              "div",
                               [
-                                _c(
-                                  "v-flex",
-                                  { attrs: { shrink: "" } },
-                                  [
-                                    _c("vueImages", {
-                                      staticClass: "image",
-                                      attrs: {
-                                        imgs: _vm.images,
-                                        modalclose: true,
-                                        keyinput: true,
-                                        showcaption: true,
-                                        showclosebutton: true
-                                      }
-                                    })
-                                  ],
-                                  1
-                                )
+                                _vm.itemData.images[0]
+                                  ? _c(
+                                      "v-layout",
+                                      [
+                                        _c(
+                                          "v-flex",
+                                          { attrs: { shrink: "" } },
+                                          [
+                                            _c("vueImages", {
+                                              staticClass: "image",
+                                              attrs: {
+                                                imgs: _vm.images,
+                                                modalclose: true,
+                                                keyinput: true,
+                                                showcaption: true,
+                                                showclosebutton: true
+                                              }
+                                            })
+                                          ],
+                                          1
+                                        )
+                                      ],
+                                      1
+                                    )
+                                  : _vm._e()
                               ],
                               1
                             )
@@ -94744,6 +95106,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -94863,6 +95226,7 @@ var render = function() {
       attrs: {
         name: "create-user-modal",
         height: "auto",
+        scrollable: true,
         adaptive: true,
         transition: "pop-out",
         pivotY: 0.3
@@ -95139,6 +95503,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -95209,6 +95574,7 @@ var render = function() {
         name: "edit-user-modal",
         height: "auto",
         adaptive: true,
+        scrollable: true,
         transition: "pop-out",
         pivotY: 0.3
       },
@@ -95385,6 +95751,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -95462,6 +95829,7 @@ var render = function() {
         name: "add-user-card-modal",
         height: "auto",
         adaptive: true,
+        scrollable: true,
         transition: "pop-out",
         pivotY: 0.3
       },
@@ -96704,6 +97072,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -96763,6 +97132,7 @@ var render = function() {
       attrs: {
         name: "restore-user-modal",
         height: "auto",
+        scrollable: true,
         adaptive: true,
         transition: "pop-out",
         pivotY: 0.3
@@ -97886,6 +98256,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -97958,6 +98329,7 @@ var render = function() {
         name: "add-object-modal",
         height: "auto",
         adaptive: true,
+        scrollable: true,
         transition: "pop-out",
         pivotY: 0.3
       },
@@ -99671,6 +100043,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -99754,7 +100127,8 @@ var render = function() {
         height: "auto",
         adaptive: true,
         transition: "pop-out",
-        pivotY: 0.3
+        pivotY: 0.3,
+        scrollable: true
       },
       on: { "before-open": _vm.beforeOpen, "before-close": _vm.beforeClose }
     },
@@ -99946,6 +100320,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -100026,6 +100401,7 @@ var render = function() {
         height: "auto",
         adaptive: true,
         transition: "pop-out",
+        scrollable: true,
         pivotY: 0.3
       },
       on: { "before-open": _vm.beforeOpen, "before-close": _vm.beforeClose }

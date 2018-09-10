@@ -65,7 +65,7 @@ class TracerAndSELECTInterpreter(CardConnectionObserver):
             if UDP_RAW_MSG != "":
                 #sock.sendto(bytes(UDP_MESSAGE + '_ON', 'utf-8'), (UDP_IP, UDP_PORT))
                 try:
-                    req = urllib.request.Request('http://localhost/api/sendCode/'+UDP_MESSAGE)
+                    req = urllib.request.Request('https://tools.keytracker.lt/api/sendCode/'+UDP_MESSAGE)
                     r = urllib.request.urlopen(req)
                     print("Issiusta...")
                 except Exception:

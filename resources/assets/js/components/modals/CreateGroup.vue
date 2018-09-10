@@ -2,6 +2,7 @@
   <modal name="create-group-modal"
          :height="300"
          :adaptive="true"
+         :scrollable="true"
          transition="pop-out"
          :pivotY="0.3"
          @before-close="beforeClose">

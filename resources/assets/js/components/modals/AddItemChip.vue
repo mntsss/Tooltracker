@@ -3,6 +3,7 @@
          height="auto"
          :adaptive="true"
          transition="pop-out"
+         :scrollable="true"
          :pivotY="0.3"
          @before-open="beforeOpen"
          @before-close="beforeClose">

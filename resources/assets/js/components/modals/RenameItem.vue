@@ -3,6 +3,7 @@
          :height="180"
          :adaptive="true"
          transition="pop-out"
+         :scrollable="true"
          :pivotY="0.3"
          @before-open="beforeOpen">
     <div class="card">

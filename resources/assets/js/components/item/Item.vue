@@ -133,6 +133,7 @@
                   </v-card-text>
               </v-card>
             </v-layout>
+        <div v-if="itemData.images">
             <v-layout v-if="itemData.images[0]">
                 <v-flex shrink>
                     <vueImages :imgs="images"
@@ -143,6 +144,7 @@
                     </vueImages>
                 </v-flex>
             </v-layout>
+        </div>
         </v-container>
       </div>
     </div>
@@ -194,16 +196,21 @@ import ConfirmReturnItemSuspentionModal from '../modals/ConfirmReturnItemSuspent
     }
     else {
       this.itemData =  this.itemProp.item
-      this.itemStatus = this.itemProp.state
-      this.note = this.itemData.ItemNote
-      if(this.itemData.images.length == 0){
-          this.images.push({imageUrl: '/media/default_picture.png', caption: this.itemData.ItemName})
+      if(this.itemProp.state == null){
+          this.loadItem()
       }
-      else
-      {
-          this.itemData.images.forEach(image => {
-              this.images.push({imageUrl: this.$uploadPath+image.ImageName, caption: image.created_at})
-          })
+      else {
+          this.itemStatus = this.itemProp.state
+          this.note = this.itemData.ItemNote
+          if(this.itemData.images.length == 0){
+              this.images.push({imageUrl: '/media/default_picture.png', caption: this.itemData.ItemName})
+          }
+          else
+          {
+              this.itemData.images.forEach(image => {
+                  this.images.push({imageUrl: this.$uploadPath+image.ImageName, caption: image.created_at})
+              })
+          }
       }
     }
   },

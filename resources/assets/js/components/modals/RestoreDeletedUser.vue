@@ -1,6 +1,7 @@
 <template>
   <modal name="restore-user-modal"
          height="auto"
+         :scrollable="true"
          :adaptive="true"
          transition="pop-out"
          :pivotY="0.3"
