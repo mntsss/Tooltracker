@@ -107,8 +107,8 @@ Route::group(['middleware' => 'jwt.auth'], function(){
 
   });
   Route::prefix('rented')->group(function(){
-    Route::get('get', 'RentedItemController@get');
-    Route::get('get/{?id}', 'RentedItemController@get');
+    // Route::get('get', 'RentedItemController@get');
+    Route::get('get/{id?}', 'RentedItemController@get');
     Route::post('create', 'RentedItemController@create');
     Route::post('edit', 'RentedItemController@edit');
     Route::post('assign', 'RentedItemController@assign');

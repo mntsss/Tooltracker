@@ -3,7 +3,7 @@
         <Loading :active.sync="isLoading"
         :can-cancel="false"
         :is-full-page="fullPage"></Loading>
-
+        <CreateRentedItem></CreateRentedItem>
   <div class="container" style="min-height: 70vh !important" v-if="items">
     <div class="card">
       <v-layout row wrap align-center class="card-header pb-0 pt-0 mx-0 theme--dark v-toolbar">
@@ -11,11 +11,11 @@
               <div class="text-center headline">Nuomoti įrankiai</div>
           </v-flex>
           <v-flex shrink headline justify-end align-content-center>
-            <a @click="show('')" class="headline"><span class="fas fa-plus text-danger p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"></span></a>
+            <a @click="show('create-rented-item-modal')" class="headline"><span class="fas fa-plus text-danger p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"></span></a>
           </v-flex>
       </v-layout>
       <div class="card-body bg-dark" v-if="items.length > 0">
-        <router-link tag="div" class="row remove-side-margin cursor-pointer" :to="{ name: 'item', params: { itemProp: item}}" v-for="(item, index) in items" :key="index">
+        <router-link tag="div" class="row remove-side-margin cursor-pointer" :to="{ name: 'rentedItem', params: { itemProp: item}}" v-for="(item, index) in items" :key="index">
           <div class="col-6">
             {{item.RentedItemName}}
           </div>
@@ -37,7 +37,7 @@
 import swal from 'sweetalert'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.min.css'
-
+import CreateRentedItem from '../modals/rent/CreateRentedItem.vue'
   export default {
     data(){
       return {
@@ -64,15 +64,16 @@ import 'vue-loading-overlay/dist/vue-loading.min.css'
           })
         },
         itemState: function(item){
-          if(!item.ObjectID)
+          if(!item.cobject)
             return "Sandėlyje"
           else{
-            return "bbz..."
+            return "Naudojamas ("+item.cobject.ObjectName+")";
           }
         }
     },
     components: {
-      Loading
+      Loading,
+      CreateRentedItem
     }
 }
 </script>

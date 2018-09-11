@@ -24,7 +24,7 @@ class RentedItemRequest extends FormRequest
             'name' => 'sometimes|string|max:50|min:3',
             'note' => 'sometimes|nullable|string|max:500',
             'price' => 'sometimes|nullable|numeric|min:0.00|max:9999.99',
-            'object' => 'sometimes|numeric|exists:objects,ObjectID',
+            'object' => 'sometimes|nullable|numeric|exists:objects,ObjectID',
             'rentDate' => 'sometimes|nullable|date|max:30'
         ];
     }

@@ -19,7 +19,7 @@ class ObjectController extends Controller
             $quer->where('ItemWithdrawalReturned', false)->with(['item' => function($q){
               $q->with(['lastWithdrawal' => function($query){ $query->with(['user', 'object']);}, 'lastSuspention' => function($query){ $query->with(['user']);}, 'lastReservation', 'images']);
             }]);
-        }])->get();
+        }, 'rented' => function($q){ $q->with('cobject');}])->get();
 
         return response()->json($objects, 200);
     }

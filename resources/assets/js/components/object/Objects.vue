@@ -39,6 +39,23 @@
                                             <v-flex px-2 shrink>Objektas pridėtas:</v-flex>
                                             <v-flex px-2>{{object.created_at}}</v-flex>
                                         </v-layout>
+                                        <v-layout row wrap align-center justify-center v-if="object.rented.length > 0">
+                                            <v-container>
+                                                <v-card-title class="theme--dark v-toolbar mx-auto ">
+                                                    <h5>Išnuomoti įrankiai / nuomos pradžia</h5>
+                                                </v-card-title>
+                                                <v-card-text>
+                                                    <router-link tag="div" class="row remove-side-margin cursor-pointer h6" :to="{ name: 'rentedItem', params: { itemProp: item}}" v-for="(item, i) in object.rented" :key="i">
+                                                      <div class="col-6 h6">
+                                                        {{item.RentedItemName}}
+                                                      </div>
+                                                      <div class="col text-center h6">
+                                                        {{item.RentedItemDate}}
+                                                      </div>
+                                                    </router-link>
+                                                </v-card-text>
+                                            </v-container>
+                                        </v-layout>
                                         <v-layout row wrap align-center justify-center>
                                             <v-container>
                                                 <v-card-title class="theme--dark v-toolbar mx-auto ">

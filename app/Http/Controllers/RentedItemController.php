@@ -61,8 +61,9 @@ class RentedItemController extends Controller
     public function assign(RentedItemRequest $request){
       $item = RentedItem::find($request->id);
       try{
-        if($item->RentedItemReturned)
-          return response()->json(['message'=> 'Klaida', 'errors'=>['name'=>['Negalima grąžinto įrankio priskirti objektui.']]]);
+        if($request->object){
+          if($item->RentedItemReturned)
+            return response()->json(['message'=> 'Klaida', 'errors'=>['name'=>['Negalima grąžinto įrankio priskirti objektui.']]]);
 
         $object = CObject::find($request->object);
         if($object->ObjectFinished)
@@ -70,6 +71,14 @@ class RentedItemController extends Controller
 
         $item->ObjectID = $request->object;
         $item->save();
+        }
+        else{
+          if($item->RentedItemReturned)
+            return response()->json(['message'=> 'Klaida', 'errors'=>['name'=>['Negalima grąžinto įrankio priskirti objektui.']]]);
+
+          $item->ObjectID = null;
+          $item->save();
+        }
       }
       catch(Exception $e){
         return response()->json(['message' => 'Nežinoma klaida', 'errors'=> ['name'=> [$e->getMessage()]]], 422);
