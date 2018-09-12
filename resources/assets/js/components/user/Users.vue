@@ -78,7 +78,7 @@
                                                   <v-icon class="text-danger">fa-history</v-icon>
                                                   <span class="mx-2">Istorija</span>
                                               </v-btn>
-                                              <v-btn outline>
+                                              <v-btn outline @click="$router.push({name:'userWithdrawals', params: {userID: user.UserID}})">
                                                   <v-icon class="text-danger">fa-toolbox</v-icon>
                                                   <span class="mx-2">Įrankiai</span>
                                               </v-btn>

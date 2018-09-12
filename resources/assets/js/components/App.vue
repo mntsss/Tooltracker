@@ -26,6 +26,7 @@
         <Loading :active.sync="isLoading"
         :can-cancel="false"
         :is-full-page="fullPage"></Loading>
+        <ChangePasswordModal></ChangePasswordModal>
     <v-navigation-drawer
       v-model="drawer"
       clipped
@@ -149,6 +150,8 @@
 import Login from './Login.vue'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.min.css'
+
+import ChangePasswordModal from './modals/settings/ChangePassword.vue'
 export default {
     data(){
         return {
@@ -172,7 +175,7 @@ export default {
                 model: false,
                 children: [
                   { icon: 'keyboard_arrow_right', text: 'Aktyvūs', click: ()=> { this.$router.push({name: 'objects'})} },
-                  { icon: 'keyboard_arrow_right', text: 'Uždaryti', click: ''}
+                  { icon: 'keyboard_arrow_right', text: 'Uždaryti', click: ()=>{ this.$router.push({name: 'closedObjects'})}}
                 ]
               },
               {
@@ -182,7 +185,7 @@ export default {
                 model: false,
                 children: [
                   { icon: 'keyboard_arrow_right', text: 'Aktyvios', click: ()=> { this.$router.push({name: 'reservations'})} },
-                  { icon: 'keyboard_arrow_right', text: 'Atiduotos', click: ''}
+                  { icon: 'keyboard_arrow_right', text: 'Atiduotos', click: ()=> { this.$router.push({name: 'closedReservations'})}}
                 ]
               },
               { icon: 'fa-users', text: 'Vartotojai', click: '',
@@ -200,7 +203,7 @@ export default {
               {text: 'Įrankių grąžinimas', click: ()=>{ this.$router.push({name: 'return'})}},
             ],
             settingsDropdownMeniu: [
-              {text: 'Keisti slaptažodį', click: () =>{ alert('Keisti slaptazodi...')}},
+              {text: 'Keisti slaptažodį', click: () =>{ this.$modal.show('change-password-modal')}},
               {text: 'Atsijungti', click: ()=>{ this.$auth.logout()}},
             ],
             snackbar: false,
@@ -263,7 +266,8 @@ export default {
     },
   components: {
     Login,
-    Loading
+    Loading,
+    ChangePasswordModal
   }
 }
 </script>

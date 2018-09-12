@@ -7,7 +7,7 @@ use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\EditUserRequest;
 use App\Http\Requests\AddUserCardRequest;
 use App\Http\Requests\RestoreUserRequest;
-
+use App\Http\Requests\ChangePasswordRequest;
 use Illuminate\Support\Facades\Validator;
 use Auth;
 use Carbon\Carbon;
@@ -31,21 +31,24 @@ class UserController extends Controller
       return response()->json($users, 200);
     }
 
-    public function changePasswordSubmit(Request $request)
+    public function changePasswordSubmit(ChangePasswordRequest $request)
     {
-      Validator::make($request->all(),
-      ['oldpass' => 'required|string|min:6|max:85',
-        'password' => 'required|string|min:6|confirmed',])->validate();
-
-        if(!Hash::check($request->oldpass, Auth::user()->password))
+        if($request->id){
+            if(Auth::user()->UserRole != "Administratorius")
+                return response()->json(['message'=> 'Klaida','errors'=>['name'=>['Šiam veiksmui neturite teisių!']]]);
+            User::find($request->id)->update(['password' => Hash::make($request->password)]);
+            return response()->json(['message'=> 'Atlikta', 'success'=>'Slaptažodis pakeistas sėkmingai.']);
+        }else
         {
-            $request->session()->flash('error', 'Senas slaptažodis įvestas neteisingai! ');
-            return redirect()->back();
-        }
-      User::find(Auth::user()->id)->update(['password' => Hash::make($request->password)]);
+            if(!Hash::check($request->oldpass, Auth::user()->password))
+            {
+                return response()->json(['message'=>'Klaida', 'errors'=>['name'=>['Senas slaptažodis neteisingas.']]], 422);
+            }
+            User::find(Auth::user()->UserID)->update(['password' => Hash::make($request->password)]);
 
-        $request->session()->flash('success', 'Slaptažodis pakeistas sėkmingai!');
-        return redirect()->route("active");
+            return response()->json(['message'=> 'Atlikta', 'success'=>'Slaptažodis pakeistas sėkmingai.']);
+        }
+
     }
 
     public function create(CreateUserRequest $request){
@@ -112,5 +115,15 @@ class UserController extends Controller
       else {
         return response()->json(['message' => 'Klaida!', 'errors' => ['name' => ['Įvyko klaida jungiantis į duomenų bazę. Apie klaidą praneškite administracijai.']]], 422);
       }
+    }
+
+    public function getWithdrawals($id){
+        $user = User::with([
+            'withdrawals' => function($q){ $q->with('item');}
+            ])->find($id);
+        if($user)
+            return response()->json($user, 200);
+        else
+            return response()->json(['message' => 'Klaida!', 'errors' => ['name' => ['Įvyko klaida jungiantis į duomenų bazę. Apie klaidą praneškite administracijai.']]], 422);
     }
 }

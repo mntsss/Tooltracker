@@ -1,6 +1,6 @@
 <template>
   <modal name="rename-group-modal"
-         :height="180"
+         height="auto"
          :adaptive="true"
          :scrollable="true"
          transition="pop-out"

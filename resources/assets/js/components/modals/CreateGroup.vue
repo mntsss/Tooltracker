@@ -1,6 +1,6 @@
 <template>
   <modal name="create-group-modal"
-         :height="300"
+         height="auto"
          :adaptive="true"
          :scrollable="true"
          transition="pop-out"
@@ -14,14 +14,14 @@
         </v-card-text>
       </v-card>
     </v-dialog>
-    <div class="card">
-        <div class="card-header bg-dark text-light">
-            Sukurti grupę
+    <div class="card bg-dark">
+        <div class="card-header theme--dark v-toolbar text-light">
+            Sukurti grupę<a @click="$modal.hide('create-group-modal')" class="float-right"><span class="fas fa-times btn-func-misc"></span></a>
         </div>
-        <div class="card-body">
-            <form class="" method="POST" @submit.prevent="save">
+        <div class="card-body h-100">
+            <form>
                 <div class="form-group">
-                    <label for="name" class="col-md-4 control-label text-dark">Pavadinimas</label>
+                    <label for="name" class="col-md-4 control-label">Pavadinimas</label>
 
                     <div class="col-md-6">
                         <input id="name" type="name" class="form-control" name="name" v-model="name" maxlength="25" required autofocus>
@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="form-group">
-                        <label for="image" class="col-md-4 control-label text-dark">Nuotrauka</label>
+                        <label for="image" class="col-md-4 control-label">Nuotrauka</label>
 
                         <div class="col-md-6 text-right">
                           <image-uploader :debug="1" :maxWidth="192" :quality="0.7" :autoRotate=true outputFormat="verbose" :preview=false :className="['fileinput', { 'fileinput--loaded' : hasImage }]"
@@ -37,11 +37,13 @@
                         </div>
                     </div>
 
-                <div class="form-group d-flex justify-content-center">
-                        <button type="submit" class="btn btn-primary">
-                            Pridėti
-                        </button>
-                </div>
+                <v-layout align-center justify-center>
+                    <v-flex shrink>
+                        <v-btn @click="save()">
+                            <v-icon class="mr-2">fa-check</v-icon>Pridėti
+                        </v-btn>
+                    </v-flex>
+                </v-layout>
             </form>
         </div>
     </div>

@@ -10735,6 +10735,12 @@ body {
   z-index: 500;
 }
 
+/***************************** Modal settings ******************************/
+
+.v--modal-overlay .v--modal-box {
+  overflow: visible !important;
+}
+
 /***************************** Function buttons ****************************/
 
 .nav-arrow {

@@ -23,6 +23,15 @@ class ObjectController extends Controller
 
         return response()->json($objects, 200);
     }
+    public function closedObjects(){
+        $objects = CObject::where('ObjectFinished', true)->with(['user','itemWithdrawals' => function ($quer) {
+            $quer->where('ItemWithdrawalReturned', false)->with(['item' => function($q){
+              $q->with(['lastWithdrawal' => function($query){ $query->with(['user', 'object']);}, 'lastSuspention' => function($query){ $query->with(['user']);}, 'lastReservation', 'images']);
+            }]);
+        }, 'rented' => function($q){ $q->with('cobject');}])->get();
+
+        return response()->json($objects, 200);
+    }
     public function add(AddObjectRequest $request){
         if(CObject::create([
             'ObjectName' => $request->name,

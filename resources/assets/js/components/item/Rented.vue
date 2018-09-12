@@ -4,6 +4,7 @@
         :can-cancel="false"
         :is-full-page="fullPage"></Loading>
     <div class="container">
+        <EditRentedItem></EditRentedItem>
       <AssignRentedItemModal></AssignRentedItemModal>
     <div class="card" v-if="itemData">
       <v-layout row wrap align-content-center class="card-header pb-0 pt-0 mx-0 theme--dark v-toolbar">
@@ -14,14 +15,7 @@
               <div class="text-center headline">{{itemData.RentedItemName}}</div>
           </v-flex>
           <v-flex shrink headline justify-end align-content-center>
-              <v-menu offset-y>
-                <a slot="activator" class="headline"><span class="fas fa-ellipsis-v text-danger p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"></span></a>
-                <v-list>
-                  <v-list-tile v-for="(item, index) in dropdownMeniu" :key="index" @click="item.click">
-                    <v-list-tile-title>{{item.text}}</v-list-tile-title>
-                  </v-list-tile>
-                </v-list>
-              </v-menu>
+                <a @click="$modal.show('edit-rented-item-modal', {item:itemData})" class="headline"><span class="fas fa-edit text-danger p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"></span></a>
           </v-flex>
       </v-layout>
       <div class="card-body bg-dark">
@@ -53,12 +47,12 @@
                           <v-flex px-2 shrink>Dieninis įkainis:</v-flex>
                           <v-flex px-2>{{itemData.RentedItemDailyPrice}}</v-flex>
                       </v-layout>
-                      <v-layout row wrap align-center v-if="itemData.RentedItemDailyPrice">
+                      <v-layout row wrap align-center v-if="itemData.RentedItemDailyPrice && itemData.RentedItemDate">
                           <v-flex shrink pa-2 style="width: 40px !important">
                               <v-icon headline class="text-danger">fa-money-bill-alt</v-icon>
                           </v-flex>
                           <v-flex px-2 shrink>Šiuo metu nuomos kaina:</v-flex>
-                          <v-flex px-2>{{itemData.RentedItemDailyPrice}}</v-flex>
+                          <v-flex px-2>({{days(itemData.RentedItemDate)*itemData.RentedItemDailyPrice}} &euro;)</v-flex>
                       </v-layout>
                       <v-layout row wrap align-center>
                         <v-flex pa-2 xs10>
@@ -102,6 +96,7 @@ import swal from 'sweetalert'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.min.css'
 import AssignRentedItemModal from '../modals/rent/AssignRentedItem.vue'
+import EditRentedItem from '../modals/rent/EditRentedItem.vue'
   export default {
     data(){
       return {
@@ -201,6 +196,15 @@ import AssignRentedItemModal from '../modals/rent/AssignRentedItem.vue'
           }
       })
     },
+    days: function(date){
+        var dateRented = new Date(date)
+        var currentDate = new Date();
+        if(dateRented > currentDate)
+            return 0
+        var timeDiff = Math.abs(currentDate.getTime() - dateRented.getTime());
+        var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+        return diffDays+1
+    },
     returnItem: function(){
         swal({
           title: 'Įrankio nuomos užbaigimas',
@@ -235,7 +239,8 @@ import AssignRentedItemModal from '../modals/rent/AssignRentedItem.vue'
   },
   components: {
       Loading,
-      AssignRentedItemModal
+      AssignRentedItemModal,
+      EditRentedItem
   }
 }
 </script>

@@ -17,7 +17,7 @@
       <div class="card-body bg-dark" v-if="items.length > 0">
         <router-link tag="div" class="row remove-side-margin cursor-pointer" :to="{ name: 'rentedItem', params: { itemProp: item}}" v-for="(item, index) in items" :key="index">
           <div class="col-6">
-            {{item.RentedItemName}}
+            {{item.RentedItemName}}<span class="ml-2" v-if="item.RentedItemDate">({{days(item.RentedItemDate)*item.RentedItemDailyPrice}} &euro;)</span>
           </div>
           <div class="col text-center">
             {{itemState(item)}}
@@ -69,6 +69,15 @@ import CreateRentedItem from '../modals/rent/CreateRentedItem.vue'
           else{
             return "Naudojamas ("+item.cobject.ObjectName+")";
           }
+        },
+        days: function(date){
+            var dateRented = new Date(date)
+            var currentDate = new Date()
+            if(dateRented > currentDate)
+                return 0
+            var timeDiff = Math.abs(currentDate.getTime() - dateRented.getTime());
+            var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+            return diffDays+1
         }
     },
     components: {

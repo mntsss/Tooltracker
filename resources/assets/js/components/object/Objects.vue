@@ -47,7 +47,7 @@
                                                 <v-card-text>
                                                     <router-link tag="div" class="row remove-side-margin cursor-pointer h6" :to="{ name: 'rentedItem', params: { itemProp: item}}" v-for="(item, i) in object.rented" :key="i">
                                                       <div class="col-6 h6">
-                                                        {{item.RentedItemName}}
+                                                        {{item.RentedItemName}}<span class="ml-2" v-if="item.RentedItemDate">({{days(item.RentedItemDate)*item.RentedItemDailyPrice}} &euro;)</span>
                                                       </div>
                                                       <div class="col text-center h6">
                                                         {{item.RentedItemDate}}
@@ -61,7 +61,7 @@
                                                 <v-card-title class="theme--dark v-toolbar mx-auto ">
                                                     <h5>Naudojami įrankiai / išdavimo data</h5>
                                                 </v-card-title>
-                                                <v-card-text>
+                                                <v-card-text v-if="object.item_withdrawals.length > 0">
                                                     <router-link tag="div" class="row remove-side-margin cursor-pointer h6" :to="{ name: 'item', params: { itemProp: {item: withdrawal.item, state: 'Naudojamas'}}}" v-for="(withdrawal, i) in object.item_withdrawals" :key="i">
                                                       <div class="col-6 h6">
                                                         {{withdrawal.item.ItemName}}
@@ -71,6 +71,11 @@
                                                       </div>
                                                     </router-link>
                                                 </v-card-text>
+                                                <div class="card-body bg-dark mt-1 border border-dark" v-else>
+                                                  <div class="text-center text-light h5 pa-2">
+                                                    Objekte įrankių nėra...
+                                                  </div>
+                                                </div>
                                             </v-container>
                                         </v-layout>
                                     </v-card-text>
@@ -125,6 +130,15 @@ export default{
         },
         show: function(name, param = {}){
             this.$modal.show(name, param)
+        },
+        days: function(date){
+            var dateRented = new Date(date).getTime()
+            var currentDate = new Date().getTime()
+            if(dateRented > currentDate)
+                return 0
+            var timeDiff = Math.abs(currentDate - dateRented);
+            var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+            return diffDays+1
         }
     },
     components: {

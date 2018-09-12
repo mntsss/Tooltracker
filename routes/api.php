@@ -64,15 +64,20 @@ Route::group(['middleware' => 'jwt.auth'], function(){
      // edits user
      Route::post('edit', 'UserController@edit');
      // deletes user with given id
+     Route::post('edit/password', 'UserController@changePasswordSubmit');
      Route::get('delete/{id}', 'UserController@delete');
      // adds new rfid card for the user, old one is deleted from user info
      Route::post('addcard', 'UserController@addcard');
      // restores deleted user
      Route::post('restore', 'UserController@restoreuser');
+     // get user withdrew items
+     Route::get('withdrawals/{id}', 'UserController@getWithdrawals');
   });
   Route::prefix('object')->group(function(){
     // returns json list of all active objects
      Route::get('list', 'ObjectController@listObjects');
+     // returns json list of closed objects
+     Route::get('closed', 'ObjectController@closedObjects');
      // adds new object
      Route::post('add', 'ObjectController@add');
   });
@@ -81,6 +86,8 @@ Route::group(['middleware' => 'jwt.auth'], function(){
     Route::post('create', 'ReservationController@create');
     // returns json list with all active reservations
     Route::get('list', 'ReservationController@list');
+    // returns json list with closed reservations
+    Route::get('closed', 'ReservationController@closed');
     // removes item from active reservation
     Route::post('removeitem', 'ReservationController@removeItemFromReservation');
     // deletes entine active reservation

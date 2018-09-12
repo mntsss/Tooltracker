@@ -62,7 +62,7 @@
                             :showclosebutton="true"
                             :showcaption="true"
                             :showimagecount="false"
-                            :showthumbnails="true">
+                            :showthumbnails="false">
           </vue-images>
         </v-flex>
       </v-layout>

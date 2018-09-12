@@ -85,6 +85,14 @@ const routes = [
      }
  },
  {
+     path: '/objects/closed',
+     name: 'closedObjects',
+     component: require('./components/object/Closed'),
+     meta:{
+         auth: true
+     }
+ },
+ {
     path: '/reservation/cart',
     name: 'cart',
     component: require('./components/reservation/Cart'),
@@ -96,6 +104,14 @@ const routes = [
    path: '/reservation/active',
    name: 'reservations',
    component: require('./components/reservation/Active'),
+   meta: {
+     auth: true
+   }
+ },
+ {
+   path: '/reservation/closed',
+   name: 'closedReservations',
+   component: require('./components/reservation/Closed'),
    meta: {
      auth: true
    }
@@ -128,6 +144,15 @@ const routes = [
    path: '/rented/item',
    name: 'rentedItem',
    component: require('./components/item/Rented'),
+   props: true,
+   meta: {
+      auth: true
+   }
+},
+{
+   path: '/users/withdrawals',
+   name: 'userWithdrawals',
+   component: require('./components/user/Withdrawals'),
    props: true,
    meta: {
       auth: true

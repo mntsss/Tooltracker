@@ -1,0 +1,138 @@
+<template>
+  <div class="loading-parent" style="height: 70vh">
+      <Loading :active.sync="isLoading"
+      :can-cancel="false"
+      :is-full-page="fullPage"></Loading>
+
+    <v-container v-if="reservations">
+      <v-layout row wrap mx-0 align-center justify-center class="theme--dark v-toolbar">
+        <v-flex shrink headline>Uždarytos (atiduotos) rezervacijos</v-flex>
+      </v-layout>
+      <v-layout class="bg-dark" row wrap align-center mx-0 mt-2 v-if="reservations.length > 0">
+          <v-expansion-panel>
+              <v-expansion-panel-content v-for="(reservation, i) in reservations" :key="i">
+                  <div slot="header" v-if="reservation.cobject">
+                      {{reservation.cobject.ObjectName+' ('+reservation.recipient[0].Username+')'}}<span class="ml-2">{{reservation.updated_at}}</span>
+                  </div>
+                  <div slot="header" v-else-if="reservation.cobject == null">
+                      {{reservation.recipient[0].Username}}<span class="ml-2">{{reservation.updated_at}}</span>
+                  </div>
+                  <v-card>
+                      <v-card-text>
+                          <v-data-table :headers="headers" :items="reservation.items" hide-actions class="elevation-3 border border-danger mb-3">
+                              <template slot="items" slot-scope="props">
+                                <td>{{ props.item.item.ItemName }}</td>
+                                <td class="text-xs-center">{{ props.item.ReservationItemQuantity }}</td>
+                                <td class="justify-center layout px-0">
+                                </td>
+                              </template>
+                              <template slot="no-data">
+                                <v-alert :value="true" class="bg-warning" icon="warning">
+                                  Rezervacija tuščia, arba įvyko klaida kraunant duomenis iš duombazės...
+                                </v-alert>
+                              </template>
+                            </v-data-table>
+                            <v-layout row wrap align-center>
+                                <v-flex shrink pa-2 style="width: 40px !important">
+                                    <v-icon headline class="text-danger">fa-calendar-plus</v-icon>
+                                </v-flex>
+                                <v-flex px-2 shrink>Rezervacija sukurta:</v-flex>
+                                <v-flex px-2>{{reservation.created_at}}</v-flex>
+                            </v-layout>
+                            <v-layout row wrap align-center>
+                                <v-flex shrink pa-2 style="width: 40px !important">
+                                    <v-icon headline class="text-danger">fa-calendar-check</v-icon>
+                                </v-flex>
+                                <v-flex px-2 shrink>Rezervacija atiduota:</v-flex>
+                                <v-flex px-2>{{reservation.updated_at}}</v-flex>
+                            </v-layout>
+                            <v-layout row wrap align-center v-if="reservation.ReservationConfirmCardNr">
+                                <v-flex shrink pa-2 style="width: 40px !important">
+                                    <v-icon headline class="text-danger">fa-id-card</v-icon>
+                                </v-flex>
+                                <v-flex px-2 shrink>Patvirtinta kortele</v-flex>
+                                <v-flex px-2><v-icon headline class="text-success">fa-check</v-icon></v-flex>
+                            </v-layout>
+                            <v-layout row wrap align-center v-else-if="reservation.ReservationConfirmSignature">
+                                <v-flex shrink pa-2 style="width: 40px !important">
+                                    <v-icon headline class="text-danger">fa-signature</v-icon>
+                                </v-flex>
+                                <v-flex px-2 shrink>Patvirtinta parašu</v-flex>
+                                <v-flex px-2 shrink><v-icon headline class="text-success">fa-check</v-icon></v-flex>
+                                <v-flex px-2 shrink>
+                                    <vueImages :imgs="[{imageUrl: reservation.ReservationConfirmSignature, caption: reservation.recipient[0].Username+' - '+reservation.updated_at}]"
+                                        :modalclose="true"
+                                        :keyinput="true"
+                                        :showcaption="true"
+                                        :showclosebutton="true" class="signature">
+                                    </vueImages>
+                            </v-flex>
+                            </v-layout>
+                      </v-card-text>
+                  </v-card>
+              </v-expansion-panel-content>
+          </v-expansion-panel>
+      </v-layout>
+      <div class="card-body bg-dark mt-1 border border-dark" v-else-if="reservations.length == 0">
+        <div class="text-center text-light h5 pa-5">
+          Uždarytų rezervacijų nėra...
+        </div>
+      </div>
+    </v-container>
+  </div>
+</template>
+<script>
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/vue-loading.min.css'
+import swal from 'sweetalert'
+import vueImages from 'vue-images'
+export default{
+  data(){
+    return {
+      isLoading: true,
+      fullPage: false,
+      reservations: null,
+      headers: [
+          {
+            text: 'Įrankio (daikto) pavadinimas',
+            align: 'left',
+            sortable: false,
+            value: 'item.ItemName'
+          },
+          { text: 'Kiekis (vnt.)', value: 'quantity' },
+          { text: '', value: 'value' }
+        ],
+    }
+  },
+  created(){
+    this.loadReservations();
+  },
+  methods:{
+    loadReservations: function(){
+      this.$http.get('/reservation/closed').then((response)=> {
+        if(response.status == 200){
+          this.isLoading = false
+          this.reservations = response.data
+        }
+      }).catch(error => {
+        swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
+      })
+    },
+    show: function(name, param = {}){
+        this.$modal.show(name, param)
+    }
+  },
+  components: {
+    Loading,
+    vueImages
+  }
+}
+</script>
+<style>
+  .loading-parent{
+    position: relative;
+  }
+  .signature{
+      background-color: white !important;
+  }
+</style>

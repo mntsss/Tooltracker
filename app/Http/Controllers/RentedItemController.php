@@ -20,7 +20,7 @@ class RentedItemController extends Controller
         'RentedItemName' => $request->name,
         'RentedItemNote' => $request->note,
         'RentedItemDailyPrice' => $request->price,
-        'RentItemRent' => $request->rentDate
+        'RentedItemDate' => $request->rentDate
       ]);
       if($rentedItem)
         return response()->json(['message' => 'Atlikta', 'success' => 'Išnuomotas įrankis išsaugotas.']);
@@ -45,8 +45,8 @@ class RentedItemController extends Controller
           $item->RentedItemName = $request->name;
         if($request->note)
           $item->RentedItemNote = $request->note;
-        if($request->rentedDate)
-          $item->RentedItemDate = $request->rentedDate;
+        if($request->rentDate)
+          $item->RentedItemDate = $request->rentDate;
         if($request->price)
           $item->RentedItemDailyPrice = $request->price;
         $item->save();
