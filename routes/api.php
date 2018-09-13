@@ -17,10 +17,10 @@ Route::group(['middleware' => 'jwt.auth'], function(){
   //item groups routes
   Route::prefix('group')->group(function(){
     Route::get('list', 'ItemGroupController@groups');
-    Route::post('create', 'ItemGroupController@create');
-    Route::post('rename', 'ItemGroupController@rename');
-    Route::post('image', 'ItemGroupController@changeImage');
-    Route::get('delete/{id}', 'ItemGroupController@delete');
+    Route::post('create', 'ItemGroupController@create')->middleware('role');
+    Route::post('rename', 'ItemGroupController@rename')->middleware('role');
+    Route::post('image', 'ItemGroupController@changeImage')->middleware('role');
+    Route::get('delete/{id}', 'ItemGroupController@delete')->middleware('role');
     Route::get('get/{id}', 'ItemGroupController@get');
 
   });
@@ -28,16 +28,16 @@ Route::group(['middleware' => 'jwt.auth'], function(){
     Route::get('list/{groupID}', 'ItemController@items');
     Route::get('suspended', 'ItemController@suspendedItems');
     Route::get('deleted', 'ItemController@deletedItems');
-    Route::post('create', 'ItemController@create');
+    Route::post('create', 'ItemController@create')->middleware('role');
     Route::get('get/{id}', 'ItemController@get');
-    Route::post('edit/name', 'ItemController@rename');
-    Route::post('edit/ident', 'ItemController@changeIdentificationNumber');
-    Route::post('edit/note', 'ItemController@changeNote');
-    Route::post('edit/warranty', 'ItemController@changeWarranty');
-    Route::post('image', 'ItemController@changeImage');
-    Route::post('delete', 'ItemController@delete');
-    Route::post('restore', 'ItemController@restore');
-    Route::post('addchip', 'ItemController@addchip');
+    Route::post('edit/name', 'ItemController@rename')->middleware('role');
+    Route::post('edit/ident', 'ItemController@changeIdentificationNumber')->middleware('role');
+    Route::post('edit/note', 'ItemController@changeNote')->middleware('role');
+    Route::post('edit/warranty', 'ItemController@changeWarranty')->middleware('role');
+    Route::post('image', 'ItemController@changeImage')->middleware('role');
+    Route::post('delete', 'ItemController@delete')->middleware('role');
+    Route::post('restore', 'ItemController@restore')->middleware('role');
+    Route::post('addchip', 'ItemController@addchip')->middleware('role');
     // returns item with given chip code and its state
     Route::post('findcode', 'ItemController@findWithCode');
     // returns json item list up to 10 items with similar name as query
@@ -47,29 +47,30 @@ Route::group(['middleware' => 'jwt.auth'], function(){
     // marks item withdrawal as returned if request has valid administrator card id
     Route::post('return/card', 'ItemController@returnItemWithCard');
     // created unconfirmed return item suspention
-    Route::post('suspend/unconfirmedreturn', 'ItemController@suspendUnconfirmedReturn');
-    Route::post('suspend/warrantedfix', 'ItemController@suspendWarrantedFix');
-    Route::post('suspend/fix', 'ItemController@suspendUnwarrantedFix');
+    Route::post('suspend/unconfirmedreturn', 'ItemController@suspendUnconfirmedReturn')->middleware('role');
+    Route::post('suspend/warrantedfix', 'ItemController@suspendWarrantedFix')->middleware('role');
+    Route::post('suspend/fix', 'ItemController@suspendUnwarrantedFix')->middleware('role');
     // confirm suspended item for unconfirmed return
-    Route::post('suspend/return/unconfirmed', 'ItemController@returnSuspentionConfirm');
-    Route::post('suspend/return/fixed', 'ItemController@suspentionReturn');
+    Route::post('suspend/return/unconfirmed', 'ItemController@returnSuspentionConfirm')->middleware('role');
+    Route::post('suspend/return/fixed', 'ItemController@suspentionReturn')->middleware('role');
   });
   Route::prefix('user')->group(function(){
+     Route::get('me', 'UserController@me');
       // returns active users list in json
      Route::get('list', 'UserController@listUsers');
      // returns deleted users list in json
      Route::get('deleted', 'UserController@deletedUsers');
      // creates user
-     Route::post('create', 'UserController@create');
+     Route::post('create', 'UserController@create')->middleware('role');
      // edits user
-     Route::post('edit', 'UserController@edit');
+     Route::post('edit', 'UserController@edit')->middleware('role');
      // deletes user with given id
      Route::post('edit/password', 'UserController@changePasswordSubmit');
-     Route::get('delete/{id}', 'UserController@delete');
+     Route::get('delete/{id}', 'UserController@delete')->middleware('role');
      // adds new rfid card for the user, old one is deleted from user info
-     Route::post('addcard', 'UserController@addcard');
+     Route::post('addcard', 'UserController@addcard')->middleware('role');
      // restores deleted user
-     Route::post('restore', 'UserController@restoreuser');
+     Route::post('restore', 'UserController@restoreuser')->middleware('role');
      // get user withdrew items
      Route::get('withdrawals/{id}', 'UserController@getWithdrawals');
   });
@@ -79,25 +80,25 @@ Route::group(['middleware' => 'jwt.auth'], function(){
      // returns json list of closed objects
      Route::get('closed', 'ObjectController@closedObjects');
      // adds new object
-     Route::post('add', 'ObjectController@add');
+     Route::post('add', 'ObjectController@add')->middleware('role');
   });
   Route::prefix('reservation')->group(function(){
     //create new item reservation for object
-    Route::post('create', 'ReservationController@create');
+    Route::post('create', 'ReservationController@create')->middleware('role');
     // returns json list with all active reservations
     Route::get('list', 'ReservationController@list');
     // returns json list with closed reservations
     Route::get('closed', 'ReservationController@closed');
     // removes item from active reservation
-    Route::post('removeitem', 'ReservationController@removeItemFromReservation');
+    Route::post('removeitem', 'ReservationController@removeItemFromReservation')->middleware('role');
     // deletes entine active reservation
-    Route::get('delete/{id}', 'ReservationController@deleteReservation');
+    Route::get('delete/{id}', 'ReservationController@deleteReservation')->middleware('role');
     // confirm reservation with card
-    Route::post('confirm/card', 'ReservationController@confirmReservationWithCard');
+    Route::post('confirm/card', 'ReservationController@confirmReservationWithCard')->middleware('role');
     // create new item reservation for user
-    Route::post('assign', 'ReservationController@createAssignmentReservation');
+    Route::post('assign', 'ReservationController@createAssignmentReservation')->middleware('role');
     // confirm reservation with user signature
-    Route::post('confirm/sign', 'ReservationController@confirmReservationWithSignature');
+    Route::post('confirm/sign', 'ReservationController@confirmReservationWithSignature')->middleware('role');
   });
 
   Route::prefix('history')->group(function(){
@@ -116,10 +117,10 @@ Route::group(['middleware' => 'jwt.auth'], function(){
   Route::prefix('rented')->group(function(){
     // Route::get('get', 'RentedItemController@get');
     Route::get('get/{id?}', 'RentedItemController@get');
-    Route::post('create', 'RentedItemController@create');
-    Route::post('edit', 'RentedItemController@edit');
-    Route::post('assign', 'RentedItemController@assign');
-    Route::post('return', 'RentedItemController@return');
+    Route::post('create', 'RentedItemController@create')->middleware('role');
+    Route::post('edit', 'RentedItemController@edit')->middleware('role');
+    Route::post('assign', 'RentedItemController@assign')->middleware('role');
+    Route::post('return', 'RentedItemController@return')->middleware('role');
   });
 });
-Route::get('sendCode/{code}', 'HomeController@sendCode');
+Route::get('sendCode/{code}/{userID}', 'HomeController@sendCode');

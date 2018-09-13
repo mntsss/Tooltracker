@@ -21,6 +21,11 @@ class UserController extends Controller
       //$this->middleware('auth');
     }
 
+
+    public function me(){
+        return response()->json(Auth::user(),200);
+    }
+
     public function listUsers(){
         $users = User::existing()->get();
         return response()->json($users, 200);

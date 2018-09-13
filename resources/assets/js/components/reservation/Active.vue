@@ -98,7 +98,7 @@ export default{
           this.reservations = response.data
         }
       }).catch(error => {
-        swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
+        swal('Klaida', error.response.data.message, 'error')
       })
     },
     deleteItem: function(item, i){
@@ -121,6 +121,8 @@ export default{
                 if(error.response.status == 422)
                 {
                     swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
+                }else {
+                  swal('Klaida', error.response.data.message, 'error')
                 }
             })
         })

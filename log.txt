@@ -1,0 +1,36 @@
+Received code: 049B2392775984 | Sending API request to: http://localhost/api/sendCode049B2392775984/2
+Received code: 049B2392775984 | Sending API request to: http://localhost/api/sendCode049B2392775984/2
+Received code: 049B2392775984 | Sending API request to: http://localhost/api/sendCode049B2392775984/2
+Received code: 049B2392775984 | Sending API request to: http://locgfd.fds/api/sendCode049B2392775984/2
+Received code: 049B2392775984 | Sending API request to: http://locgfd.fds/api/sendCode049B2392775984/2
+Received code: 049B2392775984 | Sending API request to: http://locgfd.fds/api/sendCode049B2392775984/2
+Received code: 049B2392775984 | Sending API request to: http://localhost/api/sendCode/049B2392775984/2
+API call sent. 
+Received code: 049B2392775984 | Sending API request to: http://localhost/api/sendCode/049B2392775984/1
+API call sent. 
+Received code: 049B2392775984 | Sending API request to: http://localhost/api/sendCode/049B2392775984/1
+API call sent. 
+Received code: 049B2392775984 | Sending API request to: http://localhost/api/sendCode/049B2392775984/1
+API call sent. 
+Received code: 049B2392775984 | Sending API request to: http://localhost/api/sendCode/049B2392775984/1
+API call sent. 
+Received code: 049B2392775984 | Sending API request to: http://localhost/api/sendCode/049B2392775984/1
+API call sent. 
+Received code: 049B2392775984 | Sending API request to: http://localhost/api/sendCode/049B2392775984/1
+API call sent. 
+Received code: 049B2392775984 | Sending API request to: http://localhost/api/sendCode/049B2392775984/2
+API call sent. 
+Received code: 049B2392775984 | Sending API request to: http://localhost/api/sendCode/049B2392775984/2
+API call sent. 
+Received code: 049B2392775984 | Sending API request to: https://tools.keytracker.lt/api/sendCode/049B2392775984/1
+API call sent. 
+Received code: 049B2392775984 | Sending API request to: https://tools.keytracker.lt/api/sendCode/049B2392775984/1
+API call sent. 
+Received code: 049B2392775984 | Sending API request to: https://tools.keytracker.lt/api/sendCode/049B2392775984/1
+API call sent. 
+Received code: 049B2392775984 | Sending API request to: https://tools.keytracker.lt/api/sendCode/049B2392775984/1
+API call sent. 
+Received code: 049B2392775984 | Sending API request to: https://tools.keytracker.lt/api/sendCode/049B2392775984/1
+API call sent. 
+Received code: 04185BEA635080 | Sending API request to: https://tools.keytracker.lt/api/sendCode/04185BEA635080/1
+API call sent. 

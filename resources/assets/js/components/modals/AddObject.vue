@@ -80,7 +80,7 @@ export default {
                 this.users = response.data
             }
         }).catch(error => {
-            swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], 'error')
+            swal('Klaida', error.response.data.message, 'error')
         })
     },
     beforeClose: function(e){

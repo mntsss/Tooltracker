@@ -1,10 +1,13 @@
 <template>
 <v-container fluid fill-height>
     <v-layout justify-center align-center >
-        <v-flex shrink class="border border-danger">
+        <v-flex shrink class="border border-danger login-box">
             <div class="w-100 theme--dark v-toolbar text-center pa-2 mb-5">
                 <span class="headline">Tool</span><span class="headline text-danger pr-5">Tracker</span>
             </div>
+            <v-alert :value="true" type="error" class="mt-2 mb-2" v-if="errors">
+              Neteisingi prisijungimo duomenys
+            </v-alert>
             <v-form v-model="valid" class="pt-1 pb-1 px-3">
                 <v-text-field prepend-icon="fa-user" v-model="email" :rules="[v => !!v || 'Neįvestas el. paštas']" label="El. paštas" required></v-text-field>
                 <v-text-field prepend-icon="fa-lock" type="password" v-model="password" :rules="[v => !!v || 'Neįvestas slaptažodis']" label="Slaptažodis" required></v-text-field>
@@ -24,7 +27,7 @@ export default{
     return {
       email: null,
       password: null,
-      errors: [],
+      errors: null,
       valid: false
     }
   },
@@ -37,6 +40,7 @@ export default{
               password: app.password
             },
             success: function () {
+              this.$emit('loginSuccess')
             },
             error: function (data) {
               this.errors = data
@@ -49,3 +53,9 @@ export default{
     }
 }
 </script>
+<style>
+  .login-box{
+    width: 300px !important;
+    max-width: 95vw;
+  }
+</style>

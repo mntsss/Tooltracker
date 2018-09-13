@@ -12,7 +12,7 @@
 */
 //Auth::routes();
 // Autentikacija
-$this->get('/login', 'Auth\LoginController@showLoginForm')->name('login');
+$this->get('/login', 'HomeController@home')->name('login');
 $this->post('/login', 'Auth\LoginController@login');
 $this->post('logout', 'Auth\LoginController@logout')->name('logout');
 

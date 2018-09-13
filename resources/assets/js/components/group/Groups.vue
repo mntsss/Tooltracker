@@ -70,7 +70,7 @@ export default {
           this.itemGroups = response.data;
           this.isLoading = false
       }).catch(error => {
-          swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], 'error')
+          swal('Klaida', error.response.data.message, 'error')
       })
     }
   },

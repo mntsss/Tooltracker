@@ -61,7 +61,7 @@ import 'vue-loading-overlay/dist/vue-loading.min.css'
                   this.isLoading = false;
               }
           }).catch(error => {
-            swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
+            swal('Klaida', error.response.data.message, 'error')
           })
         }
     },

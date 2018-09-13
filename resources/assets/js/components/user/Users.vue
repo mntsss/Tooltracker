@@ -72,6 +72,15 @@
                                               <v-icon headline class="text-warning" v-else-if="user.UserRFIDCode == null">fa-times</v-icon>
                                             </v-flex>
                                         </v-layout>
+                                        <v-layout row wrap align-center >
+                                            <v-flex shrink pa-2 style="width: 40px !important">
+                                                <v-icon headline class="text-danger">fa-address-card</v-icon>
+                                            </v-flex>
+                                            <v-flex px-2 shrink>Vartotojo identifikacinis numeris:</v-flex>
+                                            <v-flex px-2>
+                                              {{user.UserID}}
+                                            </v-flex>
+                                        </v-layout>
                                         <v-layout row wrap align-center pa-2 justify-end>
                                             <v-flex shrink justify-end>
                                               <v-btn outline>
@@ -168,6 +177,9 @@ export default{
                     if(error.response.status == 422)
                     {
                         swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
+                    }
+                    else {
+                      swal('Klaida', error.response.data.message, 'error')
                     }
                 })
               }

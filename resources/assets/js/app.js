@@ -62,10 +62,10 @@ Vue.use(require('@websanova/vue-auth'), {
 });
 
 //Subscribing to pusher channel
-Echo.channel('code-channel')
-  .listen('ReceivedCode', (e) => {
-    store.commit('newcode', e.code)
-  });
+// Echo.channel('code-channel')
+//   .listen('ReceivedCode', (e) => {
+//     store.commit('newcode', e.code)
+//   });
 
 //Define global variable
 

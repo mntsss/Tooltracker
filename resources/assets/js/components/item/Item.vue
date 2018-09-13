@@ -263,6 +263,10 @@ import ConfirmReturnItemSuspentionModal from '../modals/ConfirmReturnItemSuspent
                 swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
                 this.isLoading = false
             }
+            else{
+              swal('Klaida', error.response.data.message, 'error')
+              this.isLoading = false
+            }
         })
     },
     fixed: function(){
@@ -330,6 +334,9 @@ import ConfirmReturnItemSuspentionModal from '../modals/ConfirmReturnItemSuspent
                 if(error.response.status == 422)
                 {
                     swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
+                }
+                else {
+                  swal('Klaida', error.response.data.message, 'error')
                 }
             })
           }

@@ -131,7 +131,7 @@
     <v-content>
       <v-container fluid fill-height>
         <v-layout justify-center align-center v-if="!$auth.check() && $auth.ready()">
-          <Login></Login v-if="!$auth.check() && $auth.ready()">
+          <Login v-if="!$auth.check() && $auth.ready()" v-on:loginSuccess="getUser()"></Login>
         </v-layout>
         <v-layout justify-center align-center v-if="$auth.check()">
           <v-flex grow>
@@ -141,7 +141,7 @@
       </v-container>
     </v-content>
     <v-footer app fixed v-if="$auth.ready()">
-      <span>&copy; 2018</span>
+      <span>&copy; 2018</span><span>{{$auth.user().Username}}</span>
     </v-footer>
   </div>
 </v-app>
@@ -157,6 +157,7 @@ export default {
         return {
             fullPage: true,
             drawer: true,
+            user: null,
             meniuItems: [
               { icon: 'fa-home', text: 'Pradžia', click: ()=>{ this.$router.push({name: 'main'})} },
               { icon: 'fa-toolbox', 'icon-alt': 'keyboard_arrow_down', text: 'Įrankiai', click: () => {this.model = !this.model},
@@ -218,6 +219,18 @@ export default {
     mounted(){
       if(window.innerWidth < 1265)
         this.drawer = false
+
+      Echo.channel('code-channel')
+        .listen('ReceivedCode', (e) => {
+          console.log("Code received")
+          if(e.userID == this.user.UserID)
+            this.$store.commit('newcode', e.code)
+        });
+
+      setTimeout(() => {
+        this.getUser()
+      }, 1500)
+
     },
     computed: {
     isLoading: function(){
@@ -253,6 +266,8 @@ export default {
             {
               this.searchResults = response.data
             }
+          }).catch(error => {
+            swal('Klaida', error.response.data.message, 'error')
           })
         }
         else
@@ -262,6 +277,13 @@ export default {
         this.searchResults = null
         this.searchQuery = ''
         this.$router.push({name: 'item', params: { itemProp: item}})
+      },
+      getUser(){
+        this.$http.get('/user/me').then(response => {
+          this.user = response.data
+        }).catch(error => {
+          console.log(error.response.data.errors)
+        })
       }
     },
   components: {

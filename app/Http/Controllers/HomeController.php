@@ -22,7 +22,7 @@ class HomeController extends Controller
       return view('layouts/main');
     }
 
-    public function sendCode($code){
-      broadcast(new ReceivedCode($code));
+    public function sendCode($code, $userID){
+      broadcast(new ReceivedCode($code, $userID));
     }
 }
