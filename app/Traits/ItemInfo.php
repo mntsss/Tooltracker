@@ -29,4 +29,28 @@ trait ItemInfo{
 
     return "Sandėlyje";
   }
+  //checks if item is currently in reservation
+  public function checkItemReservation($id){
+    $reservationCheck = Item::find($id)->reservations()->get();
+    foreach($reservationCheck as $res){
+      if($res->reservation()->Active()->exists())
+        return true;
+    }
+    return false;
+  }
+
+  //checks if item is currently in use by someone
+  public function checkItemWithdrawal($id){
+    if(Item::find($id)->withdrawals()->Active()->exists())
+      return true;
+    else {
+      return false;
+    }
+  }
+  //checks if item is currently suspended
+  public function checkItemSuspention($id){
+    if(Item::find($id)->suspentions()->Active()->exists())
+      return true;
+    return false;
+  }
 }

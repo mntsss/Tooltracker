@@ -169,6 +169,14 @@ body{
 .cursor-pointer:hover{
     cursor:pointer;
 }
+
+.hover-bottom-border{
+  border-bottom: 2px solid transparent;
+}
+
+.hover-bottom-border:hover{
+  border-bottom-color: $primary;
+}
 /********************** Search box **************************/
 .search-result-wrapper{
     position: absolute;

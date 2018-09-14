@@ -107,8 +107,8 @@
     </div>
       <v-spacer></v-spacer>
       <v-menu offset-y>
-        <v-btn icon slot="activator">
-          <v-icon >shopping_cart</v-icon>
+        <v-btn icon slot="activator" class="mx-2">
+          <v-icon medium class="primary--text">shopping_cart</v-icon>
         </v-btn>
         <v-list>
           <v-list-tile v-for="(item, index) in cartDropdownMeniu" :key="index" @click="item.click">
@@ -117,9 +117,12 @@
         </v-list>
       </v-menu>
       <v-menu offset-y>
-        <v-btn icon slot="activator">
-          <v-icon >more_vert</v-icon>
-        </v-btn>
+          <v-flex shrink v-if="user && screenWidth > 650" slot="activator" class="hover-bottom-border">
+            <v-icon  class="primary--text pr-3">fa-user</v-icon>{{user.Username}}<v-icon class="pl-2">keyboard_arrow_down</v-icon>
+          </v-flex>
+          <v-btn icon v-else slot="activator">
+            <v-icon class="primary--text">fa-user</v-icon>
+          </v-btn>
         <v-list>
           <v-list-tile v-for="(item, index) in settingsDropdownMeniu" :key="index" @click="item.click">
             <v-list-tile-title>{{item.text}}</v-list-tile-title>
@@ -238,6 +241,9 @@ export default {
 
     },
     computed: {
+    screenWidth: function(){
+      return window.innerWidth
+    },
     isLoading: function(){
           return !(this.$auth.ready())
       },
@@ -307,5 +313,6 @@ export default {
 }
 .logo{
     max-height: 50px;
+    max-width: auto;
 }
 </style>

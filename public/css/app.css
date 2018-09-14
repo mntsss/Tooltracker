@@ -10639,6 +10639,14 @@ body {
   cursor: pointer;
 }
 
+.hover-bottom-border {
+  border-bottom: 2px solid transparent;
+}
+
+.hover-bottom-border:hover {
+  border-bottom-color: #00768E;
+}
+
 /********************** Search box **************************/
 
 .search-result-wrapper {

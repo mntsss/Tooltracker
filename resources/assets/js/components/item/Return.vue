@@ -84,7 +84,7 @@ export default{
           })
       },
       getWithdrawalInfo: function(id){
-          this.$http.post('/item/withdrawal', {id: id}).then(response => {
+          this.$http.get('/withdrawal/get/'+id).then(response => {
               if(response.status == 200){
                   this.item = response.data
                   this.show('item-return-confirm-modal', {item: this.item})

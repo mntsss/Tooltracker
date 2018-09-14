@@ -30,10 +30,11 @@ Route::group(['middleware' => 'jwt.auth'], function(){
     Route::get('deleted', 'ItemController@deletedItems');
     Route::post('create', 'ItemController@create')->middleware('role');
     Route::get('get/{id}', 'ItemController@get');
-    Route::post('edit/name', 'ItemController@rename')->middleware('role');
-    Route::post('edit/ident', 'ItemController@changeIdentificationNumber')->middleware('role');
-    Route::post('edit/note', 'ItemController@changeNote')->middleware('role');
-    Route::post('edit/warranty', 'ItemController@changeWarranty')->middleware('role');
+    Route::post('edit/name', 'ItemController@edit')->middleware('role');
+    Route::post('edit/ident', 'ItemController@edit')->middleware('role');
+    Route::post('edit/note', 'ItemController@edit')->middleware('role');
+    Route::post('edit/warranty', 'ItemController@edit')->middleware('role');
+
     Route::post('image', 'ItemController@changeImage')->middleware('role');
     Route::post('delete', 'ItemController@delete')->middleware('role');
     Route::post('restore', 'ItemController@restore')->middleware('role');
@@ -42,18 +43,21 @@ Route::group(['middleware' => 'jwt.auth'], function(){
     Route::post('findcode', 'ItemController@findWithCode');
     // returns json item list up to 10 items with similar name as query
     Route::post('search', 'ItemController@search');
-    // return item with withdrawal info and images
-    Route::post('withdrawal', 'ItemController@itemWithdrawalInfo');
     // marks item withdrawal as returned if request has valid administrator card id
-    Route::post('return/card', 'ItemController@returnItemWithCard');
+    Route::post('return/card', 'ItemWithdrawalController@return');
     // created unconfirmed return item suspention
-    Route::post('suspend/unconfirmedreturn', 'ItemController@suspendUnconfirmedReturn')->middleware('role');
-    Route::post('suspend/warrantedfix', 'ItemController@suspendWarrantedFix')->middleware('role');
-    Route::post('suspend/fix', 'ItemController@suspendUnwarrantedFix')->middleware('role');
+    Route::post('suspend/unconfirmedreturn', 'ItemSuspentionController@unconfirmedReturn')->middleware('role');
+    Route::post('suspend/warrantedfix', 'ItemSuspentionController@warrantedFix')->middleware('role');
+    Route::post('suspend/fix', 'ItemSuspentionController@unwarrantedFix')->middleware('role');
     // confirm suspended item for unconfirmed return
-    Route::post('suspend/return/unconfirmed', 'ItemController@returnSuspentionConfirm')->middleware('role');
-    Route::post('suspend/return/fixed', 'ItemController@suspentionReturn')->middleware('role');
+    Route::post('suspend/return/unconfirmed', 'ItemSuspentionController@returnConfirmed')->middleware('role');
+    Route::post('suspend/return/fixed', 'ItemSuspentionController@fixed')->middleware('role');
   });
+
+  Route::prefix('withdrawal')->group(function(){
+    Route::get('get/{id}', 'ItemWithdrawalController@get');
+  });
+
   Route::prefix('user')->group(function(){
      Route::get('me', 'UserController@me');
       // returns active users list in json

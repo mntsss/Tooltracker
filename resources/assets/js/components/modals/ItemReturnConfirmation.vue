@@ -8,7 +8,7 @@
          :clickToClose="false"
          @before-open="beforeOpen"
          @before-close="beforeClose">
-    <div v-if="item" class="card d-flex pt-0 mt-0 px-0" style="min-height: 275px !important">
+    <div v-if="item" class="card d-flex pt-0 mt-0 px-0">
       <div class="overlay position-absolute h-100 w-100" v-if="waitingDialog">
         <div class="headline">
                <a @click="$modal.hide('item-return-confirm-modal')" class="float-right"><span class="fas fa-times btn-func-misc"></span></a>
