@@ -7,14 +7,14 @@
          :pivotY="0.3"
          @before-open="beforeOpen">
     <div class="card">
-        <div class="card-header bg-dark text-light headline">
+        <div class="card-header secondary headline">
             Atkurti vartotoją <a @click="$modal.hide('restore-user-modal')" class="float-right"><span class="fas fa-times btn-func-misc"></span></a>
         </div>
-        <div class="card-body bg-dark">
+        <div class="card-body">
             <v-form v-model="valid">
                 <v-text-field v-model="password" type="password" :rules="[v => !!v || 'Naujas slaptažodis neįvestas']" label="Naujas slaptažodis" required></v-text-field>
                 <v-text-field v-model="repassword" type="password" :rules="[v => v === this.password || 'Slaptažodžiai nesutampa']" label="Pakartokite slaptažodį" required></v-text-field>
-                <v-btn @click="save()" :disabled="!valid">Atkurti</v-btn>
+                <v-btn @click="save()" outline color="primary" :disabled="!valid">Atkurti</v-btn>
             </v-form>
         </div>
     </div>

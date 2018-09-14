@@ -7,15 +7,15 @@
          :pivotY="0.3"
          @before-close="beforeClose">
     <v-dialog v-model="imageLoadingDialog" hide-overlay persistent width="300">
-      <v-card dark class="border border-danger">
+      <v-card class="border border-danger">
         <v-card-text>
           Kraunama...
-          <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
+          <v-progress-linear indeterminate color="primary" class="mb-0"></v-progress-linear>
         </v-card-text>
       </v-card>
     </v-dialog>
-    <div class="card bg-dark">
-        <div class="card-header theme--dark v-toolbar text-light">
+    <div class="card">
+        <div class="card-header theme--primary v-toolbar">
             Sukurti grupę<a @click="$modal.hide('create-group-modal')" class="float-right"><span class="fas fa-times btn-func-misc"></span></a>
         </div>
         <div class="card-body h-100">
@@ -24,7 +24,7 @@
                     <label for="name" class="col-md-4 control-label">Pavadinimas</label>
 
                     <div class="col-md-6">
-                        <input id="name" type="name" class="form-control" name="name" v-model="name" maxlength="25" required autofocus>
+                        <input id="name" type="name" class="form-control" name="name" v-model="name" maxlength="40" required autofocus>
                     </div>
                 </div>
 

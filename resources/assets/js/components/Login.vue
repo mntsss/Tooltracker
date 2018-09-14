@@ -1,7 +1,7 @@
 <template>
 <v-container fluid fill-height>
     <v-layout justify-center align-center >
-        <v-flex shrink class="border border-danger login-box">
+        <v-flex shrink class="login-box">
             <div class="w-100 theme--dark v-toolbar text-center pa-2 mb-5">
                 <span class="headline">Tool</span><span class="headline text-danger pr-5">Tracker</span>
             </div>
@@ -13,7 +13,7 @@
                 <v-text-field prepend-icon="fa-lock" type="password" v-model="password" :rules="[v => !!v || 'Neįvestas slaptažodis']" label="Slaptažodis" required></v-text-field>
                 <v-layout row mx-0 align-center justify-center pa-3>
                     <v-flex shrink>
-                        <v-btn outline @click="login"><v-icon class="text-danger mx-2">fa-sign-in-alt</v-icon>Prisijungti</v-btn>
+                        <v-btn outline @click="login"><v-icon class="primary--text mx-2">fa-sign-in-alt</v-icon>Prisijungti</v-btn>
                     </v-flex>
                 </v-layout>
             </v-form>
@@ -53,9 +53,3 @@ export default{
     }
 }
 </script>
-<style>
-  .login-box{
-    width: 300px !important;
-    max-width: 95vw;
-  }
-</style>

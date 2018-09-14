@@ -7,21 +7,21 @@
         :can-cancel="false"
         :is-full-page="fullPage"></Loading>
         <div class="container" style="min-height: 70vh !important">
-            <div class="card bg-dark" v-if="users">
-                <v-layout row wrap align-center class="card-header pb-0 pt-0 mb-0 theme--dark v-toolbar mx-0">
+            <div class="card" v-if="users">
+                <v-layout row wrap align-center class="card-header pb-0 pt-0 mb-0 secondary v-toolbar mx-0">
                     <v-flex headline align-center>
                         <div class="text-center mb-0">
                             Vartotojai
                         </div>
                     </v-flex>
                     <v-flex shrink>
-                        <a @click="show('create-user-modal')" class="headline"><span class="fas fa-plus text-danger p-2 btn-func-misc ml-2 mr-2 mb-0 mt-0"></span></a>
+                        <a @click="show('create-user-modal')" class="headline"><span class="fas fa-plus primary--text p-2 btn-func-misc ml-2 mr-2 mb-0 mt-0"></span></a>
                     </v-flex>
                 </v-layout>
-                <v-container class="card-body bg-dark mt-0 pt-4" v-if="users.length > 0">
+                <v-container class="card-body mt-0 pt-4" v-if="users.length > 0">
                     <v-layout row wrap align-center>
                         <v-expansion-panel>
-                            <v-expansion-panel-content v-for="(user, i) in users" :key="i">
+                            <v-expansion-panel-content class="primary v-toolbar mb-1 text-white" v-for="(user, i) in users" :key="i">
                                 <div slot="header">
                                     {{user.Username}}
                                 </div>
@@ -29,42 +29,42 @@
                                     <v-card-text>
                                         <v-layout row wrap align-center >
                                             <v-flex shrink pa-2 style="width: 40px !important">
-                                                <v-icon headline class="text-danger">fa-phone</v-icon>
+                                                <v-icon headline class="primary--text">fa-phone</v-icon>
                                             </v-flex>
                                             <v-flex shrink px-2>Telefonas:</v-flex>
                                             <v-flex px-2>{{user.UserPhone}}</v-flex>
                                         </v-layout>
                                         <v-layout row wrap align-center >
                                             <v-flex shrink pa-2 style="width: 40px !important">
-                                                <v-icon headline class="text-danger">fa-envelope</v-icon>
+                                                <v-icon headline class="primary--text">fa-envelope</v-icon>
                                             </v-flex>
                                             <v-flex shrink px-2>El. paštas:</v-flex>
                                             <v-flex px-2>{{user.email}}</v-flex>
                                         </v-layout>
                                         <v-layout row wrap align-center >
                                             <v-flex shrink pa-2 style="width: 40px !important">
-                                                <v-icon headline class="text-danger">fa-crown</v-icon>
+                                                <v-icon headline class="primary--text">fa-crown</v-icon>
                                             </v-flex>
                                             <v-flex px-2 shrink>Vartotojo tipas:</v-flex>
                                             <v-flex px-2>{{user.UserRole}}</v-flex>
                                         </v-layout>
                                         <v-layout row wrap align-center >
                                             <v-flex shrink pa-2 style="width: 40px !important">
-                                                <v-icon headline class="text-danger">fa-calendar-alt</v-icon>
+                                                <v-icon headline class="primary--text">fa-calendar-alt</v-icon>
                                             </v-flex>
                                             <v-flex px-2 shrink>Paskutinis aktyvumas:</v-flex>
                                             <v-flex px-2>{{user.UserLastSeen}}</v-flex>
                                         </v-layout>
                                         <v-layout row wrap align-center >
                                             <v-flex shrink pa-2 style="width: 40px !important">
-                                                <v-icon headline class="text-danger">fa-calendar-check</v-icon>
+                                                <v-icon headline class="primary--text">fa-calendar-check</v-icon>
                                             </v-flex>
                                             <v-flex px-2 shrink>Registracijos data:</v-flex>
                                             <v-flex px-2>{{user.created_at}}</v-flex>
                                         </v-layout>
                                         <v-layout row wrap align-center >
                                             <v-flex shrink pa-2 style="width: 40px !important">
-                                                <v-icon headline class="text-danger">fa-address-card</v-icon>
+                                                <v-icon headline class="primary--text">fa-address-card</v-icon>
                                             </v-flex>
                                             <v-flex px-2 shrink>Priskirta identifikacinė kortelė:</v-flex>
                                             <v-flex px-2>
@@ -74,7 +74,7 @@
                                         </v-layout>
                                         <v-layout row wrap align-center >
                                             <v-flex shrink pa-2 style="width: 40px !important">
-                                                <v-icon headline class="text-danger">fa-address-card</v-icon>
+                                                <v-icon headline class="primary--text">fa-address-card</v-icon>
                                             </v-flex>
                                             <v-flex px-2 shrink>Vartotojo identifikacinis numeris:</v-flex>
                                             <v-flex px-2>
@@ -84,23 +84,23 @@
                                         <v-layout row wrap align-center pa-2 justify-end>
                                             <v-flex shrink justify-end>
                                               <v-btn outline>
-                                                  <v-icon class="text-danger">fa-history</v-icon>
+                                                  <v-icon class="primary--text">fa-history</v-icon>
                                                   <span class="mx-2">Istorija</span>
                                               </v-btn>
                                               <v-btn outline @click="$router.push({name:'userWithdrawals', params: {userID: user.UserID}})">
-                                                  <v-icon class="text-danger">fa-toolbox</v-icon>
+                                                  <v-icon class="primary--text">fa-toolbox</v-icon>
                                                   <span class="mx-2">Įrankiai</span>
                                               </v-btn>
                                               <v-btn outline @click="show('edit-user-modal', {user: user})">
-                                                    <v-icon class="text-danger">fa-edit</v-icon>
+                                                    <v-icon class="primary--text">fa-edit</v-icon>
                                                     <span class="mx-2">Redaguoti</span>
                                                 </v-btn>
                                                 <v-btn outline @click="show('add-user-card-modal', {id: user.UserID})">
-                                                    <v-icon class="text-danger">fa-id-card</v-icon>
+                                                    <v-icon class="primary--text">fa-id-card</v-icon>
                                                     <span class="mx-2">Nauja kortelė</span>
                                                 </v-btn>
                                               <v-btn outline @click="deleteUser(user)">
-                                                  <v-icon class="text-danger">fa-trash</v-icon>
+                                                  <v-icon class="primary--text">fa-trash</v-icon>
                                                   <span class="mx-2">Ištrinti</span>
                                               </v-btn>
 
@@ -112,8 +112,8 @@
                         </v-expansion-panel>
                     </v-layout>
                 </v-container>
-                <div class="card-body bg-dark mt-1 border border-dark" v-else-if="users.length == 0">
-                  <div class="text-center text-light h5 pa-5">
+                <div class="card-body mt-1 border border-dark" v-else-if="users.length == 0">
+                  <div class="text-center h5 pa-5">
                     Vartotojų nėra...
                   </div>
                 </div>

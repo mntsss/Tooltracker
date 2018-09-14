@@ -6,10 +6,10 @@
          transition="pop-out"
          :pivotY="0.3">
     <div class="card">
-        <div class="card-header bg-dark text-light">
+        <div class="card-header secondary">
             Pridėti vartotoją <a @click="$modal.hide('create-user-modal')" class="float-right"><span class="fas fa-times btn-func-misc"></span></a>
         </div>
-        <div class="card-body bg-dark">
+        <div class="card-body">
             <v-form v-model="valid">
                 <v-text-field v-model="email" :rules="emailRules" label="El paštas" required></v-text-field>
                 <v-text-field v-model="name" :rules="nameRules" label="Vardas, pavardė" required></v-text-field>

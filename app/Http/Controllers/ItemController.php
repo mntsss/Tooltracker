@@ -114,7 +114,7 @@ class ItemController extends Controller
     // returns item and its state by provided ID
     public function get($id){
 
-        $item = Item::where('ItemID', $id)->existing()->with(['lastWithdrawal' => function($query){ $query->with(['user', 'object']);}, 'lastSuspention' => function($query){ $query->with(['user']); }, 'lastReservation', 'images'])->first();
+        $item = Item::where('ItemID', $id)->with(['lastWithdrawal' => function($query){ $query->with(['user', 'object']);}, 'lastSuspention' => function($query){ $query->with(['user']); }, 'lastReservation', 'images'])->first();
           return response()->json(['item'=> $item, 'state' => $this->GetItemState($item)], 200);
     }
     // renames item

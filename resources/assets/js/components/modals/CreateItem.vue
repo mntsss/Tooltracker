@@ -8,18 +8,18 @@
          @before-open="beforeOpen"
          @before-close="beforeClose">
          <v-dialog v-model="imageLoadingDialog" hide-overlay persistent width="300">
-           <v-card dark class="border border-danger">
+           <v-card class="border border-danger">
              <v-card-text>
                Kraunama...
-               <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
+               <v-progress-linear indeterminate color="primary" class="mb-0"></v-progress-linear>
              </v-card-text>
            </v-card>
          </v-dialog>
     <div class="card">
-        <div class="card-header theme--dark v-toolbar headline text-center">
+        <div class="card-header theme--primary v-toolbar headline text-center">
             Pridėti įrankį <a @click="$modal.hide('create-item-modal')" class="float-right"><span class="fas fa-times btn-func-misc"></span></a>
         </div>
-        <div class="card-body bg-dark text-light">
+        <div class="card-body">
             <v-form>
                 <div class="form-group mb-4">
                     <label for="name" class="col-md-4 control-label">Pavadinimas</label>
@@ -52,7 +52,7 @@
                     </div>
                 </div>
 
-                <div class="form-group row remove-side-margin">
+                <div class="form-group row mx-0">
                   <label class="col-auto control-label mb-4" for="consumable">
                     Suvartojama
                   </label>
@@ -86,7 +86,7 @@
                 </div>
                 <v-layout row mx-0 pa-2 align-center justify-center>
                   <v-flex shrink>
-                    <v-btn outline color="blue" :disabled="!code && !nocode" @click="save()">
+                    <v-btn outline color="primary" :disabled="!code && !nocode" @click="save()">
                             Pridėti
                         </v-btn>
                   </v-flex>

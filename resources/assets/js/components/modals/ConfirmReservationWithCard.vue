@@ -8,14 +8,14 @@
          @before-open="beforeOpen"
          @before-close="beforeClose">
     <div class="card">
-        <div class="card-header bg-dark text-light">
+        <div class="card-header secondary">
             Patvirtinti rezervacijos perdavimą <a @click="$modal.hide('confirm-reservation-with-card-modal')" class="float-right"><span class="fas fa-times btn-func-misc"></span></a>
         </div>
-        <div class="card-body bg-dark">
+        <div class="card-body">
             <v-form v-model="valid">
                 <v-layout row wrap align-center>
                   <v-flex v-if="!code" class="border-danger text-center headline text-danger">Laukiama vartotojo <span>{{user}}</span>  kortelė...</v-flex>
-                  <v-flex v-else-if="code" class="border-danger text-center headline text-success">Kortelė nuskaityta!</v-flex>
+                  <v-flex v-else-if="code" class="text-center headline text-success">Kortelė nuskaityta!</v-flex>
                 </v-layout>
 
                 <v-btn @click="save()" :disabled="disabled">Išsaugoti</v-btn>

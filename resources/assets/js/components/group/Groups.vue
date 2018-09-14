@@ -6,8 +6,8 @@
 
   <div class="container" style="overflow: auto !important">
     <CreateGroup></CreateGroup>
-    <v-layout row mx-0 mb-3 align-center justify-center class="theme--dark v-toolbar">
-        <v-flex shrink headline>
+    <v-layout row mx-0 mb-3 align-center justify-center class="primary">
+        <v-flex shrink headline class="text-white">
             Įrankių grupės
         </v-flex>
     </v-layout>
@@ -25,10 +25,8 @@
               <span class="far fa-folder-open text-warning"></span>
           </div>
         </div>
-        <div class="row item-name-field remove-all-margin">
-            <div class="col-12 item-text remove-all-padding">
+        <div class="row item-name-field ma-0">
               {{group.ItemGroupName}}
-            </div>
         </div>
     </router-link>
   </div>

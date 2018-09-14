@@ -8,10 +8,10 @@
          @before-open="beforeOpen"
          @before-close="beforeClose">
     <div class="card">
-        <div class="card-header bg-dark text-light headline">
+        <div class="card-header secondary headline">
             Naujas objektas <a @click="$modal.hide('add-object-modal')" class="float-right"><span class="fas fa-times btn-func-misc"></span></a>
         </div>
-        <div class="card-body bg-dark">
+        <div class="card-body">
             <v-form v-model="valid">
                 <v-text-field prepend-icon="fa-building" v-model="name" :rules="nameRules" label="Objekto pavadinimas" required></v-text-field>
                 <v-select

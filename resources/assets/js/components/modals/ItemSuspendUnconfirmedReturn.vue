@@ -8,8 +8,8 @@
          :clickToClose="false"
          @before-open="beforeOpen"
          @before-close="beforeClose">
-    <div class="card bg-dark" v-if="item">
-      <div class="card-header h5 bg-dark text-light">
+    <div class="card" v-if="item">
+      <div class="card-header h5 secondary">
           Įrankio {{item.ItemName}} įšaldymas dėl apgadinimo <a @click="$modal.hide('item-suspend-unconfirmed-modal')" class="float-right"><span class="fas fa-times btn-func-misc"></span></a>
       </div>
       <v-layout>
@@ -19,7 +19,7 @@
       </v-layout>
       <v-layout justify-center align-bottom>
         <v-flex shrink>
-          <v-btn class="ma-5" @click="save()"><v-icon class="text-danger mr-3">fa-lock</v-icon>Įšaldyti</v-btn>
+          <v-btn class="ma-5" @click="save()"><v-icon class="primary--text mr-3">fa-lock</v-icon>Įšaldyti</v-btn>
         </v-flex>
       </v-layout>
     </div>

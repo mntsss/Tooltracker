@@ -8,10 +8,10 @@
          @before-open="beforeOpen"
          @before-close="beforeClose">
     <div class="card">
-        <div class="card-header theme--dark v-toolbar headline text-center">
+        <div class="card-header secondary v-toolbar headline text-center">
             Redaguoti nuomotą įrankį <a @click="$modal.hide('edit-rented-item-modal')" class="float-right"><span class="fas fa-times btn-func-misc"></span></a>
         </div>
-        <div class="card-body bg-dark text-light">
+        <div class="card-body">
             <v-form>
                 <div class="form-group mb-4">
                     <label for="name" class="col-md-4 control-label">Pavadinimas</label>
@@ -34,7 +34,7 @@
 
                     <div class="col-md-6">
                       <div class="input-group">
-                        <span class="input-group-addon"><v-icon small class="mt-2 mx-2">fa-euro-sign</v-icon></span>
+                        <span class="input-group-addon"><v-icon small class="mt-2 mx-2 primary--text">fa-euro-sign</v-icon></span>
                         <input type="number" v-model="price" min="0" step="0.01" data-number-to-fixed="2" class="form-control"/>
                       </div>
                     </div>
@@ -42,7 +42,7 @@
 
                 <v-layout row mx-0 pa-2 align-center justify-center>
                   <v-flex shrink>
-                    <v-btn outline color="blue" :disabled="!name || rentDate == '' || price == 0" @click="save()">
+                    <v-btn outline color="primary" :disabled="!name || rentDate == '' || price == 0" @click="save()">
                             Išsaugoti
                         </v-btn>
                   </v-flex>

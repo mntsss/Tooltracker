@@ -6,21 +6,21 @@
       <ConfirmWithCard></ConfirmWithCard>
       <ConfirmWithSign></ConfirmWithSign>
     <v-container v-if="reservations">
-      <v-layout row wrap mx-0 align-center justify-center class="theme--dark v-toolbar">
+      <v-layout row wrap mx-0 align-center justify-center class="secondary v-toolbar">
         <v-flex shrink headline>Aktyvios rezervacijos</v-flex>
       </v-layout>
-      <v-layout class="bg-dark" row wrap align-center mx-0 mt-2 v-if="reservations.length > 0">
+      <v-layout class="" row wrap align-center mx-0 mt-2 v-if="reservations.length > 0">
           <v-expansion-panel>
-              <v-expansion-panel-content v-for="(reservation, i) in reservations" :key="i">
-                  <div slot="header" v-if="reservation.cobject">
+              <v-expansion-panel-content class="primary text-white v-toolbar mb-1" v-for="(reservation, i) in reservations" :key="i">
+                  <div slot="header"  v-if="reservation.cobject">
                       {{reservation.cobject.ObjectName+' ('+reservation.recipient[0].Username+')'}}
                   </div>
-                  <div slot="header" v-else-if="reservation.cobject == null">
+                  <div slot="header"  v-else-if="reservation.cobject == null">
                       {{reservation.recipient[0].Username}}
                   </div>
                   <v-card>
                       <v-card-text>
-                          <v-data-table :headers="headers" :items="reservation.items" hide-actions class="elevation-3 border border-danger">
+                          <v-data-table :headers="headers" :items="reservation.items" hide-actions class="elevation-3 border border-dark">
                               <template slot="items" slot-scope="props">
                                 <td>{{ props.item.item.ItemName }}</td>
                                 <td class="text-xs-center">{{ props.item.ReservationItemQuantity }}</td>
@@ -36,15 +36,15 @@
                             </v-data-table>
                             <v-layout row wrap align-center pa-2 justify-end>
                                   <v-btn outline @click="show('confirm-reservation-with-card-modal', {id: reservation.ReservationID, user: reservation.recipient[0].Username})">
-                                      <v-icon class="text-danger">fa-id-card</v-icon>
+                                      <v-icon class="primary--text">fa-id-card</v-icon>
                                       <span class="mx-2">Patvirtinti kortele</span>
                                   </v-btn>
                                   <v-btn outline @click="show('confirm-reservation-with-sign-modal', {id: reservation.ReservationID, user: reservation.recipient[0].Username})">
-                                        <v-icon class="text-danger">fa-signature</v-icon>
+                                        <v-icon class="primary--text">fa-signature</v-icon>
                                         <span class="mx-2">Patvirtinti parašu</span>
                                     </v-btn>
                                   <v-btn outline @click="deleteReservation(reservation)">
-                                      <v-icon class="text-danger">fa-trash</v-icon>
+                                      <v-icon class="primary--text">fa-trash</v-icon>
                                       <span class="mx-2">Ištrinti</span>
                                   </v-btn>
 
@@ -55,8 +55,8 @@
               </v-expansion-panel-content>
           </v-expansion-panel>
       </v-layout>
-      <div class="card-body bg-dark mt-1 border border-dark" v-else-if="reservations.length == 0">
-        <div class="text-center text-light h5 pa-5">
+      <div class="card-body mt-1 border border-dark" v-else-if="reservations.length == 0">
+        <div class="text-center h5 pa-5">
           Aktyvių rezervacijų nėra...
         </div>
       </div>
@@ -138,7 +138,8 @@ export default{
             cancel: {text: 'Atšaukti'}
           }
         }).then(value => {
-            this.$http.get('/reservation/delete/'+reservation.ReservationID).then((response)=> {
+            if(value){
+                this.$http.get('/reservation/delete/'+reservation.ReservationID).then((response)=> {
                 if(response.status == 200){
                     swal(response.data.message, response.data.success, "success")
                     this.loadReservations()
@@ -152,6 +153,7 @@ export default{
                     swal("Klaida", error.response.data.message, "error");
                 }
             })
+            }
         })
     },
     show: function(name, param = {}){

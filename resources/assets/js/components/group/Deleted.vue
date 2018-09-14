@@ -6,23 +6,23 @@
 
   <div class="container" style="min-height: 70vh !important" v-if="items">
     <div class="card">
-      <v-layout row wrap align-center class="card-header pb-0 pt-0 mx-0 theme--dark v-toolbar">
+      <v-layout row wrap align-center class="card-header pb-0 pt-0 mx-0 secondary">
           <v-flex>
               <div class="text-center headline">Ištrinti įrankiai</div>
           </v-flex>
       </v-layout>
-      <div class="card-body bg-dark" v-if="items.length > 0">
-        <router-link tag="div" class="row remove-side-margin cursor-pointer" :to="{ name: 'item', params: { itemProp: {item: item, state: 'Ištrintas'}}}" v-for="item in items" :key="item.ItemID">
+      <div class="card-body" v-if="items.length > 0">
+        <router-link tag="div" class="row remove-side-margin cursor-pointer" :to="{ name: 'item', params: { itemID: item.ItemID}}" v-for="item in items" :key="item.ItemID">
           <div class="col-6">
             {{item.ItemName}}
           </div>
           <div class="col text-center">
-            {{item.state}}
+            {{item.updated_at}}
           </div>
       </router-link>
       </div>
-      <div class="card-body bg-dark mt-1 border border-dark" v-else-if="items.length == 0">
-        <div class="text-center text-light h5 pa-5">
+      <div class="card-body mt-1 border border-dark" v-else-if="items.length == 0">
+        <div class="text-center h5 pa-5">
           Ištrintų įrankių nėra...
         </div>
       </div>

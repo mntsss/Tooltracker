@@ -6,14 +6,14 @@
         :is-full-page="fullPage"></Loading>
     <v-container>
         <v-layout row v-if="objects">
-                <v-layout row mb-3 class="theme--dark v-toolbar">
+                <v-layout row mb-3 class="secondary v-toolbar">
                     <v-flex headline align-center>
                         <div class="text-center mb-0">
                             Objektai
                         </div>
                     </v-flex>
                     <v-flex shrink>
-                        <a @click="show('add-object-modal')" class="headline"><span class="fas fa-plus text-danger p-2 btn-func-misc ml-2 mr-2 mb-0 mt-0"></span></a>
+                        <a @click="show('add-object-modal')" class="headline"><span class="fas fa-plus primary--text p-2 btn-func-misc ml-2 mr-2 mb-0 mt-0"></span></a>
                     </v-flex>
                 </v-layout>
                 <v-card-text v-if="objects.length > 0">
@@ -27,21 +27,21 @@
                                     <v-card-text>
                                         <v-layout row wrap align-center >
                                             <v-flex shrink pa-2 style="width: 40px !important">
-                                                <v-icon headline class="text-danger">fa-user-tie</v-icon>
+                                                <v-icon headline class="primary--text">fa-user-tie</v-icon>
                                             </v-flex>
                                             <v-flex px-2 shrink>Darbų vygdytojas:</v-flex>
                                             <v-flex px-2>{{object.user.Username}}</v-flex>
                                         </v-layout>
                                         <v-layout row wrap align-center >
                                             <v-flex shrink pa-2 style="width: 40px !important">
-                                                <v-icon headline class="text-danger">fa-calendar-plus</v-icon>
+                                                <v-icon headline class="primary--text">fa-calendar-plus</v-icon>
                                             </v-flex>
                                             <v-flex px-2 shrink>Objektas pridėtas:</v-flex>
                                             <v-flex px-2>{{object.created_at}}</v-flex>
                                         </v-layout>
                                         <v-layout row wrap align-center justify-center v-if="object.rented.length > 0">
                                             <v-container>
-                                                <v-card-title class="theme--dark v-toolbar mx-auto ">
+                                                <v-card-title class="primary v-toolbar text-white mx-auto ">
                                                     <h5>Išnuomoti įrankiai / nuomos pradžia</h5>
                                                 </v-card-title>
                                                 <v-card-text>
@@ -58,7 +58,7 @@
                                         </v-layout>
                                         <v-layout row wrap align-center justify-center>
                                             <v-container>
-                                                <v-card-title class="theme--dark v-toolbar mx-auto ">
+                                                <v-card-title class="primary v-toolbar text-white mx-auto ">
                                                     <h5>Naudojami įrankiai / išdavimo data</h5>
                                                 </v-card-title>
                                                 <v-card-text v-if="object.item_withdrawals.length > 0">
@@ -71,8 +71,8 @@
                                                       </div>
                                                     </router-link>
                                                 </v-card-text>
-                                                <div class="card-body bg-dark mt-1 border border-dark" v-else>
-                                                  <div class="text-center text-light h5 pa-2">
+                                                <div class="card-body mt-1 border border-dark" v-else>
+                                                  <div class="text-center h5 pa-2">
                                                     Objekte įrankių nėra...
                                                   </div>
                                                 </div>
@@ -84,8 +84,8 @@
                         </v-expansion-panel>
                     </v-layout>
                 </v-card-text>
-                <div class="card-body bg-dark mt-1 border border-dark" v-else-if="objects.length == 0">
-                  <div class="text-center text-light h5 pa-5">
+                <div class="card-body mt-1 border border-dark" v-else-if="objects.length == 0">
+                  <div class="text-center h5 pa-5">
                     Objektų nėra...
                   </div>
                 </div>

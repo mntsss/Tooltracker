@@ -15,16 +15,16 @@
     <div class="container">
 
     <div class="card" v-if="itemData">
-      <v-layout row wrap align-content-center class="card-header pb-0 pt-0 mx-0 theme--dark v-toolbar">
+      <v-layout row wrap align-content-center class="card-header pb-0 pt-0 mx-0 secondary">
           <v-flex headline shrink justify-start align-content-center>
-              <a @click="back()" class="headline"><span class="fa fa-arrow-left text-danger remove-all-margin p-2 btn-func-misc"></span></a>
+              <a @click="back()" class="headline"><span class="fa fa-arrow-left primary--text remove-all-margin p-2 btn-func-misc"></span></a>
           </v-flex>
           <v-flex>
               <div class="text-center headline">{{itemData.ItemName}}</div>
           </v-flex>
           <v-flex shrink headline justify-end align-content-center>
               <v-menu offset-y>
-                <a slot="activator" class="headline"><span class="fas fa-ellipsis-v text-danger p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"></span></a>
+                <a slot="activator" class="headline"><span class="fas fa-ellipsis-v primary--text p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"></span></a>
                 <v-list>
                   <v-list-tile v-for="(item, index) in dropdownMeniu" :key="index" @click="item.click">
                     <v-list-tile-title>{{item.text}}</v-list-tile-title>
@@ -33,14 +33,14 @@
               </v-menu>
           </v-flex>
       </v-layout>
-      <div class="card-body bg-dark">
+      <div class="card-body">
         <v-container>
             <v-layout mb-3>
               <v-card tile width="100%">
                   <v-card-text>
                       <v-layout row align-center >
                           <v-flex shrink pa-2 style="width: 40px !important">
-                              <v-icon headline class="text-danger">fa-map-marker</v-icon>
+                              <v-icon headline class="primary--text">fa-map-marker</v-icon>
                           </v-flex>
                           <v-flex shrink px-2>Būsena:</v-flex>
                           <v-flex px-2 shrink>{{itemStatus}}</v-flex>
@@ -48,9 +48,9 @@
                           <v-flex v-else-if="itemStatus == 'Naudojamas' && itemData.last_withdrawal.user">({{itemData.last_withdrawal.user.Username}})</v-flex>
                           <v-flex v-else-if="itemStatus == 'Laukia patvirtinimo' && itemData.last_withdrawal.user">({{itemData.last_withdrawal.user.Username}})</v-flex>
                           <v-flex v-else-if="itemStatus == 'Ištrintas'"><v-btn icon class="text-warning px-3" @click="show('restore-item-modal')"><v-icon>fa-undo</v-icon></v-btn></v-flex>
-                          <v-flex v-if="itemStatus == 'Taisomas' || itemStatus == 'Garantinis taisymas'"><v-btn outline class="mx-2" @click="fixed()"><v-icon class="text-danger pr-3">fa-check</v-icon>Sutaisyta</v-btn></v-flex>
-                          <v-flex v-else-if="itemStatus == 'Naudojamas'"><v-btn outline class="mx-2" @click="returnItem()"><v-icon class="text-danger pr-3">fa-sign-in-alt</v-icon>Grąžinti į sandėlį</v-btn></v-flex>
-                          <v-flex v-else-if="itemStatus == 'Laukia patvirtinimo'"><v-btn outline class="mx-2" @click="$modal.show('confirm-return-item-suspention-modal', {itemID: itemData.ItemID})"><v-icon class="text-danger pr-3">fa-check</v-icon>Patvirtinti grąžinimą</v-btn></v-flex>
+                          <v-flex v-if="itemStatus == 'Taisomas' || itemStatus == 'Garantinis taisymas'"><v-btn outline class="mx-2" @click="fixed()"><v-icon class="primary--text pr-3">fa-check</v-icon>Sutaisyta</v-btn></v-flex>
+                          <v-flex v-else-if="itemStatus == 'Naudojamas'"><v-btn outline class="mx-2" @click="returnItem()"><v-icon class="primary--text pr-3">fa-sign-in-alt</v-icon>Grąžinti į sandėlį</v-btn></v-flex>
+                          <v-flex v-else-if="itemStatus == 'Laukia patvirtinimo'"><v-btn outline class="mx-2" @click="$modal.show('confirm-return-item-suspention-modal', {itemID: itemData.ItemID})"><v-icon class="primary--text pr-3">fa-check</v-icon>Patvirtinti grąžinimą</v-btn></v-flex>
                       </v-layout>
                       <v-layout row align-center v-if="itemData.last_suspention">
                           <v-flex pa-2 xs10 v-if="!itemData.last_suspention.SuspentionReturned && itemData.last_suspention.SuspentionNote">
@@ -66,35 +66,35 @@
                       </v-layout>
                       <v-layout row wrap align-center v-if="itemData.ItemIdNumber">
                           <v-flex shrink pa-2 style="width: 40px !important">
-                              <v-icon headline class="text-danger">fa-fingerprint</v-icon>
+                              <v-icon headline class="primary--text">fa-fingerprint</v-icon>
                           </v-flex>
                           <v-flex shrink px-2>Identifikacinis numeris:</v-flex>
                           <v-flex px-2>{{itemData.ItemIdNumber}}</v-flex>
                       </v-layout>
                       <v-layout row wrap align-center >
                           <v-flex shrink pa-2 style="width: 40px !important">
-                              <v-icon headline class="text-danger">fa-calendar-plus</v-icon>
+                              <v-icon headline class="primary--text">fa-calendar-plus</v-icon>
                           </v-flex>
                           <v-flex px-2 shrink>Pridėjimo data:</v-flex>
                           <v-flex px-2>{{itemData.created_at}}</v-flex>
                       </v-layout>
                       <v-layout row wrap align-center v-if="itemData.ItemPurchase">
                           <v-flex shrink pa-2 style="width: 40px !important">
-                              <v-icon headline class="text-danger">fa-calendar-alt</v-icon>
+                              <v-icon headline class="primary--text">fa-calendar-alt</v-icon>
                           </v-flex>
                           <v-flex px-2 shrink>Įsigijimo data:</v-flex>
                           <v-flex px-2>{{itemData.ItemPurchase}}</v-flex>
                       </v-layout>
                       <v-layout row wrap align-center v-if="itemData.ItemWarranty">
                           <v-flex shrink pa-2 style="width: 40px !important">
-                              <v-icon headline class="text-danger">fa-calendar-check</v-icon>
+                              <v-icon headline class="primary--text">fa-calendar-check</v-icon>
                           </v-flex>
                           <v-flex px-2 shrink>Garantinis iki:</v-flex>
                           <v-flex px-2>{{itemData.ItemWarranty}}</v-flex>
                       </v-layout>
                       <v-layout row wrap align-center v-if="itemData.ItemConsumable">
                           <v-flex shrink pa-2 style="width: 40px !important">
-                              <v-icon headline class="text-danger">fa-check</v-icon>
+                              <v-icon headline class="primary--text">fa-check</v-icon>
                           </v-flex>
                           <v-flex px-2 shrink>Suvartojama</v-flex>
                       </v-layout>
@@ -117,15 +117,15 @@
                       <v-layout row wrap align-center pa-2 justify-end>
                           <v-flex shrink justify-end>
                             <v-btn outline v-if="!itemData.ItemDeleted && warrantyFix && itemStatus == 'Sandėlyje'" @click="show('item-warranty-fix-modal')">
-                                <v-icon class="text-danger">fa-wrench</v-icon>
+                                <v-icon class="primary--text">fa-wrench</v-icon>
                                 <span class="mx-2">Garantinis taisymas</span>
                             </v-btn>
                             <v-btn outline v-if="!itemData.ItemDeleted && itemStatus == 'Sandėlyje'" @click="show('item-unwarranted-fix-modal')">
-                                <v-icon class="text-danger">fa-wrench</v-icon>
+                                <v-icon class="primary--text">fa-wrench</v-icon>
                                 <span class="mx-2">Taisymas</span>
                             </v-btn>
                               <v-btn outline @click="show('add-user-card-modal', {id: user.UserID})">
-                                  <v-icon class="text-danger">fa-history</v-icon>
+                                  <v-icon class="primary--text">fa-history</v-icon>
                                   <span class="mx-2">Istorija</span>
                               </v-btn>
                           </v-flex>
@@ -188,11 +188,18 @@ import ConfirmReturnItemSuspentionModal from '../modals/ConfirmReturnItemSuspent
       itemProp: {
           required: false,
           type: Object
+      },
+      itemID:{
+          required: false,
+          type: Number
       }
   },
   created(){
     if(this.itemProp == null){
-      this.loadItem()
+        if(this.itemID != null){
+            this.itemData = {ItemID: this.itemID}
+        }
+        this.loadItem()
     }
     else {
       this.itemData =  this.itemProp.item

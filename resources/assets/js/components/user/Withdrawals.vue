@@ -6,15 +6,15 @@
 
   <div class="container" style="min-height: 70vh !important">
     <div class="card" v-if="user">
-      <v-layout row wrap align-center class="card-header pb-0 pt-0 mx-0 theme--dark v-toolbar" >
+      <v-layout row wrap align-center class="card-header pb-0 pt-0 mx-0 secondary v-toolbar" >
           <v-flex headline shrink justify-start align-content-center>
-              <a @click="back()" class="headline"><span class="fa fa-arrow-left text-danger remove-all-margin p-2 btn-func-misc"></span></a>
+              <a @click="back()" class="headline"><span class="fa fa-arrow-left primary--text remove-all-margin p-2 btn-func-misc"></span></a>
           </v-flex>
           <v-flex>
               <div class="text-center headline" v-if="user">Vartotojo {{user.Username}} įrankiai</div>
           </v-flex>
       </v-layout>
-      <div class="card-body bg-dark" v-if="user.withdrawals.length > 0">
+      <div class="card-body" v-if="user.withdrawals.length > 0">
         <router-link tag="div" class="row remove-side-margin cursor-pointer" :to="{ name: 'item', params: { itemProp: {item: withdrawal.item, state: null}}}" v-for="(withdrawal, index) in user.withdrawals" :key="index">
           <div class="col-6">
             {{withdrawal.item.ItemName}}
@@ -24,8 +24,8 @@
           </div>
       </router-link>
       </div>
-      <div class="card-body bg-dark mt-1 border border-dark" v-else-if="user.withdrawals.length == 0">
-        <div class="text-center text-light h5 pa-5">
+      <div class="card-body mt-1 border border-dark" v-else-if="user.withdrawals.length == 0">
+        <div class="text-center h5 pa-5">
           Vartotojas įrankių neturi...
         </div>
       </div>

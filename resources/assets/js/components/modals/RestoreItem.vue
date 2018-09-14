@@ -8,8 +8,8 @@
          :clickToClose="false"
          @before-open="beforeOpen"
          @before-close="beforeClose">
-    <div class="card bg-dark">
-      <div class="card-header h5 bg-dark text-light">
+    <div class="card">
+      <div class="card-header h5 secondary">
           Atkurti ištrintą įrankį <a @click="$modal.hide('restore-item-modal')" class="float-right mr-3"><span class="fas fa-times btn-func-misc"></span></a>
       </div>
       <v-form>
@@ -32,7 +32,7 @@
       </v-layout>
       <v-layout justify-center align-bottom>
         <v-flex shrink>
-          <v-btn class="ma-2" @click="save()" :disabled="!groupID"><v-icon class="text-danger mr-3">fa-undo</v-icon>Atkurti</v-btn>
+          <v-btn class="ma-2" @click="save()" :disabled="!groupID"><v-icon class="primary--text mr-3">fa-undo</v-icon>Atkurti</v-btn>
         </v-flex>
       </v-layout>
       </v-form>

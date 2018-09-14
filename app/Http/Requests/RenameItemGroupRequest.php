@@ -25,7 +25,7 @@ class RenameItemGroupRequest extends FormRequest
     {
         return [
             'id' => 'required|numeric',
-            'name' => 'string|min:3|max:25|required'
+            'name' => 'string|min:3|max:40|required'
         ];
     }
     public function messages(){
@@ -33,7 +33,7 @@ class RenameItemGroupRequest extends FormRequest
         'name.required' => 'Neįvestas grupės pavadinimas.',
         'name.string' => 'Neįvestas grupės pavadinimas.',
         'name.min' => 'Grupės pavadinimas negali būti trumpesnis nei 3 simboliai.',
-        'name.max' => 'Grupės pavadinimas negali būti ilgesnis nei 25 simboliai.',
+        'name.max' => 'Grupės pavadinimas negali būti ilgesnis nei 40 simboliai.',
         'id.required' => 'Įrankių grupė nežinoma. Apie klaidą praneškina administratoriui.',
         'id.numeric' => 'Kažkur įvyko klaida identifikuojant įrankių grupę. Apie klaidą praneškite administratoriui.'
       ];

@@ -9,10 +9,10 @@
          @before-close="beforeClose"
          >
     <div class="card">
-        <div class="card-header bg-dark text-light">
-            Priskirti įrankį objektui <a @click="$modal.hide('assignr-rented-item-modal')" class="float-right"><span class="fas fa-times btn-func-misc"></span></a>
+        <div class="card-header secondary">
+            Priskirti įrankį objektui <a @click="$modal.hide('assign-rented-item-modal')" class="float-right"><span class="fas fa-times btn-func-misc"></span></a>
         </div>
-        <div class="card-body bg-dark">
+        <div class="card-body">
             <v-form v-model="valid">
                 <v-select v-model="object" :items = "objects" item-text="ObjectName" item-value="ObjectID" label="Objektas" required></v-select>
                 <v-btn @click="save()" :disabled="!object">Priskirti</v-btn>

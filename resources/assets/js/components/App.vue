@@ -2,7 +2,7 @@
   @import '/css/app.css';
 </style>
 <template>
-  <v-app dark :if="$auth.ready()">
+  <v-app :if="$auth.ready()">
     <v-snackbar
       v-model="snackbar"
       :bottom="y === 'bottom'"
@@ -43,7 +43,7 @@
           >
           <v-list-tile slot="activator" fluid>
             <v-list-tile-action>
-              <v-icon class="text-danger">{{item.icon}}</v-icon>
+              <v-icon class="primary--text">{{item.icon}}</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title>{{item.text}}</v-list-tile-title>
@@ -68,7 +68,7 @@
 
         <v-list-tile @click="item.click" v-else-if="!item.children">
           <v-list-tile-action>
-            <v-icon class="text-danger">{{item.icon}}</v-icon>
+            <v-icon class="primary--text">{{item.icon}}</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title>{{item.text}}</v-list-tile-title>
@@ -77,13 +77,13 @@
       </v-flex>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar app fixed clipped-left v-if="$auth.check()">
+    <v-toolbar app fixed clipped-left v-if="$auth.check()" class="white">
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <v-toolbar-title><span class="headline shrink">Tool</span><span class="shrink headline text-danger pr-5">Tracker</span></v-toolbar-title>
+      <v-toolbar-title><a href="/"><img src="/media/logo.png" alt="logo" class="logo mx-4"/></a></v-toolbar-title>
       <div>
       <v-text-field
         flat
-        solo-inverted
+        solo
         hide-details
         prepend-inner-icon="search"
         label="Paieška..."
@@ -91,7 +91,7 @@
         v-on:keydown="search"
         class="hidden-sm-and-down"
       ></v-text-field>
-      <div class="search-result-wrapper bg-dark" v-if="resultBox && searchResults">
+      <div class="search-result-wrapper bg-dark border--primary" v-if="resultBox && searchResults">
         <v-list>
           <template v-for="(item, index) in searchResults">
             <v-list-tile :key="index" @click="searchItem(item)">
@@ -140,8 +140,13 @@
         </v-layout>
       </v-container>
     </v-content>
-    <v-footer app fixed v-if="$auth.ready()">
-      <span>&copy; 2018</span><span>{{$auth.user().Username}}</span>
+    <v-footer app fixed justify-center v-if="$auth.ready()">
+        <v-layout justify-center align-center>
+            <v-flex shrink>
+                <span class="h5">Tool</span><span class="h5 text-danger pr-2">Tracker</span><span>&copy; 2018</span>
+            </v-flex>
+        </v-layout>
+
     </v-footer>
   </div>
 </v-app>
@@ -300,18 +305,7 @@ export default {
 .fa, .fas {
     font-weight: 900 !important;
 }
-.search-result-wrapper{
-    position: absolute;
-    bottom: auto;
-    z-index: 100;
-    height: auto;
-    max-height: 250px;
-    overflow-y: auto;
-    width: 80%;
-    max-width: 320px;
-    min-width: 180px;
-    ::-webkit-scrollbar {
-    display: none;
-  }
+.logo{
+    max-height: 50px;
 }
 </style>

@@ -7,10 +7,10 @@
          :pivotY="0.3"
          @before-open="beforeOpen">
     <div class="card">
-        <div class="card-header bg-dark text-light">
+        <div class="card-header secondary">
             Redaguoti vartotojo duomenis <a @click="$modal.hide('edit-user-modal')" class="float-right"><span class="fas fa-times btn-func-misc"></span></a>
         </div>
-        <div class="card-body bg-dark">
+        <div class="card-body">
             <v-form v-model="valid">
                 <v-text-field v-model="name" :rules="nameRules" label="Vardas, pavardė" required></v-text-field>
                 <v-text-field v-model="phone" :rules="phoneRules" label="Telefonas"></v-text-field>

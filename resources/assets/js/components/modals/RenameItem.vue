@@ -7,17 +7,15 @@
          :pivotY="0.3"
          @before-open="beforeOpen">
     <div class="card">
-        <div class="card-header bg-dark text-light">
+        <div class="card-header secondary">
             Pervadinti įrankį
         </div>
         <div class="card-body">
-            <form method="post" @submit.prevent="save">
+            <form>
                 <div class="form-group">
                     <input class="form-control" type="text" name="name" v-model="name" maxlength="25" placeholder="Naujas pavadinimas" autocomplete="off"/>
                 </div>
-                <div class="form-group d-flex content-align-center w-100">
-                    <button class="btn btn-primary" type="submit">Išsaugoti</button>
-                </div>
+                <v-btn outline color="primary" @click="save()">Išsaugoti</v-btn>
             </form>
         </div>
     </div>

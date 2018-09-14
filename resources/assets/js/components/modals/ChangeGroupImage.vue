@@ -7,26 +7,28 @@
          @before-open="beforeOpen"
          @before-close="beforeClose">
          <v-dialog v-model="imageLoadingDialog" hide-overlay persistent width="300">
-           <v-card dark class="border border-danger">
+           <v-card class="border border-dark">
              <v-card-text>
                Kraunama...
-               <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
+               <v-progress-linear indeterminate color="primary" class="mb-0"></v-progress-linear>
              </v-card-text>
            </v-card>
          </v-dialog>
     <div class="card">
-        <div class="card-header bg-dark text-light">
+        <div class="card-header">
             Keisti nuotrauką
         </div>
         <div class="card-body">
-            <form method="post" @submit.prevent="save">
+            <form>
                 <div class="form-group">
                   <image-uploader :debug="1" :maxWidth="192" :quality="0.7" :autoRotate=true outputFormat="verbose" :preview=false :className="['fileinput', { 'fileinput--loaded' : hasImage }]"
                     capture="environment" @input="setImage" @onUpload="loadingDialog" @onComplete="loadingDialog" class="form-control"></image-uploader>
                 </div>
-                <div class="form-group d-flex content-align-center w-100">
-                    <button class="btn btn-primary" type="submit">Išsaugoti</button>
-                </div>
+                <v-layout align-center justify-center>
+                    <v-flex shrink>
+                        <v-btn class="primary text-white" @click="save()"><v-icon class="text-white pr-3">fa-save</v-icon>Išsaugoti</v-btn>
+                    </v-flex>
+                </v-layout>
             </form>
         </div>
     </div>

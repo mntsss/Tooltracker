@@ -8,15 +8,15 @@
          :clickToClose="false"
          @before-open="beforeOpen"
          @before-close="beforeClose">
-    <div v-if="item" class="card d-flex bg-dark pt-0 mt-0 px-0" style="min-height: 275px !important">
-      <div class="overlay position-absolute h-100 w-100 bg-dark" v-if="waitingDialog">
-        <div class="headline text-light">
+    <div v-if="item" class="card d-flex pt-0 mt-0 px-0" style="min-height: 275px !important">
+      <div class="overlay position-absolute h-100 w-100" v-if="waitingDialog">
+        <div class="headline">
                <a @click="$modal.hide('item-return-confirm-modal')" class="float-right"><span class="fas fa-times btn-func-misc"></span></a>
           </div>
         <v-container>
           <v-layout align-center justify-center row fill-height mt-5>
             <v-flex shrink mt-5>
-              <v-progress-circular :size="100" :width="7" color="white" indeterminate></v-progress-circular>
+              <v-progress-circular :size="100" :width="7" color="primary" indeterminate></v-progress-circular>
             </v-flex>
           </v-layout>
           <v-layout align-center justify-center v-if="!loading">
@@ -25,16 +25,16 @@
             </v-flex>
           </v-layout>
           <v-layout align-center justify-center v-else-if="loading">
-            <v-flex shrink align-center class="h4 text-light text-center mt-3">
+            <v-flex shrink align-center class="h4 text-center mt-3">
               Prašome palaukti...
             </v-flex>
           </v-layout>
         </v-container>
       </div>
 
-      <div class="overlay position-absolute h-100 w-100 bg-dark" v-if="suspentionComment">
-        <div class="card bg-dark" v-if="item">
-          <div class="card-header h5 bg-dark text-light">
+      <div class="overlay position-absolute h-100 w-100" v-if="suspentionComment">
+        <div class="card" v-if="item">
+          <div class="card-header secondary h5">
               Įrankio {{item.ItemName}} įšaldymas dėl apgadinimo <a @click="$modal.hide('item-return-confirm-modal')" class="float-right"><span class="fas fa-times btn-func-misc"></span></a>
           </div>
           <v-layout>
@@ -44,13 +44,13 @@
           </v-layout>
           <v-layout justify-center align-bottom>
             <v-flex shrink>
-              <v-btn class="ma-5" @click="suspendSave()"><v-icon class="text-danger mr-3">fa-lock</v-icon>Įšaldyti</v-btn>
+              <v-btn class="ma-5" @click="suspendSave()"><v-icon class="primary--text mr-3">fa-lock</v-icon>Įšaldyti</v-btn>
             </v-flex>
           </v-layout>
         </div>
       </div>
 
-      <div class="card-header headline bg-dark text-light">
+      <div class="card-header secondary headline">
           Grąžinamo įrankio patvirtinimas <a @click="$modal.hide('item-return-confirm-modal')" class="float-right"><span class="fas fa-times btn-func-misc"></span></a>
       </div>
       <v-layout align-center justify-center v-if="item.last_withdrawal.image" class="ma-5">
@@ -77,8 +77,8 @@
       </v-layout>
       <v-layout align-center>
         <v-flex shrink>
-          <v-btn @click="suspend()" class="ma-3"><v-icon class="text-danger mr-2">fa-lock</v-icon>Įšaldyti (įrankis sugadintas)</v-btn>
-          <v-btn @click="confirm()" class="ma-3"><v-icon class="text-danger mr-2">fa-check</v-icon>Patvirtinti grąžinimą</v-btn>
+          <v-btn @click="suspend()" class="ma-3"><v-icon class="primary--text mr-2">fa-lock</v-icon>Įšaldyti (įrankis sugadintas)</v-btn>
+          <v-btn @click="confirm()" class="ma-3"><v-icon class="primary--text mr-2">fa-check</v-icon>Patvirtinti grąžinimą</v-btn>
         </v-flex>
       </v-layout>
     </div>

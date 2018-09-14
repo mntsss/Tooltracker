@@ -5,7 +5,7 @@
         :is-full-page="fullPage"></Loading>
     <v-container>
         <v-layout row v-if="objects">
-                <v-layout row mb-3 class="theme--dark v-toolbar">
+                <v-layout row mb-3 class="secondary v-toolbar">
                     <v-flex headline align-center>
                         <div class="text-center mb-0">
                             Uždaryti objektai
@@ -37,7 +37,7 @@
                                         </v-layout>
                                         <v-layout row wrap align-center justify-center v-if="object.rented.length > 0">
                                             <v-container>
-                                                <v-card-title class="theme--dark v-toolbar mx-auto ">
+                                                <v-card-title class="primary text-white v-toolbar mx-auto ">
                                                     <h5>Išnuomoti įrankiai / nuomos pradžia</h5>
                                                 </v-card-title>
                                                 <v-card-text>
@@ -54,7 +54,7 @@
                                         </v-layout>
                                         <v-layout row wrap align-center justify-center>
                                             <v-container>
-                                                <v-card-title class="theme--dark v-toolbar mx-auto ">
+                                                <v-card-title class="primary text-white v-toolbar mx-auto ">
                                                     <h5>Naudojami įrankiai / išdavimo data</h5>
                                                 </v-card-title>
                                                 <v-card-text v-if="object.item_withdrawals.length > 0">
@@ -67,8 +67,8 @@
                                                       </div>
                                                     </router-link>
                                                 </v-card-text>
-                                                <div class="card-body bg-dark mt-1 border border-dark" v-else>
-                                                  <div class="text-center text-light h5 pa-2">
+                                                <div class="card-body mt-1 border border-dark" v-else>
+                                                  <div class="text-center h5 pa-2">
                                                     Objekte įrankių nėra...
                                                   </div>
                                                 </div>
@@ -80,8 +80,8 @@
                         </v-expansion-panel>
                     </v-layout>
                 </v-card-text>
-                <div class="card-body bg-dark mt-1 border border-dark" v-else-if="objects.length == 0">
-                  <div class="text-center text-light h5 pa-5">
+                <div class="card-body mt-1 border border-dark" v-else-if="objects.length == 0">
+                  <div class="text-center h5 pa-5">
                     Uždarytų objektų nėra...
                   </div>
                 </div>
@@ -113,7 +113,7 @@ export default{
                     this.isLoading = false
                 }
             }).catch(error => {
-                swal('Klaida', error.response.data.message, 'error')
+                swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], 'error')
             })
         },
         show: function(name, param = {}){

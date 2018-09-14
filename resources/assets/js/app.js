@@ -23,7 +23,7 @@ Vue.use(VueSignaturePad);
 Vue.use(Vuetify, {
   theme: {
     primary: '#00768E',
-    secondary: '#333333',
+    secondary: '#c4c4c4',
     accent: '#8c9eff',
     error: '#DC3545'
   }});
@@ -60,12 +60,6 @@ Vue.use(require('@websanova/vue-auth'), {
    router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js'),
    tokenDefaultName: 'access_token',
 });
-
-//Subscribing to pusher channel
-// Echo.channel('code-channel')
-//   .listen('ReceivedCode', (e) => {
-//     store.commit('newcode', e.code)
-//   });
 
 //Define global variable
 

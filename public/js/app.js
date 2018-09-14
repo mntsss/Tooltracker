@@ -26956,10 +26956,6 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(85)
-}
 var normalizeComponent = __webpack_require__(0)
 /* script */
 var __vue_script__ = __webpack_require__(87)
@@ -26968,7 +26964,7 @@ var __vue_template__ = __webpack_require__(88)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = injectStyle
+var __vue_styles__ = null
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
@@ -27315,7 +27311,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_5_vue_
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_8_vuetify___default.a, {
   theme: {
     primary: '#00768E',
-    secondary: '#333333',
+    secondary: '#c4c4c4',
     accent: '#8c9eff',
     error: '#DC3545'
   } });
@@ -27353,12 +27349,6 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__webpack_require__(254), {
   router: __webpack_require__(260),
   tokenDefaultName: 'access_token'
 });
-
-//Subscribing to pusher channel
-// Echo.channel('code-channel')
-//   .listen('ReceivedCode', (e) => {
-//     store.commit('newcode', e.code)
-//   });
 
 //Define global variable
 
@@ -85581,7 +85571,7 @@ var render = function() {
         [
           _c(
             "v-card",
-            { staticClass: "border border-danger", attrs: { dark: "" } },
+            { staticClass: "border border-danger" },
             [
               _c(
                 "v-card-text",
@@ -85589,7 +85579,7 @@ var render = function() {
                   _vm._v("\n        Kraunama...\n        "),
                   _c("v-progress-linear", {
                     staticClass: "mb-0",
-                    attrs: { indeterminate: "", color: "white" }
+                    attrs: { indeterminate: "", color: "primary" }
                   })
                 ],
                 1
@@ -85601,26 +85591,22 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "card bg-dark" }, [
-        _c(
-          "div",
-          { staticClass: "card-header theme--dark v-toolbar text-light" },
-          [
-            _vm._v("\n          Sukurti grupę"),
-            _c(
-              "a",
-              {
-                staticClass: "float-right",
-                on: {
-                  click: function($event) {
-                    _vm.$modal.hide("create-group-modal")
-                  }
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-header theme--primary v-toolbar" }, [
+          _vm._v("\n          Sukurti grupę"),
+          _c(
+            "a",
+            {
+              staticClass: "float-right",
+              on: {
+                click: function($event) {
+                  _vm.$modal.hide("create-group-modal")
                 }
-              },
-              [_c("span", { staticClass: "fas fa-times btn-func-misc" })]
-            )
-          ]
-        ),
+              }
+            },
+            [_c("span", { staticClass: "fas fa-times btn-func-misc" })]
+          )
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "card-body h-100" }, [
           _c(
@@ -85651,7 +85637,7 @@ var render = function() {
                       id: "name",
                       type: "name",
                       name: "name",
-                      maxlength: "25",
+                      maxlength: "40",
                       required: "",
                       autofocus: ""
                     },
@@ -86266,20 +86252,16 @@ var render = function() {
                     "v-card",
                     { attrs: { tile: "" } },
                     [
-                      _c(
-                        "v-card-title",
-                        { staticClass: "theme--dark v-toolbar h5 text-light" },
-                        [
-                          _vm._v(
-                            "\n                  Įrankiai laukiantys patvirtinimo\n              "
-                          )
-                        ]
-                      ),
+                      _c("v-card-title", { staticClass: "secondary h5" }, [
+                        _vm._v(
+                          "\n                  Įrankiai laukiantys patvirtinimo\n              "
+                        )
+                      ]),
                       _vm._v(" "),
                       _c(
                         "v-card-text",
                         {
-                          staticClass: "bg-dark",
+                          staticClass: "white",
                           staticStyle: { "min-height": "25vh" }
                         },
                         [
@@ -86303,7 +86285,7 @@ var render = function() {
                                     attrs: {
                                       size: 100,
                                       width: 7,
-                                      color: "white",
+                                      color: "primary",
                                       indeterminate: ""
                                     }
                                   })
@@ -86331,20 +86313,16 @@ var render = function() {
                     "v-card",
                     { attrs: { tile: "" } },
                     [
-                      _c(
-                        "v-card-title",
-                        { staticClass: "theme--dark v-toolbar h5 text-light" },
-                        [
-                          _vm._v(
-                            "\n                  Ilgiausiai nuomojami įrankiai\n              "
-                          )
-                        ]
-                      ),
+                      _c("v-card-title", { staticClass: "secondary h5" }, [
+                        _vm._v(
+                          "\n                  Ilgiausiai nuomojami įrankiai\n              "
+                        )
+                      ]),
                       _vm._v(" "),
                       _c(
                         "v-card-text",
                         {
-                          staticClass: "bg-dark",
+                          staticClass: "white",
                           staticStyle: { "min-height": "25vh" }
                         },
                         [
@@ -86368,7 +86346,7 @@ var render = function() {
                                     attrs: {
                                       size: 100,
                                       width: 7,
-                                      color: "white",
+                                      color: "primary",
                                       indeterminate: ""
                                     }
                                   })
@@ -86403,20 +86381,16 @@ var render = function() {
                     "v-card",
                     { attrs: { tile: "" } },
                     [
-                      _c(
-                        "v-card-title",
-                        { staticClass: "theme--dark v-toolbar h5 text-light" },
-                        [
-                          _vm._v(
-                            "\n                  Taisomi įrankiai\n              "
-                          )
-                        ]
-                      ),
+                      _c("v-card-title", { staticClass: "secondary h5" }, [
+                        _vm._v(
+                          "\n                  Taisomi įrankiai\n              "
+                        )
+                      ]),
                       _vm._v(" "),
                       _c(
                         "v-card-text",
                         {
-                          staticClass: "bg-dark d-flex",
+                          staticClass: "white d-flex",
                           staticStyle: { "min-height": "25vh" }
                         },
                         [
@@ -86440,7 +86414,7 @@ var render = function() {
                                     attrs: {
                                       size: 100,
                                       width: 7,
-                                      color: "white",
+                                      color: "primary",
                                       indeterminate: ""
                                     }
                                   })
@@ -86462,26 +86436,22 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "v-flex",
-                { staticClass: "px-4", attrs: { "sm-6": "" } },
+                { staticClass: "px-4 pb-3", attrs: { "sm-6": "" } },
                 [
                   _c(
                     "v-card",
                     { attrs: { tile: "" } },
                     [
-                      _c(
-                        "v-card-title",
-                        { staticClass: "theme--dark v-toolbar h5 text-light" },
-                        [
-                          _vm._v(
-                            "\n                  Jūsų aktyvios rezervacijos\n              "
-                          )
-                        ]
-                      ),
+                      _c("v-card-title", { staticClass: "secondary h5" }, [
+                        _vm._v(
+                          "\n                  Jūsų aktyvios rezervacijos\n              "
+                        )
+                      ]),
                       _vm._v(" "),
                       _c(
                         "v-card-text",
                         {
-                          staticClass: "bg-dark",
+                          staticClass: "white",
                           staticStyle: { "min-height": "25vh" }
                         },
                         [
@@ -86505,7 +86475,7 @@ var render = function() {
                                     attrs: {
                                       size: 100,
                                       width: 7,
-                                      color: "white",
+                                      color: "primary",
                                       indeterminate: ""
                                     }
                                   })
@@ -86683,8 +86653,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 
 
@@ -86770,7 +86738,7 @@ var render = function() {
           _c(
             "v-layout",
             {
-              staticClass: "theme--dark v-toolbar",
+              staticClass: "primary",
               attrs: {
                 row: "",
                 "mx-0": "",
@@ -86780,9 +86748,14 @@ var render = function() {
               }
             },
             [
-              _c("v-flex", { attrs: { shrink: "", headline: "" } }, [
-                _vm._v("\n            Įrankių grupės\n        ")
-              ])
+              _c(
+                "v-flex",
+                {
+                  staticClass: "text-white",
+                  attrs: { shrink: "", headline: "" }
+                },
+                [_vm._v("\n            Įrankių grupės\n        ")]
+              )
             ],
             1
           ),
@@ -86831,23 +86804,13 @@ var render = function() {
                     ])
                   : _vm._e(),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "row item-name-field remove-all-margin" },
-                  [
-                    _c(
-                      "div",
-                      { staticClass: "col-12 item-text remove-all-padding" },
-                      [
-                        _vm._v(
-                          "\n              " +
-                            _vm._s(group.ItemGroupName) +
-                            "\n            "
-                        )
-                      ]
-                    )
-                  ]
-                )
+                _c("div", { staticClass: "row item-name-field ma-0" }, [
+                  _vm._v(
+                    "\n              " +
+                      _vm._s(group.ItemGroupName) +
+                      "\n        "
+                  )
+                ])
               ]
             )
           })
@@ -86883,46 +86846,8 @@ if (false) {
 }
 
 /***/ }),
-/* 85 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(86);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(3)("535adf1c", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-01e7f602\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Login.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-01e7f602\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Login.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 86 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(2)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.login-box{\n  width: 300px !important;\n  max-width: 95vw;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
+/* 85 */,
+/* 86 */,
 /* 87 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -87002,10 +86927,7 @@ var render = function() {
         [
           _c(
             "v-flex",
-            {
-              staticClass: "border border-danger login-box",
-              attrs: { shrink: "" }
-            },
+            { staticClass: "login-box", attrs: { shrink: "" } },
             [
               _c(
                 "div",
@@ -87115,7 +87037,7 @@ var render = function() {
                             [
                               _c(
                                 "v-icon",
-                                { staticClass: "text-danger mx-2" },
+                                { staticClass: "primary--text mx-2" },
                                 [_vm._v("fa-sign-in-alt")]
                               ),
                               _vm._v("Prisijungti")
@@ -88245,8 +88167,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -88308,22 +88228,13 @@ var render = function() {
     },
     [
       _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-header bg-dark text-light" }, [
+        _c("div", { staticClass: "card-header secondary" }, [
           _vm._v("\n          Pervadinti grupę\n      ")
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
           _c(
             "form",
-            {
-              attrs: { method: "post" },
-              on: {
-                submit: function($event) {
-                  $event.preventDefault()
-                  return _vm.save($event)
-                }
-              }
-            },
             [
               _c("div", { staticClass: "form-group" }, [
                 _c("input", {
@@ -88339,7 +88250,7 @@ var render = function() {
                   attrs: {
                     type: "text",
                     name: "name",
-                    maxlength: "25",
+                    maxlength: "40",
                     placeholder: "Naujas pavadinimas",
                     autocomplete: "off"
                   },
@@ -88356,20 +88267,19 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c(
-                "div",
-                { staticClass: "form-group d-flex content-align-center w-100" },
-                [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary",
-                      attrs: { type: "submit" }
-                    },
-                    [_vm._v("Išsaugoti")]
-                  )
-                ]
+                "v-btn",
+                {
+                  attrs: { outline: "", color: "primary" },
+                  on: {
+                    click: function($event) {
+                      _vm.save()
+                    }
+                  }
+                },
+                [_vm._v("Išsaugoti")]
               )
-            ]
+            ],
+            1
           )
         ])
       ])
@@ -88396,6 +88306,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_sweetalert___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_sweetalert__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_image_upload_resize__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_image_upload_resize___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_image_upload_resize__);
+//
+//
 //
 //
 //
@@ -88519,7 +88431,7 @@ var render = function() {
         [
           _c(
             "v-card",
-            { staticClass: "border border-danger", attrs: { dark: "" } },
+            { staticClass: "border border-dark" },
             [
               _c(
                 "v-card-text",
@@ -88527,7 +88439,7 @@ var render = function() {
                   _vm._v("\n             Kraunama...\n             "),
                   _c("v-progress-linear", {
                     staticClass: "mb-0",
-                    attrs: { indeterminate: "", color: "white" }
+                    attrs: { indeterminate: "", color: "primary" }
                   })
                 ],
                 1
@@ -88540,22 +88452,13 @@ var render = function() {
       ),
       _vm._v(" "),
       _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-header bg-dark text-light" }, [
+        _c("div", { staticClass: "card-header" }, [
           _vm._v("\n          Keisti nuotrauką\n      ")
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
           _c(
             "form",
-            {
-              attrs: { method: "post" },
-              on: {
-                submit: function($event) {
-                  $event.preventDefault()
-                  return _vm.save($event)
-                }
-              }
-            },
             [
               _c(
                 "div",
@@ -88587,20 +88490,39 @@ var render = function() {
               ),
               _vm._v(" "),
               _c(
-                "div",
-                { staticClass: "form-group d-flex content-align-center w-100" },
+                "v-layout",
+                { attrs: { "align-center": "", "justify-center": "" } },
                 [
                   _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary",
-                      attrs: { type: "submit" }
-                    },
-                    [_vm._v("Išsaugoti")]
+                    "v-flex",
+                    { attrs: { shrink: "" } },
+                    [
+                      _c(
+                        "v-btn",
+                        {
+                          staticClass: "primary text-white",
+                          on: {
+                            click: function($event) {
+                              _vm.save()
+                            }
+                          }
+                        },
+                        [
+                          _c("v-icon", { staticClass: "text-white pr-3" }, [
+                            _vm._v("fa-save")
+                          ]),
+                          _vm._v("Išsaugoti")
+                        ],
+                        1
+                      )
+                    ],
+                    1
                   )
-                ]
+                ],
+                1
               )
-            ]
+            ],
+            1
           )
         ])
       ])
@@ -88880,7 +88802,7 @@ var render = function() {
         [
           _c(
             "v-card",
-            { staticClass: "border border-danger", attrs: { dark: "" } },
+            { staticClass: "border border-danger" },
             [
               _c(
                 "v-card-text",
@@ -88888,7 +88810,7 @@ var render = function() {
                   _vm._v("\n             Kraunama...\n             "),
                   _c("v-progress-linear", {
                     staticClass: "mb-0",
-                    attrs: { indeterminate: "", color: "white" }
+                    attrs: { indeterminate: "", color: "primary" }
                   })
                 ],
                 1
@@ -88905,7 +88827,7 @@ var render = function() {
           "div",
           {
             staticClass:
-              "card-header theme--dark v-toolbar headline text-center"
+              "card-header theme--primary v-toolbar headline text-center"
           },
           [
             _vm._v("\n          Pridėti įrankį "),
@@ -88926,7 +88848,7 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "card-body bg-dark text-light" },
+          { staticClass: "card-body" },
           [
             _c(
               "v-form",
@@ -89071,70 +88993,62 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "form-group row remove-side-margin" },
-                  [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "col-auto control-label mb-4",
-                        attrs: { for: "consumable" }
+                _c("div", { staticClass: "form-group row mx-0" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "col-auto control-label mb-4",
+                      attrs: { for: "consumable" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                  Suvartojama\n                "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col align-left" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.consumable,
+                          expression: "consumable"
+                        }
+                      ],
+                      staticClass: "remove-all-margin",
+                      staticStyle: { height: "23px", width: "23px" },
+                      attrs: { type: "checkbox", value: "", id: "consumable" },
+                      domProps: {
+                        checked: Array.isArray(_vm.consumable)
+                          ? _vm._i(_vm.consumable, "") > -1
+                          : _vm.consumable
                       },
-                      [
-                        _vm._v(
-                          "\n                  Suvartojama\n                "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col align-left" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.consumable,
-                            expression: "consumable"
-                          }
-                        ],
-                        staticClass: "remove-all-margin",
-                        staticStyle: { height: "23px", width: "23px" },
-                        attrs: {
-                          type: "checkbox",
-                          value: "",
-                          id: "consumable"
-                        },
-                        domProps: {
-                          checked: Array.isArray(_vm.consumable)
-                            ? _vm._i(_vm.consumable, "") > -1
-                            : _vm.consumable
-                        },
-                        on: {
-                          change: function($event) {
-                            var $$a = _vm.consumable,
-                              $$el = $event.target,
-                              $$c = $$el.checked ? true : false
-                            if (Array.isArray($$a)) {
-                              var $$v = "",
-                                $$i = _vm._i($$a, $$v)
-                              if ($$el.checked) {
-                                $$i < 0 && (_vm.consumable = $$a.concat([$$v]))
-                              } else {
-                                $$i > -1 &&
-                                  (_vm.consumable = $$a
-                                    .slice(0, $$i)
-                                    .concat($$a.slice($$i + 1)))
-                              }
+                      on: {
+                        change: function($event) {
+                          var $$a = _vm.consumable,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = "",
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 && (_vm.consumable = $$a.concat([$$v]))
                             } else {
-                              _vm.consumable = $$c
+                              $$i > -1 &&
+                                (_vm.consumable = $$a
+                                  .slice(0, $$i)
+                                  .concat($$a.slice($$i + 1)))
                             }
+                          } else {
+                            _vm.consumable = $$c
                           }
                         }
-                      })
-                    ])
-                  ]
-                ),
+                      }
+                    })
+                  ])
+                ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group mb-4" }, [
                   _c(
@@ -89289,7 +89203,7 @@ var render = function() {
                           {
                             attrs: {
                               outline: "",
-                              color: "blue",
+                              color: "primary",
                               disabled: !_vm.code && !_vm.nocode
                             },
                             on: {
@@ -89377,8 +89291,7 @@ var render = function() {
                 ? _c(
                     "v-layout",
                     {
-                      staticClass:
-                        "card-header pb-0 pt-0 mx-0 theme--dark v-toolbar",
+                      staticClass: "card-header pb-0 pt-0 mx-0 secondary",
                       attrs: { row: "", wrap: "", "align-center": "" }
                     },
                     [
@@ -89406,7 +89319,7 @@ var render = function() {
                             [
                               _c("span", {
                                 staticClass:
-                                  "fa fa-arrow-left text-danger remove-all-margin p-2 btn-func-misc"
+                                  "fa fa-arrow-left primary--text remove-all-margin p-2 btn-func-misc"
                               })
                             ]
                           )
@@ -89445,7 +89358,7 @@ var render = function() {
                             [
                               _c("span", {
                                 staticClass:
-                                  "fas fa-plus text-danger p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"
+                                  "fas fa-plus primary--text p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"
                               })
                             ]
                           ),
@@ -89464,7 +89377,7 @@ var render = function() {
                                 [
                                   _c("span", {
                                     staticClass:
-                                      "fas fa-ellipsis-v text-danger p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"
+                                      "fas fa-ellipsis-v primary--text p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"
                                   })
                                 ]
                               ),
@@ -89501,7 +89414,7 @@ var render = function() {
               _vm.items.length > 0
                 ? _c(
                     "div",
-                    { staticClass: "card-body bg-dark" },
+                    { staticClass: "card-body" },
                     _vm._l(_vm.items, function(item) {
                       return _c(
                         "router-link",
@@ -89536,19 +89449,13 @@ var render = function() {
                 : _vm.items.length == 0
                   ? _c(
                       "div",
-                      {
-                        staticClass: "card-body bg-dark mt-1 border border-dark"
-                      },
+                      { staticClass: "card-body mt-1 border border-dark" },
                       [
-                        _c(
-                          "div",
-                          { staticClass: "text-center text-light h5 pa-5" },
-                          [
-                            _vm._v(
-                              "\n          Grupėje įrankių nėra...\n        "
-                            )
-                          ]
-                        )
+                        _c("div", { staticClass: "text-center h5 pa-5" }, [
+                          _vm._v(
+                            "\n          Grupėje įrankių nėra...\n        "
+                          )
+                        ])
                       ]
                     )
                   : _vm._e()
@@ -89892,12 +89799,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         itemProp: {
             required: false,
             type: Object
+        },
+        itemID: {
+            required: false,
+            type: Number
         }
     },
     created: function created() {
         var _this2 = this;
 
         if (this.itemProp == null) {
+            if (this.itemID != null) {
+                this.itemData = { ItemID: this.itemID };
+            }
             this.loadItem();
         } else {
             this.itemData = this.itemProp.item;
@@ -90138,8 +90052,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -90201,22 +90113,13 @@ var render = function() {
     },
     [
       _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-header bg-dark text-light" }, [
+        _c("div", { staticClass: "card-header secondary" }, [
           _vm._v("\n          Pervadinti įrankį\n      ")
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
           _c(
             "form",
-            {
-              attrs: { method: "post" },
-              on: {
-                submit: function($event) {
-                  $event.preventDefault()
-                  return _vm.save($event)
-                }
-              }
-            },
             [
               _c("div", { staticClass: "form-group" }, [
                 _c("input", {
@@ -90249,20 +90152,19 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c(
-                "div",
-                { staticClass: "form-group d-flex content-align-center w-100" },
-                [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary",
-                      attrs: { type: "submit" }
-                    },
-                    [_vm._v("Išsaugoti")]
-                  )
-                ]
+                "v-btn",
+                {
+                  attrs: { outline: "", color: "primary" },
+                  on: {
+                    click: function($event) {
+                      _vm.save()
+                    }
+                  }
+                },
+                [_vm._v("Išsaugoti")]
               )
-            ]
+            ],
+            1
           )
         ])
       ])
@@ -90426,9 +90328,9 @@ var render = function() {
     [
       _c(
         "div",
-        { staticClass: "card bg-dark" },
+        { staticClass: "card" },
         [
-          _c("div", { staticClass: "card-header h5 bg-dark text-light" }, [
+          _c("div", { staticClass: "card-header h5 secondary" }, [
             _vm._v("\n        Keisti įrankio identifikacinį numerį "),
             _c(
               "a",
@@ -90495,7 +90397,7 @@ var render = function() {
                           }
                         },
                         [
-                          _c("v-icon", { staticClass: "text-danger mr-3" }, [
+                          _c("v-icon", { staticClass: "primary--text mr-3" }, [
                             _vm._v("fa-save")
                           ]),
                           _vm._v("Išsaugoti")
@@ -90698,31 +90600,25 @@ var render = function() {
     },
     [
       _c("div", { staticClass: "card" }, [
-        _c(
-          "div",
-          {
-            staticClass: "card-header text-light theme--dark v-toolbar headline"
-          },
-          [
-            _vm._v("\n          Priskirti identifikacinį čipą "),
-            _c(
-              "a",
-              {
-                staticClass: "float-right",
-                on: {
-                  click: function($event) {
-                    _vm.$modal.hide("add-item-chip-modal")
-                  }
+        _c("div", { staticClass: "card-header secondary v-toolbar headline" }, [
+          _vm._v("\n          Priskirti identifikacinį čipą "),
+          _c(
+            "a",
+            {
+              staticClass: "float-right",
+              on: {
+                click: function($event) {
+                  _vm.$modal.hide("add-item-chip-modal")
                 }
-              },
-              [_c("span", { staticClass: "fas fa-times btn-func-misc" })]
-            )
-          ]
-        ),
+              }
+            },
+            [_c("span", { staticClass: "fas fa-times btn-func-misc" })]
+          )
+        ]),
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "card-body bg-dark text-light" },
+          { staticClass: "card-body" },
           [
             _c(
               "v-form",
@@ -90966,9 +90862,9 @@ var render = function() {
     [
       _c(
         "div",
-        { staticClass: "card bg-dark" },
+        { staticClass: "card" },
         [
-          _c("div", { staticClass: "card-header h5 bg-dark text-light" }, [
+          _c("div", { staticClass: "card-header h5 secondary" }, [
             _vm._v("\n        Įšaldyti įrankį garantiniam taisymui "),
             _c(
               "a",
@@ -91035,7 +90931,7 @@ var render = function() {
                           }
                         },
                         [
-                          _c("v-icon", { staticClass: "text-danger mr-3" }, [
+                          _c("v-icon", { staticClass: "primary--text mr-3" }, [
                             _vm._v("fa-wrench")
                           ]),
                           _vm._v("Įšaldyti taisymui")
@@ -91216,9 +91112,9 @@ var render = function() {
     [
       _c(
         "div",
-        { staticClass: "card bg-dark" },
+        { staticClass: "card" },
         [
-          _c("div", { staticClass: "card-header h5 bg-dark text-light" }, [
+          _c("div", { staticClass: "card-header h5 secondary" }, [
             _vm._v("\n        Įšaldyti įrankį taisymui "),
             _c(
               "a",
@@ -91285,7 +91181,7 @@ var render = function() {
                           }
                         },
                         [
-                          _c("v-icon", { staticClass: "text-danger mr-3" }, [
+                          _c("v-icon", { staticClass: "primary--text mr-3" }, [
                             _vm._v("fa-wrench")
                           ]),
                           _vm._v("Įšaldyti taisymui")
@@ -91720,9 +91616,9 @@ var render = function() {
       _vm.item
         ? _c(
             "div",
-            { staticClass: "card bg-dark" },
+            { staticClass: "card" },
             [
-              _c("div", { staticClass: "card-header h5 bg-dark text-light" }, [
+              _c("div", { staticClass: "card-header h5 secondary" }, [
                 _vm._v(
                   "\n        Įrankio " +
                     _vm._s(_vm.item.ItemName) +
@@ -91793,7 +91689,7 @@ var render = function() {
                           }
                         },
                         [
-                          _c("v-icon", { staticClass: "text-danger mr-3" }, [
+                          _c("v-icon", { staticClass: "primary--text mr-3" }, [
                             _vm._v("fa-lock")
                           ]),
                           _vm._v("Įšaldyti")
@@ -91850,19 +91746,16 @@ var render = function() {
         ? _c(
             "div",
             {
-              staticClass: "card d-flex bg-dark pt-0 mt-0 px-0",
+              staticClass: "card d-flex pt-0 mt-0 px-0",
               staticStyle: { "min-height": "275px !important" }
             },
             [
               _vm.waitingDialog
                 ? _c(
                     "div",
-                    {
-                      staticClass:
-                        "overlay position-absolute h-100 w-100 bg-dark"
-                    },
+                    { staticClass: "overlay position-absolute h-100 w-100" },
                     [
-                      _c("div", { staticClass: "headline text-light" }, [
+                      _c("div", { staticClass: "headline" }, [
                         _c(
                           "a",
                           {
@@ -91904,7 +91797,7 @@ var render = function() {
                                     attrs: {
                                       size: 100,
                                       width: 7,
-                                      color: "white",
+                                      color: "primary",
                                       indeterminate: ""
                                     }
                                   })
@@ -91954,8 +91847,7 @@ var render = function() {
                                     _c(
                                       "v-flex",
                                       {
-                                        staticClass:
-                                          "h4 text-light text-center mt-3",
+                                        staticClass: "h4 text-center mt-3",
                                         attrs: {
                                           shrink: "",
                                           "align-center": ""
@@ -91982,22 +91874,16 @@ var render = function() {
               _vm.suspentionComment
                 ? _c(
                     "div",
-                    {
-                      staticClass:
-                        "overlay position-absolute h-100 w-100 bg-dark"
-                    },
+                    { staticClass: "overlay position-absolute h-100 w-100" },
                     [
                       _vm.item
                         ? _c(
                             "div",
-                            { staticClass: "card bg-dark" },
+                            { staticClass: "card" },
                             [
                               _c(
                                 "div",
-                                {
-                                  staticClass:
-                                    "card-header h5 bg-dark text-light"
-                                },
+                                { staticClass: "card-header secondary h5" },
                                 [
                                   _vm._v(
                                     "\n            Įrankio " +
@@ -92083,7 +91969,9 @@ var render = function() {
                                         [
                                           _c(
                                             "v-icon",
-                                            { staticClass: "text-danger mr-3" },
+                                            {
+                                              staticClass: "primary--text mr-3"
+                                            },
                                             [_vm._v("fa-lock")]
                                           ),
                                           _vm._v("Įšaldyti")
@@ -92104,25 +91992,21 @@ var render = function() {
                   )
                 : _vm._e(),
               _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "card-header headline bg-dark text-light" },
-                [
-                  _vm._v("\n        Grąžinamo įrankio patvirtinimas "),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "float-right",
-                      on: {
-                        click: function($event) {
-                          _vm.$modal.hide("item-return-confirm-modal")
-                        }
+              _c("div", { staticClass: "card-header secondary headline" }, [
+                _vm._v("\n        Grąžinamo įrankio patvirtinimas "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "float-right",
+                    on: {
+                      click: function($event) {
+                        _vm.$modal.hide("item-return-confirm-modal")
                       }
-                    },
-                    [_c("span", { staticClass: "fas fa-times btn-func-misc" })]
-                  )
-                ]
-              ),
+                    }
+                  },
+                  [_c("span", { staticClass: "fas fa-times btn-func-misc" })]
+                )
+              ]),
               _vm._v(" "),
               _vm.item.last_withdrawal.image
                 ? _c(
@@ -92200,7 +92084,7 @@ var render = function() {
                           }
                         },
                         [
-                          _c("v-icon", { staticClass: "text-danger mr-2" }, [
+                          _c("v-icon", { staticClass: "primary--text mr-2" }, [
                             _vm._v("fa-lock")
                           ]),
                           _vm._v("Įšaldyti (įrankis sugadintas)")
@@ -92219,7 +92103,7 @@ var render = function() {
                           }
                         },
                         [
-                          _c("v-icon", { staticClass: "text-danger mr-2" }, [
+                          _c("v-icon", { staticClass: "primary--text mr-2" }, [
                             _vm._v("fa-check")
                           ]),
                           _vm._v("Patvirtinti grąžinimą")
@@ -92475,9 +92359,9 @@ var render = function() {
     [
       _c(
         "div",
-        { staticClass: "card bg-dark" },
+        { staticClass: "card" },
         [
-          _c("div", { staticClass: "card-header h5 bg-dark text-light" }, [
+          _c("div", { staticClass: "card-header h5 secondary" }, [
             _vm._v("\n        Keisti įrankio garantinį laikotarpį "),
             _c(
               "a",
@@ -92504,7 +92388,8 @@ var render = function() {
                     { attrs: { xs12: "" } },
                     [
                       _c("DatePicker", {
-                        staticClass: "justify-center d-flex theme--dark ma-3",
+                        staticClass:
+                          "justify-center d-flex theme--primary text-white ma-3",
                         attrs: { lang: _vm.lang, format: "YYYY-MM-DD" },
                         model: {
                           value: _vm.warranty_date,
@@ -92540,7 +92425,7 @@ var render = function() {
                           }
                         },
                         [
-                          _c("v-icon", { staticClass: "text-danger mr-3" }, [
+                          _c("v-icon", { staticClass: "primary--text mr-3" }, [
                             _vm._v("fa-save")
                           ]),
                           _vm._v("Išsaugoti")
@@ -92751,9 +92636,9 @@ var render = function() {
     [
       _c(
         "div",
-        { staticClass: "card bg-dark" },
+        { staticClass: "card" },
         [
-          _c("div", { staticClass: "card-header h5 bg-dark text-light" }, [
+          _c("div", { staticClass: "card-header h5 secondary" }, [
             _vm._v("\n        Atkurti ištrintą įrankį "),
             _c(
               "a",
@@ -92830,7 +92715,7 @@ var render = function() {
                           }
                         },
                         [
-                          _c("v-icon", { staticClass: "text-danger mr-3" }, [
+                          _c("v-icon", { staticClass: "primary--text mr-3" }, [
                             _vm._v("fa-undo")
                           ]),
                           _vm._v("Atkurti")
@@ -93030,7 +92915,7 @@ var render = function() {
     },
     [
       _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-header bg-dark text-light" }, [
+        _c("div", { staticClass: "card-header secondary" }, [
           _vm._v("\n          Patvirtinti įrankio sutvarkymą "),
           _c(
             "a",
@@ -93048,7 +92933,7 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "card-body bg-dark" },
+          { staticClass: "card-body" },
           [
             _c(
               "v-form",
@@ -93069,18 +92954,14 @@ var render = function() {
                     !_vm.code
                       ? _c(
                           "v-flex",
-                          {
-                            staticClass:
-                              "border-danger text-center headline text-danger"
-                          },
+                          { staticClass: "text-center headline text-danger" },
                           [_vm._v("Laukiama administratoriaus kortelės...")]
                         )
                       : _vm.code
                         ? _c(
                             "v-flex",
                             {
-                              staticClass:
-                                "border-danger text-center headline text-success"
+                              staticClass: "text-center headline text-success"
                             },
                             [_vm._v("Kortelė nuskaityta!")]
                           )
@@ -93179,8 +93060,7 @@ var render = function() {
                 _c(
                   "v-layout",
                   {
-                    staticClass:
-                      "card-header pb-0 pt-0 mx-0 theme--dark v-toolbar",
+                    staticClass: "card-header pb-0 pt-0 mx-0 secondary",
                     attrs: { row: "", wrap: "", "align-content-center": "" }
                   },
                   [
@@ -93208,7 +93088,7 @@ var render = function() {
                           [
                             _c("span", {
                               staticClass:
-                                "fa fa-arrow-left text-danger remove-all-margin p-2 btn-func-misc"
+                                "fa fa-arrow-left primary--text remove-all-margin p-2 btn-func-misc"
                             })
                           ]
                         )
@@ -93246,7 +93126,7 @@ var render = function() {
                               [
                                 _c("span", {
                                   staticClass:
-                                    "fas fa-ellipsis-v text-danger p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"
+                                    "fas fa-ellipsis-v primary--text p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"
                                 })
                               ]
                             ),
@@ -93278,7 +93158,7 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "div",
-                  { staticClass: "card-body bg-dark" },
+                  { staticClass: "card-body" },
                   [
                     _c(
                       "v-container",
@@ -93312,7 +93192,7 @@ var render = function() {
                                             _c(
                                               "v-icon",
                                               {
-                                                staticClass: "text-danger",
+                                                staticClass: "primary--text",
                                                 attrs: { headline: "" }
                                               },
                                               [_vm._v("fa-map-marker")]
@@ -93425,7 +93305,7 @@ var render = function() {
                                                       "v-icon",
                                                       {
                                                         staticClass:
-                                                          "text-danger pr-3"
+                                                          "primary--text pr-3"
                                                       },
                                                       [_vm._v("fa-check")]
                                                     ),
@@ -93458,7 +93338,7 @@ var render = function() {
                                                         "v-icon",
                                                         {
                                                           staticClass:
-                                                            "text-danger pr-3"
+                                                            "primary--text pr-3"
                                                         },
                                                         [
                                                           _vm._v(
@@ -93505,7 +93385,7 @@ var render = function() {
                                                           "v-icon",
                                                           {
                                                             staticClass:
-                                                              "text-danger pr-3"
+                                                              "primary--text pr-3"
                                                           },
                                                           [_vm._v("fa-check")]
                                                         ),
@@ -93609,7 +93489,8 @@ var render = function() {
                                                 _c(
                                                   "v-icon",
                                                   {
-                                                    staticClass: "text-danger",
+                                                    staticClass:
+                                                      "primary--text",
                                                     attrs: { headline: "" }
                                                   },
                                                   [_vm._v("fa-fingerprint")]
@@ -93671,7 +93552,7 @@ var render = function() {
                                             _c(
                                               "v-icon",
                                               {
-                                                staticClass: "text-danger",
+                                                staticClass: "primary--text",
                                                 attrs: { headline: "" }
                                               },
                                               [_vm._v("fa-calendar-plus")]
@@ -93725,7 +93606,8 @@ var render = function() {
                                                 _c(
                                                   "v-icon",
                                                   {
-                                                    staticClass: "text-danger",
+                                                    staticClass:
+                                                      "primary--text",
                                                     attrs: { headline: "" }
                                                   },
                                                   [_vm._v("fa-calendar-alt")]
@@ -93787,7 +93669,8 @@ var render = function() {
                                                 _c(
                                                   "v-icon",
                                                   {
-                                                    staticClass: "text-danger",
+                                                    staticClass:
+                                                      "primary--text",
                                                     attrs: { headline: "" }
                                                   },
                                                   [_vm._v("fa-calendar-check")]
@@ -93849,7 +93732,8 @@ var render = function() {
                                                 _c(
                                                   "v-icon",
                                                   {
-                                                    staticClass: "text-danger",
+                                                    staticClass:
+                                                      "primary--text",
                                                     attrs: { headline: "" }
                                                   },
                                                   [_vm._v("fa-check")]
@@ -94008,7 +93892,7 @@ var render = function() {
                                                       "v-icon",
                                                       {
                                                         staticClass:
-                                                          "text-danger"
+                                                          "primary--text"
                                                       },
                                                       [_vm._v("fa-wrench")]
                                                     ),
@@ -94046,7 +93930,7 @@ var render = function() {
                                                       "v-icon",
                                                       {
                                                         staticClass:
-                                                          "text-danger"
+                                                          "primary--text"
                                                       },
                                                       [_vm._v("fa-wrench")]
                                                     ),
@@ -94078,7 +93962,7 @@ var render = function() {
                                                 _c(
                                                   "v-icon",
                                                   {
-                                                    staticClass: "text-danger"
+                                                    staticClass: "primary--text"
                                                   },
                                                   [_vm._v("fa-history")]
                                                 ),
@@ -94413,8 +94297,7 @@ var render = function() {
                   _c(
                     "v-layout",
                     {
-                      staticClass:
-                        "card-header pb-0 pt-0 mx-0 theme--dark v-toolbar",
+                      staticClass: "card-header pb-0 pt-0 mx-0 secondary",
                       attrs: { row: "", wrap: "", "align-center": "" }
                     },
                     [
@@ -94430,7 +94313,7 @@ var render = function() {
                   _vm.items.length > 0
                     ? _c(
                         "div",
-                        { staticClass: "card-body bg-dark" },
+                        { staticClass: "card-body" },
                         _vm._l(_vm.items, function(item) {
                           return _c(
                             "router-link",
@@ -94442,9 +94325,7 @@ var render = function() {
                                 tag: "div",
                                 to: {
                                   name: "item",
-                                  params: {
-                                    itemProp: { item: item, state: "Ištrintas" }
-                                  }
+                                  params: { itemID: item.ItemID }
                                 }
                               }
                             },
@@ -94460,7 +94341,7 @@ var render = function() {
                               _c("div", { staticClass: "col text-center" }, [
                                 _vm._v(
                                   "\n            " +
-                                    _vm._s(item.state) +
+                                    _vm._s(item.updated_at) +
                                     "\n          "
                                 )
                               ])
@@ -94471,20 +94352,13 @@ var render = function() {
                     : _vm.items.length == 0
                       ? _c(
                           "div",
-                          {
-                            staticClass:
-                              "card-body bg-dark mt-1 border border-dark"
-                          },
+                          { staticClass: "card-body mt-1 border border-dark" },
                           [
-                            _c(
-                              "div",
-                              { staticClass: "text-center text-light h5 pa-5" },
-                              [
-                                _vm._v(
-                                  "\n          Ištrintų įrankių nėra...\n        "
-                                )
-                              ]
-                            )
+                            _c("div", { staticClass: "text-center h5 pa-5" }, [
+                              _vm._v(
+                                "\n          Ištrintų įrankių nėra...\n        "
+                              )
+                            ])
                           ]
                         )
                       : _vm._e()
@@ -94750,8 +94624,7 @@ var render = function() {
                   _c(
                     "v-layout",
                     {
-                      staticClass:
-                        "card-header pb-0 pt-0 mx-0 theme--dark v-toolbar",
+                      staticClass: "card-header pb-0 pt-0 mx-0 secondary",
                       attrs: { row: "", wrap: "", "align-center": "" }
                     },
                     [
@@ -94767,7 +94640,7 @@ var render = function() {
                   _vm.items.length > 0
                     ? _c(
                         "div",
-                        { staticClass: "card-body bg-dark" },
+                        { staticClass: "card-body" },
                         _vm._l(_vm.items, function(item) {
                           return _c(
                             "router-link",
@@ -94803,20 +94676,13 @@ var render = function() {
                     : _vm.items.length == 0
                       ? _c(
                           "div",
-                          {
-                            staticClass:
-                              "card-body bg-dark mt-1 border border-dark"
-                          },
+                          { staticClass: "card-bodymt-1 border border-dark" },
                           [
-                            _c(
-                              "div",
-                              { staticClass: "text-center text-light h5 pa-5" },
-                              [
-                                _vm._v(
-                                  "\n          Grupėje įrankių nėra...\n        "
-                                )
-                              ]
-                            )
+                            _c("div", { staticClass: "text-center h5 pa-5" }, [
+                              _vm._v(
+                                "\n          Grupėje įrankių nėra...\n        "
+                              )
+                            ])
                           ]
                         )
                       : _vm._e()
@@ -95363,7 +95229,7 @@ var render = function() {
     },
     [
       _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-header bg-dark text-light" }, [
+        _c("div", { staticClass: "card-header secondary" }, [
           _vm._v("\n          Pridėti vartotoją "),
           _c(
             "a",
@@ -95381,7 +95247,7 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "card-body bg-dark" },
+          { staticClass: "card-body" },
           [
             _c(
               "v-form",
@@ -95711,7 +95577,7 @@ var render = function() {
     },
     [
       _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-header bg-dark text-light" }, [
+        _c("div", { staticClass: "card-header secondary" }, [
           _vm._v("\n          Redaguoti vartotojo duomenis "),
           _c(
             "a",
@@ -95729,7 +95595,7 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "card-body bg-dark" },
+          { staticClass: "card-body" },
           [
             _c(
               "v-form",
@@ -95966,7 +95832,7 @@ var render = function() {
     },
     [
       _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-header bg-dark text-light" }, [
+        _c("div", { staticClass: "card-header secondary" }, [
           _vm._v("\n          Pridėti vartotojo kortelę "),
           _c(
             "a",
@@ -95984,7 +95850,7 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "card-body bg-dark" },
+          { staticClass: "card-body" },
           [
             _c(
               "v-form",
@@ -96098,13 +95964,13 @@ var render = function() {
           _vm.users
             ? _c(
                 "div",
-                { staticClass: "card bg-dark" },
+                { staticClass: "card" },
                 [
                   _c(
                     "v-layout",
                     {
                       staticClass:
-                        "card-header pb-0 pt-0 mb-0 theme--dark v-toolbar mx-0",
+                        "card-header pb-0 pt-0 mb-0 secondary v-toolbar mx-0",
                       attrs: { row: "", wrap: "", "align-center": "" }
                     },
                     [
@@ -96134,7 +96000,7 @@ var render = function() {
                           [
                             _c("span", {
                               staticClass:
-                                "fas fa-plus text-danger p-2 btn-func-misc ml-2 mr-2 mb-0 mt-0"
+                                "fas fa-plus primary--text p-2 btn-func-misc ml-2 mr-2 mb-0 mt-0"
                             })
                           ]
                         )
@@ -96146,7 +96012,7 @@ var render = function() {
                   _vm.users.length > 0
                     ? _c(
                         "v-container",
-                        { staticClass: "card-body bg-dark mt-0 pt-4" },
+                        { staticClass: "card-body mt-0 pt-4" },
                         [
                           _c(
                             "v-layout",
@@ -96159,7 +96025,11 @@ var render = function() {
                                 _vm._l(_vm.users, function(user, i) {
                                   return _c(
                                     "v-expansion-panel-content",
-                                    { key: i },
+                                    {
+                                      key: i,
+                                      staticClass:
+                                        "primary v-toolbar mb-1 text-white"
+                                    },
                                     [
                                       _c(
                                         "div",
@@ -96208,7 +96078,7 @@ var render = function() {
                                                         "v-icon",
                                                         {
                                                           staticClass:
-                                                            "text-danger",
+                                                            "primary--text",
                                                           attrs: {
                                                             headline: ""
                                                           }
@@ -96269,7 +96139,7 @@ var render = function() {
                                                         "v-icon",
                                                         {
                                                           staticClass:
-                                                            "text-danger",
+                                                            "primary--text",
                                                           attrs: {
                                                             headline: ""
                                                           }
@@ -96326,7 +96196,7 @@ var render = function() {
                                                         "v-icon",
                                                         {
                                                           staticClass:
-                                                            "text-danger",
+                                                            "primary--text",
                                                           attrs: {
                                                             headline: ""
                                                           }
@@ -96387,7 +96257,7 @@ var render = function() {
                                                         "v-icon",
                                                         {
                                                           staticClass:
-                                                            "text-danger",
+                                                            "primary--text",
                                                           attrs: {
                                                             headline: ""
                                                           }
@@ -96458,7 +96328,7 @@ var render = function() {
                                                         "v-icon",
                                                         {
                                                           staticClass:
-                                                            "text-danger",
+                                                            "primary--text",
                                                           attrs: {
                                                             headline: ""
                                                           }
@@ -96527,7 +96397,7 @@ var render = function() {
                                                         "v-icon",
                                                         {
                                                           staticClass:
-                                                            "text-danger",
+                                                            "primary--text",
                                                           attrs: {
                                                             headline: ""
                                                           }
@@ -96624,7 +96494,7 @@ var render = function() {
                                                         "v-icon",
                                                         {
                                                           staticClass:
-                                                            "text-danger",
+                                                            "primary--text",
                                                           attrs: {
                                                             headline: ""
                                                           }
@@ -96700,7 +96570,7 @@ var render = function() {
                                                             "v-icon",
                                                             {
                                                               staticClass:
-                                                                "text-danger"
+                                                                "primary--text"
                                                             },
                                                             [
                                                               _vm._v(
@@ -96747,7 +96617,7 @@ var render = function() {
                                                             "v-icon",
                                                             {
                                                               staticClass:
-                                                                "text-danger"
+                                                                "primary--text"
                                                             },
                                                             [
                                                               _vm._v(
@@ -96790,7 +96660,7 @@ var render = function() {
                                                             "v-icon",
                                                             {
                                                               staticClass:
-                                                                "text-danger"
+                                                                "primary--text"
                                                             },
                                                             [_vm._v("fa-edit")]
                                                           ),
@@ -96836,7 +96706,7 @@ var render = function() {
                                                             "v-icon",
                                                             {
                                                               staticClass:
-                                                                "text-danger"
+                                                                "primary--text"
                                                             },
                                                             [
                                                               _vm._v(
@@ -96882,7 +96752,7 @@ var render = function() {
                                                             "v-icon",
                                                             {
                                                               staticClass:
-                                                                "text-danger"
+                                                                "primary--text"
                                                             },
                                                             [_vm._v("fa-trash")]
                                                           ),
@@ -96924,20 +96794,13 @@ var render = function() {
                     : _vm.users.length == 0
                       ? _c(
                           "div",
-                          {
-                            staticClass:
-                              "card-body bg-dark mt-1 border border-dark"
-                          },
+                          { staticClass: "card-body mt-1 border border-dark" },
                           [
-                            _c(
-                              "div",
-                              { staticClass: "text-center text-light h5 pa-5" },
-                              [
-                                _vm._v(
-                                  "\n                Vartotojų nėra...\n              "
-                                )
-                              ]
-                            )
+                            _c("div", { staticClass: "text-center h5 pa-5" }, [
+                              _vm._v(
+                                "\n                Vartotojų nėra...\n              "
+                              )
+                            ])
                           ]
                         )
                       : _vm._e()
@@ -97357,7 +97220,7 @@ var render = function() {
     },
     [
       _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-header bg-dark text-light headline" }, [
+        _c("div", { staticClass: "card-header secondary headline" }, [
           _vm._v("\n          Atkurti vartotoją "),
           _c(
             "a",
@@ -97375,7 +97238,7 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "card-body bg-dark" },
+          { staticClass: "card-body" },
           [
             _c(
               "v-form",
@@ -97434,7 +97297,11 @@ var render = function() {
                 _c(
                   "v-btn",
                   {
-                    attrs: { disabled: !_vm.valid },
+                    attrs: {
+                      outline: "",
+                      color: "primary",
+                      disabled: !_vm.valid
+                    },
                     on: {
                       click: function($event) {
                         _vm.save()
@@ -97500,13 +97367,13 @@ var render = function() {
           _vm.users
             ? _c(
                 "div",
-                { staticClass: "card bg-dark" },
+                { staticClass: "card" },
                 [
                   _c(
                     "v-layout",
                     {
                       staticClass:
-                        "card-header pb-0 pt-0 theme--dark v-toolbar mx-0",
+                        "card-header pb-0 pt-0 secondary v-toolbar mx-0",
                       attrs: { row: "", wrap: "", "align-center": "" }
                     },
                     [
@@ -97541,7 +97408,11 @@ var render = function() {
                                 _vm._l(_vm.users, function(user, i) {
                                   return _c(
                                     "v-expansion-panel-content",
-                                    { key: i },
+                                    {
+                                      key: i,
+                                      staticClass:
+                                        "primary v-toolbar mb-1 text-white"
+                                    },
                                     [
                                       _c(
                                         "div",
@@ -97590,7 +97461,7 @@ var render = function() {
                                                         "v-icon",
                                                         {
                                                           staticClass:
-                                                            "text-danger",
+                                                            "primary--text",
                                                           attrs: {
                                                             headline: ""
                                                           }
@@ -97651,7 +97522,7 @@ var render = function() {
                                                         "v-icon",
                                                         {
                                                           staticClass:
-                                                            "text-danger",
+                                                            "primary--text",
                                                           attrs: {
                                                             headline: ""
                                                           }
@@ -97708,7 +97579,7 @@ var render = function() {
                                                         "v-icon",
                                                         {
                                                           staticClass:
-                                                            "text-danger",
+                                                            "primary--text",
                                                           attrs: {
                                                             headline: ""
                                                           }
@@ -97769,7 +97640,7 @@ var render = function() {
                                                         "v-icon",
                                                         {
                                                           staticClass:
-                                                            "text-danger",
+                                                            "primary--text",
                                                           attrs: {
                                                             headline: ""
                                                           }
@@ -97830,7 +97701,7 @@ var render = function() {
                                                         "v-icon",
                                                         {
                                                           staticClass:
-                                                            "text-danger",
+                                                            "primary--text",
                                                           attrs: {
                                                             headline: ""
                                                           }
@@ -97899,7 +97770,7 @@ var render = function() {
                                                         "v-icon",
                                                         {
                                                           staticClass:
-                                                            "text-danger",
+                                                            "primary--text",
                                                           attrs: {
                                                             headline: ""
                                                           }
@@ -98001,7 +97872,7 @@ var render = function() {
                                                             "v-icon",
                                                             {
                                                               staticClass:
-                                                                "text-danger"
+                                                                "primary--text"
                                                             },
                                                             [
                                                               _vm._v(
@@ -98032,7 +97903,7 @@ var render = function() {
                                                             "v-icon",
                                                             {
                                                               staticClass:
-                                                                "text-danger"
+                                                                "primary--text"
                                                             },
                                                             [
                                                               _vm._v(
@@ -98078,7 +97949,7 @@ var render = function() {
                                                             "v-icon",
                                                             {
                                                               staticClass:
-                                                                "text-danger"
+                                                                "primary--text"
                                                             },
                                                             [_vm._v("fa-undo")]
                                                           ),
@@ -98120,20 +97991,13 @@ var render = function() {
                     : _vm.users.length == 0
                       ? _c(
                           "div",
-                          {
-                            staticClass:
-                              "card-body bg-dark mt-1 border border-dark"
-                          },
+                          { staticClass: "card-body mt-1 border border-dark" },
                           [
-                            _c(
-                              "div",
-                              { staticClass: "text-center text-light h5 pa-5" },
-                              [
-                                _vm._v(
-                                  "\n                Ištrintų vartotojų nėra...\n              "
-                                )
-                              ]
-                            )
+                            _c("div", { staticClass: "text-center h5 pa-5" }, [
+                              _vm._v(
+                                "\n                Ištrintų vartotojų nėra...\n              "
+                              )
+                            ])
                           ]
                         )
                       : _vm._e()
@@ -98583,7 +98447,7 @@ var render = function() {
     },
     [
       _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-header bg-dark text-light headline" }, [
+        _c("div", { staticClass: "card-header secondary headline" }, [
           _vm._v("\n          Naujas objektas "),
           _c(
             "a",
@@ -98601,7 +98465,7 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "card-body bg-dark" },
+          { staticClass: "card-body" },
           [
             _c(
               "v-form",
@@ -98740,7 +98604,7 @@ var render = function() {
                   _c(
                     "v-layout",
                     {
-                      staticClass: "theme--dark v-toolbar",
+                      staticClass: "secondary v-toolbar",
                       attrs: { row: "", "mb-3": "" }
                     },
                     [
@@ -98770,7 +98634,7 @@ var render = function() {
                           [
                             _c("span", {
                               staticClass:
-                                "fas fa-plus text-danger p-2 btn-func-misc ml-2 mr-2 mb-0 mt-0"
+                                "fas fa-plus primary--text p-2 btn-func-misc ml-2 mr-2 mb-0 mt-0"
                             })
                           ]
                         )
@@ -98839,7 +98703,7 @@ var render = function() {
                                                         "v-icon",
                                                         {
                                                           staticClass:
-                                                            "text-danger",
+                                                            "primary--text",
                                                           attrs: {
                                                             headline: ""
                                                           }
@@ -98906,7 +98770,7 @@ var render = function() {
                                                         "v-icon",
                                                         {
                                                           staticClass:
-                                                            "text-danger",
+                                                            "primary--text",
                                                           attrs: {
                                                             headline: ""
                                                           }
@@ -98970,7 +98834,7 @@ var render = function() {
                                                             "v-card-title",
                                                             {
                                                               staticClass:
-                                                                "theme--dark v-toolbar mx-auto "
+                                                                "primary v-toolbar text-white mx-auto "
                                                             },
                                                             [
                                                               _c("h5", [
@@ -99092,7 +98956,7 @@ var render = function() {
                                                         "v-card-title",
                                                         {
                                                           staticClass:
-                                                            "theme--dark v-toolbar mx-auto "
+                                                            "primary v-toolbar text-white mx-auto "
                                                         },
                                                         [
                                                           _c("h5", [
@@ -99181,14 +99045,14 @@ var render = function() {
                                                             "div",
                                                             {
                                                               staticClass:
-                                                                "card-body bg-dark mt-1 border border-dark"
+                                                                "card-body mt-1 border border-dark"
                                                             },
                                                             [
                                                               _c(
                                                                 "div",
                                                                 {
                                                                   staticClass:
-                                                                    "text-center text-light h5 pa-2"
+                                                                    "text-center h5 pa-2"
                                                                 },
                                                                 [
                                                                   _vm._v(
@@ -99224,20 +99088,13 @@ var render = function() {
                     : _vm.objects.length == 0
                       ? _c(
                           "div",
-                          {
-                            staticClass:
-                              "card-body bg-dark mt-1 border border-dark"
-                          },
+                          { staticClass: "card-body mt-1 border border-dark" },
                           [
-                            _c(
-                              "div",
-                              { staticClass: "text-center text-light h5 pa-5" },
-                              [
-                                _vm._v(
-                                  "\n                    Objektų nėra...\n                  "
-                                )
-                              ]
-                            )
+                            _c("div", { staticClass: "text-center h5 pa-5" }, [
+                              _vm._v(
+                                "\n                    Objektų nėra...\n                  "
+                              )
+                            ])
                           ]
                         )
                       : _vm._e()
@@ -99483,7 +99340,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     _this.isLoading = false;
                 }
             }).catch(function (error) {
-                __WEBPACK_IMPORTED_MODULE_2_sweetalert___default()('Klaida', error.response.data.message, 'error');
+                __WEBPACK_IMPORTED_MODULE_2_sweetalert___default()(error.response.data.message, Object.values(error.response.data.errors)[0][0], 'error');
             });
         },
         show: function show(name) {
@@ -99541,7 +99398,7 @@ var render = function() {
                   _c(
                     "v-layout",
                     {
-                      staticClass: "theme--dark v-toolbar",
+                      staticClass: "secondary v-toolbar",
                       attrs: { row: "", "mb-3": "" }
                     },
                     [
@@ -99751,7 +99608,7 @@ var render = function() {
                                                             "v-card-title",
                                                             {
                                                               staticClass:
-                                                                "theme--dark v-toolbar mx-auto "
+                                                                "primary text-white v-toolbar mx-auto "
                                                             },
                                                             [
                                                               _c("h5", [
@@ -99873,7 +99730,7 @@ var render = function() {
                                                         "v-card-title",
                                                         {
                                                           staticClass:
-                                                            "theme--dark v-toolbar mx-auto "
+                                                            "primary text-white v-toolbar mx-auto "
                                                         },
                                                         [
                                                           _c("h5", [
@@ -99962,14 +99819,14 @@ var render = function() {
                                                             "div",
                                                             {
                                                               staticClass:
-                                                                "card-body bg-dark mt-1 border border-dark"
+                                                                "card-body mt-1 border border-dark"
                                                             },
                                                             [
                                                               _c(
                                                                 "div",
                                                                 {
                                                                   staticClass:
-                                                                    "text-center text-light h5 pa-2"
+                                                                    "text-center h5 pa-2"
                                                                 },
                                                                 [
                                                                   _vm._v(
@@ -100005,20 +99862,13 @@ var render = function() {
                     : _vm.objects.length == 0
                       ? _c(
                           "div",
-                          {
-                            staticClass:
-                              "card-body bg-dark mt-1 border border-dark"
-                          },
+                          { staticClass: "card-body mt-1 border border-dark" },
                           [
-                            _c(
-                              "div",
-                              { staticClass: "text-center text-light h5 pa-5" },
-                              [
-                                _vm._v(
-                                  "\n                    Uždarytų objektų nėra...\n                  "
-                                )
-                              ]
-                            )
+                            _c("div", { staticClass: "text-center h5 pa-5" }, [
+                              _vm._v(
+                                "\n                    Uždarytų objektų nėra...\n                  "
+                              )
+                            ])
                           ]
                         )
                       : _vm._e()
@@ -100129,7 +99979,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.loading-parent{\n  position: relative;\n}\n.overlay{\n  z-index: 5;\n  background-color: #303030 !important;\n}\n.loading-overlay{\n  z-index: 10 !important;\n}\n.uploaded-image{\n  max-width: 576px;\n  padding: 10px;\n  max-height: 50vh;\n}\n", ""]);
+exports.push([module.i, "\n.loading-parent{\n  position: relative;\n}\n.overlay{\n  z-index: 5;\n  background-color: #FFF !important;\n}\n.loading-overlay{\n  z-index: 10 !important;\n}\n.uploaded-image{\n  max-width: 576px;\n  padding: 10px;\n  max-height: 50vh;\n}\n", ""]);
 
 // exports
 
@@ -100417,7 +100267,7 @@ var render = function() {
       !_vm.userCard
         ? _c(
             "div",
-            { staticClass: "overlay position-absolute h-100 w-100 bg-dark" },
+            { staticClass: "overlay position-absolute h-100 w-100" },
             [
               _c(
                 "v-container",
@@ -100442,7 +100292,7 @@ var render = function() {
                             attrs: {
                               size: 100,
                               width: 7,
-                              color: "white",
+                              color: "primary",
                               indeterminate: ""
                             }
                           })
@@ -100460,7 +100310,7 @@ var render = function() {
                       _c(
                         "v-flex",
                         {
-                          staticClass: "h4 text-danger text-center mt-3",
+                          staticClass: "h4 text-center mt-3",
                           attrs: { shrink: "", "align-center": "" }
                         },
                         [
@@ -100498,33 +100348,27 @@ var render = function() {
                 "v-container",
                 { staticStyle: { background: "#292929" } },
                 [
-                  _c(
-                    "div",
-                    { staticClass: "card-header bg-dark text-light headline" },
-                    [
-                      _vm._v(
-                        "\n            " +
-                          _vm._s(_vm.newItem.item.ItemName) +
-                          " "
-                      ),
-                      _c(
-                        "a",
-                        {
-                          staticClass: "float-right",
-                          on: {
-                            click: function($event) {
-                              _vm.cancelItemAddition()
-                            }
+                  _c("div", { staticClass: "card-header secondary headline" }, [
+                    _vm._v(
+                      "\n            " + _vm._s(_vm.newItem.item.ItemName) + " "
+                    ),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "float-right",
+                        on: {
+                          click: function($event) {
+                            _vm.cancelItemAddition()
                           }
-                        },
-                        [
-                          _c("span", {
-                            staticClass: "fas fa-times btn-func-misc"
-                          })
-                        ]
-                      )
-                    ]
-                  ),
+                        }
+                      },
+                      [
+                        _c("span", {
+                          staticClass: "fas fa-times btn-func-misc"
+                        })
+                      ]
+                    )
+                  ]),
                   _vm._v(" "),
                   _c("v-divider", { attrs: { light: "" } }),
                   _vm._v(" "),
@@ -100628,10 +100472,7 @@ var render = function() {
                             [
                               _c(
                                 "v-card",
-                                {
-                                  staticClass: "border border-danger",
-                                  attrs: { dark: "" }
-                                },
+                                { staticClass: "border border-danger" },
                                 [
                                   _c(
                                     "v-card-text",
@@ -100643,7 +100484,7 @@ var render = function() {
                                         staticClass: "mb-0",
                                         attrs: {
                                           indeterminate: "",
-                                          color: "white"
+                                          color: "primary"
                                         }
                                       })
                                     ],
@@ -100689,7 +100530,7 @@ var render = function() {
                             [
                               _c(
                                 "v-icon",
-                                { staticClass: "text-danger headline mx-2" },
+                                { staticClass: "primary--text headline mx-2" },
                                 [_vm._v("fa-plus")]
                               ),
                               _vm._v("Pridėti į rezervaciją")
@@ -100833,7 +100674,7 @@ var render = function() {
                     [
                       _c(
                         "v-icon",
-                        { staticClass: "text-danger headline mx-2" },
+                        { staticClass: "primary--text headline mx-2" },
                         [_vm._v("fa-save")]
                       ),
                       _vm._v("Išsaugoti rezervaciją")
@@ -101112,18 +100953,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           cancel: { text: 'Atšaukti' }
         }
       }).then(function (value) {
-        _this3.$http.get('/reservation/delete/' + reservation.ReservationID).then(function (response) {
-          if (response.status == 200) {
-            __WEBPACK_IMPORTED_MODULE_2_sweetalert___default()(response.data.message, response.data.success, "success");
-            _this3.loadReservations();
-          }
-        }).catch(function (error) {
-          if (error.response.status == 422) {
-            __WEBPACK_IMPORTED_MODULE_2_sweetalert___default()(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
-          } else {
-            __WEBPACK_IMPORTED_MODULE_2_sweetalert___default()("Klaida", error.response.data.message, "error");
-          }
-        });
+        if (value) {
+          _this3.$http.get('/reservation/delete/' + reservation.ReservationID).then(function (response) {
+            if (response.status == 200) {
+              __WEBPACK_IMPORTED_MODULE_2_sweetalert___default()(response.data.message, response.data.success, "success");
+              _this3.loadReservations();
+            }
+          }).catch(function (error) {
+            if (error.response.status == 422) {
+              __WEBPACK_IMPORTED_MODULE_2_sweetalert___default()(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
+            } else {
+              __WEBPACK_IMPORTED_MODULE_2_sweetalert___default()("Klaida", error.response.data.message, "error");
+            }
+          });
+        }
       });
     },
     show: function show(name) {
@@ -101310,7 +101153,7 @@ var render = function() {
     },
     [
       _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-header bg-dark text-light" }, [
+        _c("div", { staticClass: "card-header secondary" }, [
           _vm._v("\n          Patvirtinti rezervacijos perdavimą "),
           _c(
             "a",
@@ -101328,7 +101171,7 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "card-body bg-dark" },
+          { staticClass: "card-body" },
           [
             _c(
               "v-form",
@@ -101363,8 +101206,7 @@ var render = function() {
                         ? _c(
                             "v-flex",
                             {
-                              staticClass:
-                                "border-danger text-center headline text-success"
+                              staticClass: "text-center headline text-success"
                             },
                             [_vm._v("Kortelė nuskaityta!")]
                           )
@@ -101584,7 +101426,7 @@ var render = function() {
     },
     [
       _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-header bg-dark text-light" }, [
+        _c("div", { staticClass: "card-header secondary" }, [
           _vm._v("\n          Patvirtinti rezervacijos perdavimą "),
           _c(
             "a",
@@ -101602,7 +101444,7 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "card-body bg-dark" },
+          { staticClass: "card-body" },
           [
             _c(
               "v-layout",
@@ -101621,7 +101463,7 @@ var render = function() {
               [
                 _c(
                   "v-flex",
-                  { staticClass: "border border-light", attrs: { shrink: "" } },
+                  { staticClass: "border border-dark", attrs: { shrink: "" } },
                   [
                     _c("VueSignaturePad", {
                       ref: "signaturePad",
@@ -101647,9 +101489,11 @@ var render = function() {
                           "v-btn",
                           { attrs: { "mx-3": "" }, on: { click: _vm.clear } },
                           [
-                            _c("v-icon", { staticClass: "text-danger pr-2" }, [
-                              _vm._v("fa-eraser")
-                            ]),
+                            _c(
+                              "v-icon",
+                              { staticClass: "primary--text pr-2" },
+                              [_vm._v("fa-eraser")]
+                            ),
                             _vm._v("Išvalyti")
                           ],
                           1
@@ -101658,9 +101502,11 @@ var render = function() {
                           "v-btn",
                           { attrs: { "mx-3": "" }, on: { click: _vm.save } },
                           [
-                            _c("v-icon", { staticClass: "text-danger pr-2" }, [
-                              _vm._v("fa-save")
-                            ]),
+                            _c(
+                              "v-icon",
+                              { staticClass: "primary--text pr-2" },
+                              [_vm._v("fa-save")]
+                            ),
                             _vm._v("Išsaugoti")
                           ],
                           1
@@ -101741,7 +101587,7 @@ var render = function() {
               _c(
                 "v-layout",
                 {
-                  staticClass: "theme--dark v-toolbar",
+                  staticClass: "secondary v-toolbar",
                   attrs: {
                     row: "",
                     wrap: "",
@@ -101762,7 +101608,6 @@ var render = function() {
                 ? _c(
                     "v-layout",
                     {
-                      staticClass: "bg-dark",
                       attrs: {
                         row: "",
                         wrap: "",
@@ -101777,7 +101622,10 @@ var render = function() {
                         _vm._l(_vm.reservations, function(reservation, i) {
                           return _c(
                             "v-expansion-panel-content",
-                            { key: i },
+                            {
+                              key: i,
+                              staticClass: "primary text-white v-toolbar mb-1"
+                            },
                             [
                               reservation.cobject
                                 ? _c(
@@ -101829,7 +101677,7 @@ var render = function() {
                                         "v-data-table",
                                         {
                                           staticClass:
-                                            "elevation-3 border border-danger",
+                                            "elevation-3 border border-dark",
                                           attrs: {
                                             headers: _vm.headers,
                                             items: reservation.items,
@@ -101961,7 +101809,9 @@ var render = function() {
                                             [
                                               _c(
                                                 "v-icon",
-                                                { staticClass: "text-danger" },
+                                                {
+                                                  staticClass: "primary--text"
+                                                },
                                                 [_vm._v("fa-id-card")]
                                               ),
                                               _vm._v(" "),
@@ -101996,7 +101846,9 @@ var render = function() {
                                             [
                                               _c(
                                                 "v-icon",
-                                                { staticClass: "text-danger" },
+                                                {
+                                                  staticClass: "primary--text"
+                                                },
                                                 [_vm._v("fa-signature")]
                                               ),
                                               _vm._v(" "),
@@ -102024,7 +101876,9 @@ var render = function() {
                                             [
                                               _c(
                                                 "v-icon",
-                                                { staticClass: "text-danger" },
+                                                {
+                                                  staticClass: "primary--text"
+                                                },
                                                 [_vm._v("fa-trash")]
                                               ),
                                               _vm._v(" "),
@@ -102056,19 +101910,13 @@ var render = function() {
                 : _vm.reservations.length == 0
                   ? _c(
                       "div",
-                      {
-                        staticClass: "card-body bg-dark mt-1 border border-dark"
-                      },
+                      { staticClass: "card-body mt-1 border border-dark" },
                       [
-                        _c(
-                          "div",
-                          { staticClass: "text-center text-light h5 pa-5" },
-                          [
-                            _vm._v(
-                              "\n        Aktyvių rezervacijų nėra...\n      "
-                            )
-                          ]
-                        )
+                        _c("div", { staticClass: "text-center h5 pa-5" }, [
+                          _vm._v(
+                            "\n        Aktyvių rezervacijų nėra...\n      "
+                          )
+                        ])
                       ]
                     )
                   : _vm._e()
@@ -102358,7 +102206,7 @@ var render = function() {
               _c(
                 "v-layout",
                 {
-                  staticClass: "theme--dark v-toolbar",
+                  staticClass: "secondary v-toolbar",
                   attrs: {
                     row: "",
                     wrap: "",
@@ -102379,7 +102227,6 @@ var render = function() {
                 ? _c(
                     "v-layout",
                     {
-                      staticClass: "bg-dark",
                       attrs: {
                         row: "",
                         wrap: "",
@@ -102394,7 +102241,10 @@ var render = function() {
                         _vm._l(_vm.reservations, function(reservation, i) {
                           return _c(
                             "v-expansion-panel-content",
-                            { key: i },
+                            {
+                              key: i,
+                              staticClass: "primary v-toolbar mb-1 text-white"
+                            },
                             [
                               reservation.cobject
                                 ? _c(
@@ -102450,7 +102300,7 @@ var render = function() {
                                         "v-data-table",
                                         {
                                           staticClass:
-                                            "elevation-3 border border-danger mb-3",
+                                            "elevation-3 border border-dark mb-3",
                                           attrs: {
                                             headers: _vm.headers,
                                             items: reservation.items,
@@ -102543,7 +102393,7 @@ var render = function() {
                                               _c(
                                                 "v-icon",
                                                 {
-                                                  staticClass: "text-danger",
+                                                  staticClass: "primary--text",
                                                   attrs: { headline: "" }
                                                 },
                                                 [_vm._v("fa-calendar-plus")]
@@ -102595,7 +102445,7 @@ var render = function() {
                                               _c(
                                                 "v-icon",
                                                 {
-                                                  staticClass: "text-danger",
+                                                  staticClass: "primary--text",
                                                   attrs: { headline: "" }
                                                 },
                                                 [_vm._v("fa-calendar-check")]
@@ -102652,7 +102502,7 @@ var render = function() {
                                                     "v-icon",
                                                     {
                                                       staticClass:
-                                                        "text-danger",
+                                                        "primary--text",
                                                       attrs: { headline: "" }
                                                     },
                                                     [_vm._v("fa-id-card")]
@@ -102718,7 +102568,7 @@ var render = function() {
                                                       "v-icon",
                                                       {
                                                         staticClass:
-                                                          "text-danger",
+                                                          "primary--text",
                                                         attrs: { headline: "" }
                                                       },
                                                       [_vm._v("fa-signature")]
@@ -102814,19 +102664,13 @@ var render = function() {
                 : _vm.reservations.length == 0
                   ? _c(
                       "div",
-                      {
-                        staticClass: "card-body bg-dark mt-1 border border-dark"
-                      },
+                      { staticClass: "card-body mt-1 border border-dark" },
                       [
-                        _c(
-                          "div",
-                          { staticClass: "text-center text-light h5 pa-5" },
-                          [
-                            _vm._v(
-                              "\n        Uždarytų rezervacijų nėra...\n      "
-                            )
-                          ]
-                        )
+                        _c("div", { staticClass: "text-center h5 pa-5" }, [
+                          _vm._v(
+                            "\n        Uždarytų rezervacijų nėra...\n      "
+                          )
+                        ])
                       ]
                     )
                   : _vm._e()
@@ -103211,7 +103055,7 @@ var render = function() {
                       _c("v-text-field", {
                         attrs: {
                           flat: "",
-                          "solo-inverted": "",
+                          solo: "",
                           "hide-details": "",
                           "prepend-inner-icon": "search",
                           label: "Įrankių paieška..."
@@ -103277,7 +103121,7 @@ var render = function() {
                                       [
                                         _c(
                                           "v-icon",
-                                          { staticClass: "text-danger" },
+                                          { staticClass: "primary--text" },
                                           [_vm._v("fa-arrow-alt-circle-right")]
                                         )
                                       ],
@@ -103309,7 +103153,7 @@ var render = function() {
                             "v-card-title",
                             {
                               staticClass:
-                                "text-center theme--dark v-toolbar h5 mb-0"
+                                "text-center secondary v-toolbar h5 mb-0"
                             },
                             [
                               _vm._v(
@@ -103367,7 +103211,9 @@ var render = function() {
                                             [
                                               _c(
                                                 "v-icon",
-                                                { staticClass: "text-danger" },
+                                                {
+                                                  staticClass: "primary--text"
+                                                },
                                                 [_vm._v("fa-minus-circle")]
                                               )
                                             ],
@@ -103421,7 +103267,7 @@ var render = function() {
                     [
                       _c(
                         "v-icon",
-                        { staticClass: "text-danger headline mx-2" },
+                        { staticClass: "primary--text headline mx-2" },
                         [_vm._v("fa-save")]
                       ),
                       _vm._v("Išsaugoti rezervaciją")
@@ -103699,7 +103545,7 @@ var render = function() {
           _c(
             "v-layout",
             {
-              staticClass: "theme--dark v-toolbar mb-5",
+              staticClass: "secondary mb-5",
               attrs: { wrap: "", row: "", "justify-center": "" }
             },
             [
@@ -103729,7 +103575,7 @@ var render = function() {
                           _c(
                             "v-icon",
                             {
-                              staticClass: "display-4 text-danger",
+                              staticClass: "display-4 primary--text",
                               attrs: { "d-flex": "", "justify-center": "" }
                             },
                             [_vm._v("fa-broadcast-tower")]
@@ -103743,7 +103589,7 @@ var render = function() {
                         attrs: {
                           indeterminate: true,
                           color: "red darken-2",
-                          "background-color": "white"
+                          "background-color": "primary"
                         }
                       }),
                       _vm._v(" "),
@@ -103988,7 +103834,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
       if (dateRented > currentDate) return 0;
       var timeDiff = Math.abs(currentDate.getTime() - dateRented.getTime());
       var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-      return diffDays + 1;
+      return diffDays;
     }
   },
   components: {
@@ -104209,8 +104055,7 @@ var render = function() {
         _c(
           "div",
           {
-            staticClass:
-              "card-header theme--dark v-toolbar headline text-center"
+            staticClass: "card-header secondary v-toolbar headline text-center"
           },
           [
             _vm._v("\n          Pridėti nuomotą įrankį "),
@@ -104231,7 +104076,7 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "card-body bg-dark text-light" },
+          { staticClass: "card-body" },
           [
             _c(
               "v-form",
@@ -104325,7 +104170,10 @@ var render = function() {
                         [
                           _c(
                             "v-icon",
-                            { staticClass: "mt-2 mx-2", attrs: { small: "" } },
+                            {
+                              staticClass: "primary--text mt-2 mx-2",
+                              attrs: { small: "" }
+                            },
                             [_vm._v("fa-euro-sign")]
                           )
                         ],
@@ -104413,7 +104261,7 @@ var render = function() {
                           {
                             attrs: {
                               outline: "",
-                              color: "blue",
+                              color: "primary",
                               disabled:
                                 !_vm.name ||
                                 _vm.rentDate == "" ||
@@ -104499,8 +104347,7 @@ var render = function() {
                   _c(
                     "v-layout",
                     {
-                      staticClass:
-                        "card-header pb-0 pt-0 mx-0 theme--dark v-toolbar",
+                      staticClass: "card-header pb-0 pt-0 mx-0 secondary",
                       attrs: { row: "", wrap: "", "align-center": "" }
                     },
                     [
@@ -104534,7 +104381,7 @@ var render = function() {
                             [
                               _c("span", {
                                 staticClass:
-                                  "fas fa-plus text-danger p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"
+                                  "fas fa-plus primary--text p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"
                               })
                             ]
                           )
@@ -104547,7 +104394,7 @@ var render = function() {
                   _vm.items.length > 0
                     ? _c(
                         "div",
-                        { staticClass: "card-body bg-dark" },
+                        { staticClass: "card-body" },
                         _vm._l(_vm.items, function(item, index) {
                           return _c(
                             "router-link",
@@ -104596,20 +104443,13 @@ var render = function() {
                     : _vm.items.length == 0
                       ? _c(
                           "div",
-                          {
-                            staticClass:
-                              "card-body bg-dark mt-1 border border-dark"
-                          },
+                          { staticClass: "card-body mt-1 border border-dark" },
                           [
-                            _c(
-                              "div",
-                              { staticClass: "text-center text-light h5 pa-5" },
-                              [
-                                _vm._v(
-                                  "\n          Išnuomotų įrankių nėra...\n        "
-                                )
-                              ]
-                            )
+                            _c("div", { staticClass: "text-center h5 pa-5" }, [
+                              _vm._v(
+                                "\n          Išnuomotų įrankių nėra...\n        "
+                              )
+                            ])
                           ]
                         )
                       : _vm._e()
@@ -104955,7 +104795,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (dateRented > currentDate) return 0;
             var timeDiff = Math.abs(currentDate.getTime() - dateRented.getTime());
             var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-            return diffDays + 1;
+            return diffDays;
         },
         returnItem: function returnItem() {
             var _this5 = this;
@@ -105158,7 +104998,7 @@ var render = function() {
     },
     [
       _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-header bg-dark text-light" }, [
+        _c("div", { staticClass: "card-header secondary" }, [
           _vm._v("\n          Priskirti įrankį objektui "),
           _c(
             "a",
@@ -105166,7 +105006,7 @@ var render = function() {
               staticClass: "float-right",
               on: {
                 click: function($event) {
-                  _vm.$modal.hide("assignr-rented-item-modal")
+                  _vm.$modal.hide("assign-rented-item-modal")
                 }
               }
             },
@@ -105176,7 +105016,7 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "card-body bg-dark" },
+          { staticClass: "card-body" },
           [
             _c(
               "v-form",
@@ -105450,8 +105290,7 @@ var render = function() {
         _c(
           "div",
           {
-            staticClass:
-              "card-header theme--dark v-toolbar headline text-center"
+            staticClass: "card-header secondary v-toolbar headline text-center"
           },
           [
             _vm._v("\n          Redaguoti nuomotą įrankį "),
@@ -105472,7 +105311,7 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "card-body bg-dark text-light" },
+          { staticClass: "card-body" },
           [
             _c(
               "v-form",
@@ -105566,7 +105405,10 @@ var render = function() {
                         [
                           _c(
                             "v-icon",
-                            { staticClass: "mt-2 mx-2", attrs: { small: "" } },
+                            {
+                              staticClass: "mt-2 mx-2 primary--text",
+                              attrs: { small: "" }
+                            },
                             [_vm._v("fa-euro-sign")]
                           )
                         ],
@@ -105624,7 +105466,7 @@ var render = function() {
                           {
                             attrs: {
                               outline: "",
-                              color: "blue",
+                              color: "primary",
                               disabled:
                                 !_vm.name ||
                                 _vm.rentDate == "" ||
@@ -105709,8 +105551,7 @@ var render = function() {
                   _c(
                     "v-layout",
                     {
-                      staticClass:
-                        "card-header pb-0 pt-0 mx-0 theme--dark v-toolbar",
+                      staticClass: "card-header pb-0 pt-0 mx-0 secondary",
                       attrs: { row: "", wrap: "", "align-content-center": "" }
                     },
                     [
@@ -105738,7 +105579,7 @@ var render = function() {
                             [
                               _c("span", {
                                 staticClass:
-                                  "fa fa-arrow-left text-danger remove-all-margin p-2 btn-func-misc"
+                                  "fa fa-arrow-left primary--text remove-all-margin p-2 btn-func-misc"
                               })
                             ]
                           )
@@ -105777,7 +105618,7 @@ var render = function() {
                             [
                               _c("span", {
                                 staticClass:
-                                  "fas fa-edit text-danger p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"
+                                  "fas fa-edit primary--text p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"
                               })
                             ]
                           )
@@ -105789,7 +105630,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "div",
-                    { staticClass: "card-body bg-dark" },
+                    { staticClass: "card-body" },
                     [
                       _c(
                         "v-container",
@@ -105823,7 +105664,7 @@ var render = function() {
                                               _c(
                                                 "v-icon",
                                                 {
-                                                  staticClass: "text-danger",
+                                                  staticClass: "primary--text",
                                                   attrs: { headline: "" }
                                                 },
                                                 [_vm._v("fa-map-marker")]
@@ -105895,7 +105736,7 @@ var render = function() {
                                                         "v-icon",
                                                         {
                                                           staticClass:
-                                                            "text-danger pr-3"
+                                                            "primary--text pr-3"
                                                         },
                                                         [
                                                           _vm._v(
@@ -105939,7 +105780,7 @@ var render = function() {
                                               _c(
                                                 "v-icon",
                                                 {
-                                                  staticClass: "text-danger",
+                                                  staticClass: "primary--text",
                                                   attrs: { headline: "" }
                                                 },
                                                 [_vm._v("fa-calendar-plus")]
@@ -105998,7 +105839,7 @@ var render = function() {
                                                     "v-icon",
                                                     {
                                                       staticClass:
-                                                        "text-danger",
+                                                        "primary--text",
                                                       attrs: { headline: "" }
                                                     },
                                                     [_vm._v("fa-euro-sign")]
@@ -106063,7 +105904,7 @@ var render = function() {
                                                     "v-icon",
                                                     {
                                                       staticClass:
-                                                        "text-danger",
+                                                        "primary--text",
                                                       attrs: { headline: "" }
                                                     },
                                                     [
@@ -106261,7 +106102,7 @@ var render = function() {
                                                         "v-icon",
                                                         {
                                                           staticClass:
-                                                            "text-danger"
+                                                            "primary--text"
                                                         },
                                                         [_vm._v("fa-wrench")]
                                                       ),
@@ -106298,7 +106139,7 @@ var render = function() {
                                                         "v-icon",
                                                         {
                                                           staticClass:
-                                                            "text-danger"
+                                                            "primary--text"
                                                         },
                                                         [_vm._v("fa-wrench")]
                                                       ),
@@ -106585,7 +106426,7 @@ var render = function() {
                     "v-layout",
                     {
                       staticClass:
-                        "card-header pb-0 pt-0 mx-0 theme--dark v-toolbar",
+                        "card-header pb-0 pt-0 mx-0 secondary v-toolbar",
                       attrs: { row: "", wrap: "", "align-center": "" }
                     },
                     [
@@ -106613,7 +106454,7 @@ var render = function() {
                             [
                               _c("span", {
                                 staticClass:
-                                  "fa fa-arrow-left text-danger remove-all-margin p-2 btn-func-misc"
+                                  "fa fa-arrow-left primary--text remove-all-margin p-2 btn-func-misc"
                               })
                             ]
                           )
@@ -106638,7 +106479,7 @@ var render = function() {
                   _vm.user.withdrawals.length > 0
                     ? _c(
                         "div",
-                        { staticClass: "card-body bg-dark" },
+                        { staticClass: "card-body" },
                         _vm._l(_vm.user.withdrawals, function(
                           withdrawal,
                           index
@@ -106685,20 +106526,13 @@ var render = function() {
                     : _vm.user.withdrawals.length == 0
                       ? _c(
                           "div",
-                          {
-                            staticClass:
-                              "card-body bg-dark mt-1 border border-dark"
-                          },
+                          { staticClass: "card-body mt-1 border border-dark" },
                           [
-                            _c(
-                              "div",
-                              { staticClass: "text-center text-light h5 pa-5" },
-                              [
-                                _vm._v(
-                                  "\n          Vartotojas įrankių neturi...\n        "
-                                )
-                              ]
-                            )
+                            _c("div", { staticClass: "text-center h5 pa-5" }, [
+                              _vm._v(
+                                "\n          Vartotojas įrankių neturi...\n        "
+                              )
+                            ])
                           ]
                         )
                       : _vm._e()
@@ -106893,7 +106727,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.fa, .far, .fas {\r\n    font-family: \"Font Awesome 5 Free\" !important;\n}\n.fa, .fas {\r\n    font-weight: 900 !important;\n}\n.search-result-wrapper{\r\n    position: absolute;\r\n    bottom: auto;\r\n    z-index: 100;\r\n    height: auto;\r\n    max-height: 250px;\r\n    overflow-y: auto;\r\n    width: 80%;\r\n    max-width: 320px;\r\n    min-width: 180px;\n::-webkit-scrollbar {\r\n    display: none;\n}\n}\r\n", ""]);
+exports.push([module.i, "\n.fa, .far, .fas {\r\n    font-family: \"Font Awesome 5 Free\" !important;\n}\n.fa, .fas {\r\n    font-weight: 900 !important;\n}\n.logo{\r\n    max-height: 50px;\n}\r\n", ""]);
 
 // exports
 
@@ -106912,6 +106746,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_loading_overlay_dist_vue_loading_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vue_loading_overlay_dist_vue_loading_min_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modals_settings_ChangePassword_vue__ = __webpack_require__(247);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modals_settings_ChangePassword_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__modals_settings_ChangePassword_vue__);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -107358,9 +107197,9 @@ var render = function() {
     [
       _c(
         "div",
-        { staticClass: "card bg-dark" },
+        { staticClass: "card" },
         [
-          _c("div", { staticClass: "card-header h5 bg-dark text-light" }, [
+          _c("div", { staticClass: "card-header h5 secondary" }, [
             _vm._v("\n        Keisti slaptažodį "),
             _c(
               "a",
@@ -107458,7 +107297,7 @@ var render = function() {
                           }
                         },
                         [
-                          _c("v-icon", { staticClass: "text-danger mr-3" }, [
+                          _c("v-icon", { staticClass: "primary--text mr-3" }, [
                             _vm._v("fa-save")
                           ]),
                           _vm._v("Išsaugoti")
@@ -107500,7 +107339,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "v-app",
-    { attrs: { dark: "", if: _vm.$auth.ready() } },
+    { attrs: { if: _vm.$auth.ready() } },
     [
       _c(
         "v-snackbar",
@@ -107612,7 +107451,7 @@ var render = function() {
                                         [
                                           _c(
                                             "v-icon",
-                                            { staticClass: "text-danger" },
+                                            { staticClass: "primary--text" },
                                             [_vm._v(_vm._s(item.icon))]
                                           )
                                         ],
@@ -107683,7 +107522,7 @@ var render = function() {
                                       [
                                         _c(
                                           "v-icon",
-                                          { staticClass: "text-danger" },
+                                          { staticClass: "primary--text" },
                                           [_vm._v(_vm._s(item.icon))]
                                         )
                                       ],
@@ -107716,7 +107555,10 @@ var render = function() {
           _vm.$auth.check()
             ? _c(
                 "v-toolbar",
-                { attrs: { app: "", fixed: "", "clipped-left": "" } },
+                {
+                  staticClass: "white",
+                  attrs: { app: "", fixed: "", "clipped-left": "" }
+                },
                 [
                   _c("v-toolbar-side-icon", {
                     on: {
@@ -107728,14 +107570,12 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("v-toolbar-title", [
-                    _c("span", { staticClass: "headline shrink" }, [
-                      _vm._v("Tool")
-                    ]),
-                    _c(
-                      "span",
-                      { staticClass: "shrink headline text-danger pr-5" },
-                      [_vm._v("Tracker")]
-                    )
+                    _c("a", { attrs: { href: "/" } }, [
+                      _c("img", {
+                        staticClass: "logo mx-4",
+                        attrs: { src: "/media/logo.png", alt: "logo" }
+                      })
+                    ])
                   ]),
                   _vm._v(" "),
                   _c(
@@ -107745,7 +107585,7 @@ var render = function() {
                         staticClass: "hidden-sm-and-down",
                         attrs: {
                           flat: "",
-                          "solo-inverted": "",
+                          solo: "",
                           "hide-details": "",
                           "prepend-inner-icon": "search",
                           label: "Paieška..."
@@ -107763,7 +107603,10 @@ var render = function() {
                       _vm.resultBox && _vm.searchResults
                         ? _c(
                             "div",
-                            { staticClass: "search-result-wrapper bg-dark" },
+                            {
+                              staticClass:
+                                "search-result-wrapper bg-dark border--primary"
+                            },
                             [
                               _c(
                                 "v-list",
@@ -107950,10 +107793,27 @@ var render = function() {
           ),
           _vm._v(" "),
           _vm.$auth.ready()
-            ? _c("v-footer", { attrs: { app: "", fixed: "" } }, [
-                _c("span", [_vm._v("© 2018")]),
-                _c("span", [_vm._v(_vm._s(_vm.$auth.user().Username))])
-              ])
+            ? _c(
+                "v-footer",
+                { attrs: { app: "", fixed: "", "justify-center": "" } },
+                [
+                  _c(
+                    "v-layout",
+                    { attrs: { "justify-center": "", "align-center": "" } },
+                    [
+                      _c("v-flex", { attrs: { shrink: "" } }, [
+                        _c("span", { staticClass: "h5" }, [_vm._v("Tool")]),
+                        _c("span", { staticClass: "h5 text-danger pr-2" }, [
+                          _vm._v("Tracker")
+                        ]),
+                        _c("span", [_vm._v("© 2018")])
+                      ])
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
             : _vm._e()
         ],
         1

@@ -9,19 +9,19 @@
          :clickToClose="false"
          @before-open="beforeOpen"
          @before-close="beforeClose">
-    <div class="card bg-dark">
-      <div class="card-header h5 bg-dark text-light">
+    <div class="card">
+      <div class="card-header h5 secondary">
           Keisti įrankio garantinį laikotarpį <a @click="$modal.hide('change-item-warranty-modal')" class="float-right mr-3"><span class="fas fa-times btn-func-misc"></span></a>
       </div>
       <v-form>
       <v-layout>
         <v-flex xs12>
-          <DatePicker class="justify-center d-flex theme--dark ma-3" v-model="warranty_date" :lang="lang" format="YYYY-MM-DD"></DatePicker>
+          <DatePicker class="justify-center d-flex theme--primary text-white ma-3" v-model="warranty_date" :lang="lang" format="YYYY-MM-DD"></DatePicker>
         </v-flex>
       </v-layout>
       <v-layout justify-center align-bottom>
         <v-flex shrink>
-          <v-btn class="ma-2" @click="save()"><v-icon class="text-danger mr-3">fa-save</v-icon>Išsaugoti</v-btn>
+          <v-btn class="ma-2" @click="save()"><v-icon class="primary--text mr-3">fa-save</v-icon>Išsaugoti</v-btn>
         </v-flex>
       </v-layout>
       </v-form>

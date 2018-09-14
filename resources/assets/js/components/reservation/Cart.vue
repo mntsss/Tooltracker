@@ -3,15 +3,15 @@
       <Loading :active.sync="isLoading"
       :can-cancel="false"
       :is-full-page="fullPage"></Loading>
-      <div class="overlay position-absolute h-100 w-100 bg-dark" v-if="!userCard">
+      <div class="overlay position-absolute h-100 w-100" v-if="!userCard">
         <v-container>
           <v-layout align-center justify-center row fill-height mt-5>
             <v-flex shrink mt-5>
-              <v-progress-circular :size="100" :width="7" color="white" indeterminate></v-progress-circular>
+              <v-progress-circular :size="100" :width="7" color="primary" indeterminate></v-progress-circular>
             </v-flex>
           </v-layout>
           <v-layout align-center justify-center>
-            <v-flex shrink align-center class="h4 text-danger text-center mt-3">
+            <v-flex shrink align-center class="h4 text-center mt-3">
               Laukiama identifikacinės kortelės...
             </v-flex>
           </v-layout>
@@ -19,7 +19,7 @@
       </div>
     <v-dialog v-model="waitingImageDialog" persistent max-width="780" >
       <v-container v-if="newItem.item" style="background: #292929">
-        <div class="card-header bg-dark text-light headline">
+        <div class="card-header secondary headline">
             {{newItem.item.ItemName}} <a @click="cancelItemAddition()" class="float-right"><span class="fas fa-times btn-func-misc"></span></a>
         </div>
         <v-divider light></v-divider>
@@ -39,17 +39,17 @@
 
           <!-- Loading modal appearing on upload start and loading til upload and resize ends -->
             <v-dialog v-model="imageLoadingDialog" hide-overlay persistent width="300">
-              <v-card dark class="border border-danger">
+              <v-card class="border border-danger">
                 <v-card-text>
                   Kraunama...
-                  <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
+                  <v-progress-linear indeterminate color="primary" class="mb-0"></v-progress-linear>
                 </v-card-text>
               </v-card>
             </v-dialog>
 
         </v-layout>
         <v-layout row wrap mx-0 pa-3 justify-center align-center>
-          <v-flex shrink><v-btn outline @click="addToReservation" :disabled="addButtonDisabled"><v-icon class="text-danger headline mx-2">fa-plus</v-icon>Pridėti į rezervaciją</v-btn></v-flex>
+          <v-flex shrink><v-btn outline @click="addToReservation" :disabled="addButtonDisabled"><v-icon class="primary--text headline mx-2">fa-plus</v-icon>Pridėti į rezervaciją</v-btn></v-flex>
         </v-layout>
       </v-container>
     </v-dialog>
@@ -81,7 +81,7 @@
             </template>
           </v-data-table>
           <v-layout row wrap mx-0 pa-3 justify-center align-center>
-            <v-flex shrink><v-btn outline @click="save" :disabled="saveButtonDisabled"><v-icon class="text-danger headline mx-2">fa-save</v-icon>Išsaugoti rezervaciją</v-btn></v-flex>
+            <v-flex shrink><v-btn outline @click="save" :disabled="saveButtonDisabled"><v-icon class="primary--text headline mx-2">fa-save</v-icon>Išsaugoti rezervaciją</v-btn></v-flex>
           </v-layout>
   </v-container>
 </div>
@@ -259,7 +259,7 @@ export default{
   }
   .overlay{
     z-index: 5;
-    background-color: #303030 !important;
+    background-color: #FFF !important;
   }
   .loading-overlay{
     z-index: 10 !important;

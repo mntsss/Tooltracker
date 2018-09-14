@@ -11,19 +11,64 @@
 |
 */
 //Auth::routes();
-// Autentikacija
-$this->get('/login', 'HomeController@home')->name('login');
-$this->post('/login', 'Auth\LoginController@login');
-$this->post('logout', 'Auth\LoginController@logout')->name('logout');
 
-// Password Reset Routes...
-/*
-$this->get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
-$this->post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
-$this->get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
-$this->post('password/reset', 'Auth\ResetPasswordController@reset');*/
 
 Route::get('/', 'HomeController@home')->name('home');
+
+Route::get('/groups', function(){
+    return redirect('/');
+})->name('home');
+Route::get('/login', function(){
+    return redirect('/');
+})->name('home');
+Route::get('/group/{id?}', function(){
+    return redirect('/');
+})->name('home');
+Route::get('/item', function(){
+    return redirect('/');
+})->name('home');
+Route::get('/item/deleted', function(){
+    return redirect('/');
+})->name('home');
+Route::get('/item/suspended', function(){
+    return redirect('/');
+})->name('home');
+Route::get('/users', function(){
+    return redirect('/');
+})->name('home');
+Route::get('/users/deleted', function(){
+    return redirect('/');
+})->name('home');
+Route::get('/objects/closed', function(){
+    return redirect('/');
+})->name('home');
+Route::get('/objects', function(){
+    return redirect('/');
+})->name('home');
+Route::get('/reservation/active', function(){
+    return redirect('/');
+})->name('home');
+Route::get('/reservation/cart', function(){
+    return redirect('/');
+})->name('home');
+Route::get('/reservation/closed', function(){
+    return redirect('/');
+})->name('home');
+Route::get('/reservation/assign', function(){
+    return redirect('/');
+})->name('home');
+Route::get('/item/return', function(){
+    return redirect('/');
+})->name('home');
+Route::get('/rented', function(){
+    return redirect('/');
+})->name('home');
+Route::get('/rented/item', function(){
+    return redirect('/');
+})->name('home');
+Route::get('/rented/withdrawals', function(){
+    return redirect('/');
+})->name('home');
 
 // Route::get('/{catchall?}', function () {
 //     return response()->view('layouts/main');

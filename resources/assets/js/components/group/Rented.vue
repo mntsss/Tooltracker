@@ -6,15 +6,15 @@
         <CreateRentedItem></CreateRentedItem>
   <div class="container" style="min-height: 70vh !important" v-if="items">
     <div class="card">
-      <v-layout row wrap align-center class="card-header pb-0 pt-0 mx-0 theme--dark v-toolbar">
+      <v-layout row wrap align-center class="card-header pb-0 pt-0 mx-0 secondary">
           <v-flex>
               <div class="text-center headline">Nuomoti įrankiai</div>
           </v-flex>
           <v-flex shrink headline justify-end align-content-center>
-            <a @click="show('create-rented-item-modal')" class="headline"><span class="fas fa-plus text-danger p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"></span></a>
+            <a @click="show('create-rented-item-modal')" class="headline"><span class="fas fa-plus primary--text p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"></span></a>
           </v-flex>
       </v-layout>
-      <div class="card-body bg-dark" v-if="items.length > 0">
+      <div class="card-body" v-if="items.length > 0">
         <router-link tag="div" class="row remove-side-margin cursor-pointer" :to="{ name: 'rentedItem', params: { itemProp: item}}" v-for="(item, index) in items" :key="index">
           <div class="col-6">
             {{item.RentedItemName}}<span class="ml-2" v-if="item.RentedItemDate">({{days(item.RentedItemDate)*item.RentedItemDailyPrice}} &euro;)</span>
@@ -24,8 +24,8 @@
           </div>
       </router-link>
       </div>
-      <div class="card-body bg-dark mt-1 border border-dark" v-else-if="items.length == 0">
-        <div class="text-center text-light h5 pa-5">
+      <div class="card-body mt-1 border border-dark" v-else-if="items.length == 0">
+        <div class="text-center h5 pa-5">
           Išnuomotų įrankių nėra...
         </div>
       </div>
@@ -77,7 +77,7 @@ import CreateRentedItem from '../modals/rent/CreateRentedItem.vue'
                 return 0
             var timeDiff = Math.abs(currentDate.getTime() - dateRented.getTime());
             var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-            return diffDays+1
+            return diffDays
         }
     },
     components: {

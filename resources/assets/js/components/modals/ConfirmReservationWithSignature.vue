@@ -8,21 +8,21 @@
          @before-open="beforeOpen"
          @before-close="beforeClose">
     <div class="card">
-        <div class="card-header bg-dark text-light">
+        <div class="card-header secondary">
             Patvirtinti rezervacijos perdavimą <a @click="$modal.hide('confirm-reservation-with-sign-modal')" class="float-right"><span class="fas fa-times btn-func-misc"></span></a>
         </div>
-        <div class="card-body bg-dark">
+        <div class="card-body">
           <v-layout align-center justify-center>
             <v-flex shrink h5>Laikiama vartotojo {{user}} parašo</v-flex>
           </v-layout>
             <v-layout align-center justify-center>
-              <v-flex shrink class="border border-light">
+              <v-flex shrink class="border border-dark">
                 <VueSignaturePad width="500px" height="500px" ref="signaturePad"/>
               </v-flex>
             </v-layout>
             <v-layout align-center justify-center>
               <v-flex shrink v-if="!loading">
-                <v-btn mx-3 @click="clear"><v-icon class="text-danger pr-2">fa-eraser</v-icon>Išvalyti</v-btn><v-btn mx-3 @click = "save"><v-icon class="text-danger pr-2">fa-save</v-icon>Išsaugoti</v-btn>
+                <v-btn mx-3 @click="clear"><v-icon class="primary--text pr-2">fa-eraser</v-icon>Išvalyti</v-btn><v-btn mx-3 @click = "save"><v-icon class="primary--text pr-2">fa-save</v-icon>Išsaugoti</v-btn>
               </v-flex>
               <v-flex shrink v-else-if="loading">
                 <v-progress-circular

@@ -26,7 +26,7 @@
         <v-flex sm6 px-1>
           <v-text-field
             flat
-            solo-inverted
+            solo
             hide-details
             prepend-inner-icon="search"
             label="Įrankių paieška..."
@@ -42,7 +42,7 @@
                   <v-list-tile-sub-title v-text="item.state"></v-list-tile-sub-title>
                 </v-list-tile-content>
                 <v-list-tile-avatar class="headline font-weight-light">
-                  <v-icon class="text-danger">fa-arrow-alt-circle-right</v-icon>
+                  <v-icon class="primary--text">fa-arrow-alt-circle-right</v-icon>
                 </v-list-tile-avatar>
               </v-list-tile>
             </v-list>
@@ -50,7 +50,7 @@
         </v-flex>
         <v-flex sm6 px-1>
           <v-card class="border border-light" scrollable>
-            <v-card-title class="text-center theme--dark v-toolbar h5 mb-0">
+            <v-card-title class="text-center secondary v-toolbar h5 mb-0">
                   Priskyrimui rezervuojami įrankiai
             </v-card-title>
             <v-card-text class="pa-0">
@@ -61,7 +61,7 @@
                     <v-list-tile-sub-title v-text="item.state"></v-list-tile-sub-title>
                   </v-list-tile-content>
                   <v-list-tile-avatar class="headline font-weight-light cursor-pointer" @click="remove(item)">
-                    <v-btn small icon><v-icon class="text-danger">fa-minus-circle</v-icon></v-btn>
+                    <v-btn small icon><v-icon class="primary--text">fa-minus-circle</v-icon></v-btn>
                   </v-list-tile-avatar>
                 </v-list-tile>
               </v-list>
@@ -70,7 +70,7 @@
         </v-flex>
       </v-layout>
       <v-layout row wrap mx-0 pa-3 justify-center align-center>
-        <v-flex shrink><v-btn outline @click="save" :disabled="saveButtonDisabled"><v-icon class="text-danger headline mx-2">fa-save</v-icon>Išsaugoti rezervaciją</v-btn></v-flex>
+        <v-flex shrink><v-btn outline @click="save" :disabled="saveButtonDisabled"><v-icon class="primary--text headline mx-2">fa-save</v-icon>Išsaugoti rezervaciją</v-btn></v-flex>
       </v-layout>
     </v-container>
   </div>

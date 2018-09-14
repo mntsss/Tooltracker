@@ -8,13 +8,13 @@
     <v-layout row mx-0 justify-center>
       <v-flex sm-6 class="px-4 pb-3">
           <v-card tile>
-              <v-card-title class="theme--dark v-toolbar h5 text-light">
+              <v-card-title class="secondary h5">
                   Įrankiai laukiantys patvirtinimo
               </v-card-title>
-              <v-card-text style="min-height: 25vh" class="bg-dark">
+              <v-card-text style="min-height: 25vh" class="white">
                   <v-layout align-center mt-5 justify-center row fill-height>
                     <v-flex shrink>
-                      <v-progress-circular :size="100" :width="7" color="white" indeterminate></v-progress-circular>
+                      <v-progress-circular :size="100" :width="7" color="primary" indeterminate></v-progress-circular>
                     </v-flex>
                   </v-layout>
               </v-card-text>
@@ -22,13 +22,13 @@
       </v-flex>
       <v-flex sm-6 class="px-4 pb-3">
           <v-card tile>
-              <v-card-title class="theme--dark v-toolbar h5 text-light">
+              <v-card-title class="secondary h5">
                   Ilgiausiai nuomojami įrankiai
               </v-card-title>
-              <v-card-text style="min-height: 25vh" class="bg-dark">
+              <v-card-text style="min-height: 25vh" class="white">
                   <v-layout align-center mt-5 justify-center row fill-height>
                     <v-flex shrink>
-                      <v-progress-circular :size="100" :width="7" color="white" indeterminate></v-progress-circular>
+                      <v-progress-circular :size="100" :width="7" color="primary" indeterminate></v-progress-circular>
                     </v-flex>
                   </v-layout>
               </v-card-text>
@@ -38,27 +38,27 @@
     <v-layout row mx-0 justify-center>
       <v-flex sm-6 class="px-4 pb-3">
           <v-card tile>
-              <v-card-title class="theme--dark v-toolbar h5 text-light">
+              <v-card-title class="secondary h5">
                   Taisomi įrankiai
               </v-card-title>
-              <v-card-text style="min-height: 25vh" class="bg-dark d-flex">
+              <v-card-text style="min-height: 25vh" class="white d-flex">
                   <v-layout align-center mt-5 justify-center row fill-height>
                     <v-flex shrink>
-                      <v-progress-circular :size="100" :width="7" color="white" indeterminate></v-progress-circular>
+                      <v-progress-circular :size="100" :width="7" color="primary" indeterminate></v-progress-circular>
                     </v-flex>
                   </v-layout>
               </v-card-text>
           </v-card>
       </v-flex>
-      <v-flex sm-6 class="px-4">
+      <v-flex sm-6 class="px-4 pb-3">
           <v-card tile>
-              <v-card-title class="theme--dark v-toolbar h5 text-light">
+              <v-card-title class="secondary h5">
                   Jūsų aktyvios rezervacijos
               </v-card-title>
-              <v-card-text style="min-height: 25vh" class="bg-dark">
+              <v-card-text style="min-height: 25vh" class="white">
                   <v-layout align-center mt-5 justify-center row fill-height>
                     <v-flex shrink>
-                      <v-progress-circular :size="100" :width="7" color="white" indeterminate></v-progress-circular>
+                      <v-progress-circular :size="100" :width="7" color="primary" indeterminate></v-progress-circular>
                     </v-flex>
                   </v-layout>
               </v-card-text>

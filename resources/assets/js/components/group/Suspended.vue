@@ -6,12 +6,12 @@
 
   <div class="container" style="min-height: 70vh !important" v-if="items">
     <div class="card">
-      <v-layout row wrap align-center class="card-header pb-0 pt-0 mx-0 theme--dark v-toolbar">
+      <v-layout row wrap align-center class="card-header pb-0 pt-0 mx-0 secondary">
           <v-flex>
               <div class="text-center headline">Įšaldyti įrankiai</div>
           </v-flex>
       </v-layout>
-      <div class="card-body bg-dark" v-if="items.length > 0">
+      <div class="card-body" v-if="items.length > 0">
         <router-link tag="div" class="row remove-side-margin cursor-pointer" :to="{ name: 'item', params: { itemProp: item}}" v-for="item in items" :key="item.item.ItemID">
           <div class="col-6">
             {{item.item.ItemName}}
@@ -21,8 +21,8 @@
           </div>
       </router-link>
       </div>
-      <div class="card-body bg-dark mt-1 border border-dark" v-else-if="items.length == 0">
-        <div class="text-center text-light h5 pa-5">
+      <div class="card-bodymt-1 border border-dark" v-else-if="items.length == 0">
+        <div class="text-center h5 pa-5">
           Grupėje įrankių nėra...
         </div>
       </div>

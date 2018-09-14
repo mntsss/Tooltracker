@@ -7,8 +7,8 @@
          :clickToClose="false"
          @before-open="beforeOpen"
          @before-close="beforeClose">
-    <div class="card bg-dark">
-      <div class="card-header h5 bg-dark text-light">
+    <div class="card">
+      <div class="card-header h5 secondary">
           Keisti įrankio identifikacinį numerį <a @click="$modal.hide('change-item-idnumber-modal')" class="float-right mr-3"><span class="fas fa-times btn-func-misc"></span></a>
       </div>
       <v-form>
@@ -19,7 +19,7 @@
       </v-layout>
       <v-layout justify-center align-bottom>
         <v-flex shrink>
-          <v-btn class="ma-2" @click="save()"><v-icon class="text-danger mr-3">fa-save</v-icon>Išsaugoti</v-btn>
+          <v-btn class="ma-2" @click="save()"><v-icon class="primary--text mr-3">fa-save</v-icon>Išsaugoti</v-btn>
         </v-flex>
       </v-layout>
       </v-form>

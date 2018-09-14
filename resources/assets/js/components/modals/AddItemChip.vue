@@ -8,10 +8,10 @@
          @before-open="beforeOpen"
          @before-close="beforeClose">
     <div class="card">
-        <div class="card-header text-light theme--dark v-toolbar headline">
+        <div class="card-header secondary v-toolbar headline">
             Priskirti identifikacinį čipą <a @click="$modal.hide('add-item-chip-modal')" class="float-right"><span class="fas fa-times btn-func-misc"></span></a>
         </div>
-        <div class="card-body bg-dark text-light">
+        <div class="card-body">
             <v-form v-model="valid">
                 <v-layout row wrap align-center>
                   <v-flex v-if="!code" class="border-danger text-center headline text-danger">Laukiama naujo čipo...</v-flex>

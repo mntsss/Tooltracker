@@ -9,17 +9,17 @@
     <ChangeImageModal></ChangeImageModal>
     <CreateItemModal></CreateItemModal>
     <div class="card">
-      <v-layout row wrap align-center class="card-header pb-0 pt-0 mx-0 theme--dark v-toolbar" v-if="items">
+      <v-layout row wrap align-center class="card-header pb-0 pt-0 mx-0 secondary" v-if="items">
           <v-flex headline shrink justify-start align-content-center>
-              <a @click="$router.push({name: 'groups'})" class="headline"><span class="fa fa-arrow-left text-danger remove-all-margin p-2 btn-func-misc"></span></a>
+              <a @click="$router.push({name: 'groups'})" class="headline"><span class="fa fa-arrow-left primary--text remove-all-margin p-2 btn-func-misc"></span></a>
           </v-flex>
           <v-flex>
               <div class="text-center headline" v-if="itemGroup">{{itemGroup.ItemGroupName}}</div>
           </v-flex>
           <v-flex shrink headline justify-end align-content-center>
-              <a @click="show('create-item-modal')" class="headline"><span class="fas fa-plus text-danger p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"></span></a>
+              <a @click="show('create-item-modal')" class="headline"><span class="fas fa-plus primary--text p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"></span></a>
               <v-menu offset-y>
-                <a slot="activator" class="headline"><span class="fas fa-ellipsis-v text-danger p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"></span></a>
+                <a slot="activator" class="headline"><span class="fas fa-ellipsis-v primary--text p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"></span></a>
                 <v-list>
                   <v-list-tile v-for="(item, index) in dropdownMeniu" :key="index" @click="item.click">
                     <v-list-tile-title>{{item.text}}</v-list-tile-title>
@@ -28,7 +28,7 @@
               </v-menu>
           </v-flex>
       </v-layout>
-      <div class="card-body bg-dark" v-if="items.length > 0">
+      <div class="card-body" v-if="items.length > 0">
         <router-link tag="div" class="row remove-side-margin cursor-pointer" :to="{ name: 'item', params: { itemProp: item}}" v-for="item in items" :key="item.item.ItemID">
           <div class="col-6">
             {{item.item.ItemName}}
@@ -38,8 +38,8 @@
           </div>
       </router-link>
       </div>
-      <div class="card-body bg-dark mt-1 border border-dark" v-else-if="items.length == 0">
-        <div class="text-center text-light h5 pa-5">
+      <div class="card-body mt-1 border border-dark" v-else-if="items.length == 0">
+        <div class="text-center h5 pa-5">
           Grupėje įrankių nėra...
         </div>
       </div>
