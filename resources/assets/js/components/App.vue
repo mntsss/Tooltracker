@@ -27,21 +27,47 @@
         :can-cancel="false"
         :is-full-page="fullPage"></Loading>
         <ChangePasswordModal></ChangePasswordModal>
-    <v-navigation-drawer
-      v-model="drawer"
-      clipped
-      fixed
-      app
-    v-if="$auth.check()">
-      <v-list dense>
-        <v-flex v-for="item in meniuItems" :key="item.text" >
-          <v-list-group
-            v-if="item.children"
-            v-model="item.model"
-            :key="item.text"
-            :append-icon="item.model ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"
-          >
-          <v-list-tile slot="activator" fluid>
+        <div v-if="$currentUser">
+      <v-navigation-drawer
+        v-model="drawer"
+        clipped
+        fixed
+        app
+      v-if="$auth.check()">
+        <v-list dense>
+          <v-flex v-for="item in meniuItems" :key="item.text">
+            <v-list-group
+              v-if="item.children"
+              v-model="item.model"
+              :key="item.text"
+              :append-icon="item.model ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"
+            >
+            <v-list-tile slot="activator" fluid>
+              <v-list-tile-action>
+                <v-icon class="primary--text">{{item.icon}}</v-icon>
+              </v-list-tile-action>
+              <v-list-tile-content>
+                <v-list-tile-title>{{item.text}}</v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+
+            <v-list-tile
+                v-for="(child, i) in item.children"
+                :key="i"
+                @click="child.click"
+                fluid            >
+                <v-list-tile-action v-if="child.icon">
+                  <v-icon>{{ child.icon }}</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                  <v-list-tile-title>
+                    {{ child.text }}
+                  </v-list-tile-title>
+                </v-list-tile-content>
+              </v-list-tile>
+          </v-list-group>
+
+          <v-list-tile @click="item.click" v-else-if="!item.children">
             <v-list-tile-action>
               <v-icon class="primary--text">{{item.icon}}</v-icon>
             </v-list-tile-action>
@@ -49,108 +75,84 @@
               <v-list-tile-title>{{item.text}}</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
-
-          <v-list-tile
-              v-for="(child, i) in item.children"
-              :key="i"
-              @click="child.click"
-              fluid            >
-              <v-list-tile-action v-if="child.icon">
-                <v-icon>{{ child.icon }}</v-icon>
-              </v-list-tile-action>
-              <v-list-tile-content>
-                <v-list-tile-title>
-                  {{ child.text }}
-                </v-list-tile-title>
-              </v-list-tile-content>
-            </v-list-tile>
-        </v-list-group>
-
-        <v-list-tile @click="item.click" v-else-if="!item.children">
-          <v-list-tile-action>
-            <v-icon class="primary--text">{{item.icon}}</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>{{item.text}}</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-      </v-flex>
-      </v-list>
-    </v-navigation-drawer>
-    <v-toolbar app fixed clipped-left v-if="$auth.check()" class="white">
-      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <v-toolbar-title><a href="/"><img src="/media/logo.png" alt="logo" class="logo mx-4"/></a></v-toolbar-title>
-      <div>
-      <v-text-field
-        flat
-        solo
-        hide-details
-        prepend-inner-icon="search"
-        label="Paieška..."
-        v-model = "searchQuery"
-        v-on:keydown="search"
-        class="hidden-sm-and-down"
-      ></v-text-field>
-      <div class="search-result-wrapper bg-dark border--primary" v-if="resultBox && searchResults">
-        <v-list>
-          <template v-for="(item, index) in searchResults">
-            <v-list-tile :key="index" @click="searchItem(item)">
-              <v-list-tile-content>
-                <v-list-tile-title>{{ item.item.ItemName }}</v-list-tile-title>
-                <v-list-tile-sub-title class="text--primary">{{ item.state }}</v-list-tile-sub-title>
-              </v-list-tile-content>
-            </v-list-tile>
-            <v-divider v-if="index + 1 < searchResults.length" :key="`divider-${index}`" class="ma-0"></v-divider>
-          </template>
+        </v-flex>
         </v-list>
+      </v-navigation-drawer>
+      <v-toolbar app fixed clipped-left v-if="$auth.check()" class="white">
+        <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+        <v-toolbar-title><a href="/"><img src="/media/logo.png" alt="logo" class="logo mx-4"/></a></v-toolbar-title>
+        <div>
+        <v-text-field
+          flat
+          solo
+          hide-details
+          prepend-inner-icon="search"
+          label="Paieška..."
+          v-model = "searchQuery"
+          v-on:keydown="search"
+          class="hidden-sm-and-down"
+        ></v-text-field>
+        <div class="search-result-wrapper bg-dark border--primary" v-if="resultBox && searchResults">
+          <v-list>
+            <template v-for="(item, index) in searchResults">
+              <v-list-tile :key="index" @click="searchItem(item)">
+                <v-list-tile-content>
+                  <v-list-tile-title>{{ item.item.ItemName }}</v-list-tile-title>
+                  <v-list-tile-sub-title class="text--primary">{{ item.state }}</v-list-tile-sub-title>
+                </v-list-tile-content>
+              </v-list-tile>
+              <v-divider v-if="index + 1 < searchResults.length" :key="`divider-${index}`" class="ma-0"></v-divider>
+            </template>
+          </v-list>
+        </div>
       </div>
-    </div>
-      <v-spacer></v-spacer>
-      <v-menu offset-y>
-        <v-btn icon slot="activator" class="mx-2">
-          <v-icon medium class="primary--text">shopping_cart</v-icon>
-        </v-btn>
-        <v-list>
-          <v-list-tile v-for="(item, index) in cartDropdownMeniu" :key="index" @click="item.click">
-            <v-list-tile-title>{{item.text}}</v-list-tile-title>
-          </v-list-tile>
-        </v-list>
-      </v-menu>
-      <v-menu offset-y>
-          <v-flex shrink v-if="user && screenWidth > 650" slot="activator" class="hover-bottom-border">
-            <v-icon  class="primary--text pr-3">fa-user</v-icon>{{user.Username}}<v-icon class="pl-2">keyboard_arrow_down</v-icon>
-          </v-flex>
-          <v-btn icon v-else slot="activator">
-            <v-icon class="primary--text">fa-user</v-icon>
+        <v-spacer></v-spacer>
+        <v-menu offset-y v-if="$currentUser.UserRole =='Administratorius'">
+          <v-btn icon slot="activator" class="mx-2">
+            <v-icon medium class="primary--text">shopping_cart</v-icon>
           </v-btn>
-        <v-list>
-          <v-list-tile v-for="(item, index) in settingsDropdownMeniu" :key="index" @click="item.click">
-            <v-list-tile-title>{{item.text}}</v-list-tile-title>
-          </v-list-tile>
-        </v-list>
-      </v-menu>
-
-    </v-toolbar>
-    <v-content>
-      <v-container fluid fill-height>
-        <v-layout justify-center align-center v-if="!$auth.check() && $auth.ready()">
-          <Login v-if="!$auth.check() && $auth.ready()" v-on:loginSuccess="getUser()"></Login>
-        </v-layout>
-        <v-layout justify-center align-center v-if="$auth.check()">
-          <v-flex grow>
-            <router-view></router-view>
-          </v-flex>
-        </v-layout>
-      </v-container>
-    </v-content>
-    <v-footer app fixed justify-center v-if="$auth.ready()">
-        <v-layout justify-center align-center>
-            <v-flex shrink>
-                <span class="h5">Tool</span><span class="h5 text-danger pr-2">Tracker</span><span>&copy; 2018</span>
+          <v-list>
+            <v-list-tile v-for="(item, index) in cartDropdownMeniu" :key="index" @click="item.click">
+              <v-list-tile-title>{{item.text}}</v-list-tile-title>
+            </v-list-tile>
+          </v-list>
+        </v-menu>
+        <v-menu offset-y>
+            <v-flex shrink v-if="$currentUser && screenWidth > 650" slot="activator" class="hover-bottom-border">
+              <v-icon  class="primary--text pr-3">fa-user</v-icon>{{$currentUser.Username}}<v-icon class="pl-2">keyboard_arrow_down</v-icon>
             </v-flex>
-        </v-layout>
+            <v-btn icon v-else slot="activator">
+              <v-icon class="primary--text">fa-user</v-icon>
+            </v-btn>
+          <v-list>
+            <v-list-tile v-for="(item, index) in settingsDropdownMeniu" :key="index" @click="item.click">
+              <v-list-tile-title>{{item.text}}</v-list-tile-title>
+            </v-list-tile>
+          </v-list>
+        </v-menu>
 
-    </v-footer>
+      </v-toolbar>
+      <v-content>
+        <v-container fluid fill-height>
+          <v-layout justify-center align-center v-if="!$auth.check() && $auth.ready()">
+            <Login v-if="!$auth.check() && $auth.ready()" v-on:loginSuccess="getUser()"></Login>
+          </v-layout>
+          <v-layout justify-center align-center v-if="$auth.check()">
+            <v-flex grow>
+              <router-view></router-view>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-content>
+      <v-footer app fixed justify-center v-if="$auth.ready()">
+          <v-layout justify-center align-center>
+              <v-flex shrink>
+                  <span class="h5">Tool</span><span class="h5 text-danger pr-2">Tracker</span><span>&copy; 2018</span>
+              </v-flex>
+          </v-layout>
+
+      </v-footer>
+    </div>
   </div>
 </v-app>
 </template>
@@ -165,7 +167,6 @@ export default {
         return {
             fullPage: true,
             drawer: true,
-            user: null,
             meniuItems: [
               { icon: 'fa-home', text: 'Pradžia', click: ()=>{ this.$router.push({name: 'main'})} },
               { icon: 'fa-toolbox', 'icon-alt': 'keyboard_arrow_down', text: 'Įrankiai', click: () => {this.model = !this.model},
@@ -231,14 +232,10 @@ export default {
       Echo.channel('code-channel')
         .listen('ReceivedCode', (e) => {
           console.log("Code received")
-          if(e.userID == this.user.UserID)
+          if(e.userID == this.$currentUser.UserID)
             this.$store.commit('newcode', e.code)
         });
-
-      setTimeout(() => {
-        this.getUser()
-      }, 1500)
-
+        console.log(this.$currentUser);
     },
     computed: {
     screenWidth: function(){
@@ -288,13 +285,6 @@ export default {
         this.searchResults = null
         this.searchQuery = ''
         this.$router.push({name: 'item', params: { itemProp: item}})
-      },
-      getUser(){
-        this.$http.get('/user/me').then(response => {
-          this.user = response.data
-        }).catch(error => {
-          console.log(error.response.data.errors)
-        })
       }
     },
   components: {

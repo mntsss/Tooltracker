@@ -16,7 +16,7 @@ const store = new Vuex.Store({
       resetCode(state){
         state.recentCode = null
       },
-      userInfo(state, user){
+      setUser(state, user){
         state.user = user
       },
       addRouteToHistory(state, route){

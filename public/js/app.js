@@ -27286,7 +27286,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__store__ = __webpack_require__(238);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_App_vue__ = __webpack_require__(239);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_App_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__components_App_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__mixins_user__ = __webpack_require__(262);
 __webpack_require__(34);
+
+
 
 
 
@@ -27353,7 +27356,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__webpack_require__(252), {
 //Define global variable
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.prototype.$uploadPath = '/media/items/';
-
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.mixin(__WEBPACK_IMPORTED_MODULE_12__mixins_user__["a" /* default */]);
 //main app init
 __WEBPACK_IMPORTED_MODULE_11__components_App_vue___default.a.router = __WEBPACK_IMPORTED_MODULE_0_vue___default.a.router;
 __WEBPACK_IMPORTED_MODULE_11__components_App_vue___default.a.store = __WEBPACK_IMPORTED_MODULE_0_vue___default.a.store;
@@ -86668,19 +86671,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   created: function created() {
     this.loadGroups();
+    if (typeof this.user === 'undefined') this.getUser();
   },
 
   computed: {
-    username: function username() {
-      return this.$auth.user().UserName;
-    },
-    code: {
-      get: function get() {
-        return this.$store.state.recentCode;
-      },
-      set: function set(value) {
-        return this.$store.commit('newcode', value);
-      }
+    user: function user() {
+      return this.$store.state.user;
     }
   },
   methods: {
@@ -86692,6 +86688,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         _this.isLoading = false;
       }).catch(function (error) {
         __WEBPACK_IMPORTED_MODULE_3_sweetalert___default()('Klaida', error.response.data.message, 'error');
+      });
+    },
+    getUser: function getUser() {
+      var _this2 = this;
+
+      this.$http.get('/user/me').then(function (response) {
+        _this2.$store.commit("setUser", response.data);
+      }).catch(function (error) {
+        console.log(error.response.data.errors);
       });
     }
   },
@@ -86760,18 +86765,20 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "item-box-panel",
-              on: {
-                click: function($event) {
-                  _vm.$modal.show("create-group-modal")
-                }
-              }
-            },
-            [_vm._m(0)]
-          ),
+          _vm.user.UserRole == "Administratorius"
+            ? _c(
+                "div",
+                {
+                  staticClass: "item-box-panel",
+                  on: {
+                    click: function($event) {
+                      _vm.$modal.show("create-group-modal")
+                    }
+                  }
+                },
+                [_vm._m(0)]
+              )
+            : _vm._e(),
           _vm._v(" "),
           _vm._l(_vm.itemGroups, function(group) {
             return _c(
@@ -87245,119 +87252,133 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        var _this = this;
+  data: function data() {
+    var _this = this;
 
-        return {
-            items: [],
-            itemGroup: null,
-            isLoading: true,
-            fullPage: false,
-            dropdownMeniu: [{ text: 'Pervadinti', click: function click() {
-                    _this.show('rename-group-modal');
-                } }, { text: 'Keisti nuotrauką', click: function click() {
-                    _this.show('change-group-image-modal');
-                } }, { text: 'Ištrinti', click: function click() {
-                    _this.deleteGroup();
-                } }]
-        };
-    },
+    return {
+      items: [],
+      itemGroup: null,
+      isLoading: true,
+      fullPage: false,
+      dropdownMeniu: [{ text: 'Pervadinti', click: function click() {
+          _this.show('rename-group-modal');
+        } }, { text: 'Keisti nuotrauką', click: function click() {
+          _this.show('change-group-image-modal');
+        } }, { text: 'Ištrinti', click: function click() {
+          _this.deleteGroup();
+        } }]
+    };
+  },
 
-    props: {
-        group: {
-            required: true,
-            type: String
-        }
-    },
-    created: function () {
-        var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
-            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
-                while (1) {
-                    switch (_context.prev = _context.next) {
-                        case 0:
-                            this.loadGroup().then(this.loadItems);
-
-                        case 1:
-                        case 'end':
-                            return _context.stop();
-                    }
-                }
-            }, _callee, this);
-        }));
-
-        function created() {
-            return _ref.apply(this, arguments);
-        }
-
-        return created;
-    }(),
-
-    computed: {},
-    methods: {
-        show: function show(name) {
-            this.$modal.show(name, { groupID: this.itemGroup.ItemGroupID });
-        },
-
-        deleteGroup: function deleteGroup() {
-            var _this2 = this;
-
-            __WEBPACK_IMPORTED_MODULE_4_sweetalert___default()({
-                title: 'Ar tikrai norite ištrinti šią grupę?',
-                text: 'Ištrinti galima tik grupes, kurios neturi naudojamų, rezervuotų ar taisomų įrankių. Ištrynus grupę, visi jai priskirti įrankiai taip pat bus ištrinti.',
-                icon: 'warning',
-                dangerMode: true,
-                buttons: {
-                    del: { text: 'Trinti', value: true },
-                    cancel: { text: 'Atšaukti' }
-                }
-            }).then(function (value) {
-                if (value) {
-                    _this2.$http.get('/group/delete/' + _this2.itemGroup.ItemGroupID).then(function (response) {
-                        if (response.status == 200) {
-                            __WEBPACK_IMPORTED_MODULE_4_sweetalert___default()(response.data.message, response.data.success, "success").then(function (value) {
-                                _this2.$router.push({ name: 'groups' });
-                            });
-                        }
-                    }).catch(function (error) {
-                        if (error.response.status == 422) {
-                            __WEBPACK_IMPORTED_MODULE_4_sweetalert___default()(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
-                        } else {
-                            __WEBPACK_IMPORTED_MODULE_4_sweetalert___default()('Klaida', error.response.data.message, 'error');
-                        }
-                    });
-                }
-            });
-        },
-        loadGroup: function loadGroup() {
-            var _this3 = this;
-
-            return this.$http.get('/group/get/' + this.group).then(function (response) {
-                if (response.status == 200) {
-                    _this3.itemGroup = response.data;
-                }
-            }).catch(function (error) {
-                __WEBPACK_IMPORTED_MODULE_4_sweetalert___default()('Klaida', error.response.data.message, 'error');
-            });
-        },
-        loadItems: function loadItems() {
-            var _this4 = this;
-
-            return this.$http.get('/item/list/' + this.itemGroup.ItemGroupID).then(function (response) {
-                if (response.status == 200) {
-                    _this4.items = response.data;
-                    _this4.isLoading = false;
-                }
-            }).catch(function (error) {
-                __WEBPACK_IMPORTED_MODULE_4_sweetalert___default()('Klaida', error.response.data.message, 'error');
-            });
-        }
-    },
-    components: {
-        RenameModal: __WEBPACK_IMPORTED_MODULE_1__modals_RenameGroup_vue___default.a,
-        ChangeImageModal: __WEBPACK_IMPORTED_MODULE_2__modals_ChangeGroupImage_vue___default.a,
-        CreateItemModal: __WEBPACK_IMPORTED_MODULE_3__modals_CreateItem_vue___default.a,
-        Loading: __WEBPACK_IMPORTED_MODULE_5_vue_loading_overlay___default.a
+  props: {
+    group: {
+      required: true,
+      type: String
     }
+  },
+  created: function () {
+    var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+      return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              this.loadGroup().then(this.loadItems);
+              if (typeof this.user === 'undefined') this.getUser();
+
+            case 2:
+            case 'end':
+              return _context.stop();
+          }
+        }
+      }, _callee, this);
+    }));
+
+    function created() {
+      return _ref.apply(this, arguments);
+    }
+
+    return created;
+  }(),
+
+  computed: {
+    user: function user() {
+      return this.$store.state.user;
+    }
+  },
+  methods: {
+    show: function show(name) {
+      this.$modal.show(name, { groupID: this.itemGroup.ItemGroupID });
+    },
+
+    deleteGroup: function deleteGroup() {
+      var _this2 = this;
+
+      __WEBPACK_IMPORTED_MODULE_4_sweetalert___default()({
+        title: 'Ar tikrai norite ištrinti šią grupę?',
+        text: 'Ištrinti galima tik grupes, kurios neturi naudojamų, rezervuotų ar taisomų įrankių. Ištrynus grupę, visi jai priskirti įrankiai taip pat bus ištrinti.',
+        icon: 'warning',
+        dangerMode: true,
+        buttons: {
+          del: { text: 'Trinti', value: true },
+          cancel: { text: 'Atšaukti' }
+        }
+      }).then(function (value) {
+        if (value) {
+          _this2.$http.get('/group/delete/' + _this2.itemGroup.ItemGroupID).then(function (response) {
+            if (response.status == 200) {
+              __WEBPACK_IMPORTED_MODULE_4_sweetalert___default()(response.data.message, response.data.success, "success").then(function (value) {
+                _this2.$router.push({ name: 'groups' });
+              });
+            }
+          }).catch(function (error) {
+            if (error.response.status == 422) {
+              __WEBPACK_IMPORTED_MODULE_4_sweetalert___default()(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
+            } else {
+              __WEBPACK_IMPORTED_MODULE_4_sweetalert___default()('Klaida', error.response.data.message, 'error');
+            }
+          });
+        }
+      });
+    },
+    loadGroup: function loadGroup() {
+      var _this3 = this;
+
+      return this.$http.get('/group/get/' + this.group).then(function (response) {
+        if (response.status == 200) {
+          _this3.itemGroup = response.data;
+        }
+      }).catch(function (error) {
+        __WEBPACK_IMPORTED_MODULE_4_sweetalert___default()('Klaida', error.response.data.message, 'error');
+      });
+    },
+    loadItems: function loadItems() {
+      var _this4 = this;
+
+      return this.$http.get('/item/list/' + this.itemGroup.ItemGroupID).then(function (response) {
+        if (response.status == 200) {
+          _this4.items = response.data;
+          _this4.isLoading = false;
+        }
+      }).catch(function (error) {
+        __WEBPACK_IMPORTED_MODULE_4_sweetalert___default()('Klaida', error.response.data.message, 'error');
+      });
+    },
+    getUser: function getUser() {
+      var _this5 = this;
+
+      this.$http.get('/user/me').then(function (response) {
+        _this5.$store.commit("setUser", response.data);
+      }).catch(function (error) {
+        console.log(error.response.data.errors);
+      });
+    }
+  },
+  components: {
+    RenameModal: __WEBPACK_IMPORTED_MODULE_1__modals_RenameGroup_vue___default.a,
+    ChangeImageModal: __WEBPACK_IMPORTED_MODULE_2__modals_ChangeGroupImage_vue___default.a,
+    CreateItemModal: __WEBPACK_IMPORTED_MODULE_3__modals_CreateItem_vue___default.a,
+    Loading: __WEBPACK_IMPORTED_MODULE_5_vue_loading_overlay___default.a
+  }
 });
 
 /***/ }),
@@ -89332,78 +89353,83 @@ var render = function() {
                           : _vm._e()
                       ]),
                       _vm._v(" "),
-                      _c(
-                        "v-flex",
-                        {
-                          attrs: {
-                            shrink: "",
-                            headline: "",
-                            "justify-end": "",
-                            "align-content-center": ""
-                          }
-                        },
-                        [
-                          _c(
-                            "a",
+                      _vm.user.UserRole == "Administratorius"
+                        ? _c(
+                            "v-flex",
                             {
-                              staticClass: "headline",
-                              on: {
-                                click: function($event) {
-                                  _vm.show("create-item-modal")
-                                }
+                              attrs: {
+                                shrink: "",
+                                headline: "",
+                                "justify-end": "",
+                                "align-content-center": ""
                               }
                             },
-                            [
-                              _c("span", {
-                                staticClass:
-                                  "fas fa-plus primary--text p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"
-                              })
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-menu",
-                            { attrs: { "offset-y": "" } },
                             [
                               _c(
                                 "a",
                                 {
                                   staticClass: "headline",
-                                  attrs: { slot: "activator" },
-                                  slot: "activator"
+                                  on: {
+                                    click: function($event) {
+                                      _vm.show("create-item-modal")
+                                    }
+                                  }
                                 },
                                 [
                                   _c("span", {
                                     staticClass:
-                                      "fas fa-ellipsis-v primary--text p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"
+                                      "fas fa-plus primary--text p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"
                                   })
                                 ]
                               ),
                               _vm._v(" "),
                               _c(
-                                "v-list",
-                                _vm._l(_vm.dropdownMeniu, function(
-                                  item,
-                                  index
-                                ) {
-                                  return _c(
-                                    "v-list-tile",
-                                    { key: index, on: { click: item.click } },
+                                "v-menu",
+                                { attrs: { "offset-y": "" } },
+                                [
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass: "headline",
+                                      attrs: { slot: "activator" },
+                                      slot: "activator"
+                                    },
                                     [
-                                      _c("v-list-tile-title", [
-                                        _vm._v(_vm._s(item.text))
-                                      ])
-                                    ],
-                                    1
+                                      _c("span", {
+                                        staticClass:
+                                          "fas fa-ellipsis-v primary--text p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"
+                                      })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-list",
+                                    _vm._l(_vm.dropdownMeniu, function(
+                                      item,
+                                      index
+                                    ) {
+                                      return _c(
+                                        "v-list-tile",
+                                        {
+                                          key: index,
+                                          on: { click: item.click }
+                                        },
+                                        [
+                                          _c("v-list-tile-title", [
+                                            _vm._v(_vm._s(item.text))
+                                          ])
+                                        ],
+                                        1
+                                      )
+                                    })
                                   )
-                                })
+                                ],
+                                1
                               )
                             ],
                             1
                           )
-                        ],
-                        1
-                      )
+                        : _vm._e()
                     ],
                     1
                   )
@@ -100266,6 +100292,7 @@ var render = function() {
             [
               _c(
                 "v-container",
+                { attrs: { fluid: "" } },
                 [
                   _c(
                     "v-layout",
@@ -100341,7 +100368,10 @@ var render = function() {
           _vm.newItem.item
             ? _c(
                 "v-container",
-                { staticStyle: { background: "#292929" } },
+                {
+                  staticClass: "primary--border border bg-light mt-0",
+                  attrs: { fluid: "" }
+                },
                 [
                   _c("div", { staticClass: "card-header secondary headline" }, [
                     _vm._v(
@@ -100359,7 +100389,7 @@ var render = function() {
                       },
                       [
                         _c("span", {
-                          staticClass: "fas fa-times btn-func-misc"
+                          staticClass: "fas fa-times btn-func-misc primary-text"
                         })
                       ]
                     )
@@ -103785,8 +103815,9 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
           switch (_context.prev = _context.next) {
             case 0:
               this.loadItems();
+              if (typeof this.user === 'undefined') this.getUser();
 
-            case 1:
+            case 2:
             case 'end':
               return _context.stop();
           }
@@ -103801,6 +103832,11 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
     return created;
   }(),
 
+  computed: {
+    user: function user() {
+      return this.$store.state.user;
+    }
+  },
   methods: {
     show: function show(name) {
       this.$modal.show(name);
@@ -103830,6 +103866,15 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
       var timeDiff = Math.abs(currentDate.getTime() - dateRented.getTime());
       var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
       return diffDays;
+    },
+    getUser: function getUser() {
+      var _this2 = this;
+
+      this.$http.get('/user/me').then(function (response) {
+        _this2.$store.commit("setUser", response.data);
+      }).catch(function (error) {
+        console.log(error.response.data.errors);
+      });
     }
   },
   components: {
@@ -104352,36 +104397,38 @@ var render = function() {
                         ])
                       ]),
                       _vm._v(" "),
-                      _c(
-                        "v-flex",
-                        {
-                          attrs: {
-                            shrink: "",
-                            headline: "",
-                            "justify-end": "",
-                            "align-content-center": ""
-                          }
-                        },
-                        [
-                          _c(
-                            "a",
+                      _vm.user.UserRole == "Administratorius"
+                        ? _c(
+                            "v-flex",
                             {
-                              staticClass: "headline",
-                              on: {
-                                click: function($event) {
-                                  _vm.show("create-rented-item-modal")
-                                }
+                              attrs: {
+                                shrink: "",
+                                headline: "",
+                                "justify-end": "",
+                                "align-content-center": ""
                               }
                             },
                             [
-                              _c("span", {
-                                staticClass:
-                                  "fas fa-plus primary--text p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"
-                              })
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "headline",
+                                  on: {
+                                    click: function($event) {
+                                      _vm.show("create-rented-item-modal")
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("span", {
+                                    staticClass:
+                                      "fas fa-plus primary--text p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"
+                                  })
+                                ]
+                              )
                             ]
                           )
-                        ]
-                      )
+                        : _vm._e()
                     ],
                     1
                   ),
@@ -106577,7 +106624,7 @@ var store = new __WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* default */].Store({
     resetCode: function resetCode(state) {
       state.recentCode = null;
     },
-    userInfo: function userInfo(state, user) {
+    setUser: function setUser(state, user) {
       state.user = user;
     },
     addRouteToHistory: function addRouteToHistory(state, route) {
@@ -106897,6 +106944,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -106910,7 +106959,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     return {
       fullPage: true,
       drawer: true,
-      user: null,
       meniuItems: [{ icon: 'fa-home', text: 'Pradžia', click: function click() {
           _this.$router.push({ name: 'main' });
         } }, { icon: 'fa-toolbox', 'icon-alt': 'keyboard_arrow_down', text: 'Įrankiai', click: function click() {
@@ -106982,12 +107030,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     Echo.channel('code-channel').listen('ReceivedCode', function (e) {
       console.log("Code received");
-      if (e.userID == _this2.user.UserID) _this2.$store.commit('newcode', e.code);
+      if (e.userID == _this2.$currentUser.UserID) _this2.$store.commit('newcode', e.code);
     });
-
-    setTimeout(function () {
-      _this2.getUser();
-    }, 1500);
+    console.log(this.$currentUser);
   },
 
   computed: {
@@ -107031,15 +107076,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.searchResults = null;
       this.searchQuery = '';
       this.$router.push({ name: 'item', params: { itemProp: item } });
-    },
-    getUser: function getUser() {
-      var _this4 = this;
-
-      this.$http.get('/user/me').then(function (response) {
-        _this4.user = response.data;
-      }).catch(function (error) {
-        console.log(error.response.data.errors);
-      });
     }
   },
   components: {
@@ -107399,408 +107435,172 @@ var render = function() {
           _vm._v(" "),
           _c("ChangePasswordModal"),
           _vm._v(" "),
-          _vm.$auth.check()
+          _vm.$currentUser
             ? _c(
-                "v-navigation-drawer",
-                {
-                  attrs: { clipped: "", fixed: "", app: "" },
-                  model: {
-                    value: _vm.drawer,
-                    callback: function($$v) {
-                      _vm.drawer = $$v
-                    },
-                    expression: "drawer"
-                  }
-                },
+                "div",
                 [
-                  _c(
-                    "v-list",
-                    { attrs: { dense: "" } },
-                    _vm._l(_vm.meniuItems, function(item) {
-                      return _c(
-                        "v-flex",
-                        { key: item.text },
-                        [
-                          item.children
-                            ? _c(
-                                "v-list-group",
-                                {
-                                  key: item.text,
-                                  attrs: {
-                                    "append-icon": item.model
-                                      ? "keyboard_arrow_up"
-                                      : "keyboard_arrow_down"
-                                  },
-                                  model: {
-                                    value: item.model,
-                                    callback: function($$v) {
-                                      _vm.$set(item, "model", $$v)
-                                    },
-                                    expression: "item.model"
-                                  }
-                                },
-                                [
-                                  _c(
-                                    "v-list-tile",
-                                    {
-                                      attrs: { slot: "activator", fluid: "" },
-                                      slot: "activator"
-                                    },
-                                    [
-                                      _c(
-                                        "v-list-tile-action",
-                                        [
-                                          _c(
-                                            "v-icon",
-                                            { staticClass: "primary--text" },
-                                            [_vm._v(_vm._s(item.icon))]
-                                          )
-                                        ],
-                                        1
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-list-tile-content",
-                                        [
-                                          _c("v-list-tile-title", [
-                                            _vm._v(_vm._s(item.text))
-                                          ])
-                                        ],
-                                        1
-                                      )
-                                    ],
-                                    1
-                                  ),
-                                  _vm._v(" "),
-                                  _vm._l(item.children, function(child, i) {
-                                    return _c(
-                                      "v-list-tile",
-                                      {
-                                        key: i,
-                                        attrs: { fluid: "" },
-                                        on: { click: child.click }
-                                      },
-                                      [
-                                        child.icon
-                                          ? _c(
-                                              "v-list-tile-action",
-                                              [
-                                                _c("v-icon", [
-                                                  _vm._v(_vm._s(child.icon))
-                                                ])
-                                              ],
-                                              1
-                                            )
-                                          : _vm._e(),
-                                        _vm._v(" "),
-                                        _c(
-                                          "v-list-tile-content",
-                                          [
-                                            _c("v-list-tile-title", [
-                                              _vm._v(
-                                                "\n                  " +
-                                                  _vm._s(child.text) +
-                                                  "\n                "
-                                              )
-                                            ])
-                                          ],
-                                          1
-                                        )
-                                      ],
-                                      1
-                                    )
-                                  })
-                                ],
-                                2
-                              )
-                            : !item.children
-                              ? _c(
-                                  "v-list-tile",
-                                  { on: { click: item.click } },
-                                  [
-                                    _c(
-                                      "v-list-tile-action",
-                                      [
-                                        _c(
-                                          "v-icon",
-                                          { staticClass: "primary--text" },
-                                          [_vm._v(_vm._s(item.icon))]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "v-list-tile-content",
-                                      [
-                                        _c("v-list-tile-title", [
-                                          _vm._v(_vm._s(item.text))
-                                        ])
-                                      ],
-                                      1
-                                    )
-                                  ],
-                                  1
-                                )
-                              : _vm._e()
-                        ],
-                        1
-                      )
-                    })
-                  )
-                ],
-                1
-              )
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.$auth.check()
-            ? _c(
-                "v-toolbar",
-                {
-                  staticClass: "white",
-                  attrs: { app: "", fixed: "", "clipped-left": "" }
-                },
-                [
-                  _c("v-toolbar-side-icon", {
-                    on: {
-                      click: function($event) {
-                        $event.stopPropagation()
-                        _vm.drawer = !_vm.drawer
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("v-toolbar-title", [
-                    _c("a", { attrs: { href: "/" } }, [
-                      _c("img", {
-                        staticClass: "logo mx-4",
-                        attrs: { src: "/media/logo.png", alt: "logo" }
-                      })
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    [
-                      _c("v-text-field", {
-                        staticClass: "hidden-sm-and-down",
-                        attrs: {
-                          flat: "",
-                          solo: "",
-                          "hide-details": "",
-                          "prepend-inner-icon": "search",
-                          label: "Paieška..."
-                        },
-                        on: { keydown: _vm.search },
-                        model: {
-                          value: _vm.searchQuery,
-                          callback: function($$v) {
-                            _vm.searchQuery = $$v
-                          },
-                          expression: "searchQuery"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.resultBox && _vm.searchResults
-                        ? _c(
-                            "div",
-                            {
-                              staticClass:
-                                "search-result-wrapper bg-dark border--primary"
+                  _vm.$auth.check()
+                    ? _c(
+                        "v-navigation-drawer",
+                        {
+                          attrs: { clipped: "", fixed: "", app: "" },
+                          model: {
+                            value: _vm.drawer,
+                            callback: function($$v) {
+                              _vm.drawer = $$v
                             },
-                            [
-                              _c(
-                                "v-list",
+                            expression: "drawer"
+                          }
+                        },
+                        [
+                          _c(
+                            "v-list",
+                            { attrs: { dense: "" } },
+                            _vm._l(_vm.meniuItems, function(item) {
+                              return _c(
+                                "v-flex",
+                                { key: item.text },
                                 [
-                                  _vm._l(_vm.searchResults, function(
-                                    item,
-                                    index
-                                  ) {
-                                    return [
-                                      _c(
-                                        "v-list-tile",
+                                  item.children
+                                    ? _c(
+                                        "v-list-group",
                                         {
-                                          key: index,
-                                          on: {
-                                            click: function($event) {
-                                              _vm.searchItem(item)
-                                            }
+                                          key: item.text,
+                                          attrs: {
+                                            "append-icon": item.model
+                                              ? "keyboard_arrow_up"
+                                              : "keyboard_arrow_down"
+                                          },
+                                          model: {
+                                            value: item.model,
+                                            callback: function($$v) {
+                                              _vm.$set(item, "model", $$v)
+                                            },
+                                            expression: "item.model"
                                           }
                                         },
                                         [
                                           _c(
-                                            "v-list-tile-content",
+                                            "v-list-tile",
+                                            {
+                                              attrs: {
+                                                slot: "activator",
+                                                fluid: ""
+                                              },
+                                              slot: "activator"
+                                            },
                                             [
-                                              _c("v-list-tile-title", [
-                                                _vm._v(
-                                                  _vm._s(item.item.ItemName)
-                                                )
-                                              ]),
+                                              _c(
+                                                "v-list-tile-action",
+                                                [
+                                                  _c(
+                                                    "v-icon",
+                                                    {
+                                                      staticClass:
+                                                        "primary--text"
+                                                    },
+                                                    [_vm._v(_vm._s(item.icon))]
+                                                  )
+                                                ],
+                                                1
+                                              ),
                                               _vm._v(" "),
                                               _c(
-                                                "v-list-tile-sub-title",
-                                                {
-                                                  staticClass: "text--primary"
-                                                },
-                                                [_vm._v(_vm._s(item.state))]
+                                                "v-list-tile-content",
+                                                [
+                                                  _c("v-list-tile-title", [
+                                                    _vm._v(_vm._s(item.text))
+                                                  ])
+                                                ],
+                                                1
                                               )
                                             ],
                                             1
-                                          )
-                                        ],
-                                        1
-                                      ),
-                                      _vm._v(" "),
-                                      index + 1 < _vm.searchResults.length
-                                        ? _c("v-divider", {
-                                            key: "divider-" + index,
-                                            staticClass: "ma-0"
+                                          ),
+                                          _vm._v(" "),
+                                          _vm._l(item.children, function(
+                                            child,
+                                            i
+                                          ) {
+                                            return _c(
+                                              "v-list-tile",
+                                              {
+                                                key: i,
+                                                attrs: { fluid: "" },
+                                                on: { click: child.click }
+                                              },
+                                              [
+                                                child.icon
+                                                  ? _c(
+                                                      "v-list-tile-action",
+                                                      [
+                                                        _c("v-icon", [
+                                                          _vm._v(
+                                                            _vm._s(child.icon)
+                                                          )
+                                                        ])
+                                                      ],
+                                                      1
+                                                    )
+                                                  : _vm._e(),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "v-list-tile-content",
+                                                  [
+                                                    _c("v-list-tile-title", [
+                                                      _vm._v(
+                                                        "\n                    " +
+                                                          _vm._s(child.text) +
+                                                          "\n                  "
+                                                      )
+                                                    ])
+                                                  ],
+                                                  1
+                                                )
+                                              ],
+                                              1
+                                            )
                                           })
-                                        : _vm._e()
-                                    ]
-                                  })
+                                        ],
+                                        2
+                                      )
+                                    : !item.children
+                                      ? _c(
+                                          "v-list-tile",
+                                          { on: { click: item.click } },
+                                          [
+                                            _c(
+                                              "v-list-tile-action",
+                                              [
+                                                _c(
+                                                  "v-icon",
+                                                  {
+                                                    staticClass: "primary--text"
+                                                  },
+                                                  [_vm._v(_vm._s(item.icon))]
+                                                )
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "v-list-tile-content",
+                                              [
+                                                _c("v-list-tile-title", [
+                                                  _vm._v(_vm._s(item.text))
+                                                ])
+                                              ],
+                                              1
+                                            )
+                                          ],
+                                          1
+                                        )
+                                      : _vm._e()
                                 ],
-                                2
+                                1
                               )
-                            ],
-                            1
+                            })
                           )
-                        : _vm._e()
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("v-spacer"),
-                  _vm._v(" "),
-                  _c(
-                    "v-menu",
-                    { attrs: { "offset-y": "" } },
-                    [
-                      _c(
-                        "v-btn",
-                        {
-                          staticClass: "mx-2",
-                          attrs: { slot: "activator", icon: "" },
-                          slot: "activator"
-                        },
-                        [
-                          _c(
-                            "v-icon",
-                            {
-                              staticClass: "primary--text",
-                              attrs: { medium: "" }
-                            },
-                            [_vm._v("shopping_cart")]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-list",
-                        _vm._l(_vm.cartDropdownMeniu, function(item, index) {
-                          return _c(
-                            "v-list-tile",
-                            { key: index, on: { click: item.click } },
-                            [
-                              _c("v-list-tile-title", [
-                                _vm._v(_vm._s(item.text))
-                              ])
-                            ],
-                            1
-                          )
-                        })
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-menu",
-                    { attrs: { "offset-y": "" } },
-                    [
-                      _vm.user && _vm.screenWidth > 650
-                        ? _c(
-                            "v-flex",
-                            {
-                              staticClass: "hover-bottom-border",
-                              attrs: { slot: "activator", shrink: "" },
-                              slot: "activator"
-                            },
-                            [
-                              _c(
-                                "v-icon",
-                                { staticClass: "primary--text pr-3" },
-                                [_vm._v("fa-user")]
-                              ),
-                              _vm._v(_vm._s(_vm.user.Username)),
-                              _c("v-icon", { staticClass: "pl-2" }, [
-                                _vm._v("keyboard_arrow_down")
-                              ])
-                            ],
-                            1
-                          )
-                        : _c(
-                            "v-btn",
-                            {
-                              attrs: { slot: "activator", icon: "" },
-                              slot: "activator"
-                            },
-                            [
-                              _c("v-icon", { staticClass: "primary--text" }, [
-                                _vm._v("fa-user")
-                              ])
-                            ],
-                            1
-                          ),
-                      _vm._v(" "),
-                      _c(
-                        "v-list",
-                        _vm._l(_vm.settingsDropdownMeniu, function(
-                          item,
-                          index
-                        ) {
-                          return _c(
-                            "v-list-tile",
-                            { key: index, on: { click: item.click } },
-                            [
-                              _c("v-list-tile-title", [
-                                _vm._v(_vm._s(item.text))
-                              ])
-                            ],
-                            1
-                          )
-                        })
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            : _vm._e(),
-          _vm._v(" "),
-          _c(
-            "v-content",
-            [
-              _c(
-                "v-container",
-                { attrs: { fluid: "", "fill-height": "" } },
-                [
-                  !_vm.$auth.check() && _vm.$auth.ready()
-                    ? _c(
-                        "v-layout",
-                        { attrs: { "justify-center": "", "align-center": "" } },
-                        [
-                          !_vm.$auth.check() && _vm.$auth.ready()
-                            ? _c("Login", {
-                                on: {
-                                  loginSuccess: function($event) {
-                                    _vm.getUser()
-                                  }
-                                }
-                              })
-                            : _vm._e()
                         ],
                         1
                       )
@@ -107808,45 +107608,339 @@ var render = function() {
                   _vm._v(" "),
                   _vm.$auth.check()
                     ? _c(
-                        "v-layout",
-                        { attrs: { "justify-center": "", "align-center": "" } },
+                        "v-toolbar",
+                        {
+                          staticClass: "white",
+                          attrs: { app: "", fixed: "", "clipped-left": "" }
+                        },
+                        [
+                          _c("v-toolbar-side-icon", {
+                            on: {
+                              click: function($event) {
+                                $event.stopPropagation()
+                                _vm.drawer = !_vm.drawer
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("v-toolbar-title", [
+                            _c("a", { attrs: { href: "/" } }, [
+                              _c("img", {
+                                staticClass: "logo mx-4",
+                                attrs: { src: "/media/logo.png", alt: "logo" }
+                              })
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            [
+                              _c("v-text-field", {
+                                staticClass: "hidden-sm-and-down",
+                                attrs: {
+                                  flat: "",
+                                  solo: "",
+                                  "hide-details": "",
+                                  "prepend-inner-icon": "search",
+                                  label: "Paieška..."
+                                },
+                                on: { keydown: _vm.search },
+                                model: {
+                                  value: _vm.searchQuery,
+                                  callback: function($$v) {
+                                    _vm.searchQuery = $$v
+                                  },
+                                  expression: "searchQuery"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.resultBox && _vm.searchResults
+                                ? _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "search-result-wrapper bg-dark border--primary"
+                                    },
+                                    [
+                                      _c(
+                                        "v-list",
+                                        [
+                                          _vm._l(_vm.searchResults, function(
+                                            item,
+                                            index
+                                          ) {
+                                            return [
+                                              _c(
+                                                "v-list-tile",
+                                                {
+                                                  key: index,
+                                                  on: {
+                                                    click: function($event) {
+                                                      _vm.searchItem(item)
+                                                    }
+                                                  }
+                                                },
+                                                [
+                                                  _c(
+                                                    "v-list-tile-content",
+                                                    [
+                                                      _c("v-list-tile-title", [
+                                                        _vm._v(
+                                                          _vm._s(
+                                                            item.item.ItemName
+                                                          )
+                                                        )
+                                                      ]),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "v-list-tile-sub-title",
+                                                        {
+                                                          staticClass:
+                                                            "text--primary"
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            _vm._s(item.state)
+                                                          )
+                                                        ]
+                                                      )
+                                                    ],
+                                                    1
+                                                  )
+                                                ],
+                                                1
+                                              ),
+                                              _vm._v(" "),
+                                              index + 1 <
+                                              _vm.searchResults.length
+                                                ? _c("v-divider", {
+                                                    key: "divider-" + index,
+                                                    staticClass: "ma-0"
+                                                  })
+                                                : _vm._e()
+                                            ]
+                                          })
+                                        ],
+                                        2
+                                      )
+                                    ],
+                                    1
+                                  )
+                                : _vm._e()
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("v-spacer"),
+                          _vm._v(" "),
+                          _vm.$currentUser.UserRole == "Administratorius"
+                            ? _c(
+                                "v-menu",
+                                { attrs: { "offset-y": "" } },
+                                [
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      staticClass: "mx-2",
+                                      attrs: { slot: "activator", icon: "" },
+                                      slot: "activator"
+                                    },
+                                    [
+                                      _c(
+                                        "v-icon",
+                                        {
+                                          staticClass: "primary--text",
+                                          attrs: { medium: "" }
+                                        },
+                                        [_vm._v("shopping_cart")]
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-list",
+                                    _vm._l(_vm.cartDropdownMeniu, function(
+                                      item,
+                                      index
+                                    ) {
+                                      return _c(
+                                        "v-list-tile",
+                                        {
+                                          key: index,
+                                          on: { click: item.click }
+                                        },
+                                        [
+                                          _c("v-list-tile-title", [
+                                            _vm._v(_vm._s(item.text))
+                                          ])
+                                        ],
+                                        1
+                                      )
+                                    })
+                                  )
+                                ],
+                                1
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _c(
+                            "v-menu",
+                            { attrs: { "offset-y": "" } },
+                            [
+                              _vm.$currentUser && _vm.screenWidth > 650
+                                ? _c(
+                                    "v-flex",
+                                    {
+                                      staticClass: "hover-bottom-border",
+                                      attrs: { slot: "activator", shrink: "" },
+                                      slot: "activator"
+                                    },
+                                    [
+                                      _c(
+                                        "v-icon",
+                                        { staticClass: "primary--text pr-3" },
+                                        [_vm._v("fa-user")]
+                                      ),
+                                      _vm._v(_vm._s(_vm.$currentUser.Username)),
+                                      _c("v-icon", { staticClass: "pl-2" }, [
+                                        _vm._v("keyboard_arrow_down")
+                                      ])
+                                    ],
+                                    1
+                                  )
+                                : _c(
+                                    "v-btn",
+                                    {
+                                      attrs: { slot: "activator", icon: "" },
+                                      slot: "activator"
+                                    },
+                                    [
+                                      _c(
+                                        "v-icon",
+                                        { staticClass: "primary--text" },
+                                        [_vm._v("fa-user")]
+                                      )
+                                    ],
+                                    1
+                                  ),
+                              _vm._v(" "),
+                              _c(
+                                "v-list",
+                                _vm._l(_vm.settingsDropdownMeniu, function(
+                                  item,
+                                  index
+                                ) {
+                                  return _c(
+                                    "v-list-tile",
+                                    { key: index, on: { click: item.click } },
+                                    [
+                                      _c("v-list-tile-title", [
+                                        _vm._v(_vm._s(item.text))
+                                      ])
+                                    ],
+                                    1
+                                  )
+                                })
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c(
+                    "v-content",
+                    [
+                      _c(
+                        "v-container",
+                        { attrs: { fluid: "", "fill-height": "" } },
+                        [
+                          !_vm.$auth.check() && _vm.$auth.ready()
+                            ? _c(
+                                "v-layout",
+                                {
+                                  attrs: {
+                                    "justify-center": "",
+                                    "align-center": ""
+                                  }
+                                },
+                                [
+                                  !_vm.$auth.check() && _vm.$auth.ready()
+                                    ? _c("Login", {
+                                        on: {
+                                          loginSuccess: function($event) {
+                                            _vm.getUser()
+                                          }
+                                        }
+                                      })
+                                    : _vm._e()
+                                ],
+                                1
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.$auth.check()
+                            ? _c(
+                                "v-layout",
+                                {
+                                  attrs: {
+                                    "justify-center": "",
+                                    "align-center": ""
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "v-flex",
+                                    { attrs: { grow: "" } },
+                                    [_c("router-view")],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            : _vm._e()
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _vm.$auth.ready()
+                    ? _c(
+                        "v-footer",
+                        { attrs: { app: "", fixed: "", "justify-center": "" } },
                         [
                           _c(
-                            "v-flex",
-                            { attrs: { grow: "" } },
-                            [_c("router-view")],
+                            "v-layout",
+                            {
+                              attrs: {
+                                "justify-center": "",
+                                "align-center": ""
+                              }
+                            },
+                            [
+                              _c("v-flex", { attrs: { shrink: "" } }, [
+                                _c("span", { staticClass: "h5" }, [
+                                  _vm._v("Tool")
+                                ]),
+                                _c(
+                                  "span",
+                                  { staticClass: "h5 text-danger pr-2" },
+                                  [_vm._v("Tracker")]
+                                ),
+                                _c("span", [_vm._v("© 2018")])
+                              ])
+                            ],
                             1
                           )
                         ],
                         1
                       )
                     : _vm._e()
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _vm.$auth.ready()
-            ? _c(
-                "v-footer",
-                { attrs: { app: "", fixed: "", "justify-center": "" } },
-                [
-                  _c(
-                    "v-layout",
-                    { attrs: { "justify-center": "", "align-center": "" } },
-                    [
-                      _c("v-flex", { attrs: { shrink: "" } }, [
-                        _c("span", { staticClass: "h5" }, [_vm._v("Tool")]),
-                        _c("span", { staticClass: "h5 text-danger pr-2" }, [
-                          _vm._v("Tracker")
-                        ]),
-                        _c("span", [_vm._v("© 2018")])
-                      ])
-                    ],
-                    1
-                  )
                 ],
                 1
               )
@@ -109130,6 +109224,39 @@ module.exports = {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 260 */,
+/* 261 */,
+/* 262 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ({
+  computed: {
+    $currentUser: function $currentUser() {
+      return this.$store.state.user;
+    }
+  },
+  methods: {
+    getUser: function getUser() {
+      var _this = this;
+
+      this.$http.get('/user/me').then(function (response) {
+        _this.$store.commit("setUser", response.data);
+      }).catch(function (error) {
+        console.log(error.response.data.errors);
+      });
+    }
+  },
+  watch: {
+    '$auth.watch.loaded': {
+      handler: function handler(ready) {
+        if (ready) this.getUser();
+      }
+    }
+  }
+});
 
 /***/ })
 /******/ ]);

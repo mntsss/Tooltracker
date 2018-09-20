@@ -4,7 +4,7 @@
       :can-cancel="false"
       :is-full-page="fullPage"></Loading>
       <div class="overlay position-absolute h-100 w-100" v-if="!userCard">
-        <v-container>
+        <v-container fluid>
           <v-layout align-center justify-center row fill-height mt-5>
             <v-flex shrink mt-5>
               <v-progress-circular :size="100" :width="7" color="primary" indeterminate></v-progress-circular>
@@ -18,9 +18,9 @@
         </v-container>
       </div>
     <v-dialog v-model="waitingImageDialog" persistent max-width="780" >
-      <v-container v-if="newItem.item" style="background: #292929">
+      <v-container fluid v-if="newItem.item" class="primary--border border bg-light mt-0">
         <div class="card-header secondary headline">
-            {{newItem.item.ItemName}} <a @click="cancelItemAddition()" class="float-right"><span class="fas fa-times btn-func-misc"></span></a>
+            {{newItem.item.ItemName}} <a @click="cancelItemAddition()" class="float-right"><span class="fas fa-times btn-func-misc primary-text"></span></a>
         </div>
         <v-divider light></v-divider>
         <v-layout row wrap v-if="newItem.item.ItemConsumable">

@@ -15,6 +15,8 @@ import store from './store';
 
 import App from './components/App.vue'
 
+import UserMixin from './mixins/user';
+
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
 Vue.use(vmodal);
@@ -64,7 +66,7 @@ Vue.use(require('@websanova/vue-auth'), {
 //Define global variable
 
 Vue.prototype.$uploadPath = '/media/items/'
-
+Vue.mixin(UserMixin);
 //main app init
 App.router = Vue.router;
 App.store = Vue.store;

@@ -11,7 +11,7 @@
             Įrankių grupės
         </v-flex>
     </v-layout>
-    <div class="item-box-panel" @click="$modal.show('create-group-modal')">
+    <div class="item-box-panel" @click="$modal.show('create-group-modal')" v-if="user.UserRole =='Administratorius'">
         <div class="item-add-box" style="height: 100% !important">
             <span class="fas fa-plus text-success"></span>
         </div>
@@ -47,18 +47,12 @@ export default {
   },
   created(){
     this.loadGroups()
+    if(typeof this.user === 'undefined')
+      this.getUser()
   },
   computed: {
-    username: function(){
-      return this.$auth.user().UserName
-    },
-    code: {
-      get(){
-        return this.$store.state.recentCode;
-      },
-      set(value){
-        return this.$store.commit('newcode', value)
-      }
+    user: function(){
+      return this.$store.state.user
     }
   },
   methods: {
@@ -69,6 +63,13 @@ export default {
           this.isLoading = false
       }).catch(error => {
           swal('Klaida', error.response.data.message, 'error')
+      })
+    },
+    getUser(){
+      this.$http.get('/user/me').then(response => {
+        this.$store.commit("setUser", response.data)
+      }).catch(error => {
+        console.log(error.response.data.errors)
       })
     }
   },
