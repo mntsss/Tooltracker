@@ -10,7 +10,7 @@
           <v-flex>
               <div class="text-center headline">Nuomoti įrankiai</div>
           </v-flex>
-          <v-flex shrink headline justify-end align-content-center v-if="user.UserRole =='Administratorius'">
+          <v-flex shrink headline justify-end align-content-center v-if="$user.UserRole =='Administratorius'">
             <a @click="show('create-rented-item-modal')" class="headline"><span class="fas fa-plus primary--text p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"></span></a>
           </v-flex>
       </v-layout>
@@ -48,13 +48,6 @@ import CreateRentedItem from '../modals/rent/CreateRentedItem.vue'
     },
     async created(){
         this.loadItems()
-        if(typeof this.user === 'undefined')
-          this.getUser()
-    },
-    computed: {
-      user: function(){
-        return this.$store.state.user
-      },
     },
     methods: {
         show (name) {
@@ -85,13 +78,6 @@ import CreateRentedItem from '../modals/rent/CreateRentedItem.vue'
             var timeDiff = Math.abs(currentDate.getTime() - dateRented.getTime());
             var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
             return diffDays
-        },
-        getUser(){
-          this.$http.get('/user/me').then(response => {
-            this.$store.commit("setUser", response.data)
-          }).catch(error => {
-            console.log(error.response.data.errors)
-          })
         }
     },
     components: {

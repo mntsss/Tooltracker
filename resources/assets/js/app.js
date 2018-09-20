@@ -15,7 +15,7 @@ import store from './store';
 
 import App from './components/App.vue'
 
-import UserMixin from './mixins/user';
+import GlobalMixin from './mixins/global';
 
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
@@ -50,7 +50,19 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   var currentRoute = from.name
   var currentParams = from.params
-  store.commit('addRouteToHistory', {'route': currentRoute, 'params': currentParams})
+  if(from.name != null){
+      if(store.state.routesHistory.length > 0){
+          if(store.state.routesHistory[0].route == to.name){
+              next()
+          }
+          else {
+              store.commit('addRouteToHistory', {'route': currentRoute, 'params': currentParams})
+          }
+      }
+      else{
+          store.commit('addRouteToHistory', {'route': currentRoute, 'params': currentParams})
+      }
+  }
   next()
 })
 Vue.router = router;
@@ -66,7 +78,7 @@ Vue.use(require('@websanova/vue-auth'), {
 //Define global variable
 
 Vue.prototype.$uploadPath = '/media/items/'
-Vue.mixin(UserMixin);
+Vue.mixin(GlobalMixin);
 //main app init
 App.router = Vue.router;
 App.store = Vue.store;

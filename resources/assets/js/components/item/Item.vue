@@ -17,12 +17,12 @@
     <div class="card" v-if="itemData">
       <v-layout row wrap align-content-center class="card-header pb-0 pt-0 mx-0 secondary">
           <v-flex headline shrink justify-start align-content-center>
-              <a @click="back()" class="headline"><span class="fa fa-arrow-left primary--text remove-all-margin p-2 btn-func-misc"></span></a>
+              <a @click="$back()" class="headline"><span class="fa fa-arrow-left primary--text remove-all-margin p-2 btn-func-misc"></span></a>
           </v-flex>
           <v-flex>
               <div class="text-center headline">{{itemData.ItemName}}</div>
           </v-flex>
-          <v-flex shrink headline justify-end align-content-center>
+          <v-flex shrink headline justify-end align-content-center v-if="$user.UserRole == 'Administratorius'">
               <v-menu offset-y>
                 <a slot="activator" class="headline"><span class="fas fa-ellipsis-v primary--text p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"></span></a>
                 <v-list>
@@ -348,11 +348,6 @@ import ConfirmReturnItemSuspentionModal from '../modals/ConfirmReturnItemSuspent
             })
           }
         })
-    },
-    back: function(){
-        var previousRoute = this.$store.state.routesHistory[0].route
-        var previousRouteParams = this.$store.state.routesHistory[0].params
-        this.$router.push({name:previousRoute, params:previousRouteParams})
     }
   },
   components: {

@@ -8,7 +8,7 @@
     <div class="card" v-if="user">
       <v-layout row wrap align-center class="card-header pb-0 pt-0 mx-0 secondary v-toolbar" >
           <v-flex headline shrink justify-start align-content-center>
-              <a @click="back()" class="headline"><span class="fa fa-arrow-left primary--text remove-all-margin p-2 btn-func-misc"></span></a>
+              <a @click="$back()" class="headline"><span class="fa fa-arrow-left primary--text remove-all-margin p-2 btn-func-misc"></span></a>
           </v-flex>
           <v-flex>
               <div class="text-center headline" v-if="user">Vartotojo {{user.Username}} įrankiai</div>
@@ -65,12 +65,7 @@ import 'vue-loading-overlay/dist/vue-loading.min.css'
             }).catch(error => {
                 swal('Klaida', error.response.data.message, 'error')
             })
-        },
-      back: function(){
-          var previousRoute = this.$store.state.routesHistory[0].route
-          var previousRouteParams = this.$store.state.routesHistory[0].params
-          this.$router.push({name:previousRoute, params:previousRouteParams})
-      }
+        }
     },
     components: {
       Loading

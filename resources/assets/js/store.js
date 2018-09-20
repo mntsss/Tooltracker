@@ -7,7 +7,8 @@ const store = new Vuex.Store({
     state: {
       recentCode: null,
       user: null,
-      routesHistory: []
+      routesHistory: [],
+      USER_API_CALL_LOADING: false
     },
     mutations: {
       newcode(state, code){
@@ -23,6 +24,9 @@ const store = new Vuex.Store({
         state.routesHistory.unshift(route)
         if(state.routesHistory.length > 10)
           state.routesHistory.splice(-1, 1)
+      },
+      USER_API_CALL_LOADING(state, val){
+          state.USER_API_CALL_LOADING = val
       }
     },
     actions: {},

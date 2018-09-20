@@ -101,7 +101,7 @@ export default{
       },
       show: function(name, params={}){
         this.$modal.show(name, params)
-      },
+      }
   },
   components: {
     Loading,

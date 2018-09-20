@@ -27,13 +27,12 @@
         :can-cancel="false"
         :is-full-page="fullPage"></Loading>
         <ChangePasswordModal></ChangePasswordModal>
-        <div v-if="$currentUser">
       <v-navigation-drawer
         v-model="drawer"
         clipped
         fixed
         app
-      v-if="$auth.check()">
+      v-if="$auth.check() && $user">
         <v-list dense>
           <v-flex v-for="item in meniuItems" :key="item.text">
             <v-list-group
@@ -78,7 +77,7 @@
         </v-flex>
         </v-list>
       </v-navigation-drawer>
-      <v-toolbar app fixed clipped-left v-if="$auth.check()" class="white">
+      <v-toolbar app fixed clipped-left v-if="$auth.check() && $user" class="white">
         <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
         <v-toolbar-title><a href="/"><img src="/media/logo.png" alt="logo" class="logo mx-4"/></a></v-toolbar-title>
         <div>
@@ -107,7 +106,7 @@
         </div>
       </div>
         <v-spacer></v-spacer>
-        <v-menu offset-y v-if="$currentUser.UserRole =='Administratorius'">
+        <v-menu offset-y v-if="$user.UserRole =='Administratorius'">
           <v-btn icon slot="activator" class="mx-2">
             <v-icon medium class="primary--text">shopping_cart</v-icon>
           </v-btn>
@@ -118,8 +117,8 @@
           </v-list>
         </v-menu>
         <v-menu offset-y>
-            <v-flex shrink v-if="$currentUser && screenWidth > 650" slot="activator" class="hover-bottom-border">
-              <v-icon  class="primary--text pr-3">fa-user</v-icon>{{$currentUser.Username}}<v-icon class="pl-2">keyboard_arrow_down</v-icon>
+            <v-flex shrink v-if="$user && screenWidth > 650" slot="activator" class="hover-bottom-border">
+              <v-icon  class="primary--text pr-3">fa-user</v-icon>{{$user.Username}}<v-icon class="pl-2">keyboard_arrow_down</v-icon>
             </v-flex>
             <v-btn icon v-else slot="activator">
               <v-icon class="primary--text">fa-user</v-icon>
@@ -135,7 +134,7 @@
       <v-content>
         <v-container fluid fill-height>
           <v-layout justify-center align-center v-if="!$auth.check() && $auth.ready()">
-            <Login v-if="!$auth.check() && $auth.ready()" v-on:loginSuccess="getUser()"></Login>
+            <Login v-if="!$auth.check() && $auth.ready()" v-on:loginSuccess="$getUser()"></Login>
           </v-layout>
           <v-layout justify-center align-center v-if="$auth.check()">
             <v-flex grow>
@@ -153,7 +152,6 @@
 
       </v-footer>
     </div>
-  </div>
 </v-app>
 </template>
 <script>
@@ -213,8 +211,9 @@ export default {
               {text: 'Įrankių grąžinimas', click: ()=>{ this.$router.push({name: 'return'})}},
             ],
             settingsDropdownMeniu: [
+              {text: 'Mano įrankiai', click: ()=>{this.$router.push({name:'userWithdrawals', params: {userID: this.$user.UserID}})}},
               {text: 'Keisti slaptažodį', click: () =>{ this.$modal.show('change-password-modal')}},
-              {text: 'Atsijungti', click: ()=>{ this.$auth.logout()}},
+              {text: 'Atsijungti', click: ()=>{ this.$store.commit('setUser', null); this.$auth.logout()}},
             ],
             snackbar: false,
             y: 'top',
@@ -232,10 +231,9 @@ export default {
       Echo.channel('code-channel')
         .listen('ReceivedCode', (e) => {
           console.log("Code received")
-          if(e.userID == this.$currentUser.UserID)
+          if(e.userID == this.$user.UserID)
             this.$store.commit('newcode', e.code)
         });
-        console.log(this.$currentUser);
     },
     computed: {
     screenWidth: function(){

@@ -67,7 +67,7 @@
                                               <v-icon headline class="text-warning" v-else-if="user.UserRFIDCode == null">fa-times</v-icon>
                                             </v-flex>
                                         </v-layout>
-                                        <v-layout row wrap align-center pa-2 justify-end>
+                                        <v-layout row wrap align-center pa-2 justify-end v-if="$user.UserRole == 'Administratorius'">
                                             <v-flex shrink justify-end>
                                               <v-btn outline>
                                                   <v-icon class="primary--text">fa-history</v-icon>

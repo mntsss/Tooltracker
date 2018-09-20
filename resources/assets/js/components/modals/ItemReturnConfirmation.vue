@@ -9,9 +9,9 @@
          @before-open="beforeOpen"
          @before-close="beforeClose">
     <div v-if="item" class="card d-flex pt-0 mt-0 px-0">
-      <div class="overlay position-absolute h-100 w-100" v-if="waitingDialog">
+      <div class="overlay position-absolute h-100 w-100 bg-light" v-if="waitingDialog">
         <div class="headline">
-               <a @click="$modal.hide('item-return-confirm-modal')" class="float-right"><span class="fas fa-times btn-func-misc"></span></a>
+               <a @click="$modal.hide('item-return-confirm-modal')" class="float-right"><span class="fas fa-times btn-func-misc p-3"></span></a>
           </div>
         <v-container>
           <v-layout align-center justify-center row fill-height mt-5>
@@ -20,7 +20,7 @@
             </v-flex>
           </v-layout>
           <v-layout align-center justify-center v-if="!loading">
-            <v-flex shrink align-center class="h4 text-danger text-center mt-3">
+            <v-flex shrink align-center class="h4 primary--text text-center mt-3">
               Laukiama administratoriaus identifikacinės kortelės...
             </v-flex>
           </v-layout>
@@ -192,7 +192,6 @@ watch: {
 <style>
 .overlay{
   z-index: 5;
-  background-color: #303030 !important;
 }
 
 </style>

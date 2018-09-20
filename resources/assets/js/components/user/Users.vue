@@ -14,7 +14,7 @@
                             Vartotojai
                         </div>
                     </v-flex>
-                    <v-flex shrink>
+                    <v-flex shrink v-if="$user.UserRole == 'Administratorius'">
                         <a @click="show('create-user-modal')" class="headline"><span class="fas fa-plus primary--text p-2 btn-func-misc ml-2 mr-2 mb-0 mt-0"></span></a>
                     </v-flex>
                 </v-layout>
@@ -91,15 +91,15 @@
                                                   <v-icon class="primary--text">fa-toolbox</v-icon>
                                                   <span class="mx-2">Įrankiai</span>
                                               </v-btn>
-                                              <v-btn outline @click="show('edit-user-modal', {user: user})">
+                                              <v-btn outline @click="show('edit-user-modal', {user: user})" v-if="$user.UserRole == 'Administratorius'">
                                                     <v-icon class="primary--text">fa-edit</v-icon>
                                                     <span class="mx-2">Redaguoti</span>
                                                 </v-btn>
-                                                <v-btn outline @click="show('add-user-card-modal', {id: user.UserID})">
+                                                <v-btn outline @click="show('add-user-card-modal', {id: user.UserID})" v-if="$user.UserRole == 'Administratorius'">
                                                     <v-icon class="primary--text">fa-id-card</v-icon>
                                                     <span class="mx-2">Nauja kortelė</span>
                                                 </v-btn>
-                                              <v-btn outline @click="deleteUser(user)">
+                                              <v-btn outline @click="deleteUser(user)" v-if="$user.UserRole == 'Administratorius'">
                                                   <v-icon class="primary--text">fa-trash</v-icon>
                                                   <span class="mx-2">Ištrinti</span>
                                               </v-btn>

@@ -25,7 +25,7 @@
                                 <td>{{ props.item.item.ItemName }}</td>
                                 <td class="text-xs-center">{{ props.item.ReservationItemQuantity }}</td>
                                 <td class="justify-center layout px-0">
-                                    <v-btn @click="deleteItem(props.item, i)"><v-icon>delete</v-icon></v-btn>
+                                    <v-btn @click="deleteItem(props.item, i)" v-if="$user.UserRole == 'Administratorius'"><v-icon>delete</v-icon></v-btn>
                                 </td>
                               </template>
                               <template slot="no-data">
@@ -34,7 +34,7 @@
                                 </v-alert>
                               </template>
                             </v-data-table>
-                            <v-layout row wrap align-center pa-2 justify-end>
+                            <v-layout row wrap align-center pa-2 justify-end v-if="$user.UserRole == 'Administratorius'">
                                   <v-btn outline @click="show('confirm-reservation-with-card-modal', {id: reservation.ReservationID, user: reservation.recipient[0].Username})">
                                       <v-icon class="primary--text">fa-id-card</v-icon>
                                       <span class="mx-2">Patvirtinti kortele</span>

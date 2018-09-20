@@ -27258,7 +27258,7 @@ module.exports = (function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(33);
-module.exports = __webpack_require__(259);
+module.exports = __webpack_require__(260);
 
 
 /***/ }),
@@ -27286,7 +27286,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__store__ = __webpack_require__(238);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_App_vue__ = __webpack_require__(239);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_App_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__components_App_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__mixins_user__ = __webpack_require__(262);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__mixins_global__ = __webpack_require__(249);
 __webpack_require__(34);
 
 
@@ -27319,7 +27319,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_8_vuet
     error: '#DC3545'
   } });
 //api requests setup with jwt tokens
-var tokenProvider = __webpack_require__(249);
+var tokenProvider = __webpack_require__(250);
 __WEBPACK_IMPORTED_MODULE_2_axios___default.a.defaults.baseURL = window.location.href + 'api';
 var instance = __WEBPACK_IMPORTED_MODULE_2_axios___default.a.create({
   baseURL: window.location.href + 'api'
@@ -27340,23 +27340,33 @@ var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
 router.beforeEach(function (to, from, next) {
   var currentRoute = from.name;
   var currentParams = from.params;
-  __WEBPACK_IMPORTED_MODULE_10__store__["a" /* default */].commit('addRouteToHistory', { 'route': currentRoute, 'params': currentParams });
+  if (from.name != null) {
+    if (__WEBPACK_IMPORTED_MODULE_10__store__["a" /* default */].state.routesHistory.length > 0) {
+      if (__WEBPACK_IMPORTED_MODULE_10__store__["a" /* default */].state.routesHistory[0].route == to.name) {
+        next();
+      } else {
+        __WEBPACK_IMPORTED_MODULE_10__store__["a" /* default */].commit('addRouteToHistory', { 'route': currentRoute, 'params': currentParams });
+      }
+    } else {
+      __WEBPACK_IMPORTED_MODULE_10__store__["a" /* default */].commit('addRouteToHistory', { 'route': currentRoute, 'params': currentParams });
+    }
+  }
   next();
 });
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.router = router;
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.store = __WEBPACK_IMPORTED_MODULE_10__store__["a" /* default */];
 //jwt auth init
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__webpack_require__(252), {
-  auth: __webpack_require__(256),
-  http: __webpack_require__(257),
-  router: __webpack_require__(258),
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__webpack_require__(253), {
+  auth: __webpack_require__(257),
+  http: __webpack_require__(258),
+  router: __webpack_require__(259),
   tokenDefaultName: 'access_token'
 });
 
 //Define global variable
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.prototype.$uploadPath = '/media/items/';
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.mixin(__WEBPACK_IMPORTED_MODULE_12__mixins_user__["a" /* default */]);
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.mixin(__WEBPACK_IMPORTED_MODULE_12__mixins_global__["a" /* default */]);
 //main app init
 __WEBPACK_IMPORTED_MODULE_11__components_App_vue___default.a.router = __WEBPACK_IMPORTED_MODULE_0_vue___default.a.router;
 __WEBPACK_IMPORTED_MODULE_11__components_App_vue___default.a.store = __WEBPACK_IMPORTED_MODULE_0_vue___default.a.store;
@@ -86671,14 +86681,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   created: function created() {
     this.loadGroups();
-    if (typeof this.user === 'undefined') this.getUser();
   },
 
-  computed: {
-    user: function user() {
-      return this.$store.state.user;
-    }
-  },
   methods: {
     loadGroups: function loadGroups() {
       var _this = this;
@@ -86688,15 +86692,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         _this.isLoading = false;
       }).catch(function (error) {
         __WEBPACK_IMPORTED_MODULE_3_sweetalert___default()('Klaida', error.response.data.message, 'error');
-      });
-    },
-    getUser: function getUser() {
-      var _this2 = this;
-
-      this.$http.get('/user/me').then(function (response) {
-        _this2.$store.commit("setUser", response.data);
-      }).catch(function (error) {
-        console.log(error.response.data.errors);
       });
     }
   },
@@ -86765,7 +86760,7 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _vm.user.UserRole == "Administratorius"
+          _vm.$user.UserRole == "Administratorius"
             ? _c(
                 "div",
                 {
@@ -87252,133 +87247,118 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    var _this = this;
+    data: function data() {
+        var _this = this;
 
-    return {
-      items: [],
-      itemGroup: null,
-      isLoading: true,
-      fullPage: false,
-      dropdownMeniu: [{ text: 'Pervadinti', click: function click() {
-          _this.show('rename-group-modal');
-        } }, { text: 'Keisti nuotrauką', click: function click() {
-          _this.show('change-group-image-modal');
-        } }, { text: 'Ištrinti', click: function click() {
-          _this.deleteGroup();
-        } }]
-    };
-  },
-
-  props: {
-    group: {
-      required: true,
-      type: String
-    }
-  },
-  created: function () {
-    var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
-      return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              this.loadGroup().then(this.loadItems);
-              if (typeof this.user === 'undefined') this.getUser();
-
-            case 2:
-            case 'end':
-              return _context.stop();
-          }
-        }
-      }, _callee, this);
-    }));
-
-    function created() {
-      return _ref.apply(this, arguments);
-    }
-
-    return created;
-  }(),
-
-  computed: {
-    user: function user() {
-      return this.$store.state.user;
-    }
-  },
-  methods: {
-    show: function show(name) {
-      this.$modal.show(name, { groupID: this.itemGroup.ItemGroupID });
+        return {
+            items: [],
+            itemGroup: null,
+            isLoading: true,
+            fullPage: false,
+            dropdownMeniu: [{ text: 'Pervadinti', click: function click() {
+                    _this.show('rename-group-modal');
+                } }, { text: 'Keisti nuotrauką', click: function click() {
+                    _this.show('change-group-image-modal');
+                } }, { text: 'Ištrinti', click: function click() {
+                    _this.deleteGroup();
+                } }]
+        };
     },
 
-    deleteGroup: function deleteGroup() {
-      var _this2 = this;
-
-      __WEBPACK_IMPORTED_MODULE_4_sweetalert___default()({
-        title: 'Ar tikrai norite ištrinti šią grupę?',
-        text: 'Ištrinti galima tik grupes, kurios neturi naudojamų, rezervuotų ar taisomų įrankių. Ištrynus grupę, visi jai priskirti įrankiai taip pat bus ištrinti.',
-        icon: 'warning',
-        dangerMode: true,
-        buttons: {
-          del: { text: 'Trinti', value: true },
-          cancel: { text: 'Atšaukti' }
+    props: {
+        group: {
+            required: true,
+            type: String
         }
-      }).then(function (value) {
-        if (value) {
-          _this2.$http.get('/group/delete/' + _this2.itemGroup.ItemGroupID).then(function (response) {
-            if (response.status == 200) {
-              __WEBPACK_IMPORTED_MODULE_4_sweetalert___default()(response.data.message, response.data.success, "success").then(function (value) {
-                _this2.$router.push({ name: 'groups' });
-              });
-            }
-          }).catch(function (error) {
-            if (error.response.status == 422) {
-              __WEBPACK_IMPORTED_MODULE_4_sweetalert___default()(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
-            } else {
-              __WEBPACK_IMPORTED_MODULE_4_sweetalert___default()('Klaida', error.response.data.message, 'error');
-            }
-          });
-        }
-      });
     },
-    loadGroup: function loadGroup() {
-      var _this3 = this;
+    created: function () {
+        var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+                while (1) {
+                    switch (_context.prev = _context.next) {
+                        case 0:
+                            this.loadGroup().then(this.loadItems);
 
-      return this.$http.get('/group/get/' + this.group).then(function (response) {
-        if (response.status == 200) {
-          _this3.itemGroup = response.data;
+                        case 1:
+                        case 'end':
+                            return _context.stop();
+                    }
+                }
+            }, _callee, this);
+        }));
+
+        function created() {
+            return _ref.apply(this, arguments);
         }
-      }).catch(function (error) {
-        __WEBPACK_IMPORTED_MODULE_4_sweetalert___default()('Klaida', error.response.data.message, 'error');
-      });
-    },
-    loadItems: function loadItems() {
-      var _this4 = this;
 
-      return this.$http.get('/item/list/' + this.itemGroup.ItemGroupID).then(function (response) {
-        if (response.status == 200) {
-          _this4.items = response.data;
-          _this4.isLoading = false;
+        return created;
+    }(),
+
+    methods: {
+        show: function show(name) {
+            this.$modal.show(name, { groupID: this.itemGroup.ItemGroupID });
+        },
+
+        deleteGroup: function deleteGroup() {
+            var _this2 = this;
+
+            __WEBPACK_IMPORTED_MODULE_4_sweetalert___default()({
+                title: 'Ar tikrai norite ištrinti šią grupę?',
+                text: 'Ištrinti galima tik grupes, kurios neturi naudojamų, rezervuotų ar taisomų įrankių. Ištrynus grupę, visi jai priskirti įrankiai taip pat bus ištrinti.',
+                icon: 'warning',
+                dangerMode: true,
+                buttons: {
+                    del: { text: 'Trinti', value: true },
+                    cancel: { text: 'Atšaukti' }
+                }
+            }).then(function (value) {
+                if (value) {
+                    _this2.$http.get('/group/delete/' + _this2.itemGroup.ItemGroupID).then(function (response) {
+                        if (response.status == 200) {
+                            __WEBPACK_IMPORTED_MODULE_4_sweetalert___default()(response.data.message, response.data.success, "success").then(function (value) {
+                                _this2.$router.push({ name: 'groups' });
+                            });
+                        }
+                    }).catch(function (error) {
+                        if (error.response.status == 422) {
+                            __WEBPACK_IMPORTED_MODULE_4_sweetalert___default()(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
+                        } else {
+                            __WEBPACK_IMPORTED_MODULE_4_sweetalert___default()('Klaida', error.response.data.message, 'error');
+                        }
+                    });
+                }
+            });
+        },
+        loadGroup: function loadGroup() {
+            var _this3 = this;
+
+            return this.$http.get('/group/get/' + this.group).then(function (response) {
+                if (response.status == 200) {
+                    _this3.itemGroup = response.data;
+                }
+            }).catch(function (error) {
+                __WEBPACK_IMPORTED_MODULE_4_sweetalert___default()('Klaida', error.response.data.message, 'error');
+            });
+        },
+        loadItems: function loadItems() {
+            var _this4 = this;
+
+            return this.$http.get('/item/list/' + this.itemGroup.ItemGroupID).then(function (response) {
+                if (response.status == 200) {
+                    _this4.items = response.data;
+                    _this4.isLoading = false;
+                }
+            }).catch(function (error) {
+                __WEBPACK_IMPORTED_MODULE_4_sweetalert___default()('Klaida', error.response.data.message, 'error');
+            });
         }
-      }).catch(function (error) {
-        __WEBPACK_IMPORTED_MODULE_4_sweetalert___default()('Klaida', error.response.data.message, 'error');
-      });
     },
-    getUser: function getUser() {
-      var _this5 = this;
-
-      this.$http.get('/user/me').then(function (response) {
-        _this5.$store.commit("setUser", response.data);
-      }).catch(function (error) {
-        console.log(error.response.data.errors);
-      });
+    components: {
+        RenameModal: __WEBPACK_IMPORTED_MODULE_1__modals_RenameGroup_vue___default.a,
+        ChangeImageModal: __WEBPACK_IMPORTED_MODULE_2__modals_ChangeGroupImage_vue___default.a,
+        CreateItemModal: __WEBPACK_IMPORTED_MODULE_3__modals_CreateItem_vue___default.a,
+        Loading: __WEBPACK_IMPORTED_MODULE_5_vue_loading_overlay___default.a
     }
-  },
-  components: {
-    RenameModal: __WEBPACK_IMPORTED_MODULE_1__modals_RenameGroup_vue___default.a,
-    ChangeImageModal: __WEBPACK_IMPORTED_MODULE_2__modals_ChangeGroupImage_vue___default.a,
-    CreateItemModal: __WEBPACK_IMPORTED_MODULE_3__modals_CreateItem_vue___default.a,
-    Loading: __WEBPACK_IMPORTED_MODULE_5_vue_loading_overlay___default.a
-  }
 });
 
 /***/ }),
@@ -89331,7 +89311,7 @@ var render = function() {
                               staticClass: "headline",
                               on: {
                                 click: function($event) {
-                                  _vm.$router.push({ name: "groups" })
+                                  _vm.$back()
                                 }
                               }
                             },
@@ -89353,7 +89333,7 @@ var render = function() {
                           : _vm._e()
                       ]),
                       _vm._v(" "),
-                      _vm.user.UserRole == "Administratorius"
+                      _vm.$user.UserRole == "Administratorius"
                         ? _c(
                             "v-flex",
                             {
@@ -89976,11 +89956,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     });
                 }
             });
-        },
-        back: function back() {
-            var previousRoute = this.$store.state.routesHistory[0].route;
-            var previousRouteParams = this.$store.state.routesHistory[0].params;
-            this.$router.push({ name: previousRoute, params: previousRouteParams });
         }
     },
     components: {
@@ -91272,7 +91247,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.overlay{\r\n  z-index: 5;\r\n  background-color: #303030 !important;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n.overlay{\r\n  z-index: 5;\n}\r\n\r\n", ""]);
 
 // exports
 
@@ -91774,7 +91749,10 @@ var render = function() {
               _vm.waitingDialog
                 ? _c(
                     "div",
-                    { staticClass: "overlay position-absolute h-100 w-100" },
+                    {
+                      staticClass:
+                        "overlay position-absolute h-100 w-100 bg-light"
+                    },
                     [
                       _c("div", { staticClass: "headline" }, [
                         _c(
@@ -91789,7 +91767,7 @@ var render = function() {
                           },
                           [
                             _c("span", {
-                              staticClass: "fas fa-times btn-func-misc"
+                              staticClass: "fas fa-times btn-func-misc p-3"
                             })
                           ]
                         )
@@ -91843,7 +91821,7 @@ var render = function() {
                                     "v-flex",
                                     {
                                       staticClass:
-                                        "h4 text-danger text-center mt-3",
+                                        "h4 primary--text text-center mt-3",
                                       attrs: { shrink: "", "align-center": "" }
                                     },
                                     [
@@ -93102,7 +93080,7 @@ var render = function() {
                             staticClass: "headline",
                             on: {
                               click: function($event) {
-                                _vm.back()
+                                _vm.$back()
                               }
                             }
                           },
@@ -93122,57 +93100,62 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _c(
-                      "v-flex",
-                      {
-                        attrs: {
-                          shrink: "",
-                          headline: "",
-                          "justify-end": "",
-                          "align-content-center": ""
-                        }
-                      },
-                      [
-                        _c(
-                          "v-menu",
-                          { attrs: { "offset-y": "" } },
+                    _vm.$user.UserRole == "Administratorius"
+                      ? _c(
+                          "v-flex",
+                          {
+                            attrs: {
+                              shrink: "",
+                              headline: "",
+                              "justify-end": "",
+                              "align-content-center": ""
+                            }
+                          },
                           [
                             _c(
-                              "a",
-                              {
-                                staticClass: "headline",
-                                attrs: { slot: "activator" },
-                                slot: "activator"
-                              },
+                              "v-menu",
+                              { attrs: { "offset-y": "" } },
                               [
-                                _c("span", {
-                                  staticClass:
-                                    "fas fa-ellipsis-v primary--text p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"
-                                })
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "v-list",
-                              _vm._l(_vm.dropdownMeniu, function(item, index) {
-                                return _c(
-                                  "v-list-tile",
-                                  { key: index, on: { click: item.click } },
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass: "headline",
+                                    attrs: { slot: "activator" },
+                                    slot: "activator"
+                                  },
                                   [
-                                    _c("v-list-tile-title", [
-                                      _vm._v(_vm._s(item.text))
-                                    ])
-                                  ],
-                                  1
+                                    _c("span", {
+                                      staticClass:
+                                        "fas fa-ellipsis-v primary--text p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"
+                                    })
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-list",
+                                  _vm._l(_vm.dropdownMeniu, function(
+                                    item,
+                                    index
+                                  ) {
+                                    return _c(
+                                      "v-list-tile",
+                                      { key: index, on: { click: item.click } },
+                                      [
+                                        _c("v-list-tile-title", [
+                                          _vm._v(_vm._s(item.text))
+                                        ])
+                                      ],
+                                      1
+                                    )
+                                  })
                                 )
-                              })
+                              ],
+                              1
                             )
                           ],
                           1
                         )
-                      ],
-                      1
-                    )
+                      : _vm._e()
                   ],
                   1
                 ),
@@ -96007,25 +95990,27 @@ var render = function() {
                         ]
                       ),
                       _vm._v(" "),
-                      _c("v-flex", { attrs: { shrink: "" } }, [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "headline",
-                            on: {
-                              click: function($event) {
-                                _vm.show("create-user-modal")
-                              }
-                            }
-                          },
-                          [
-                            _c("span", {
-                              staticClass:
-                                "fas fa-plus primary--text p-2 btn-func-misc ml-2 mr-2 mb-0 mt-0"
-                            })
-                          ]
-                        )
-                      ])
+                      _vm.$user.UserRole == "Administratorius"
+                        ? _c("v-flex", { attrs: { shrink: "" } }, [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "headline",
+                                on: {
+                                  click: function($event) {
+                                    _vm.show("create-user-modal")
+                                  }
+                                }
+                              },
+                              [
+                                _c("span", {
+                                  staticClass:
+                                    "fas fa-plus primary--text p-2 btn-func-misc ml-2 mr-2 mb-0 mt-0"
+                                })
+                              ]
+                            )
+                          ])
+                        : _vm._e()
                     ],
                     1
                   ),
@@ -96659,136 +96644,159 @@ var render = function() {
                                                         1
                                                       ),
                                                       _vm._v(" "),
-                                                      _c(
-                                                        "v-btn",
-                                                        {
-                                                          attrs: {
-                                                            outline: ""
-                                                          },
-                                                          on: {
-                                                            click: function(
-                                                              $event
-                                                            ) {
-                                                              _vm.show(
-                                                                "edit-user-modal",
-                                                                { user: user }
-                                                              )
-                                                            }
-                                                          }
-                                                        },
-                                                        [
-                                                          _c(
-                                                            "v-icon",
+                                                      _vm.$user.UserRole ==
+                                                      "Administratorius"
+                                                        ? _c(
+                                                            "v-btn",
                                                             {
-                                                              staticClass:
-                                                                "primary--text"
-                                                            },
-                                                            [_vm._v("fa-edit")]
-                                                          ),
-                                                          _vm._v(" "),
-                                                          _c(
-                                                            "span",
-                                                            {
-                                                              staticClass:
-                                                                "mx-2"
-                                                            },
-                                                            [
-                                                              _vm._v(
-                                                                "Redaguoti"
-                                                              )
-                                                            ]
-                                                          )
-                                                        ],
-                                                        1
-                                                      ),
-                                                      _vm._v(" "),
-                                                      _c(
-                                                        "v-btn",
-                                                        {
-                                                          attrs: {
-                                                            outline: ""
-                                                          },
-                                                          on: {
-                                                            click: function(
-                                                              $event
-                                                            ) {
-                                                              _vm.show(
-                                                                "add-user-card-modal",
-                                                                {
-                                                                  id:
-                                                                    user.UserID
+                                                              attrs: {
+                                                                outline: ""
+                                                              },
+                                                              on: {
+                                                                click: function(
+                                                                  $event
+                                                                ) {
+                                                                  _vm.show(
+                                                                    "edit-user-modal",
+                                                                    {
+                                                                      user: user
+                                                                    }
+                                                                  )
                                                                 }
-                                                              )
-                                                            }
-                                                          }
-                                                        },
-                                                        [
-                                                          _c(
-                                                            "v-icon",
-                                                            {
-                                                              staticClass:
-                                                                "primary--text"
+                                                              }
                                                             },
                                                             [
-                                                              _vm._v(
-                                                                "fa-id-card"
+                                                              _c(
+                                                                "v-icon",
+                                                                {
+                                                                  staticClass:
+                                                                    "primary--text"
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "fa-edit"
+                                                                  )
+                                                                ]
+                                                              ),
+                                                              _vm._v(" "),
+                                                              _c(
+                                                                "span",
+                                                                {
+                                                                  staticClass:
+                                                                    "mx-2"
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "Redaguoti"
+                                                                  )
+                                                                ]
                                                               )
-                                                            ]
-                                                          ),
-                                                          _vm._v(" "),
-                                                          _c(
-                                                            "span",
-                                                            {
-                                                              staticClass:
-                                                                "mx-2"
-                                                            },
-                                                            [
-                                                              _vm._v(
-                                                                "Nauja kortelė"
-                                                              )
-                                                            ]
+                                                            ],
+                                                            1
                                                           )
-                                                        ],
-                                                        1
-                                                      ),
+                                                        : _vm._e(),
                                                       _vm._v(" "),
-                                                      _c(
-                                                        "v-btn",
-                                                        {
-                                                          attrs: {
-                                                            outline: ""
-                                                          },
-                                                          on: {
-                                                            click: function(
-                                                              $event
-                                                            ) {
-                                                              _vm.deleteUser(
-                                                                user
+                                                      _vm.$user.UserRole ==
+                                                      "Administratorius"
+                                                        ? _c(
+                                                            "v-btn",
+                                                            {
+                                                              attrs: {
+                                                                outline: ""
+                                                              },
+                                                              on: {
+                                                                click: function(
+                                                                  $event
+                                                                ) {
+                                                                  _vm.show(
+                                                                    "add-user-card-modal",
+                                                                    {
+                                                                      id:
+                                                                        user.UserID
+                                                                    }
+                                                                  )
+                                                                }
+                                                              }
+                                                            },
+                                                            [
+                                                              _c(
+                                                                "v-icon",
+                                                                {
+                                                                  staticClass:
+                                                                    "primary--text"
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "fa-id-card"
+                                                                  )
+                                                                ]
+                                                              ),
+                                                              _vm._v(" "),
+                                                              _c(
+                                                                "span",
+                                                                {
+                                                                  staticClass:
+                                                                    "mx-2"
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "Nauja kortelė"
+                                                                  )
+                                                                ]
                                                               )
-                                                            }
-                                                          }
-                                                        },
-                                                        [
-                                                          _c(
-                                                            "v-icon",
-                                                            {
-                                                              staticClass:
-                                                                "primary--text"
-                                                            },
-                                                            [_vm._v("fa-trash")]
-                                                          ),
-                                                          _vm._v(" "),
-                                                          _c(
-                                                            "span",
-                                                            {
-                                                              staticClass:
-                                                                "mx-2"
-                                                            },
-                                                            [_vm._v("Ištrinti")]
+                                                            ],
+                                                            1
                                                           )
-                                                        ],
-                                                        1
-                                                      )
+                                                        : _vm._e(),
+                                                      _vm._v(" "),
+                                                      _vm.$user.UserRole ==
+                                                      "Administratorius"
+                                                        ? _c(
+                                                            "v-btn",
+                                                            {
+                                                              attrs: {
+                                                                outline: ""
+                                                              },
+                                                              on: {
+                                                                click: function(
+                                                                  $event
+                                                                ) {
+                                                                  _vm.deleteUser(
+                                                                    user
+                                                                  )
+                                                                }
+                                                              }
+                                                            },
+                                                            [
+                                                              _c(
+                                                                "v-icon",
+                                                                {
+                                                                  staticClass:
+                                                                    "primary--text"
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "fa-trash"
+                                                                  )
+                                                                ]
+                                                              ),
+                                                              _vm._v(" "),
+                                                              _c(
+                                                                "span",
+                                                                {
+                                                                  staticClass:
+                                                                    "mx-2"
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "Ištrinti"
+                                                                  )
+                                                                ]
+                                                              )
+                                                            ],
+                                                            1
+                                                          )
+                                                        : _vm._e()
                                                     ],
                                                     1
                                                   )
@@ -97862,126 +97870,151 @@ var render = function() {
                                                 1
                                               ),
                                               _vm._v(" "),
-                                              _c(
-                                                "v-layout",
-                                                {
-                                                  attrs: {
-                                                    row: "",
-                                                    wrap: "",
-                                                    "align-center": "",
-                                                    "pa-2": "",
-                                                    "justify-end": ""
-                                                  }
-                                                },
-                                                [
-                                                  _c(
-                                                    "v-flex",
+                                              _vm.$user.UserRole ==
+                                              "Administratorius"
+                                                ? _c(
+                                                    "v-layout",
                                                     {
                                                       attrs: {
-                                                        shrink: "",
+                                                        row: "",
+                                                        wrap: "",
+                                                        "align-center": "",
+                                                        "pa-2": "",
                                                         "justify-end": ""
                                                       }
                                                     },
                                                     [
                                                       _c(
-                                                        "v-btn",
-                                                        {
-                                                          attrs: { outline: "" }
-                                                        },
-                                                        [
-                                                          _c(
-                                                            "v-icon",
-                                                            {
-                                                              staticClass:
-                                                                "primary--text"
-                                                            },
-                                                            [
-                                                              _vm._v(
-                                                                "fa-history"
-                                                              )
-                                                            ]
-                                                          ),
-                                                          _vm._v(" "),
-                                                          _c(
-                                                            "span",
-                                                            {
-                                                              staticClass:
-                                                                "mx-2"
-                                                            },
-                                                            [_vm._v("Istorija")]
-                                                          )
-                                                        ],
-                                                        1
-                                                      ),
-                                                      _vm._v(" "),
-                                                      _c(
-                                                        "v-btn",
-                                                        {
-                                                          attrs: { outline: "" }
-                                                        },
-                                                        [
-                                                          _c(
-                                                            "v-icon",
-                                                            {
-                                                              staticClass:
-                                                                "primary--text"
-                                                            },
-                                                            [
-                                                              _vm._v(
-                                                                "fa-toolbox"
-                                                              )
-                                                            ]
-                                                          ),
-                                                          _vm._v(" "),
-                                                          _c(
-                                                            "span",
-                                                            {
-                                                              staticClass:
-                                                                "mx-2"
-                                                            },
-                                                            [_vm._v("Įrankiai")]
-                                                          )
-                                                        ],
-                                                        1
-                                                      ),
-                                                      _vm._v(" "),
-                                                      _c(
-                                                        "v-btn",
+                                                        "v-flex",
                                                         {
                                                           attrs: {
-                                                            outline: ""
-                                                          },
-                                                          on: {
-                                                            click: function(
-                                                              $event
-                                                            ) {
-                                                              _vm.show(
-                                                                "restore-user-modal",
-                                                                {
-                                                                  id:
-                                                                    user.UserID
-                                                                }
-                                                              )
-                                                            }
+                                                            shrink: "",
+                                                            "justify-end": ""
                                                           }
                                                         },
                                                         [
                                                           _c(
-                                                            "v-icon",
+                                                            "v-btn",
                                                             {
-                                                              staticClass:
-                                                                "primary--text"
+                                                              attrs: {
+                                                                outline: ""
+                                                              }
                                                             },
-                                                            [_vm._v("fa-undo")]
+                                                            [
+                                                              _c(
+                                                                "v-icon",
+                                                                {
+                                                                  staticClass:
+                                                                    "primary--text"
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "fa-history"
+                                                                  )
+                                                                ]
+                                                              ),
+                                                              _vm._v(" "),
+                                                              _c(
+                                                                "span",
+                                                                {
+                                                                  staticClass:
+                                                                    "mx-2"
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "Istorija"
+                                                                  )
+                                                                ]
+                                                              )
+                                                            ],
+                                                            1
                                                           ),
                                                           _vm._v(" "),
                                                           _c(
-                                                            "span",
+                                                            "v-btn",
                                                             {
-                                                              staticClass:
-                                                                "mx-2"
+                                                              attrs: {
+                                                                outline: ""
+                                                              }
                                                             },
-                                                            [_vm._v("Atkurti")]
+                                                            [
+                                                              _c(
+                                                                "v-icon",
+                                                                {
+                                                                  staticClass:
+                                                                    "primary--text"
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "fa-toolbox"
+                                                                  )
+                                                                ]
+                                                              ),
+                                                              _vm._v(" "),
+                                                              _c(
+                                                                "span",
+                                                                {
+                                                                  staticClass:
+                                                                    "mx-2"
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "Įrankiai"
+                                                                  )
+                                                                ]
+                                                              )
+                                                            ],
+                                                            1
+                                                          ),
+                                                          _vm._v(" "),
+                                                          _c(
+                                                            "v-btn",
+                                                            {
+                                                              attrs: {
+                                                                outline: ""
+                                                              },
+                                                              on: {
+                                                                click: function(
+                                                                  $event
+                                                                ) {
+                                                                  _vm.show(
+                                                                    "restore-user-modal",
+                                                                    {
+                                                                      id:
+                                                                        user.UserID
+                                                                    }
+                                                                  )
+                                                                }
+                                                              }
+                                                            },
+                                                            [
+                                                              _c(
+                                                                "v-icon",
+                                                                {
+                                                                  staticClass:
+                                                                    "primary--text"
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "fa-undo"
+                                                                  )
+                                                                ]
+                                                              ),
+                                                              _vm._v(" "),
+                                                              _c(
+                                                                "span",
+                                                                {
+                                                                  staticClass:
+                                                                    "mx-2"
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "Atkurti"
+                                                                  )
+                                                                ]
+                                                              )
+                                                            ],
+                                                            1
                                                           )
                                                         ],
                                                         1
@@ -97989,9 +98022,7 @@ var render = function() {
                                                     ],
                                                     1
                                                   )
-                                                ],
-                                                1
-                                              )
+                                                : _vm._e()
                                             ],
                                             1
                                           )
@@ -98641,25 +98672,27 @@ var render = function() {
                         ]
                       ),
                       _vm._v(" "),
-                      _c("v-flex", { attrs: { shrink: "" } }, [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "headline",
-                            on: {
-                              click: function($event) {
-                                _vm.show("add-object-modal")
-                              }
-                            }
-                          },
-                          [
-                            _c("span", {
-                              staticClass:
-                                "fas fa-plus primary--text p-2 btn-func-misc ml-2 mr-2 mb-0 mt-0"
-                            })
-                          ]
-                        )
-                      ])
+                      _vm.$user.UserRole == "Administratorius"
+                        ? _c("v-flex", { attrs: { shrink: "" } }, [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "headline",
+                                on: {
+                                  click: function($event) {
+                                    _vm.show("add-object-modal")
+                                  }
+                                }
+                              },
+                              [
+                                _c("span", {
+                                  staticClass:
+                                    "fas fa-plus primary--text p-2 btn-func-misc ml-2 mr-2 mb-0 mt-0"
+                                })
+                              ]
+                            )
+                          ])
+                        : _vm._e()
                     ],
                     1
                   ),
@@ -101744,27 +101777,30 @@ var render = function() {
                                                         "justify-center layout px-0"
                                                     },
                                                     [
-                                                      _c(
-                                                        "v-btn",
-                                                        {
-                                                          on: {
-                                                            click: function(
-                                                              $event
-                                                            ) {
-                                                              _vm.deleteItem(
-                                                                props.item,
-                                                                i
-                                                              )
-                                                            }
-                                                          }
-                                                        },
-                                                        [
-                                                          _c("v-icon", [
-                                                            _vm._v("delete")
-                                                          ])
-                                                        ],
-                                                        1
-                                                      )
+                                                      _vm.$user.UserRole ==
+                                                      "Administratorius"
+                                                        ? _c(
+                                                            "v-btn",
+                                                            {
+                                                              on: {
+                                                                click: function(
+                                                                  $event
+                                                                ) {
+                                                                  _vm.deleteItem(
+                                                                    props.item,
+                                                                    i
+                                                                  )
+                                                                }
+                                                              }
+                                                            },
+                                                            [
+                                                              _c("v-icon", [
+                                                                _vm._v("delete")
+                                                              ])
+                                                            ],
+                                                            1
+                                                          )
+                                                        : _vm._e()
                                                     ],
                                                     1
                                                   )
@@ -101800,124 +101836,139 @@ var render = function() {
                                         2
                                       ),
                                       _vm._v(" "),
-                                      _c(
-                                        "v-layout",
-                                        {
-                                          attrs: {
-                                            row: "",
-                                            wrap: "",
-                                            "align-center": "",
-                                            "pa-2": "",
-                                            "justify-end": ""
-                                          }
-                                        },
-                                        [
-                                          _c(
-                                            "v-btn",
+                                      _vm.$user.UserRole == "Administratorius"
+                                        ? _c(
+                                            "v-layout",
                                             {
-                                              attrs: { outline: "" },
-                                              on: {
-                                                click: function($event) {
-                                                  _vm.show(
-                                                    "confirm-reservation-with-card-modal",
-                                                    {
-                                                      id:
-                                                        reservation.ReservationID,
-                                                      user:
-                                                        reservation.recipient[0]
-                                                          .Username
+                                              attrs: {
+                                                row: "",
+                                                wrap: "",
+                                                "align-center": "",
+                                                "pa-2": "",
+                                                "justify-end": ""
+                                              }
+                                            },
+                                            [
+                                              _c(
+                                                "v-btn",
+                                                {
+                                                  attrs: { outline: "" },
+                                                  on: {
+                                                    click: function($event) {
+                                                      _vm.show(
+                                                        "confirm-reservation-with-card-modal",
+                                                        {
+                                                          id:
+                                                            reservation.ReservationID,
+                                                          user:
+                                                            reservation
+                                                              .recipient[0]
+                                                              .Username
+                                                        }
+                                                      )
                                                     }
-                                                  )
-                                                }
-                                              }
-                                            },
-                                            [
-                                              _c(
-                                                "v-icon",
-                                                {
-                                                  staticClass: "primary--text"
+                                                  }
                                                 },
-                                                [_vm._v("fa-id-card")]
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "span",
-                                                { staticClass: "mx-2" },
-                                                [_vm._v("Patvirtinti kortele")]
-                                              )
-                                            ],
-                                            1
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-btn",
-                                            {
-                                              attrs: { outline: "" },
-                                              on: {
-                                                click: function($event) {
-                                                  _vm.show(
-                                                    "confirm-reservation-with-sign-modal",
+                                                [
+                                                  _c(
+                                                    "v-icon",
                                                     {
-                                                      id:
-                                                        reservation.ReservationID,
-                                                      user:
-                                                        reservation.recipient[0]
-                                                          .Username
+                                                      staticClass:
+                                                        "primary--text"
+                                                    },
+                                                    [_vm._v("fa-id-card")]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "span",
+                                                    { staticClass: "mx-2" },
+                                                    [
+                                                      _vm._v(
+                                                        "Patvirtinti kortele"
+                                                      )
+                                                    ]
+                                                  )
+                                                ],
+                                                1
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-btn",
+                                                {
+                                                  attrs: { outline: "" },
+                                                  on: {
+                                                    click: function($event) {
+                                                      _vm.show(
+                                                        "confirm-reservation-with-sign-modal",
+                                                        {
+                                                          id:
+                                                            reservation.ReservationID,
+                                                          user:
+                                                            reservation
+                                                              .recipient[0]
+                                                              .Username
+                                                        }
+                                                      )
                                                     }
-                                                  )
-                                                }
-                                              }
-                                            },
-                                            [
-                                              _c(
-                                                "v-icon",
-                                                {
-                                                  staticClass: "primary--text"
+                                                  }
                                                 },
-                                                [_vm._v("fa-signature")]
+                                                [
+                                                  _c(
+                                                    "v-icon",
+                                                    {
+                                                      staticClass:
+                                                        "primary--text"
+                                                    },
+                                                    [_vm._v("fa-signature")]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "span",
+                                                    { staticClass: "mx-2" },
+                                                    [
+                                                      _vm._v(
+                                                        "Patvirtinti parašu"
+                                                      )
+                                                    ]
+                                                  )
+                                                ],
+                                                1
                                               ),
                                               _vm._v(" "),
                                               _c(
-                                                "span",
-                                                { staticClass: "mx-2" },
-                                                [_vm._v("Patvirtinti parašu")]
-                                              )
-                                            ],
-                                            1
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-btn",
-                                            {
-                                              attrs: { outline: "" },
-                                              on: {
-                                                click: function($event) {
-                                                  _vm.deleteReservation(
-                                                    reservation
-                                                  )
-                                                }
-                                              }
-                                            },
-                                            [
-                                              _c(
-                                                "v-icon",
+                                                "v-btn",
                                                 {
-                                                  staticClass: "primary--text"
+                                                  attrs: { outline: "" },
+                                                  on: {
+                                                    click: function($event) {
+                                                      _vm.deleteReservation(
+                                                        reservation
+                                                      )
+                                                    }
+                                                  }
                                                 },
-                                                [_vm._v("fa-trash")]
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "span",
-                                                { staticClass: "mx-2" },
-                                                [_vm._v("Ištrinti")]
+                                                [
+                                                  _c(
+                                                    "v-icon",
+                                                    {
+                                                      staticClass:
+                                                        "primary--text"
+                                                    },
+                                                    [_vm._v("fa-trash")]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "span",
+                                                    { staticClass: "mx-2" },
+                                                    [_vm._v("Ištrinti")]
+                                                  )
+                                                ],
+                                                1
                                               )
                                             ],
                                             1
                                           )
-                                        ],
-                                        1
-                                      )
+                                        : _vm._e()
                                     ],
                                     1
                                   )
@@ -103815,9 +103866,8 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
           switch (_context.prev = _context.next) {
             case 0:
               this.loadItems();
-              if (typeof this.user === 'undefined') this.getUser();
 
-            case 2:
+            case 1:
             case 'end':
               return _context.stop();
           }
@@ -103832,11 +103882,6 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
     return created;
   }(),
 
-  computed: {
-    user: function user() {
-      return this.$store.state.user;
-    }
-  },
   methods: {
     show: function show(name) {
       this.$modal.show(name);
@@ -103866,15 +103911,6 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
       var timeDiff = Math.abs(currentDate.getTime() - dateRented.getTime());
       var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
       return diffDays;
-    },
-    getUser: function getUser() {
-      var _this2 = this;
-
-      this.$http.get('/user/me').then(function (response) {
-        _this2.$store.commit("setUser", response.data);
-      }).catch(function (error) {
-        console.log(error.response.data.errors);
-      });
     }
   },
   components: {
@@ -104397,7 +104433,7 @@ var render = function() {
                         ])
                       ]),
                       _vm._v(" "),
-                      _vm.user.UserRole == "Administratorius"
+                      _vm.$user.UserRole == "Administratorius"
                         ? _c(
                             "v-flex",
                             {
@@ -104722,163 +104758,158 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        var _this = this;
+  data: function data() {
+    var _this = this;
 
-        return {
-            itemData: '',
-            note: '',
-            readonly: true,
-            isLoading: true,
-            fullPage: false,
-            dropdownMeniu: [{ text: 'Priskirti čipą', click: function click() {
-                    _this.show('add-item-chip-modal');
-                } }, { text: 'Pervadinti', click: function click() {
-                    _this.show('rename-item-modal');
-                } }, { text: 'Keisti identifikacinį numerį', click: function click() {
-                    _this.show('change-item-idnumber-modal');
-                } }, { text: 'Keisti garantinį laikotarpį', click: function click() {
-                    _this.$modal.show('change-item-warranty-modal', { itemID: _this.itemData.ItemID, warranty: _this.itemData.ItemWarranty });
-                } }, { text: 'Ištrinti', click: function click() {
-                    _this.deleteItem();
-                } }]
-        };
-    },
+    return {
+      itemData: '',
+      note: '',
+      readonly: true,
+      isLoading: true,
+      fullPage: false,
+      dropdownMeniu: [{ text: 'Priskirti čipą', click: function click() {
+          _this.show('add-item-chip-modal');
+        } }, { text: 'Pervadinti', click: function click() {
+          _this.show('rename-item-modal');
+        } }, { text: 'Keisti identifikacinį numerį', click: function click() {
+          _this.show('change-item-idnumber-modal');
+        } }, { text: 'Keisti garantinį laikotarpį', click: function click() {
+          _this.$modal.show('change-item-warranty-modal', { itemID: _this.itemData.ItemID, warranty: _this.itemData.ItemWarranty });
+        } }, { text: 'Ištrinti', click: function click() {
+          _this.deleteItem();
+        } }]
+    };
+  },
 
-    props: {
-        itemProp: {
-            required: false,
-            type: Object
-        }
-    },
-    created: function created() {
-        if (this.itemProp == null) {
-            this.loadItem();
-        } else {
-            this.itemData = this.itemProp;
-            this.note = this.itemData.RentedItemNote;
-        }
-    },
-    mounted: function mounted() {
-        this.isLoading = false;
-    },
-
-    methods: {
-        show: function show(name) {
-            var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-            this.$modal.show(name, params);
-        },
-
-        loadItem: function loadItem() {
-            var _this2 = this;
-
-            //this.isLoading = true
-            return this.$http.get('/rented/get/' + this.itemData.RentedItemID).then(function (response) {
-                if (response.status == 200) {
-                    _this2.itemData = response.data;
-                    _this2.note = _this2.itemData.note;
-                }
-            }).catch(function (error) {
-                if (error.response.status == 422) {
-                    __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
-                    _this2.isLoading = false;
-                } else {
-                    __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()('Klaida', error.response.data.message, 'error');
-                }
-            });
-        },
-        unAssign: function unAssign() {
-            var _this3 = this;
-
-            __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()({
-                title: 'Nuomotas įrankis grąžintas į sandėlį?',
-                icon: 'warning',
-                dangerMode: true,
-                buttons: {
-                    del: { text: 'Gražintas', value: true },
-                    cancel: { text: 'Atšaukti' }
-                }
-            }).then(function (value) {
-                if (value) {
-                    _this3.$http.post('/rented/assign', { id: _this3.itemData.RentedItemID }).then(function (response) {
-                        if (response.status == 200) {
-                            __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()(response.data.message, response.data.success, "success");
-                            _this3.loadItem();
-                        }
-                    }).catch(function (error) {
-                        if (error.response.status == 422) {
-                            __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
-                        } else {
-                            __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()("Klaida", error.response.data.message, "error");
-                        }
-                    });
-                }
-            });
-        },
-        editNote: function editNote() {
-            var _this4 = this;
-
-            this.$http.post('/rented/edit', { id: this.itemData.RentedItemID, note: this.note }).then(function (response) {
-                if (response.status == 200) {
-                    _this4.readonly = true;
-                }
-            }).catch(function (error) {
-                if (error.response.status == 422) {
-                    __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
-                } else {
-                    __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()("Klaida", error.response.data.message, "error");
-                }
-            });
-        },
-        days: function days(date) {
-            var dateRented = new Date(date);
-            var currentDate = new Date();
-            if (dateRented > currentDate) return 0;
-            var timeDiff = Math.abs(currentDate.getTime() - dateRented.getTime());
-            var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-            return diffDays;
-        },
-        returnItem: function returnItem() {
-            var _this5 = this;
-
-            __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()({
-                title: 'Įrankio nuomos užbaigimas',
-                text: 'Ar tikrai norite užbaigti įrankio nuomą?',
-                icon: 'warning',
-                dangerMode: true,
-                buttons: {
-                    del: { text: 'Taip', value: true },
-                    cancel: { text: 'Atšaukti' }
-                }
-            }).then(function (value) {
-                if (value) {
-                    _this5.$http.post('/rented/return', { id: _this5.itemData.RentedItemID }).then(function (response) {
-                        if (response.status == 200) {
-                            __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()(response.data.message, response.data.success, "success");
-                            _this5.back();
-                        }
-                    }).catch(function (error) {
-                        if (error.response.status == 422) {
-                            __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
-                        } else {
-                            __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()('Klaida', error.response.data.message, 'error');
-                        }
-                    });
-                }
-            });
-        },
-        back: function back() {
-            var previousRoute = this.$store.state.routesHistory[0].route;
-            var previousRouteParams = this.$store.state.routesHistory[0].params;
-            this.$router.push({ name: previousRoute, params: previousRouteParams });
-        }
-    },
-    components: {
-        Loading: __WEBPACK_IMPORTED_MODULE_1_vue_loading_overlay___default.a,
-        AssignRentedItemModal: __WEBPACK_IMPORTED_MODULE_3__modals_rent_AssignRentedItem_vue___default.a,
-        EditRentedItem: __WEBPACK_IMPORTED_MODULE_4__modals_rent_EditRentedItem_vue___default.a
+  props: {
+    itemProp: {
+      required: false,
+      type: Object
     }
+  },
+  created: function created() {
+    if (this.itemProp == null) {
+      this.loadItem();
+    } else {
+      this.itemData = this.itemProp;
+      this.note = this.itemData.RentedItemNote;
+    }
+  },
+  mounted: function mounted() {
+    this.isLoading = false;
+  },
+
+  methods: {
+    show: function show(name) {
+      var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+      this.$modal.show(name, params);
+    },
+
+    loadItem: function loadItem() {
+      var _this2 = this;
+
+      //this.isLoading = true
+      return this.$http.get('/rented/get/' + this.itemData.RentedItemID).then(function (response) {
+        if (response.status == 200) {
+          _this2.itemData = response.data;
+          _this2.note = _this2.itemData.note;
+        }
+      }).catch(function (error) {
+        if (error.response.status == 422) {
+          __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
+          _this2.isLoading = false;
+        } else {
+          __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()('Klaida', error.response.data.message, 'error');
+        }
+      });
+    },
+    unAssign: function unAssign() {
+      var _this3 = this;
+
+      __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()({
+        title: 'Nuomotas įrankis grąžintas į sandėlį?',
+        icon: 'warning',
+        dangerMode: true,
+        buttons: {
+          del: { text: 'Gražintas', value: true },
+          cancel: { text: 'Atšaukti' }
+        }
+      }).then(function (value) {
+        if (value) {
+          _this3.$http.post('/rented/assign', { id: _this3.itemData.RentedItemID }).then(function (response) {
+            if (response.status == 200) {
+              __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()(response.data.message, response.data.success, "success");
+              _this3.loadItem();
+            }
+          }).catch(function (error) {
+            if (error.response.status == 422) {
+              __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
+            } else {
+              __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()("Klaida", error.response.data.message, "error");
+            }
+          });
+        }
+      });
+    },
+    editNote: function editNote() {
+      var _this4 = this;
+
+      this.$http.post('/rented/edit', { id: this.itemData.RentedItemID, note: this.note }).then(function (response) {
+        if (response.status == 200) {
+          _this4.readonly = true;
+        }
+      }).catch(function (error) {
+        if (error.response.status == 422) {
+          __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
+        } else {
+          __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()("Klaida", error.response.data.message, "error");
+        }
+      });
+    },
+    days: function days(date) {
+      var dateRented = new Date(date);
+      var currentDate = new Date();
+      if (dateRented > currentDate) return 0;
+      var timeDiff = Math.abs(currentDate.getTime() - dateRented.getTime());
+      var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+      return diffDays;
+    },
+    returnItem: function returnItem() {
+      var _this5 = this;
+
+      __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()({
+        title: 'Įrankio nuomos užbaigimas',
+        text: 'Ar tikrai norite užbaigti įrankio nuomą?',
+        icon: 'warning',
+        dangerMode: true,
+        buttons: {
+          del: { text: 'Taip', value: true },
+          cancel: { text: 'Atšaukti' }
+        }
+      }).then(function (value) {
+        if (value) {
+          _this5.$http.post('/rented/return', { id: _this5.itemData.RentedItemID }).then(function (response) {
+            if (response.status == 200) {
+              __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()(response.data.message, response.data.success, "success");
+              _this5.back();
+            }
+          }).catch(function (error) {
+            if (error.response.status == 422) {
+              __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
+            } else {
+              __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()('Klaida', error.response.data.message, 'error');
+            }
+          });
+        }
+      });
+    }
+  },
+  components: {
+    Loading: __WEBPACK_IMPORTED_MODULE_1_vue_loading_overlay___default.a,
+    AssignRentedItemModal: __WEBPACK_IMPORTED_MODULE_3__modals_rent_AssignRentedItem_vue___default.a,
+    EditRentedItem: __WEBPACK_IMPORTED_MODULE_4__modals_rent_EditRentedItem_vue___default.a
+  }
 });
 
 /***/ }),
@@ -105614,7 +105645,7 @@ var render = function() {
                               staticClass: "headline",
                               on: {
                                 click: function($event) {
-                                  _vm.back()
+                                  _vm.$back()
                                 }
                               }
                             },
@@ -106415,11 +106446,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).catch(function (error) {
                 __WEBPACK_IMPORTED_MODULE_0_sweetalert___default()('Klaida', error.response.data.message, 'error');
             });
-        },
-        back: function back() {
-            var previousRoute = this.$store.state.routesHistory[0].route;
-            var previousRouteParams = this.$store.state.routesHistory[0].params;
-            this.$router.push({ name: previousRoute, params: previousRouteParams });
         }
     },
     components: {
@@ -106489,7 +106515,7 @@ var render = function() {
                               staticClass: "headline",
                               on: {
                                 click: function($event) {
-                                  _vm.back()
+                                  _vm.$back()
                                 }
                               }
                             },
@@ -106615,7 +106641,8 @@ var store = new __WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* default */].Store({
   state: {
     recentCode: null,
     user: null,
-    routesHistory: []
+    routesHistory: [],
+    USER_API_CALL_LOADING: false
   },
   mutations: {
     newcode: function newcode(state, code) {
@@ -106630,6 +106657,9 @@ var store = new __WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* default */].Store({
     addRouteToHistory: function addRouteToHistory(state, route) {
       state.routesHistory.unshift(route);
       if (state.routesHistory.length > 10) state.routesHistory.splice(-1, 1);
+    },
+    USER_API_CALL_LOADING: function USER_API_CALL_LOADING(state, val) {
+      state.USER_API_CALL_LOADING = val;
     }
   },
   actions: {},
@@ -106944,8 +106974,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 
 
@@ -107009,10 +107037,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         } }, { text: 'Įrankių grąžinimas', click: function click() {
           _this.$router.push({ name: 'return' });
         } }],
-      settingsDropdownMeniu: [{ text: 'Keisti slaptažodį', click: function click() {
+      settingsDropdownMeniu: [{ text: 'Mano įrankiai', click: function click() {
+          _this.$router.push({ name: 'userWithdrawals', params: { userID: _this.$user.UserID } });
+        } }, { text: 'Keisti slaptažodį', click: function click() {
           _this.$modal.show('change-password-modal');
         } }, { text: 'Atsijungti', click: function click() {
-          _this.$auth.logout();
+          _this.$store.commit('setUser', null);_this.$auth.logout();
         } }],
       snackbar: false,
       y: 'top',
@@ -107030,9 +107060,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     Echo.channel('code-channel').listen('ReceivedCode', function (e) {
       console.log("Code received");
-      if (e.userID == _this2.$currentUser.UserID) _this2.$store.commit('newcode', e.code);
+      if (e.userID == _this2.$user.UserID) _this2.$store.commit('newcode', e.code);
     });
-    console.log(this.$currentUser);
   },
 
   computed: {
@@ -107435,167 +107464,317 @@ var render = function() {
           _vm._v(" "),
           _c("ChangePasswordModal"),
           _vm._v(" "),
-          _vm.$currentUser
+          _vm.$auth.check() && _vm.$user
             ? _c(
-                "div",
+                "v-navigation-drawer",
+                {
+                  attrs: { clipped: "", fixed: "", app: "" },
+                  model: {
+                    value: _vm.drawer,
+                    callback: function($$v) {
+                      _vm.drawer = $$v
+                    },
+                    expression: "drawer"
+                  }
+                },
                 [
-                  _vm.$auth.check()
-                    ? _c(
-                        "v-navigation-drawer",
-                        {
-                          attrs: { clipped: "", fixed: "", app: "" },
-                          model: {
-                            value: _vm.drawer,
-                            callback: function($$v) {
-                              _vm.drawer = $$v
-                            },
-                            expression: "drawer"
-                          }
-                        },
+                  _c(
+                    "v-list",
+                    { attrs: { dense: "" } },
+                    _vm._l(_vm.meniuItems, function(item) {
+                      return _c(
+                        "v-flex",
+                        { key: item.text },
                         [
-                          _c(
-                            "v-list",
-                            { attrs: { dense: "" } },
-                            _vm._l(_vm.meniuItems, function(item) {
-                              return _c(
-                                "v-flex",
-                                { key: item.text },
+                          item.children
+                            ? _c(
+                                "v-list-group",
+                                {
+                                  key: item.text,
+                                  attrs: {
+                                    "append-icon": item.model
+                                      ? "keyboard_arrow_up"
+                                      : "keyboard_arrow_down"
+                                  },
+                                  model: {
+                                    value: item.model,
+                                    callback: function($$v) {
+                                      _vm.$set(item, "model", $$v)
+                                    },
+                                    expression: "item.model"
+                                  }
+                                },
                                 [
-                                  item.children
-                                    ? _c(
-                                        "v-list-group",
-                                        {
-                                          key: item.text,
-                                          attrs: {
-                                            "append-icon": item.model
-                                              ? "keyboard_arrow_up"
-                                              : "keyboard_arrow_down"
-                                          },
-                                          model: {
-                                            value: item.model,
-                                            callback: function($$v) {
-                                              _vm.$set(item, "model", $$v)
-                                            },
-                                            expression: "item.model"
-                                          }
-                                        },
+                                  _c(
+                                    "v-list-tile",
+                                    {
+                                      attrs: { slot: "activator", fluid: "" },
+                                      slot: "activator"
+                                    },
+                                    [
+                                      _c(
+                                        "v-list-tile-action",
                                         [
                                           _c(
-                                            "v-list-tile",
-                                            {
-                                              attrs: {
-                                                slot: "activator",
-                                                fluid: ""
-                                              },
-                                              slot: "activator"
-                                            },
-                                            [
-                                              _c(
-                                                "v-list-tile-action",
-                                                [
-                                                  _c(
-                                                    "v-icon",
-                                                    {
-                                                      staticClass:
-                                                        "primary--text"
-                                                    },
-                                                    [_vm._v(_vm._s(item.icon))]
-                                                  )
-                                                ],
-                                                1
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "v-list-tile-content",
-                                                [
-                                                  _c("v-list-tile-title", [
-                                                    _vm._v(_vm._s(item.text))
-                                                  ])
-                                                ],
-                                                1
-                                              )
-                                            ],
-                                            1
-                                          ),
-                                          _vm._v(" "),
-                                          _vm._l(item.children, function(
-                                            child,
-                                            i
-                                          ) {
-                                            return _c(
-                                              "v-list-tile",
-                                              {
-                                                key: i,
-                                                attrs: { fluid: "" },
-                                                on: { click: child.click }
-                                              },
-                                              [
-                                                child.icon
-                                                  ? _c(
-                                                      "v-list-tile-action",
-                                                      [
-                                                        _c("v-icon", [
-                                                          _vm._v(
-                                                            _vm._s(child.icon)
-                                                          )
-                                                        ])
-                                                      ],
-                                                      1
-                                                    )
-                                                  : _vm._e(),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "v-list-tile-content",
-                                                  [
-                                                    _c("v-list-tile-title", [
-                                                      _vm._v(
-                                                        "\n                    " +
-                                                          _vm._s(child.text) +
-                                                          "\n                  "
-                                                      )
-                                                    ])
-                                                  ],
-                                                  1
-                                                )
-                                              ],
-                                              1
-                                            )
-                                          })
+                                            "v-icon",
+                                            { staticClass: "primary--text" },
+                                            [_vm._v(_vm._s(item.icon))]
+                                          )
                                         ],
-                                        2
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-list-tile-content",
+                                        [
+                                          _c("v-list-tile-title", [
+                                            _vm._v(_vm._s(item.text))
+                                          ])
+                                        ],
+                                        1
                                       )
-                                    : !item.children
-                                      ? _c(
-                                          "v-list-tile",
-                                          { on: { click: item.click } },
-                                          [
-                                            _c(
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _vm._l(item.children, function(child, i) {
+                                    return _c(
+                                      "v-list-tile",
+                                      {
+                                        key: i,
+                                        attrs: { fluid: "" },
+                                        on: { click: child.click }
+                                      },
+                                      [
+                                        child.icon
+                                          ? _c(
                                               "v-list-tile-action",
                                               [
-                                                _c(
-                                                  "v-icon",
-                                                  {
-                                                    staticClass: "primary--text"
-                                                  },
-                                                  [_vm._v(_vm._s(item.icon))]
-                                                )
-                                              ],
-                                              1
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "v-list-tile-content",
-                                              [
-                                                _c("v-list-tile-title", [
-                                                  _vm._v(_vm._s(item.text))
+                                                _c("v-icon", [
+                                                  _vm._v(_vm._s(child.icon))
                                                 ])
                                               ],
                                               1
                                             )
+                                          : _vm._e(),
+                                        _vm._v(" "),
+                                        _c(
+                                          "v-list-tile-content",
+                                          [
+                                            _c("v-list-tile-title", [
+                                              _vm._v(
+                                                "\n                    " +
+                                                  _vm._s(child.text) +
+                                                  "\n                  "
+                                              )
+                                            ])
                                           ],
                                           1
                                         )
-                                      : _vm._e()
+                                      ],
+                                      1
+                                    )
+                                  })
+                                ],
+                                2
+                              )
+                            : !item.children
+                              ? _c(
+                                  "v-list-tile",
+                                  { on: { click: item.click } },
+                                  [
+                                    _c(
+                                      "v-list-tile-action",
+                                      [
+                                        _c(
+                                          "v-icon",
+                                          { staticClass: "primary--text" },
+                                          [_vm._v(_vm._s(item.icon))]
+                                        )
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "v-list-tile-content",
+                                      [
+                                        _c("v-list-tile-title", [
+                                          _vm._v(_vm._s(item.text))
+                                        ])
+                                      ],
+                                      1
+                                    )
+                                  ],
+                                  1
+                                )
+                              : _vm._e()
+                        ],
+                        1
+                      )
+                    })
+                  )
+                ],
+                1
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.$auth.check() && _vm.$user
+            ? _c(
+                "v-toolbar",
+                {
+                  staticClass: "white",
+                  attrs: { app: "", fixed: "", "clipped-left": "" }
+                },
+                [
+                  _c("v-toolbar-side-icon", {
+                    on: {
+                      click: function($event) {
+                        $event.stopPropagation()
+                        _vm.drawer = !_vm.drawer
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("v-toolbar-title", [
+                    _c("a", { attrs: { href: "/" } }, [
+                      _c("img", {
+                        staticClass: "logo mx-4",
+                        attrs: { src: "/media/logo.png", alt: "logo" }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    [
+                      _c("v-text-field", {
+                        staticClass: "hidden-sm-and-down",
+                        attrs: {
+                          flat: "",
+                          solo: "",
+                          "hide-details": "",
+                          "prepend-inner-icon": "search",
+                          label: "Paieška..."
+                        },
+                        on: { keydown: _vm.search },
+                        model: {
+                          value: _vm.searchQuery,
+                          callback: function($$v) {
+                            _vm.searchQuery = $$v
+                          },
+                          expression: "searchQuery"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.resultBox && _vm.searchResults
+                        ? _c(
+                            "div",
+                            {
+                              staticClass:
+                                "search-result-wrapper bg-dark border--primary"
+                            },
+                            [
+                              _c(
+                                "v-list",
+                                [
+                                  _vm._l(_vm.searchResults, function(
+                                    item,
+                                    index
+                                  ) {
+                                    return [
+                                      _c(
+                                        "v-list-tile",
+                                        {
+                                          key: index,
+                                          on: {
+                                            click: function($event) {
+                                              _vm.searchItem(item)
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "v-list-tile-content",
+                                            [
+                                              _c("v-list-tile-title", [
+                                                _vm._v(
+                                                  _vm._s(item.item.ItemName)
+                                                )
+                                              ]),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-list-tile-sub-title",
+                                                {
+                                                  staticClass: "text--primary"
+                                                },
+                                                [_vm._v(_vm._s(item.state))]
+                                              )
+                                            ],
+                                            1
+                                          )
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      index + 1 < _vm.searchResults.length
+                                        ? _c("v-divider", {
+                                            key: "divider-" + index,
+                                            staticClass: "ma-0"
+                                          })
+                                        : _vm._e()
+                                    ]
+                                  })
+                                ],
+                                2
+                              )
+                            ],
+                            1
+                          )
+                        : _vm._e()
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _vm.$user.UserRole == "Administratorius"
+                    ? _c(
+                        "v-menu",
+                        { attrs: { "offset-y": "" } },
+                        [
+                          _c(
+                            "v-btn",
+                            {
+                              staticClass: "mx-2",
+                              attrs: { slot: "activator", icon: "" },
+                              slot: "activator"
+                            },
+                            [
+                              _c(
+                                "v-icon",
+                                {
+                                  staticClass: "primary--text",
+                                  attrs: { medium: "" }
+                                },
+                                [_vm._v("shopping_cart")]
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-list",
+                            _vm._l(_vm.cartDropdownMeniu, function(
+                              item,
+                              index
+                            ) {
+                              return _c(
+                                "v-list-tile",
+                                { key: index, on: { click: item.click } },
+                                [
+                                  _c("v-list-tile-title", [
+                                    _vm._v(_vm._s(item.text))
+                                  ])
                                 ],
                                 1
                               )
@@ -107606,341 +107785,138 @@ var render = function() {
                       )
                     : _vm._e(),
                   _vm._v(" "),
-                  _vm.$auth.check()
-                    ? _c(
-                        "v-toolbar",
-                        {
-                          staticClass: "white",
-                          attrs: { app: "", fixed: "", "clipped-left": "" }
-                        },
-                        [
-                          _c("v-toolbar-side-icon", {
-                            on: {
-                              click: function($event) {
-                                $event.stopPropagation()
-                                _vm.drawer = !_vm.drawer
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("v-toolbar-title", [
-                            _c("a", { attrs: { href: "/" } }, [
-                              _c("img", {
-                                staticClass: "logo mx-4",
-                                attrs: { src: "/media/logo.png", alt: "logo" }
-                              })
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "div",
+                  _c(
+                    "v-menu",
+                    { attrs: { "offset-y": "" } },
+                    [
+                      _vm.$user && _vm.screenWidth > 650
+                        ? _c(
+                            "v-flex",
+                            {
+                              staticClass: "hover-bottom-border",
+                              attrs: { slot: "activator", shrink: "" },
+                              slot: "activator"
+                            },
                             [
-                              _c("v-text-field", {
-                                staticClass: "hidden-sm-and-down",
-                                attrs: {
-                                  flat: "",
-                                  solo: "",
-                                  "hide-details": "",
-                                  "prepend-inner-icon": "search",
-                                  label: "Paieška..."
-                                },
-                                on: { keydown: _vm.search },
-                                model: {
-                                  value: _vm.searchQuery,
-                                  callback: function($$v) {
-                                    _vm.searchQuery = $$v
-                                  },
-                                  expression: "searchQuery"
-                                }
-                              }),
-                              _vm._v(" "),
-                              _vm.resultBox && _vm.searchResults
-                                ? _c(
-                                    "div",
-                                    {
-                                      staticClass:
-                                        "search-result-wrapper bg-dark border--primary"
-                                    },
-                                    [
-                                      _c(
-                                        "v-list",
-                                        [
-                                          _vm._l(_vm.searchResults, function(
-                                            item,
-                                            index
-                                          ) {
-                                            return [
-                                              _c(
-                                                "v-list-tile",
-                                                {
-                                                  key: index,
-                                                  on: {
-                                                    click: function($event) {
-                                                      _vm.searchItem(item)
-                                                    }
-                                                  }
-                                                },
-                                                [
-                                                  _c(
-                                                    "v-list-tile-content",
-                                                    [
-                                                      _c("v-list-tile-title", [
-                                                        _vm._v(
-                                                          _vm._s(
-                                                            item.item.ItemName
-                                                          )
-                                                        )
-                                                      ]),
-                                                      _vm._v(" "),
-                                                      _c(
-                                                        "v-list-tile-sub-title",
-                                                        {
-                                                          staticClass:
-                                                            "text--primary"
-                                                        },
-                                                        [
-                                                          _vm._v(
-                                                            _vm._s(item.state)
-                                                          )
-                                                        ]
-                                                      )
-                                                    ],
-                                                    1
-                                                  )
-                                                ],
-                                                1
-                                              ),
-                                              _vm._v(" "),
-                                              index + 1 <
-                                              _vm.searchResults.length
-                                                ? _c("v-divider", {
-                                                    key: "divider-" + index,
-                                                    staticClass: "ma-0"
-                                                  })
-                                                : _vm._e()
-                                            ]
-                                          })
-                                        ],
-                                        2
-                                      )
-                                    ],
-                                    1
-                                  )
-                                : _vm._e()
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c("v-spacer"),
-                          _vm._v(" "),
-                          _vm.$currentUser.UserRole == "Administratorius"
-                            ? _c(
-                                "v-menu",
-                                { attrs: { "offset-y": "" } },
-                                [
-                                  _c(
-                                    "v-btn",
-                                    {
-                                      staticClass: "mx-2",
-                                      attrs: { slot: "activator", icon: "" },
-                                      slot: "activator"
-                                    },
-                                    [
-                                      _c(
-                                        "v-icon",
-                                        {
-                                          staticClass: "primary--text",
-                                          attrs: { medium: "" }
-                                        },
-                                        [_vm._v("shopping_cart")]
-                                      )
-                                    ],
-                                    1
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "v-list",
-                                    _vm._l(_vm.cartDropdownMeniu, function(
-                                      item,
-                                      index
-                                    ) {
-                                      return _c(
-                                        "v-list-tile",
-                                        {
-                                          key: index,
-                                          on: { click: item.click }
-                                        },
-                                        [
-                                          _c("v-list-tile-title", [
-                                            _vm._v(_vm._s(item.text))
-                                          ])
-                                        ],
-                                        1
-                                      )
-                                    })
-                                  )
-                                ],
-                                1
-                              )
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _c(
-                            "v-menu",
-                            { attrs: { "offset-y": "" } },
-                            [
-                              _vm.$currentUser && _vm.screenWidth > 650
-                                ? _c(
-                                    "v-flex",
-                                    {
-                                      staticClass: "hover-bottom-border",
-                                      attrs: { slot: "activator", shrink: "" },
-                                      slot: "activator"
-                                    },
-                                    [
-                                      _c(
-                                        "v-icon",
-                                        { staticClass: "primary--text pr-3" },
-                                        [_vm._v("fa-user")]
-                                      ),
-                                      _vm._v(_vm._s(_vm.$currentUser.Username)),
-                                      _c("v-icon", { staticClass: "pl-2" }, [
-                                        _vm._v("keyboard_arrow_down")
-                                      ])
-                                    ],
-                                    1
-                                  )
-                                : _c(
-                                    "v-btn",
-                                    {
-                                      attrs: { slot: "activator", icon: "" },
-                                      slot: "activator"
-                                    },
-                                    [
-                                      _c(
-                                        "v-icon",
-                                        { staticClass: "primary--text" },
-                                        [_vm._v("fa-user")]
-                                      )
-                                    ],
-                                    1
-                                  ),
-                              _vm._v(" "),
                               _c(
-                                "v-list",
-                                _vm._l(_vm.settingsDropdownMeniu, function(
-                                  item,
-                                  index
-                                ) {
-                                  return _c(
-                                    "v-list-tile",
-                                    { key: index, on: { click: item.click } },
-                                    [
-                                      _c("v-list-tile-title", [
-                                        _vm._v(_vm._s(item.text))
-                                      ])
-                                    ],
-                                    1
-                                  )
-                                })
-                              )
+                                "v-icon",
+                                { staticClass: "primary--text pr-3" },
+                                [_vm._v("fa-user")]
+                              ),
+                              _vm._v(_vm._s(_vm.$user.Username)),
+                              _c("v-icon", { staticClass: "pl-2" }, [
+                                _vm._v("keyboard_arrow_down")
+                              ])
                             ],
                             1
                           )
+                        : _c(
+                            "v-btn",
+                            {
+                              attrs: { slot: "activator", icon: "" },
+                              slot: "activator"
+                            },
+                            [
+                              _c("v-icon", { staticClass: "primary--text" }, [
+                                _vm._v("fa-user")
+                              ])
+                            ],
+                            1
+                          ),
+                      _vm._v(" "),
+                      _c(
+                        "v-list",
+                        _vm._l(_vm.settingsDropdownMeniu, function(
+                          item,
+                          index
+                        ) {
+                          return _c(
+                            "v-list-tile",
+                            { key: index, on: { click: item.click } },
+                            [
+                              _c("v-list-tile-title", [
+                                _vm._v(_vm._s(item.text))
+                              ])
+                            ],
+                            1
+                          )
+                        })
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _c(
+            "v-content",
+            [
+              _c(
+                "v-container",
+                { attrs: { fluid: "", "fill-height": "" } },
+                [
+                  !_vm.$auth.check() && _vm.$auth.ready()
+                    ? _c(
+                        "v-layout",
+                        { attrs: { "justify-center": "", "align-center": "" } },
+                        [
+                          !_vm.$auth.check() && _vm.$auth.ready()
+                            ? _c("Login", {
+                                on: {
+                                  loginSuccess: function($event) {
+                                    _vm.$getUser()
+                                  }
+                                }
+                              })
+                            : _vm._e()
                         ],
                         1
                       )
                     : _vm._e(),
                   _vm._v(" "),
-                  _c(
-                    "v-content",
-                    [
-                      _c(
-                        "v-container",
-                        { attrs: { fluid: "", "fill-height": "" } },
-                        [
-                          !_vm.$auth.check() && _vm.$auth.ready()
-                            ? _c(
-                                "v-layout",
-                                {
-                                  attrs: {
-                                    "justify-center": "",
-                                    "align-center": ""
-                                  }
-                                },
-                                [
-                                  !_vm.$auth.check() && _vm.$auth.ready()
-                                    ? _c("Login", {
-                                        on: {
-                                          loginSuccess: function($event) {
-                                            _vm.getUser()
-                                          }
-                                        }
-                                      })
-                                    : _vm._e()
-                                ],
-                                1
-                              )
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.$auth.check()
-                            ? _c(
-                                "v-layout",
-                                {
-                                  attrs: {
-                                    "justify-center": "",
-                                    "align-center": ""
-                                  }
-                                },
-                                [
-                                  _c(
-                                    "v-flex",
-                                    { attrs: { grow: "" } },
-                                    [_c("router-view")],
-                                    1
-                                  )
-                                ],
-                                1
-                              )
-                            : _vm._e()
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _vm.$auth.ready()
+                  _vm.$auth.check()
                     ? _c(
-                        "v-footer",
-                        { attrs: { app: "", fixed: "", "justify-center": "" } },
+                        "v-layout",
+                        { attrs: { "justify-center": "", "align-center": "" } },
                         [
                           _c(
-                            "v-layout",
-                            {
-                              attrs: {
-                                "justify-center": "",
-                                "align-center": ""
-                              }
-                            },
-                            [
-                              _c("v-flex", { attrs: { shrink: "" } }, [
-                                _c("span", { staticClass: "h5" }, [
-                                  _vm._v("Tool")
-                                ]),
-                                _c(
-                                  "span",
-                                  { staticClass: "h5 text-danger pr-2" },
-                                  [_vm._v("Tracker")]
-                                ),
-                                _c("span", [_vm._v("© 2018")])
-                              ])
-                            ],
+                            "v-flex",
+                            { attrs: { grow: "" } },
+                            [_c("router-view")],
                             1
                           )
                         ],
                         1
                       )
                     : _vm._e()
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _vm.$auth.ready()
+            ? _c(
+                "v-footer",
+                { attrs: { app: "", fixed: "", "justify-center": "" } },
+                [
+                  _c(
+                    "v-layout",
+                    { attrs: { "justify-center": "", "align-center": "" } },
+                    [
+                      _c("v-flex", { attrs: { shrink: "" } }, [
+                        _c("span", { staticClass: "h5" }, [_vm._v("Tool")]),
+                        _c("span", { staticClass: "h5 text-danger pr-2" }, [
+                          _vm._v("Tracker")
+                        ]),
+                        _c("span", [_vm._v("© 2018")])
+                      ])
+                    ],
+                    1
+                  )
                 ],
                 1
               )
@@ -107964,9 +107940,57 @@ if (false) {
 
 /***/ }),
 /* 249 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ({
+    computed: {
+        $user: function $user() {
+            return this.$store.state.user;
+        }
+    },
+    methods: {
+        $getUser: function $getUser() {
+            var _this = this;
+
+            if (this.$store) if (this.$store.state.user == null && !this.$store.state.USER_API_CALL_LOADING) {
+                this.$store.commit("USER_API_CALL_LOADING", true);
+                this.$http.get('/user/me').then(function (response) {
+                    _this.$store.commit("setUser", response.data);
+                    _this.$store.commit("USER_API_CALL_LOADING", false);
+                }).catch(function (error) {
+                    console.log(error.response.data.errors);
+                });
+            }
+        },
+        $back: function $back() {
+            var router = this.$router;
+            var store = this.$store;
+            this.$store.state.routesHistory.forEach(function (route, i, array) {
+                if (route.route == router.currentRoute.name) {
+                    array.splice(i, 1);
+                    return;
+                }
+                var previousRoute = store.state.routesHistory[0].route;
+                var previousRouteParams = store.state.routesHistory[0].params;
+                router.push({ name: previousRoute, params: previousRouteParams });
+            });
+        }
+    },
+    watch: {
+        '$auth.watch.loaded': {
+            handler: function handler(ready) {
+                if (ready) this.$getUser();
+            }
+        }
+    }
+});
+
+/***/ }),
+/* 250 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const tokenCache = __webpack_require__(250);
+const tokenCache = __webpack_require__(251);
 
 function getToken(options) {
   if (options.token) {
@@ -108000,10 +108024,10 @@ module.exports.tokenCache = tokenCache;
 
 
 /***/ }),
-/* 250 */
+/* 251 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const Lock = __webpack_require__(251);
+const Lock = __webpack_require__(252);
 
 module.exports = (getToken, options) => {
   const lock = Lock();
@@ -108055,7 +108079,7 @@ module.exports = (getToken, options) => {
 
 
 /***/ }),
-/* 251 */
+/* 252 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(setImmediate) {
@@ -108144,10 +108168,10 @@ module.exports = function () {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9).setImmediate))
 
 /***/ }),
-/* 252 */
+/* 253 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Auth = __webpack_require__(253)();
+var Auth = __webpack_require__(254)();
 
 module.exports = (function () {
 
@@ -108188,11 +108212,11 @@ module.exports = (function () {
 })();
 
 /***/ }),
-/* 253 */
+/* 254 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __utils  = __webpack_require__(254),
-    __token  = __webpack_require__(255),
+var __utils  = __webpack_require__(255),
+    __token  = __webpack_require__(256),
     __cookie = __webpack_require__(31)
 
 module.exports = function () {
@@ -108902,7 +108926,7 @@ module.exports = function () {
 
 
 /***/ }),
-/* 254 */
+/* 255 */
 /***/ (function(module, exports) {
 
 module.exports = (function (){
@@ -108984,7 +109008,7 @@ module.exports = (function (){
 
 
 /***/ }),
-/* 255 */
+/* 256 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __cookie = __webpack_require__(31);
@@ -109064,7 +109088,7 @@ module.exports = (function () {
 })();
 
 /***/ }),
-/* 256 */
+/* 257 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -109086,7 +109110,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 257 */
+/* 258 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -109152,7 +109176,7 @@ module.exports = {
 
 
 /***/ }),
-/* 258 */
+/* 259 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -109220,43 +109244,10 @@ module.exports = {
 };
 
 /***/ }),
-/* 259 */
+/* 260 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 260 */,
-/* 261 */,
-/* 262 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony default export */ __webpack_exports__["a"] = ({
-  computed: {
-    $currentUser: function $currentUser() {
-      return this.$store.state.user;
-    }
-  },
-  methods: {
-    getUser: function getUser() {
-      var _this = this;
-
-      this.$http.get('/user/me').then(function (response) {
-        _this.$store.commit("setUser", response.data);
-      }).catch(function (error) {
-        console.log(error.response.data.errors);
-      });
-    }
-  },
-  watch: {
-    '$auth.watch.loaded': {
-      handler: function handler(ready) {
-        if (ready) this.getUser();
-      }
-    }
-  }
-});
 
 /***/ })
 /******/ ]);

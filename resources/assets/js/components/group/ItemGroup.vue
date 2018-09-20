@@ -11,12 +11,12 @@
     <div class="card">
       <v-layout row wrap align-center class="card-header pb-0 pt-0 mx-0 secondary" v-if="items">
           <v-flex headline shrink justify-start align-content-center>
-              <a @click="$router.push({name: 'groups'})" class="headline"><span class="fa fa-arrow-left primary--text remove-all-margin p-2 btn-func-misc"></span></a>
+              <a @click="$back()" class="headline"><span class="fa fa-arrow-left primary--text remove-all-margin p-2 btn-func-misc"></span></a>
           </v-flex>
           <v-flex>
               <div class="text-center headline" v-if="itemGroup">{{itemGroup.ItemGroupName}}</div>
           </v-flex>
-          <v-flex shrink headline justify-end align-content-center v-if="user.UserRole =='Administratorius'">
+          <v-flex shrink headline justify-end align-content-center v-if="$user.UserRole =='Administratorius'">
               <a @click="show('create-item-modal')" class="headline"><span class="fas fa-plus primary--text p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"></span></a>
               <v-menu offset-y>
                 <a slot="activator" class="headline"><span class="fas fa-ellipsis-v primary--text p-2 ml-2 mr-2 mb-0 mt-0 btn-func-misc"></span></a>
@@ -78,13 +78,6 @@ import 'vue-loading-overlay/dist/vue-loading.min.css'
     },
     async created(){
         this.loadGroup().then(this.loadItems)
-        if(typeof this.user === 'undefined')
-        this.getUser()
-    },
-    computed:{
-      user: function(){
-        return this.$store.state.user
-      }
     },
     methods: {
         show (name) {
@@ -135,13 +128,6 @@ import 'vue-loading-overlay/dist/vue-loading.min.css'
               }
           }).catch(error => {
             swal('Klaida', error.response.data.message, 'error')
-          })
-        },
-        getUser(){
-          this.$http.get('/user/me').then(response => {
-            this.$store.commit("setUser", response.data)
-          }).catch(error => {
-            console.log(error.response.data.errors)
           })
         }
     },

@@ -12,7 +12,7 @@
                             Objektai
                         </div>
                     </v-flex>
-                    <v-flex shrink>
+                    <v-flex shrink v-if="$user.UserRole == 'Administratorius'">
                         <a @click="show('add-object-modal')" class="headline"><span class="fas fa-plus primary--text p-2 btn-func-misc ml-2 mr-2 mb-0 mt-0"></span></a>
                     </v-flex>
                 </v-layout>
