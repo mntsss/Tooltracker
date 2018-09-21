@@ -1,5 +1,5 @@
 <template>
-  <modal name="change-item-idnumber-modal"
+  <modal name="change-item-acquired-modal"
          height="auto"
          :adaptive="true"
          transition="pop-out"
@@ -9,12 +9,12 @@
          @before-close="beforeClose">
     <div class="card">
       <div class="card-header h5 secondary">
-          Keisti įrankio identifikacinį numerį <a @click="$modal.hide('change-item-idnumber-modal')" class="float-right mr-3"><span class="fas fa-times btn-func-misc"></span></a>
+          Keisti įrankio įsigijimo vietą <a @click="$modal.hide('change-item-acquired-modal')" class="float-right mr-3"><span class="fas fa-times btn-func-misc"></span></a>
       </div>
       <v-form>
       <v-layout>
         <v-flex xs12>
-          <v-text-field v-model="ident" label="Naujas identifikacinis numeris" type="text" max="25" class="mx-2"></v-text-field>
+          <v-text-field v-model="acquired" label="Naujas įsigijimo vieta" type="text" max="150" class="mx-2"></v-text-field>
         </v-flex>
       </v-layout>
       <v-layout justify-center align-bottom>
@@ -31,7 +31,7 @@ import swal from 'sweetalert'
 export default {
     data(){
         return {
-            ident: '',
+            acquired: null,
             itemID: null
         }
     },
@@ -39,11 +39,11 @@ export default {
     save: function(){
         this.$http.post('/item/edit/ident', {
             'id': this.itemID,
-            'idnumber': this.ident
+            'acquired': this.acquired
         }).then((response)=>{
             if(response.status == 200){
-                this.$parent.itemData.ItemIdNumber = this.ident;
-                this.$modal.hide('change-item-idnumber-modal')
+                this.$parent.itemData.ItemAcquiredFrom = this.acquired;
+                this.$modal.hide('change-item-acquired-modal')
                 swal(response.data.message, response.data.success, "success")
             }
         }).catch(error =>{

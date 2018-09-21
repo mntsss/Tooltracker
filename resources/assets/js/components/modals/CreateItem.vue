@@ -52,6 +52,14 @@
                     </div>
                 </div>
 
+                <div class="form-group mb-4">
+                    <label for="number" class="col-md-4 control-label">Įsigyta iš</label>
+
+                    <div class="col-md-6">
+                        <input id="acquired" type="text" class="form-control" name="idnumber" v-model="acquired" maxlength="150">
+                    </div>
+                </div>
+
                 <div class="form-group row mx-0">
                   <label class="col-auto control-label mb-4" for="consumable">
                     Suvartojama
@@ -110,6 +118,7 @@ export default {
             image: null,
             code: null,
             nocode: false,
+            acquired: null,
             idnumber: null,
             consumable: false,
             warranty_date: '',
@@ -149,6 +158,7 @@ export default {
             image: this.image,
             code: this.code,
             idnumber: this.idnumber,
+            acquired: this.acquired,
             consumable: this.consumable,
             nocode: this.nocode,
             warranty_date: this.format(this.warranty_date),
@@ -192,6 +202,7 @@ export default {
       this.code = null
       this.consumable = false
       this.nocode= false
+      this.acquired = null
       this.warranty_date = ''
       this.purchase_date= ''
       this.idnumber = null

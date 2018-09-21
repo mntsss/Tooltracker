@@ -23,15 +23,15 @@
             {{newItem.item.ItemName}} <a @click="cancelItemAddition()" class="float-right"><span class="fas fa-times btn-func-misc primary-text"></span></a>
         </div>
         <v-divider light></v-divider>
-        <v-layout row wrap v-if="newItem.item.ItemConsumable">
+        <v-layout justify-center class="border border-primary" row wrap v-if="newItem.item.ItemConsumable">
           <v-flex shrink>
-            <v-text-field type="number" v-model="newItem.quantity" placeholder="Paimamas kiekis"></v-text-field>
+            <v-text-field type="number" v-model="newItem.quantity" label="Kiekis" placeholder="Paimamas kiekis"></v-text-field>
           </v-flex>
         </v-layout>
         <v-layout row align-center justify-center v-if="!newItem.item.ItemConsumable">
           <v-flex shrink v-if="!newItem.image">
             <image-uploader :debug="0" :maxWidth="1024" :quality="0.7" :autoRotate=true outputFormat="verbose" :preview=false :className="['fileinput', { 'fileinput--loaded' : hasImage }]"
-              capture="environment" @input="setImage" @onUpload="loadingDialog" @onComplete="loadingDialog"></image-uploader>
+              accept="image/*;capture=camera" capture="camera" @input="setImage" @onUpload="loadingDialog" @onComplete="loadingDialog"></image-uploader>
           </v-flex>
           <v-flex shrink v-else-if="newItem.image">
             <img v-bind:src="newItem.image.dataUrl" alt="uploaded_image" class="uploaded-image" />
@@ -208,8 +208,15 @@ export default{
         this.hasImage = true
         this.newItem.image = file
     },
+    takeImage: function(){
+      imageCapture.takePhoto()
+      .then(blob => {
+        console.log(blob)
+      })
+      .catch(error => console.error('takePhoto() error:', error));
+    },
     loadingDialog: function(){
-      this.imageLoadingDialog = !this.imageLoadingDialog
+        this.imageLoadingDialog = !this.imageLoadingDialog
     },
     addToReservation: function(){
       this.reservedItems.push(JSON.parse(JSON.stringify(this.newItem)))

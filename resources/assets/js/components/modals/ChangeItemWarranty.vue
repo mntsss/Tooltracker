@@ -104,8 +104,4 @@ export default {
 .mx-datepicker{
     margin: 20px auto !important;
 }
-.mx-input{
-    background-color: #424242 !important;
-    color: #fff !important;
-}
 </style>

@@ -12,6 +12,7 @@
         <RestoreItemModal></RestoreItemModal>
         <ItemReturnConfirmation v-on:reload="loadItem()"></ItemReturnConfirmation>
         <ConfirmReturnItemSuspentionModal></ConfirmReturnItemSuspentionModal>
+        <ChangeItemAcquiredModal></ChangeItemAcquiredModal>
     <div class="container">
 
     <div class="card" v-if="itemData">
@@ -70,6 +71,13 @@
                           </v-flex>
                           <v-flex shrink px-2>Identifikacinis numeris:</v-flex>
                           <v-flex px-2>{{itemData.ItemIdNumber}}</v-flex>
+                      </v-layout>
+                      <v-layout row wrap align-center v-if="itemData.ItemAcquiredFrom">
+                          <v-flex shrink pa-2 style="width: 40px !important">
+                              <v-icon headline class="primary--text">fa-shopping-bag</v-icon>
+                          </v-flex>
+                          <v-flex shrink px-2>Įsigyta iš:</v-flex>
+                          <v-flex px-2>{{itemData.ItemAcquiredFrom}}</v-flex>
                       </v-layout>
                       <v-layout row wrap align-center >
                           <v-flex shrink pa-2 style="width: 40px !important">
@@ -158,6 +166,7 @@ import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.min.css'
 import RenameItemModal from '../modals/RenameItem.vue'
 import ChangeItemIdnumberModal from '../modals/ChangeItemIdnumber.vue'
+import ChangeItemAcquiredModal from '../modals/ChangeItemAcquiredFrom.vue'
 import AddItemChipModal from '../modals/AddItemChip.vue'
 import ItemWarrantyFixModal from '../modals/ItemWarrantyFix.vue'
 import ItemUnwarrantedFixModal from '../modals/ItemUnwarrantedFix.vue'
@@ -179,6 +188,7 @@ import ConfirmReturnItemSuspentionModal from '../modals/ConfirmReturnItemSuspent
             {text: 'Priskirti čipą', click: () =>{this.show('add-item-chip-modal')}},
             {text: 'Pervadinti', click: ()=>{this.show('rename-item-modal')}},
             {text: 'Keisti identifikacinį numerį', click: ()=>{this.show('change-item-idnumber-modal')}},
+            {text: 'Keisti įsigijimo vietą', click: ()=>{this.show('change-item-acquired-modal')}},
             {text: 'Keisti garantinį laikotarpį', click: ()=>{this.$modal.show('change-item-warranty-modal', {itemID: this.itemData.ItemID, warranty: this.itemData.ItemWarranty})}},
             {text: 'Ištrinti', click: ()=>{this.deleteItem()}},
           ]
@@ -361,7 +371,8 @@ import ConfirmReturnItemSuspentionModal from '../modals/ConfirmReturnItemSuspent
       ItemReturnConfirmation,
       ChangeItemWarrantyModal,
       RestoreItemModal,
-      ConfirmReturnItemSuspentionModal
+      ConfirmReturnItemSuspentionModal,
+      ChangeItemAcquiredModal
   }
 }
 </script>

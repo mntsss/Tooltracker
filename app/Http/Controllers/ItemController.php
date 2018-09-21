@@ -69,7 +69,8 @@ class ItemController extends Controller
         'ItemWarranty' => $request->warranty_date,
         'ItemPurchase' => $request->purchase_date,
         'ItemGroupID' => $request->groupID,
-        'ItemIdNumber' => $request->idnumber
+        'ItemIdNumber' => $request->idnumber,
+        'ItemAcquiredFrom' => $request->acquired
       ]);
       if($item){
         if($request->code)
@@ -110,6 +111,7 @@ class ItemController extends Controller
 
     public function edit(ItemRequest $request){
       $item = Item::find($request->id);
+
       if($item){
         if($request->has('name'))
           $item->ItemName = $request->name;
@@ -121,6 +123,8 @@ class ItemController extends Controller
           $item->ItemNote = $request->note;
         if($request->has('idnumber'))
           $item->ItemIdNumber = $request->idnumber;
+        if($request->has('acquired'))
+          $item->ItemAcquiredFrom = $request->acquired;
 
         $item->save();
         return response()->json(['message' => 'Atlikta', 'success' => 'Įrankio informacija sėkmingai redaguota.']);
