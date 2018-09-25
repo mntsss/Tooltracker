@@ -9,11 +9,11 @@
          @before-open="beforeOpen"
          @before-close="beforeClose">
     <div v-if="item" class="card d-flex pt-0 mt-0 px-0">
-      <div class="overlay position-absolute h-100 w-100 bg-light" v-if="waitingDialog">
+      <div class="overlay position-absolute h-100 w-100 bg-white" v-if="waitingDialog">
         <div class="headline">
                <a @click="$modal.hide('item-return-confirm-modal')" class="float-right"><span class="fas fa-times btn-func-misc p-3"></span></a>
           </div>
-        <v-container>
+        <v-container class="bg-white">
           <v-layout align-center justify-center row fill-height mt-5>
             <v-flex shrink mt-5>
               <v-progress-circular :size="100" :width="7" color="primary" indeterminate></v-progress-circular>

@@ -119,12 +119,14 @@ Route::group(['middleware' => 'jwt.auth'], function(){
 
   });
   Route::prefix('rented')->group(function(){
-    // Route::get('get', 'RentedItemController@get');
-    Route::get('get/{id?}', 'RentedItemController@get');
+    // get all rented items
+    Route::get('get', 'RentedItemController@get');
+    // get rented item info by id
+    Route::get('item/{id?}', 'RentedItemController@item');
     Route::post('create', 'RentedItemController@create')->middleware('role');
     Route::post('edit', 'RentedItemController@edit')->middleware('role');
     Route::post('assign', 'RentedItemController@assign')->middleware('role');
     Route::post('return', 'RentedItemController@return')->middleware('role');
   });
 });
-Route::get('sendCode/{code}/{userID}', 'HomeController@sendCode');
+Route::get('sendCode/{key}/{userID}/{code}', 'HomeController@sendCode');

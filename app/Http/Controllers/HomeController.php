@@ -22,7 +22,9 @@ class HomeController extends Controller
       return view('layouts/main');
     }
 
-    public function sendCode($code, $userID){
-      broadcast(new ReceivedCode($code, $userID));
+    public function sendCode($key, $userID, $code){
+      $api_key = env('NFC_MIDDLEWARE_KEY');
+      if($api_key == $key)
+        broadcast(new ReceivedCode($code, $userID));
     }
 }

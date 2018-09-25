@@ -139,7 +139,7 @@ import EditRentedItem from '../modals/rent/EditRentedItem.vue'
 
     loadItem: function(){
             //this.isLoading = true
-        return this.$http.get('/rented/get/'+this.itemData.RentedItemID).then((response)=>{
+        return this.$http.get('/rented/item/'+this.itemData.RentedItemID).then((response)=>{
             if(response.status == 200){
                 this.itemData = response.data
                 this.note = this.itemData.note

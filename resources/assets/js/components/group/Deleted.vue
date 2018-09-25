@@ -55,7 +55,7 @@ import 'vue-loading-overlay/dist/vue-loading.min.css'
     },
     methods: {
         loadItems: function(){
-          return this.$http.get('/item/deleted/').then((response)=>{
+          return this.$http.get('/item/deleted').then((response)=>{
               if(response.status==200){
                   this.items = response.data;
                   this.isLoading = false;

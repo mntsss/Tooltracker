@@ -86682,6 +86682,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   created: function created() {
     this.loadGroups();
   },
+  updated: function updated() {
+    this.equalizeHeigth();
+  },
 
   methods: {
     loadGroups: function loadGroups() {
@@ -86693,6 +86696,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }).catch(function (error) {
         __WEBPACK_IMPORTED_MODULE_3_sweetalert___default()('Klaida', error.response.data.message, 'error');
       });
+    },
+    equalizeHeigth: function equalizeHeigth() {
+      var boxes = document.getElementsByClassName("item-box-panel");
+      var maxHeight = 0;
+      for (var i = 0; i < boxes.length; i++) {
+        console.log(boxes[i].clientHeight);
+        if (boxes[i].clientHeight > maxHeight) maxHeight = boxes[i].clientHeight;
+      }
+      console.log(maxHeight);
+      for (var i = 0, len = boxes.length; i < len; i++) {
+        boxes[i].style.height = maxHeight + "px";
+      }
     }
   },
   components: {
@@ -92064,7 +92079,7 @@ var render = function() {
                     "div",
                     {
                       staticClass:
-                        "overlay position-absolute h-100 w-100 bg-light"
+                        "overlay position-absolute h-100 w-100 bg-white"
                     },
                     [
                       _c("div", { staticClass: "headline" }, [
@@ -92088,6 +92103,7 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "v-container",
+                        { staticClass: "bg-white" },
                         [
                           _c(
                             "v-layout",
@@ -94625,7 +94641,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
     loadItems: function loadItems() {
       var _this = this;
 
-      return this.$http.get('/item/deleted/').then(function (response) {
+      return this.$http.get('/item/deleted').then(function (response) {
         if (response.status == 200) {
           _this.items = response.data;
           _this.isLoading = false;
@@ -104281,7 +104297,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
     loadItems: function loadItems() {
       var _this = this;
 
-      return this.$http.get('/rented/get/').then(function (response) {
+      return this.$http.get('/rented/get').then(function (response) {
         if (response.status == 200) {
           _this.items = response.data;
           _this.isLoading = false;
@@ -105201,7 +105217,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var _this2 = this;
 
       //this.isLoading = true
-      return this.$http.get('/rented/get/' + this.itemData.RentedItemID).then(function (response) {
+      return this.$http.get('/rented/item/' + this.itemData.RentedItemID).then(function (response) {
         if (response.status == 200) {
           _this2.itemData = response.data;
           _this2.note = _this2.itemData.note;

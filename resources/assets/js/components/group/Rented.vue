@@ -54,7 +54,7 @@ import CreateRentedItem from '../modals/rent/CreateRentedItem.vue'
             this.$modal.show(name);
         },
         loadItems: function(){
-          return this.$http.get('/rented/get/').then((response)=>{
+          return this.$http.get('/rented/get').then((response)=>{
               if(response.status==200){
                   this.items = response.data;
                   this.isLoading = false;

@@ -26,13 +26,13 @@ class RentedItemController extends Controller
         return response()->json(['message' => 'Atlikta', 'success' => 'Išnuomotas įrankis išsaugotas.']);
     }
 
-    public function get($id = null){
-      if($id == null || $id == ""){
+    public function get(){
         $items = RentedItem::Active()->with('cobject')->get();
-      }
-      else{
+      return response()->json($items, 200);
+    }
+
+    public function item($id){
         $items = RentedItem::with('cobject')->find($id);
-      }
       return response()->json($items, 200);
     }
 

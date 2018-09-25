@@ -48,6 +48,9 @@ export default {
   created(){
     this.loadGroups()
   },
+  updated(){
+    this.equalizeHeigth()
+  },
   methods: {
     loadGroups: function(){
       this.$http.get('/group/list').then((response)=>{
@@ -57,6 +60,20 @@ export default {
       }).catch(error => {
           swal('Klaida', error.response.data.message, 'error')
       })
+    },
+    equalizeHeigth: function(){
+      var boxes = document.getElementsByClassName("item-box-panel");
+      var maxHeight = 0;
+      for (var i = 0; i < boxes.length; i++) {
+        console.log(boxes[i].clientHeight)
+        if(boxes[i].clientHeight > maxHeight)
+          maxHeight = boxes[i].clientHeight
+      }
+      console.log(maxHeight)
+      for (var i = 0, len = boxes.length; i < len; i++) {
+        boxes[i].style.height = maxHeight+"px"
+      }
+
     }
   },
   components: {

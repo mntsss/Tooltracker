@@ -20,7 +20,7 @@ Route::get('/groups', function(){
 })->name('home');
 Route::get('/login', function(){
     return redirect('/');
-})->name('home');
+})->name('login');
 Route::get('/group/{id?}', function(){
     return redirect('/');
 })->name('home');
