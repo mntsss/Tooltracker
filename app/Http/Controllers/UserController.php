@@ -124,7 +124,7 @@ class UserController extends Controller
 
     public function getWithdrawals($id){
         $user = User::with([
-            'withdrawals' => function($q){ $q->with('item');}
+            'withdrawals' => function($q){ $q->Active()->with('item');}
             ])->find($id);
         if($user)
             return response()->json($user, 200);

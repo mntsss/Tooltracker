@@ -68,12 +68,12 @@ class ReservationController extends Controller
     public function list(){
       $reservations = Reservation::Active()->where('UserID', Auth::user()->UserID)->with(['items' => function($query){
         $query->with('item');
-    }, 'cobject' => function($query){ $query->with('user');}, 'recipient'])->get();
+    }, 'cobject' => function($query){ $query->with('user');}, 'recipient'])->orderBy('created_at', 'DESC')->get();
       return response()->json($reservations, 200);
     }
 
     public function closed(){
-      $reservations = Reservation::where('ReservationDelivered', true)->where('UserID', Auth::user()->UserID)->with(['items' => function($query){
+      $reservations = Reservation::where('ReservationDelivered', true)->with(['items' => function($query){
         $query->with('item');
     }, 'cobject' => function($query){ $query->with('user');}, 'recipient'])->get();
       return response()->json($reservations, 200);

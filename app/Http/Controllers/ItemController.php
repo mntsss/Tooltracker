@@ -192,7 +192,7 @@ class ItemController extends Controller
     }
 
     public function search(ItemSearchRequest $request){
-      $items = Item::where('ItemName', 'like','%'.$request['query'].'%')->existing()->with(['lastWithdrawal', 'lastSuspention', 'lastReservation', 'images'])->limit(10)->get();
+      $items = Item::where('ItemName', 'like','%'.$request['query'].'%')->orWhere('ItemIdNumber', 'like', $request['query'].'%')->existing()->with(['lastWithdrawal', 'lastSuspention', 'lastReservation', 'images'])->limit(10)->get();
       $response = [];
       foreach($items as $item){
         array_push($response, ['item'=> $item, 'state' => $this->GetItemState($item)]);
