@@ -15,14 +15,29 @@
           </v-flex>
       </v-layout>
       <div class="card-body" v-if="user.withdrawals.length > 0">
-        <router-link tag="div" class="row remove-side-margin cursor-pointer" :to="{ name: 'item', params: { itemProp: {item: withdrawal.item, state: null}}}" v-for="(withdrawal, index) in user.withdrawals" :key="index">
-          <div class="col-6">
-            {{withdrawal.item.ItemName}}
-          </div>
-          <div class="col text-center">
-            {{withdrawal.created_at}}
-          </div>
-      </router-link>
+          <v-data-table :headers="headers" :items="user.withdrawals" hide-actions class="elevation-3 border border-dark">
+              <template slot="items" slot-scope="props">
+                <tr @click="$router.push({ name: 'item', params: { itemID: props.item.item.ItemID}})" class="cursor-pointer">
+                  <td>
+                    {{ props.item.item.item_group.ItemGroupName}}
+                  </td>
+                  <td>
+                    {{ props.item.item.ItemName }}
+                  </td>
+                  <td class="text-xs-center">
+                    {{ props.item.ItemWithdrawalQuantity }}
+                  </td>
+                  <td class="justify-center layout px-0">
+                    {{ props.item.created_at}}
+                  </td>
+                </tr>
+              </template>
+              <template slot="no-data">
+                <v-alert :value="true" class="bg-warning" icon="warning">
+                  Vartotojas neturi įrankių
+                </v-alert>
+              </template>
+            </v-data-table>
       </div>
       <div class="card-body mt-1 border border-dark" v-else-if="user.withdrawals.length == 0">
         <div class="text-center h5 pa-5">
@@ -44,6 +59,29 @@ import 'vue-loading-overlay/dist/vue-loading.min.css'
         user: null,
         isLoading: true,
         fullPage: false,
+        headers: [
+            {
+              text: 'Grupė',
+              align: 'left',
+              value: 'item.group.ItemGroupName'
+            },
+            {
+              text: 'Pavadinimas',
+              align: 'left',
+              sortable: false,
+              value: 'item.ItemName'
+            },
+            {
+              text: 'Kiekis (vnt.)',
+              align: 'center',
+              value: 'ItemWithdrawalQuantity'
+            },
+            {
+              text: 'Išdavimo data',
+              value: 'created_at',
+              align: 'left'
+            }
+          ]
       }
     },
     props: {

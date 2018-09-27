@@ -84179,6 +84179,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -84189,11 +84211,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             itemGroups: [],
             isLoading: true,
-            fullPage: false
+            fullPage: false,
+            suspentionLoading: true,
+            unconfirmedReturnSuspentions: [],
+            suspentionsHeaders: [{
+                text: 'Grupė',
+                align: 'left',
+                value: 'item.group.ItemGroupName'
+            }, {
+                text: 'Pavadinimas',
+                align: 'left',
+                sortable: false,
+                value: 'item.ItemName'
+            }, {
+                text: 'Įšaldymo data',
+                value: 'created_at',
+                align: 'left'
+            }]
         };
     },
     mounted: function mounted() {
         this.isLoading = false;
+        this.getSuspentionsUnconfirmedReturn();
     },
 
     computed: {
@@ -84220,7 +84259,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 code: code
             }).then(function (response) {
                 if (response.status == 200) {
-                    _this.$router.push({ name: 'item', params: { itemProp: { item: response.data.item, state: null } } });
+                    _this.$router.push({ name: 'item', params: { itemProp: response.data } });
+                }
+            }).catch(function (err) {
+                if (err.response.status == 422) {
+                    __WEBPACK_IMPORTED_MODULE_3_sweetalert___default()(err.response.data.message, Object.values(err.response.data.errors)[0][0], "error");
+                } else {
+                    __WEBPACK_IMPORTED_MODULE_3_sweetalert___default()("Klaida", err.response.data.message, "error");
+                }
+            });
+        },
+        getSuspentionsUnconfirmedReturn: function getSuspentionsUnconfirmedReturn() {
+            var _this2 = this;
+
+            this.$http.get('/suspention/get/unconfirmedreturn').then(function (response) {
+                if (response.status == 200) {
+                    _this2.unconfirmedReturnSuspentions = response.data;
+                    _this2.suspentionLoading = false;
                 }
             }).catch(function (err) {
                 if (err.response.status == 422) {
@@ -86274,39 +86329,104 @@ var render = function() {
                       _c(
                         "v-card-text",
                         {
-                          staticClass: "white",
+                          staticClass: "white position-relative",
                           staticStyle: { "min-height": "25vh" }
                         },
                         [
-                          _c(
-                            "v-layout",
-                            {
-                              attrs: {
-                                "align-center": "",
-                                "mt-5": "",
-                                "justify-center": "",
-                                row: "",
-                                "fill-height": ""
+                          _c("Loading", {
+                            attrs: {
+                              active: _vm.suspentionLoading,
+                              "can-cancel": false,
+                              "is-full-page": false
+                            },
+                            on: {
+                              "update:active": function($event) {
+                                _vm.suspentionLoading = $event
                               }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "v-data-table",
+                            {
+                              staticClass: "elevation-3 border border-dark",
+                              attrs: {
+                                headers: _vm.suspentionsHeaders,
+                                items: _vm.unconfirmedReturnSuspentions,
+                                "hide-actions": ""
+                              },
+                              scopedSlots: _vm._u([
+                                {
+                                  key: "items",
+                                  fn: function(props) {
+                                    return [
+                                      _c(
+                                        "tr",
+                                        { staticClass: "cursor-pointer" },
+                                        [
+                                          _c("td", [
+                                            _vm._v(
+                                              "\n                            " +
+                                                _vm._s(
+                                                  props.item.item.item_group
+                                                    .ItemGroupName
+                                                ) +
+                                                "\n                          "
+                                            )
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("td", [
+                                            _vm._v(
+                                              "\n                            " +
+                                                _vm._s(
+                                                  props.item.item.ItemName
+                                                ) +
+                                                "\n                          "
+                                            )
+                                          ]),
+                                          _vm._v(" "),
+                                          _c(
+                                            "td",
+                                            {
+                                              staticClass:
+                                                "justify-center layout px-0"
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                            " +
+                                                  _vm._s(
+                                                    props.item.created_at
+                                                  ) +
+                                                  "\n                          "
+                                              )
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  }
+                                }
+                              ])
                             },
                             [
                               _c(
-                                "v-flex",
-                                { attrs: { shrink: "" } },
+                                "template",
+                                { slot: "no-data" },
                                 [
-                                  _c("v-progress-circular", {
-                                    attrs: {
-                                      size: 100,
-                                      width: 7,
-                                      color: "primary",
-                                      indeterminate: ""
-                                    }
-                                  })
+                                  _c(
+                                    "v-alert",
+                                    { attrs: { value: true, icon: "success" } },
+                                    [
+                                      _vm._v(
+                                        "\n                          Nepatvirtintų grąžinimų nėra...\n                        "
+                                      )
+                                    ]
+                                  )
                                 ],
                                 1
                               )
                             ],
-                            1
+                            2
                           )
                         ],
                         1
@@ -88691,7 +88811,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             purchase_date: '',
             groupID: null,
             lang: {
-                days: ['Pr', 'An', 'Tr', 'Ket', 'Pn', 'Še', 'Sek'],
+                days: ['Sek', 'Pr', 'An', 'Tr', 'Ket', 'Pn', 'Še'],
                 months: ['Sau', 'Vas', 'Kov', 'Bal', 'Geg', 'Bir', 'Lie', 'Rugp', 'Rugs', 'Spa', 'Lap', 'Gru'],
                 placeholder: {
                     date: 'Pasirinkite datą',
@@ -92599,7 +92719,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             warranty_date: null,
             itemID: null,
             lang: {
-                days: ['Pr', 'An', 'Tr', 'Ket', 'Pn', 'Še', 'Sek'],
+                days: ['Sek', 'Pr', 'An', 'Tr', 'Ket', 'Pn', 'Še'],
                 months: ['Sau', 'Vas', 'Kov', 'Bal', 'Geg', 'Bir', 'Lie', 'Rugp', 'Rugs', 'Spa', 'Lap', 'Gru'],
                 placeholder: {
                     date: 'Pasirinkite datą',
@@ -94271,7 +94391,8 @@ var render = function() {
                                           [
                                             !_vm.itemData.ItemDeleted &&
                                             _vm.warrantyFix &&
-                                            _vm.itemStatus == "Sandėlyje"
+                                            _vm.itemStatus == "Sandėlyje" &&
+                                            !_vm.itemData.ItemConsumable
                                               ? _c(
                                                   "v-btn",
                                                   {
@@ -94309,7 +94430,8 @@ var render = function() {
                                               : _vm._e(),
                                             _vm._v(" "),
                                             !_vm.itemData.ItemDeleted &&
-                                            _vm.itemStatus == "Sandėlyje"
+                                            _vm.itemStatus == "Sandėlyje" &&
+                                            !_vm.itemData.ItemConsumable
                                               ? _c(
                                                   "v-btn",
                                                   {
@@ -98757,9 +98879,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             for (var i = 0; i < withdrawals.length; i++) {
                 if (withdrawals[i].item.ItemConsumable) {
                     for (var j = i + 1; j < withdrawals.length; j++) {
-                        if (withdrawals[i].ItemID == withdrawals[j].ItemID && withdrawals[j].item.ItemConsumable) {
+                        console.log(withdrawals[j]);
+                        if (withdrawals[i].ItemID == withdrawals[j].ItemID) {
                             withdrawals[i].ItemWithdrawalQuantity += withdrawals[j].ItemWithdrawalQuantity;
                             withdrawals.splice(j, 1);
+                            j--;
                         }
                     }
                 }
@@ -104602,7 +104726,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             price: 0,
             note: null,
             lang: {
-                days: ['Pr', 'An', 'Tr', 'Ket', 'Pn', 'Še', 'Sek'],
+                days: ['Sek', 'Pr', 'An', 'Tr', 'Ket', 'Pn', 'Še'],
                 months: ['Sau', 'Vas', 'Kov', 'Bal', 'Geg', 'Bir', 'Lie', 'Rugp', 'Rugs', 'Spa', 'Lap', 'Gru'],
                 placeholder: {
                     date: 'Pasirinkite datą',
@@ -106965,6 +107089,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -106975,7 +107114,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             user: null,
             isLoading: true,
-            fullPage: false
+            fullPage: false,
+            headers: [{
+                text: 'Grupė',
+                align: 'left',
+                value: 'item.group.ItemGroupName'
+            }, {
+                text: 'Pavadinimas',
+                align: 'left',
+                sortable: false,
+                value: 'item.ItemName'
+            }, {
+                text: 'Kiekis (vnt.)',
+                align: 'center',
+                value: 'ItemWithdrawalQuantity'
+            }, {
+                text: 'Išdavimo data',
+                value: 'created_at',
+                align: 'left'
+            }]
         };
     },
 
@@ -107103,48 +107260,121 @@ var render = function() {
                     ? _c(
                         "div",
                         { staticClass: "card-body" },
-                        _vm._l(_vm.user.withdrawals, function(
-                          withdrawal,
-                          index
-                        ) {
-                          return _c(
-                            "router-link",
+                        [
+                          _c(
+                            "v-data-table",
                             {
-                              key: index,
-                              staticClass:
-                                "row remove-side-margin cursor-pointer",
+                              staticClass: "elevation-3 border border-dark",
                               attrs: {
-                                tag: "div",
-                                to: {
-                                  name: "item",
-                                  params: {
-                                    itemProp: {
-                                      item: withdrawal.item,
-                                      state: null
-                                    }
+                                headers: _vm.headers,
+                                items: _vm.user.withdrawals,
+                                "hide-actions": ""
+                              },
+                              scopedSlots: _vm._u([
+                                {
+                                  key: "items",
+                                  fn: function(props) {
+                                    return [
+                                      _c(
+                                        "tr",
+                                        {
+                                          staticClass: "cursor-pointer",
+                                          on: {
+                                            click: function($event) {
+                                              _vm.$router.push({
+                                                name: "item",
+                                                params: {
+                                                  itemID: props.item.item.ItemID
+                                                }
+                                              })
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c("td", [
+                                            _vm._v(
+                                              "\n                    " +
+                                                _vm._s(
+                                                  props.item.item.item_group
+                                                    .ItemGroupName
+                                                ) +
+                                                "\n                  "
+                                            )
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("td", [
+                                            _vm._v(
+                                              "\n                    " +
+                                                _vm._s(
+                                                  props.item.item.ItemName
+                                                ) +
+                                                "\n                  "
+                                            )
+                                          ]),
+                                          _vm._v(" "),
+                                          _c(
+                                            "td",
+                                            { staticClass: "text-xs-center" },
+                                            [
+                                              _vm._v(
+                                                "\n                    " +
+                                                  _vm._s(
+                                                    props.item
+                                                      .ItemWithdrawalQuantity
+                                                  ) +
+                                                  "\n                  "
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "td",
+                                            {
+                                              staticClass:
+                                                "justify-center layout px-0"
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                    " +
+                                                  _vm._s(
+                                                    props.item.created_at
+                                                  ) +
+                                                  "\n                  "
+                                              )
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    ]
                                   }
                                 }
-                              }
+                              ])
                             },
                             [
-                              _c("div", { staticClass: "col-6" }, [
-                                _vm._v(
-                                  "\n            " +
-                                    _vm._s(withdrawal.item.ItemName) +
-                                    "\n          "
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "col text-center" }, [
-                                _vm._v(
-                                  "\n            " +
-                                    _vm._s(withdrawal.created_at) +
-                                    "\n          "
-                                )
-                              ])
-                            ]
+                              _c(
+                                "template",
+                                { slot: "no-data" },
+                                [
+                                  _c(
+                                    "v-alert",
+                                    {
+                                      staticClass: "bg-warning",
+                                      attrs: { value: true, icon: "warning" }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                  Vartotojas neturi įrankių\n                "
+                                      )
+                                    ]
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            2
                           )
-                        })
+                        ],
+                        1
                       )
                     : _vm.user.withdrawals.length == 0
                       ? _c(

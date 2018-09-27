@@ -69,7 +69,7 @@ export default {
             price: 0,
             note: null,
             lang: {
-              days: ['Pr', 'An', 'Tr', 'Ket', 'Pn', 'Še', 'Sek'],
+              days: ['Sek', 'Pr', 'An', 'Tr', 'Ket', 'Pn', 'Še'],
               months: ['Sau', 'Vas', 'Kov', 'Bal', 'Geg', 'Bir', 'Lie', 'Rugp', 'Rugs', 'Spa', 'Lap', 'Gru'],
               placeholder: {
                 date: 'Pasirinkite datą',

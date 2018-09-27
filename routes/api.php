@@ -54,6 +54,10 @@ Route::group(['middleware' => 'jwt.auth'], function(){
     Route::post('suspend/return/fixed', 'ItemSuspentionController@fixed')->middleware('role');
   });
 
+  Route::prefix('suspention')->group(function(){
+     Route::get('get/unconfirmedreturn', 'ItemSuspentionController@getWaitingConfirmationSuspentions'); 
+  });
+
   Route::prefix('withdrawal')->group(function(){
     Route::get('get/{id}', 'ItemWithdrawalController@get');
   });

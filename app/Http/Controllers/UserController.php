@@ -23,6 +23,8 @@ class UserController extends Controller
 
 
     public function me(){
+        Auth::user()->UserLastSeen = date('Y-m-d H:i:s');
+        Auth::user()->save();
         return response()->json(Auth::user(),200);
     }
 
@@ -124,7 +126,7 @@ class UserController extends Controller
 
     public function getWithdrawals($id){
         $user = User::with([
-            'withdrawals' => function($q){ $q->Active()->with('item');}
+            'withdrawals' => function($q){ $q->Active()->with(['item' => function($q){ return $q->with('itemGroup');}]);}
             ])->find($id);
         if($user)
             return response()->json($user, 200);

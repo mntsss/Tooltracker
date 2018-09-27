@@ -124,11 +124,11 @@
                       </v-layout>
                       <v-layout row wrap align-center pa-2 justify-end>
                           <v-flex shrink justify-end>
-                            <v-btn outline v-if="!itemData.ItemDeleted && warrantyFix && itemStatus == 'Sandėlyje'" @click="show('item-warranty-fix-modal')">
+                            <v-btn outline v-if="!itemData.ItemDeleted && warrantyFix && itemStatus == 'Sandėlyje' && !itemData.ItemConsumable" @click="show('item-warranty-fix-modal')">
                                 <v-icon class="primary--text">fa-wrench</v-icon>
                                 <span class="mx-2">Garantinis taisymas</span>
                             </v-btn>
-                            <v-btn outline v-if="!itemData.ItemDeleted && itemStatus == 'Sandėlyje'" @click="show('item-unwarranted-fix-modal')">
+                            <v-btn outline v-if="!itemData.ItemDeleted && itemStatus == 'Sandėlyje' && !itemData.ItemConsumable" @click="show('item-unwarranted-fix-modal')">
                                 <v-icon class="primary--text">fa-wrench</v-icon>
                                 <span class="mx-2">Taisymas</span>
                             </v-btn>

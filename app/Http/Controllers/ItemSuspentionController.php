@@ -90,4 +90,9 @@ class ItemSuspentionController extends Controller
       }
       return response()->json(['message' => 'Atlikta', 'success' => 'Įrankio įšaldymas panaikintas, įrankis grąžintas į sandėlį.'], 200);
     }
+
+    public function getWaitingConfirmationSuspentions(){
+        $suspentions = ItemSuspention::Active()->where('SuspentionUnconfirmedReturn', true)->with(['item' => function($q){ return $q->with('itemGroup');}])->orderBy("created_at", "ASC")->get();
+        return response()->json($suspentions, 200);
+    }
 }
