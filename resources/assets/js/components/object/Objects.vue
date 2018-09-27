@@ -62,14 +62,29 @@
                                                     <h5>Naudojami įrankiai / išdavimo data</h5>
                                                 </v-card-title>
                                                 <v-card-text v-if="object.item_withdrawals.length > 0">
-                                                    <router-link tag="div" class="row remove-side-margin cursor-pointer h6" :to="{ name: 'item', params: { itemProp: {item: withdrawal.item, state: 'Naudojamas'}}}" v-for="(withdrawal, i) in object.item_withdrawals" :key="i">
-                                                      <div class="col-6 h6">
-                                                        {{withdrawal.item.ItemName}}
-                                                      </div>
-                                                      <div class="col text-center h6">
-                                                        {{withdrawal.created_at}}
-                                                      </div>
-                                                    </router-link>
+                                                  <v-data-table :headers="headers" :items="object.item_withdrawals" hide-actions class="elevation-3 border border-dark">
+                                                      <template slot="items" slot-scope="props">
+                                                        <tr @click="$router.push({ name: 'item', params: { itemID: props.item.item.ItemID}})" class="cursor-pointer">
+                                                          <td>
+                                                            {{ props.item.item.item_group.ItemGroupName}}
+                                                          </td>
+                                                          <td>
+                                                            {{ props.item.item.ItemName }}
+                                                          </td>
+                                                          <td class="text-xs-center">
+                                                            {{ props.item.ItemWithdrawalQuantity }}
+                                                          </td>
+                                                          <td class="justify-center layout px-0">
+                                                            {{ props.item.created_at}}
+                                                          </td>
+                                                        </tr>
+                                                      </template>
+                                                      <template slot="no-data">
+                                                        <v-alert :value="true" class="bg-warning" icon="warning">
+                                                          Rezervacija tuščia, arba įvyko klaida kraunant duomenis iš duombazės...
+                                                        </v-alert>
+                                                      </template>
+                                                    </v-data-table>
                                                 </v-card-text>
                                                 <div class="card-body mt-1 border border-dark" v-else>
                                                   <div class="text-center h5 pa-2">
@@ -105,7 +120,30 @@ export default{
         return {
             objects: null,
             isLoading: true,
-            fullPage: false
+            fullPage: false,
+            headers: [
+                {
+                  text: 'Grupė',
+                  align: 'left',
+                  value: 'item.group.ItemGroupName'
+                },
+                {
+                  text: 'Pavadinimas',
+                  align: 'left',
+                  sortable: false,
+                  value: 'item.ItemName'
+                },
+                {
+                  text: 'Kiekis (vnt.)',
+                  align: 'center',
+                  value: 'ItemWithdrawalQuantity'
+                },
+                {
+                  text: 'Išdavimo data',
+                  value: 'created_at',
+                  align: 'left'
+                }
+              ],
         }
     },
     created(){
@@ -122,6 +160,7 @@ export default{
             this.$http.get('object/list').then((response)=>{
                 if(response.status == 200){
                     this.objects = response.data
+                    this.proccessObjectWithdrawals()
                     this.isLoading = false
                 }
             }).catch(error => {
@@ -139,6 +178,27 @@ export default{
             var timeDiff = Math.abs(currentDate - dateRented);
             var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
             return diffDays+1
+        },
+        proccessObjectWithdrawals: function(){
+          for(var i = 0; i< this.objects.length; i++){
+            this.objects[i].item_withdrawals = this.addConsumables(this.objects[i].item_withdrawals);
+          }
+        },
+        addConsumables: function(withdrawals){
+          console.log(withdrawals.length)
+          for(var i = 0; i < withdrawals.length; i++){
+            if(withdrawals[i].item.ItemConsumable){
+                for(var j = i+1; j< withdrawals.length; j++)
+                {
+                  if(withdrawals[i].ItemID == withdrawals[j].ItemID && withdrawals[j].item.ItemConsumable)
+                  {
+                    withdrawals[i].ItemWithdrawalQuantity += withdrawals[j].ItemWithdrawalQuantity;
+                    withdrawals.splice(j,1);
+                  }
+                }
+            }
+          }
+          return withdrawals
         }
     },
     components: {

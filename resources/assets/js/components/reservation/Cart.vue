@@ -163,7 +163,7 @@ export default{
               this.$http.post('/item/findcode', {code: this.RFIDCode}).then((response) => {
                 if(response.status == 200)
                   if(response.data.status == null){
-                    this.newItem.item = response.data.item
+                    this.newItem.item = response.data
                     this.waitingImageDialog = true
                   }
                   else if(response.data.status == 'reserved')

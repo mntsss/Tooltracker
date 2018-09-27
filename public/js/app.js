@@ -86701,10 +86701,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var boxes = document.getElementsByClassName("item-box-panel");
       var maxHeight = 0;
       for (var i = 0; i < boxes.length; i++) {
-        console.log(boxes[i].clientHeight);
         if (boxes[i].clientHeight > maxHeight) maxHeight = boxes[i].clientHeight;
       }
-      console.log(maxHeight);
       for (var i = 0, len = boxes.length; i < len; i++) {
         boxes[i].style.height = maxHeight + "px";
       }
@@ -89489,7 +89487,7 @@ var render = function() {
                       return _c(
                         "router-link",
                         {
-                          key: item.item.ItemID,
+                          key: item.ItemID,
                           staticClass: "row remove-side-margin cursor-pointer",
                           attrs: {
                             tag: "div",
@@ -89500,7 +89498,7 @@ var render = function() {
                           _c("div", { staticClass: "col-6" }, [
                             _vm._v(
                               "\n            " +
-                                _vm._s(item.item.ItemName) +
+                                _vm._s(item.ItemName) +
                                 "\n          "
                             )
                           ]),
@@ -89897,7 +89895,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
             this.loadItem();
         } else {
-            this.itemData = this.itemProp.item;
+            this.itemData = this.itemProp;
             if (this.itemProp.state == null) {
                 this.loadItem();
             } else {
@@ -89942,7 +89940,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return this.$http.get('/item/get/' + this.itemData.ItemID).then(function (response) {
                 if (response.status == 200) {
                     _this3.itemStatus = response.data.state;
-                    _this3.itemData = response.data.item;
+                    _this3.itemData = response.data;
                     _this3.images = [];
                     _this3.note = _this3.itemData.note;
                     if (_this3.itemData.images.length == 0) {
@@ -98668,6 +98666,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -98680,7 +98693,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             objects: null,
             isLoading: true,
-            fullPage: false
+            fullPage: false,
+            headers: [{
+                text: 'Grupė',
+                align: 'left',
+                value: 'item.group.ItemGroupName'
+            }, {
+                text: 'Pavadinimas',
+                align: 'left',
+                sortable: false,
+                value: 'item.ItemName'
+            }, {
+                text: 'Kiekis (vnt.)',
+                align: 'center',
+                value: 'ItemWithdrawalQuantity'
+            }, {
+                text: 'Išdavimo data',
+                value: 'created_at',
+                align: 'left'
+            }]
         };
     },
     created: function created() {},
@@ -98696,6 +98727,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.$http.get('object/list').then(function (response) {
                 if (response.status == 200) {
                     _this.objects = response.data;
+                    _this.proccessObjectWithdrawals();
                     _this.isLoading = false;
                 }
             }).catch(function (error) {
@@ -98714,6 +98746,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var timeDiff = Math.abs(currentDate - dateRented);
             var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
             return diffDays + 1;
+        },
+        proccessObjectWithdrawals: function proccessObjectWithdrawals() {
+            for (var i = 0; i < this.objects.length; i++) {
+                this.objects[i].item_withdrawals = this.addConsumables(this.objects[i].item_withdrawals);
+            }
+        },
+        addConsumables: function addConsumables(withdrawals) {
+            console.log(withdrawals.length);
+            for (var i = 0; i < withdrawals.length; i++) {
+                if (withdrawals[i].item.ItemConsumable) {
+                    for (var j = i + 1; j < withdrawals.length; j++) {
+                        if (withdrawals[i].ItemID == withdrawals[j].ItemID && withdrawals[j].item.ItemConsumable) {
+                            withdrawals[i].ItemWithdrawalQuantity += withdrawals[j].ItemWithdrawalQuantity;
+                            withdrawals.splice(j, 1);
+                        }
+                    }
+                }
+            }
+            return withdrawals;
         }
     },
     components: {
@@ -99420,75 +99471,172 @@ var render = function() {
                                                         .length > 0
                                                         ? _c(
                                                             "v-card-text",
-                                                            _vm._l(
-                                                              object.item_withdrawals,
-                                                              function(
-                                                                withdrawal,
-                                                                i
-                                                              ) {
-                                                                return _c(
-                                                                  "router-link",
-                                                                  {
-                                                                    key: i,
-                                                                    staticClass:
-                                                                      "row remove-side-margin cursor-pointer h6",
-                                                                    attrs: {
-                                                                      tag:
-                                                                        "div",
-                                                                      to: {
-                                                                        name:
-                                                                          "item",
-                                                                        params: {
-                                                                          itemProp: {
-                                                                            item:
-                                                                              withdrawal.item,
-                                                                            state:
-                                                                              "Naudojamas"
-                                                                          }
+                                                            [
+                                                              _c(
+                                                                "v-data-table",
+                                                                {
+                                                                  staticClass:
+                                                                    "elevation-3 border border-dark",
+                                                                  attrs: {
+                                                                    headers:
+                                                                      _vm.headers,
+                                                                    items:
+                                                                      object.item_withdrawals,
+                                                                    "hide-actions":
+                                                                      ""
+                                                                  },
+                                                                  scopedSlots: _vm._u(
+                                                                    [
+                                                                      {
+                                                                        key:
+                                                                          "items",
+                                                                        fn: function(
+                                                                          props
+                                                                        ) {
+                                                                          return [
+                                                                            _c(
+                                                                              "tr",
+                                                                              {
+                                                                                staticClass:
+                                                                                  "cursor-pointer",
+                                                                                on: {
+                                                                                  click: function(
+                                                                                    $event
+                                                                                  ) {
+                                                                                    _vm.$router.push(
+                                                                                      {
+                                                                                        name:
+                                                                                          "item",
+                                                                                        params: {
+                                                                                          itemID:
+                                                                                            props
+                                                                                              .item
+                                                                                              .item
+                                                                                              .ItemID
+                                                                                        }
+                                                                                      }
+                                                                                    )
+                                                                                  }
+                                                                                }
+                                                                              },
+                                                                              [
+                                                                                _c(
+                                                                                  "td",
+                                                                                  [
+                                                                                    _vm._v(
+                                                                                      "\n                                                            " +
+                                                                                        _vm._s(
+                                                                                          props
+                                                                                            .item
+                                                                                            .item
+                                                                                            .item_group
+                                                                                            .ItemGroupName
+                                                                                        ) +
+                                                                                        "\n                                                          "
+                                                                                    )
+                                                                                  ]
+                                                                                ),
+                                                                                _vm._v(
+                                                                                  " "
+                                                                                ),
+                                                                                _c(
+                                                                                  "td",
+                                                                                  [
+                                                                                    _vm._v(
+                                                                                      "\n                                                            " +
+                                                                                        _vm._s(
+                                                                                          props
+                                                                                            .item
+                                                                                            .item
+                                                                                            .ItemName
+                                                                                        ) +
+                                                                                        "\n                                                          "
+                                                                                    )
+                                                                                  ]
+                                                                                ),
+                                                                                _vm._v(
+                                                                                  " "
+                                                                                ),
+                                                                                _c(
+                                                                                  "td",
+                                                                                  {
+                                                                                    staticClass:
+                                                                                      "text-xs-center"
+                                                                                  },
+                                                                                  [
+                                                                                    _vm._v(
+                                                                                      "\n                                                            " +
+                                                                                        _vm._s(
+                                                                                          props
+                                                                                            .item
+                                                                                            .ItemWithdrawalQuantity
+                                                                                        ) +
+                                                                                        "\n                                                          "
+                                                                                    )
+                                                                                  ]
+                                                                                ),
+                                                                                _vm._v(
+                                                                                  " "
+                                                                                ),
+                                                                                _c(
+                                                                                  "td",
+                                                                                  {
+                                                                                    staticClass:
+                                                                                      "justify-center layout px-0"
+                                                                                  },
+                                                                                  [
+                                                                                    _vm._v(
+                                                                                      "\n                                                            " +
+                                                                                        _vm._s(
+                                                                                          props
+                                                                                            .item
+                                                                                            .created_at
+                                                                                        ) +
+                                                                                        "\n                                                          "
+                                                                                    )
+                                                                                  ]
+                                                                                )
+                                                                              ]
+                                                                            )
+                                                                          ]
                                                                         }
                                                                       }
-                                                                    }
-                                                                  },
-                                                                  [
-                                                                    _c(
-                                                                      "div",
-                                                                      {
-                                                                        staticClass:
-                                                                          "col-6 h6"
-                                                                      },
-                                                                      [
-                                                                        _vm._v(
-                                                                          "\n                                                        " +
-                                                                            _vm._s(
-                                                                              withdrawal
-                                                                                .item
-                                                                                .ItemName
-                                                                            ) +
-                                                                            "\n                                                      "
-                                                                        )
-                                                                      ]
-                                                                    ),
-                                                                    _vm._v(" "),
-                                                                    _c(
-                                                                      "div",
-                                                                      {
-                                                                        staticClass:
-                                                                          "col text-center h6"
-                                                                      },
-                                                                      [
-                                                                        _vm._v(
-                                                                          "\n                                                        " +
-                                                                            _vm._s(
-                                                                              withdrawal.created_at
-                                                                            ) +
-                                                                            "\n                                                      "
-                                                                        )
-                                                                      ]
-                                                                    )
-                                                                  ]
-                                                                )
-                                                              }
-                                                            )
+                                                                    ]
+                                                                  )
+                                                                },
+                                                                [
+                                                                  _c(
+                                                                    "template",
+                                                                    {
+                                                                      slot:
+                                                                        "no-data"
+                                                                    },
+                                                                    [
+                                                                      _c(
+                                                                        "v-alert",
+                                                                        {
+                                                                          staticClass:
+                                                                            "bg-warning",
+                                                                          attrs: {
+                                                                            value: true,
+                                                                            icon:
+                                                                              "warning"
+                                                                          }
+                                                                        },
+                                                                        [
+                                                                          _vm._v(
+                                                                            "\n                                                          Rezervacija tuščia, arba įvyko klaida kraunant duomenis iš duombazės...\n                                                        "
+                                                                          )
+                                                                        ]
+                                                                      )
+                                                                    ],
+                                                                    1
+                                                                  )
+                                                                ],
+                                                                2
+                                                              )
+                                                            ],
+                                                            1
                                                           )
                                                         : _c(
                                                             "div",
@@ -100603,7 +100751,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         } else if (this.userCard) {
           this.$http.post('/item/findcode', { code: this.RFIDCode }).then(function (response) {
             if (response.status == 200) if (response.data.status == null) {
-              _this.newItem.item = response.data.item;
+              _this.newItem.item = response.data;
               _this.waitingImageDialog = true;
             } else if (response.data.status == 'reserved') __WEBPACK_IMPORTED_MODULE_2_sweetalert___default()("Klaida!", 'Įrankis jau yra pridėtas aktyvioje rezervacijoje...', 'error');else if (response.data.status == 'withdrew') __WEBPACK_IMPORTED_MODULE_2_sweetalert___default()("Klaida!", 'Įrankis yra naudojamas ir negali būti pridėtas į rezervaciją!', 'error');else if (response.data.status == 'suspended') __WEBPACK_IMPORTED_MODULE_2_sweetalert___default()("Klaida!", 'Įrankis yra įšaldytas, todėl negali būti pridėtas į rezervaciją!', 'error');else if (response.data.status == 'deleted') __WEBPACK_IMPORTED_MODULE_2_sweetalert___default()("Klaida!", 'Įrankis yra ištrintas, todėl negali būti pridėtas į rezervaciją!', 'error');
           }).catch(function (error) {

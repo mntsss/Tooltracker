@@ -29,9 +29,9 @@
           </v-flex>
       </v-layout>
       <div class="card-body" v-if="items.length > 0">
-        <router-link tag="div" class="row remove-side-margin cursor-pointer" :to="{ name: 'item', params: { itemProp: item}}" v-for="item in items" :key="item.item.ItemID">
+        <router-link tag="div" class="row remove-side-margin cursor-pointer" :to="{ name: 'item', params: { itemProp: item}}" v-for="item in items" :key="item.ItemID">
           <div class="col-6">
-            {{item.item.ItemName}}
+            {{item.ItemName}}
           </div>
           <div class="col text-center">
             {{item.state}}

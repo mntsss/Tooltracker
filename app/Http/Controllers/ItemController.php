@@ -3,18 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\ItemRequest;
 use App\Http\Requests\AddItemChipRequest;
 use App\Http\Requests\FindItemWithCodeRequest;
 use App\Http\Requests\ItemSearchRequest;
-use App\Http\Requests\GetItemWithdrawalInfo;
-use App\Http\Requests\ReturnItemWithCardRequest;
-use App\Http\Requests\SuspendItemUnconfirmedRequest;
-use App\Http\Requests\SuspendFixRequest;
-use App\Http\Requests\ReturnSuspentionRequest;
-use App\Http\Requests\RestoreItemRequest;
-use App\Http\Requests\DeleteItemRequest;
-use App\Http\Requests\ConfirmReturnSuspentionRequest;
 use App\Item;
 use App\ItemGroup;
 use App\RfidCode;
@@ -22,7 +15,7 @@ use App\ItemWithdrawal;
 use App\ItemImage;
 use App\ItemSuspention;
 use Auth;
-use Illuminate\Support\Facades\Validator;
+
 use App\Traits\ItemInfo;
 
 class ItemController extends Controller
@@ -36,12 +29,11 @@ class ItemController extends Controller
    // returns item list for provided group id
     public function items($groupID){
       $items = Item::where('ItemGroupID', $groupID)->existing()->with(['lastWithdrawal' => function($query){ $query->with(['user', 'object']);}, 'lastSuspention' => function($query){ $query->with(['user']);}, 'lastReservation', 'images'])->get();
-      $response = [];
       foreach($items as $item){
-        array_push($response, ['item'=> $item, 'state' => $this->GetItemState($item)]);
-        //$item->state = $this->GetItemState($item);
+        //array_push($response, ['item'=> $item, 'state' => $this->GetItemState($item)]);
+        $item->state = $this->GetItemState($item);
       }
-      return response()->json($response);
+      return response()->json($items);
     }
 
     // returns suspended item list
@@ -136,7 +128,8 @@ class ItemController extends Controller
     public function get($id){
 
         $item = Item::where('ItemID', $id)->with(['lastWithdrawal' => function($query){ $query->with(['user', 'object']);}, 'lastSuspention' => function($query){ $query->with(['user']); }, 'lastReservation', 'images'])->first();
-          return response()->json(['item'=> $item, 'state' => $this->GetItemState($item)], 200);
+        $item->state = $this->GetItemState($item);
+          return response()->json($item, 200);
     }
     // restore item marked as deleted to selected item group
 
@@ -174,21 +167,8 @@ class ItemController extends Controller
     // finds item which is assigned to provided RFID code
     public function findWithCode(FindItemWithCodeRequest $request){
         $item = RfidCode::where('Code', $request->code)->first()->item;
-        $status = null;
-
-
-        if($this->checkItemWithdrawal($item->ItemID)){
-          if($this->checkItemSuspention($item->ItemID))
-            $status = 'suspended';
-          else $status = 'withdrew';
-        }
-        if($this->checkItemSuspention($item->ItemID))
-            $status = 'suspended';
-        if($this->checkItemReservation($item->ItemID))
-          $status = "reserved";
-        if($item->ItemDeleted)
-          $status = "deleted";
-      return response()->json(['item' => $item, 'status' => $status], 200);
+        $item->status = $this->checkItemState($item);
+      return response()->json($item, 200);
     }
 
     public function search(ItemSearchRequest $request){

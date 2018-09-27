@@ -9,6 +9,9 @@ trait ItemInfo{
     if($item->ItemDeleted){
       return "Ištrintas";
     }
+    if($item->ItemConsumable){
+      return "Sandėlyje";
+    }
     if(!is_null($item->lastSuspention))
       if(!$item->lastSuspention->SuspentionReturned){
         if($item->lastSuspention->SuspentionWarrantyFix)
@@ -28,6 +31,23 @@ trait ItemInfo{
         return "Rezervuotas";
 
     return "Sandėlyje";
+  }
+
+  //checks item state
+  public function checkItemState(Item $item){
+    if(!$item->ItemConsumable){
+      if($this->checkItemWithdrawal($item->ItemID)){
+        if($this->checkItemSuspention($item->ItemID))
+          $status = 'suspended';
+        else $status = 'withdrew';
+      }
+      if($this->checkItemSuspention($item->ItemID))
+          $status = 'suspended';
+      if($this->checkItemReservation($item->ItemID))
+        $status = "reserved";
+      if($item->ItemDeleted)
+        $status = "deleted";
+    }
   }
   //checks if item is currently in reservation
   public function checkItemReservation($id){

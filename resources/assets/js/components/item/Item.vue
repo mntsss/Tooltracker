@@ -212,7 +212,7 @@ import ConfirmReturnItemSuspentionModal from '../modals/ConfirmReturnItemSuspent
         this.loadItem()
     }
     else {
-      this.itemData =  this.itemProp.item
+      this.itemData =  this.itemProp
       if(this.itemProp.state == null){
           this.loadItem()
       }
@@ -262,7 +262,7 @@ import ConfirmReturnItemSuspentionModal from '../modals/ConfirmReturnItemSuspent
         return this.$http.get('/item/get/'+this.itemData.ItemID).then((response)=>{
             if(response.status == 200){
                 this.itemStatus = response.data.state
-                this.itemData = response.data.item
+                this.itemData = response.data
                 this.images = [];
                 this.note = this.itemData.note
                 if(this.itemData.images.length == 0){

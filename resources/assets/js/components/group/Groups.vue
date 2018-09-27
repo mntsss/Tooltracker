@@ -65,11 +65,9 @@ export default {
       var boxes = document.getElementsByClassName("item-box-panel");
       var maxHeight = 0;
       for (var i = 0; i < boxes.length; i++) {
-        console.log(boxes[i].clientHeight)
         if(boxes[i].clientHeight > maxHeight)
           maxHeight = boxes[i].clientHeight
       }
-      console.log(maxHeight)
       for (var i = 0, len = boxes.length; i < len; i++) {
         boxes[i].style.height = maxHeight+"px"
       }
