@@ -13,6 +13,11 @@
 
 @import '~vuetify/dist/vuetify.min.css';
 
+//hide scrollbar on chrome
+::-webkit-scrollbar {
+    display: none;
+}
+
 body{
   height: 100% !important;
   overflow: auto;

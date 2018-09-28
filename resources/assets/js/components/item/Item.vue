@@ -10,7 +10,7 @@
         <ItemUnwarrantedFixModal></ItemUnwarrantedFixModal>
         <ChangeItemWarrantyModal></ChangeItemWarrantyModal>
         <RestoreItemModal></RestoreItemModal>
-        <ItemReturnConfirmation v-on:reload="loadItem()"></ItemReturnConfirmation>
+        <ItemReturnConfirmation v-on:reload="loadItem"></ItemReturnConfirmation>
         <ConfirmReturnItemSuspentionModal></ConfirmReturnItemSuspentionModal>
         <ChangeItemAcquiredModal></ChangeItemAcquiredModal>
     <div class="container">
@@ -261,6 +261,8 @@ import ConfirmReturnItemSuspentionModal from '../modals/ConfirmReturnItemSuspent
             //this.isLoading = true
         return this.$http.get('/item/get/'+this.itemData.ItemID).then((response)=>{
             if(response.status == 200){
+              console.log("item loaded")
+              console.log(response.data)
                 this.itemStatus = response.data.state
                 this.itemData = response.data
                 this.images = [];

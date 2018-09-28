@@ -10471,6 +10471,10 @@ a.text-dark:focus {
   }
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 body {
   height: 100% !important;
   overflow: auto;

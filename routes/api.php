@@ -55,7 +55,7 @@ Route::group(['middleware' => 'jwt.auth'], function(){
   });
 
   Route::prefix('suspention')->group(function(){
-     Route::get('get/unconfirmedreturn', 'ItemSuspentionController@getWaitingConfirmationSuspentions'); 
+     Route::get('get/unconfirmedreturn', 'ItemSuspentionController@getWaitingConfirmationSuspentions');
   });
 
   Route::prefix('withdrawal')->group(function(){
@@ -125,6 +125,8 @@ Route::group(['middleware' => 'jwt.auth'], function(){
   Route::prefix('rented')->group(function(){
     // get all rented items
     Route::get('get', 'RentedItemController@get');
+    // get 5 longest rented items that are still Active
+    Route::get('get/longest', 'RentedItemController@getLongestRented');
     // get rented item info by id
     Route::get('item/{id?}', 'RentedItemController@item');
     Route::post('create', 'RentedItemController@create')->middleware('role');

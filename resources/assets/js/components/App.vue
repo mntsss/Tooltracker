@@ -96,7 +96,7 @@
             <template v-for="(item, index) in searchResults">
               <v-list-tile :key="index" @click="searchItem(item)">
                 <v-list-tile-content>
-                  <v-list-tile-title>{{ item.item.ItemName }}</v-list-tile-title>
+                  <v-list-tile-title>{{ item.ItemName }}</v-list-tile-title>
                   <v-list-tile-sub-title class="text--primary">{{ item.state }}</v-list-tile-sub-title>
                 </v-list-tile-content>
               </v-list-tile>

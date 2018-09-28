@@ -31,6 +31,11 @@ class RentedItemController extends Controller
       return response()->json($items, 200);
     }
 
+    public function getLongestRented(){
+      $items = RentedItem::Active()->with('cobject')->orderBy('created_at', 'ASC')->take(5)->get();
+    return response()->json($items, 200);
+    }
+
     public function item($id){
         $items = RentedItem::with('cobject')->find($id);
       return response()->json($items, 200);

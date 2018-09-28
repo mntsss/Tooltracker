@@ -84057,7 +84057,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.loading-parent{\n    position: relative;\n}\n", ""]);
+exports.push([module.i, "\n.loading-parent{\n    position: relative;\n}\n.overview-box{\n  max-height: 35vh;\n}\n", ""]);
 
 // exports
 
@@ -84201,6 +84201,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -84213,7 +84222,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             isLoading: true,
             fullPage: false,
             suspentionLoading: true,
+            longestRentedLoading: true,
             unconfirmedReturnSuspentions: [],
+            longestRentedItems: [],
             suspentionsHeaders: [{
                 text: 'Grupė',
                 align: 'left',
@@ -84227,12 +84238,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 text: 'Įšaldymo data',
                 value: 'created_at',
                 align: 'left'
+            }],
+            rentedHeaders: [{
+                text: 'Pavadinimas',
+                align: 'left',
+                value: 'item.RentedItemName',
+                sortable: false
+            }, {
+                text: 'Kaina',
+                value: false,
+                align: 'left',
+                sortable: false
             }]
         };
     },
     mounted: function mounted() {
         this.isLoading = false;
         this.getSuspentionsUnconfirmedReturn();
+        this.getLongestRented();
     },
 
     computed: {
@@ -84284,6 +84307,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     __WEBPACK_IMPORTED_MODULE_3_sweetalert___default()("Klaida", err.response.data.message, "error");
                 }
             });
+        },
+        getLongestRented: function getLongestRented() {
+            var _this3 = this;
+
+            this.$http.get('/rented/get/longest').then(function (response) {
+                if (response.status == 200) {
+                    _this3.longestRentedItems = response.data;
+                    _this3.longestRentedLoading = false;
+                }
+            }).catch(function (err) {
+                if (err.response.status == 422) {
+                    __WEBPACK_IMPORTED_MODULE_3_sweetalert___default()(err.response.data.message, Object.values(err.response.data.errors)[0][0], "error");
+                } else {
+                    __WEBPACK_IMPORTED_MODULE_3_sweetalert___default()("Klaida", err.response.data.message, "error");
+                }
+            });
+        },
+        days: function days(date) {
+            var dateRented = new Date(date);
+            console.log(dateRented);
+            var currentDate = new Date();
+            if (dateRented > currentDate) return 0;
+            var timeDiff = Math.abs(currentDate.getTime() - dateRented.getTime());
+            var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+            return diffDays;
         }
     },
     components: {
@@ -86347,86 +86395,101 @@ var render = function() {
                           }),
                           _vm._v(" "),
                           _c(
-                            "v-data-table",
-                            {
-                              staticClass: "elevation-3 border border-dark",
-                              attrs: {
-                                headers: _vm.suspentionsHeaders,
-                                items: _vm.unconfirmedReturnSuspentions,
-                                "hide-actions": ""
-                              },
-                              scopedSlots: _vm._u([
+                            "div",
+                            { staticClass: "table-responsive overview-box" },
+                            [
+                              _c(
+                                "v-data-table",
                                 {
-                                  key: "items",
-                                  fn: function(props) {
-                                    return [
-                                      _c(
-                                        "tr",
-                                        { staticClass: "cursor-pointer" },
-                                        [
-                                          _c("td", [
-                                            _vm._v(
-                                              "\n                            " +
-                                                _vm._s(
-                                                  props.item.item.item_group
-                                                    .ItemGroupName
-                                                ) +
-                                                "\n                          "
-                                            )
-                                          ]),
-                                          _vm._v(" "),
-                                          _c("td", [
-                                            _vm._v(
-                                              "\n                            " +
-                                                _vm._s(
-                                                  props.item.item.ItemName
-                                                ) +
-                                                "\n                          "
-                                            )
-                                          ]),
-                                          _vm._v(" "),
+                                  staticClass: "elevation-3 border border-dark",
+                                  attrs: {
+                                    headers: _vm.suspentionsHeaders,
+                                    items: _vm.unconfirmedReturnSuspentions,
+                                    "hide-actions": ""
+                                  },
+                                  scopedSlots: _vm._u([
+                                    {
+                                      key: "items",
+                                      fn: function(props) {
+                                        return [
                                           _c(
-                                            "td",
+                                            "tr",
                                             {
-                                              staticClass:
-                                                "justify-center layout px-0"
+                                              staticClass: "cursor-pointer",
+                                              class: {
+                                                "text-danger":
+                                                  _vm.days(
+                                                    props.item.created_at
+                                                  ) > 6
+                                              },
+                                              on: {
+                                                click: function($event) {
+                                                  _vm.$router.push({
+                                                    name: "item",
+                                                    params: {
+                                                      itemID:
+                                                        props.item.item.ItemID
+                                                    }
+                                                  })
+                                                }
+                                              }
                                             },
                                             [
-                                              _vm._v(
-                                                "\n                            " +
-                                                  _vm._s(
-                                                    props.item.created_at
-                                                  ) +
-                                                  "\n                          "
+                                              _c("td", [
+                                                _vm._v(
+                                                  "\n                              " +
+                                                    _vm._s(
+                                                      props.item.item.item_group
+                                                        .ItemGroupName
+                                                    ) +
+                                                    "\n                            "
+                                                )
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  "\n                              " +
+                                                    _vm._s(
+                                                      props.item.item.ItemName
+                                                    ) +
+                                                    "\n                            "
+                                                )
+                                              ]),
+                                              _vm._v(" "),
+                                              _c(
+                                                "td",
+                                                {
+                                                  staticClass:
+                                                    "justify-center layout px-0"
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "\n                              " +
+                                                      _vm._s(
+                                                        props.item.created_at
+                                                      ) +
+                                                      "\n                            "
+                                                  )
+                                                ]
                                               )
                                             ]
                                           )
                                         ]
-                                      )
-                                    ]
-                                  }
-                                }
-                              ])
-                            },
-                            [
-                              _c(
-                                "template",
-                                { slot: "no-data" },
+                                      }
+                                    }
+                                  ])
+                                },
                                 [
-                                  _c(
-                                    "v-alert",
-                                    { attrs: { value: true, icon: "success" } },
-                                    [
-                                      _vm._v(
-                                        "\n                          Nepatvirtintų grąžinimų nėra...\n                        "
-                                      )
-                                    ]
-                                  )
+                                  _c("template", { slot: "no-data" }, [
+                                    _vm._v(
+                                      "\n                            Nepatvirtintų grąžinimų nėra...\n                        "
+                                    )
+                                  ])
                                 ],
-                                1
+                                2
                               )
                             ],
-                            2
+                            1
                           )
                         ],
                         1
@@ -86455,39 +86518,89 @@ var render = function() {
                       _c(
                         "v-card-text",
                         {
-                          staticClass: "white",
+                          staticClass: "white position-relative",
                           staticStyle: { "min-height": "25vh" }
                         },
                         [
-                          _c(
-                            "v-layout",
-                            {
-                              attrs: {
-                                "align-center": "",
-                                "mt-5": "",
-                                "justify-center": "",
-                                row: "",
-                                "fill-height": ""
+                          _c("Loading", {
+                            attrs: {
+                              active: _vm.longestRentedLoading,
+                              "can-cancel": false,
+                              "is-full-page": false
+                            },
+                            on: {
+                              "update:active": function($event) {
+                                _vm.longestRentedLoading = $event
                               }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "v-data-table",
+                            {
+                              staticClass: "elevation-3 border border-dark",
+                              attrs: {
+                                headers: _vm.rentedHeaders,
+                                items: _vm.longestRentedItems,
+                                "hide-actions": ""
+                              },
+                              scopedSlots: _vm._u([
+                                {
+                                  key: "items",
+                                  fn: function(props) {
+                                    return [
+                                      _c(
+                                        "tr",
+                                        {
+                                          staticClass: "cursor-pointer",
+                                          on: {
+                                            click: function($event) {
+                                              _vm.$router.push({
+                                                name: "rentedItem",
+                                                params: { itemProp: props.item }
+                                              })
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c("td", [
+                                            _vm._v(
+                                              "\n                          " +
+                                                _vm._s(
+                                                  props.item.RentedItemName
+                                                ) +
+                                                "\n                        "
+                                            )
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("td", [
+                                            _vm._v(
+                                              "\n                          " +
+                                                _vm._s(
+                                                  _vm.days(
+                                                    props.item.RentedItemDate
+                                                  ) *
+                                                    props.item
+                                                      .RentedItemDailyPrice
+                                                ) +
+                                                " €\n                        "
+                                            )
+                                          ])
+                                        ]
+                                      )
+                                    ]
+                                  }
+                                }
+                              ])
                             },
                             [
-                              _c(
-                                "v-flex",
-                                { attrs: { shrink: "" } },
-                                [
-                                  _c("v-progress-circular", {
-                                    attrs: {
-                                      size: 100,
-                                      width: 7,
-                                      color: "primary",
-                                      indeterminate: ""
-                                    }
-                                  })
-                                ],
-                                1
-                              )
+                              _c("template", { slot: "no-data" }, [
+                                _vm._v(
+                                  "\n                        Nuomojamų įrankių nėra...\n                    "
+                                )
+                              ])
                             ],
-                            1
+                            2
                           )
                         ],
                         1
@@ -90059,6 +90172,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             //this.isLoading = true
             return this.$http.get('/item/get/' + this.itemData.ItemID).then(function (response) {
                 if (response.status == 200) {
+                    console.log("item loaded");
+                    console.log(response.data);
                     _this3.itemStatus = response.data.state;
                     _this3.itemData = response.data;
                     _this3.images = [];
@@ -93487,13 +93602,7 @@ var render = function() {
       _vm._v(" "),
       _c("RestoreItemModal"),
       _vm._v(" "),
-      _c("ItemReturnConfirmation", {
-        on: {
-          reload: function($event) {
-            _vm.loadItem()
-          }
-        }
-      }),
+      _c("ItemReturnConfirmation", { on: { reload: _vm.loadItem } }),
       _vm._v(" "),
       _c("ConfirmReturnItemSuspentionModal"),
       _vm._v(" "),
@@ -108482,9 +108591,7 @@ var render = function() {
                                             "v-list-tile-content",
                                             [
                                               _c("v-list-tile-title", [
-                                                _vm._v(
-                                                  _vm._s(item.item.ItemName)
-                                                )
+                                                _vm._v(_vm._s(item.ItemName))
                                               ]),
                                               _vm._v(" "),
                                               _c(
