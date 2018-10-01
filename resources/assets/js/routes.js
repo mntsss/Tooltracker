@@ -159,6 +159,14 @@ const routes = [
    }
 },
 {
+  path: '/history',
+  name: 'history',
+  component: require('./components/history/Main'),
+  meta:{
+    auth: true
+  }
+},
+{
     path: '/history/item',
     name: 'itemHistory',
     component: require('./components/history/Item'),

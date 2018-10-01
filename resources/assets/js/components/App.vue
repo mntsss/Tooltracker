@@ -203,7 +203,7 @@ export default {
                   { icon: 'keyboard_arrow_right', text: 'Ištrinti', click: ()=>{ this.$router.push({name: 'deletedUsers'})}}
                 ]
               },
-              {icon: 'fa-history', text: 'Istorija', click: ''}
+              {icon: 'fa-history', text: 'Istorija', click: ()=> { this.$router.push({name: 'history'})}}
             ],
             cartDropdownMeniu: [
               {text: 'Nauja rezervacija', click: () =>{this.$router.push({name: 'cart'})}},
