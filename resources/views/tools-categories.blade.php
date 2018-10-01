@@ -20,7 +20,6 @@
 
      $('.popup-item-box').css('width', $('.container').width());
      $('#'+id).css('height', Object.keys(items[id]).length*55+55);
-     console.log(items[id]);
      $('#'+id).center();
     if ($('#'+id).css('display') === 'none')
     {

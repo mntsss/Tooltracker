@@ -157,6 +157,15 @@ const routes = [
    meta: {
       auth: true
    }
+},
+{
+    path: '/history/item',
+    name: 'itemHistory',
+    component: require('./components/history/Item'),
+    props: true,
+    meta: {
+        auth: true
+    }
 }
 ]
 

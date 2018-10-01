@@ -48,7 +48,7 @@ class ReservationController extends Controller
           $base64 = end($imageExpl);
           //saving image as a file
 
-          if(file_put_contents(public_path(env('ITEMS_IMAGE_ROUTE')).$imageName, base64_decode($base64))){
+          if(file_put_contents(public_path(env('IMAGE_UPLOAD_ROUTE')).$imageName, base64_decode($base64))){
               if(!ItemImage::create([
                   'ImageName' => $imageName,
                   'ItemID' => $item['item']['ItemID'],

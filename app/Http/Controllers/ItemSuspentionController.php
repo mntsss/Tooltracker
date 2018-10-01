@@ -95,4 +95,11 @@ class ItemSuspentionController extends Controller
         $suspentions = ItemSuspention::Active()->where('SuspentionUnconfirmedReturn', true)->with(['item' => function($q){ return $q->with('itemGroup');}])->orderBy("created_at", "ASC")->get();
         return response()->json($suspentions, 200);
     }
+
+    public function getFixSuspentions(){
+        $suspentions = ItemSuspention::Active()->where(function ($q){
+            return $q->where('SuspentionWarrantyFix', true)->orWhere('SuspentionUnwarrantedFix', true);
+        })->with(['item' => function($q){ return $q->with('itemGroup');}])->orderBy("created_at", "ASC")->get();
+        return response()->json($suspentions, 200);
+    }
 }

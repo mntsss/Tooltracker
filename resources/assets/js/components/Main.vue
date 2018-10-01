@@ -72,12 +72,30 @@
               <v-card-title class="secondary h5">
                   Taisomi įrankiai
               </v-card-title>
-              <v-card-text style="min-height: 25vh" class="white d-flex">
-                  <v-layout align-center mt-5 justify-center row fill-height>
-                    <v-flex shrink>
-                      <v-progress-circular :size="100" :width="7" color="primary" indeterminate></v-progress-circular>
-                    </v-flex>
-                  </v-layout>
+              <v-card-text style="min-height: 25vh" class="white position-relative">
+                  <Loading :active.sync="suspentionFixLoading"
+                  :can-cancel="false"
+                  :is-full-page="false"></Loading>
+                  <div class="table-responsive overview-box">
+                    <v-data-table :headers="suspentionsHeaders" :items="fixingSuspentions" hide-actions class="elevation-3 border border-dark">
+                        <template slot="items" slot-scope="props">
+                          <tr class="cursor-pointer" @click="$router.push({ name: 'item', params: { itemID: props.item.item.ItemID}})">
+                            <td>
+                              {{ props.item.item.item_group.ItemGroupName}}
+                            </td>
+                            <td>
+                              {{ props.item.item.ItemName }}
+                            </td>
+                            <td class="justify-center layout px-0">
+                              {{ props.item.created_at}}
+                            </td>
+                          </tr>
+                        </template>
+                        <template slot="no-data">
+                            Taisomų įranki nėra...
+                        </template>
+                   </v-data-table>
+                 </div>
               </v-card-text>
           </v-card>
       </v-flex>
@@ -111,8 +129,10 @@ export default {
       isLoading: true,
       fullPage: false,
       suspentionLoading: true,
+      suspentionFixLoading: true,
       longestRentedLoading: true,
       unconfirmedReturnSuspentions: [],
+      fixingSuspentions: [],
       longestRentedItems: [],
       suspentionsHeaders: [
           {
@@ -152,6 +172,7 @@ export default {
       this.isLoading = false
       this.getSuspentionsUnconfirmedReturn();
       this.getLongestRented();
+      this.getFixingSuspentions();
   },
   computed: {
     username: function(){
@@ -206,6 +227,24 @@ export default {
               }
           })
       },
+      getFixingSuspentions: function(){
+          this.$http.get('/suspention/get/fixing')
+          .then(response => {
+              if(response.status == 200)
+              {
+                  this.fixingSuspentions = response.data
+                  this.suspentionFixLoading = false
+              }
+          }).catch(err => {
+              if(err.response.status == 422)
+              {
+                  swal(err.response.data.message, Object.values(err.response.data.errors)[0][0], "error");
+              }
+              else{
+                  swal("Klaida", err.response.data.message, "error");
+              }
+          })
+      },
       getLongestRented: function(){
           this.$http.get('/rented/get/longest')
           .then(response => {
@@ -226,7 +265,6 @@ export default {
       },
       days: function(date){
           var dateRented = new Date(date)
-          console.log(dateRented)
           var currentDate = new Date()
           if(dateRented > currentDate)
               return 0

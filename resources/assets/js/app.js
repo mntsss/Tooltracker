@@ -76,8 +76,7 @@ Vue.use(require('@websanova/vue-auth'), {
 });
 
 //Define global variable
-
-Vue.prototype.$uploadPath = '/media/items/'
+Vue.prototype.$uploadPath = process.env.MIX_IMAGE_UPLOAD_ROUTE
 Vue.mixin(GlobalMixin);
 //main app init
 App.router = Vue.router;

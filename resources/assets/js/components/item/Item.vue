@@ -132,7 +132,7 @@
                                 <v-icon class="primary--text">fa-wrench</v-icon>
                                 <span class="mx-2">Taisymas</span>
                             </v-btn>
-                              <v-btn outline @click="show('add-user-card-modal', {id: user.UserID})">
+                              <v-btn outline @click="$router.push({ name: 'itemHistory', params: { id: itemData.ItemID, type: 'item'}})">
                                   <v-icon class="primary--text">fa-history</v-icon>
                                   <span class="mx-2">Istorija</span>
                               </v-btn>
@@ -261,8 +261,6 @@ import ConfirmReturnItemSuspentionModal from '../modals/ConfirmReturnItemSuspent
             //this.isLoading = true
         return this.$http.get('/item/get/'+this.itemData.ItemID).then((response)=>{
             if(response.status == 200){
-              console.log("item loaded")
-              console.log(response.data)
                 this.itemStatus = response.data.state
                 this.itemData = response.data
                 this.images = [];

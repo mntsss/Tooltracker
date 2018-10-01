@@ -28,6 +28,8 @@ Route::group(['middleware' => 'jwt.auth'], function(){
     Route::get('list/{groupID}', 'ItemController@items');
     Route::get('suspended', 'ItemController@suspendedItems');
     Route::get('deleted', 'ItemController@deletedItems');
+    // returns item history
+    Route::get('history/{id}', 'ItemController@history');
     Route::post('create', 'ItemController@create')->middleware('role');
     Route::get('get/{id}', 'ItemController@get');
     Route::post('edit/name', 'ItemController@edit')->middleware('role');
@@ -56,6 +58,7 @@ Route::group(['middleware' => 'jwt.auth'], function(){
 
   Route::prefix('suspention')->group(function(){
      Route::get('get/unconfirmedreturn', 'ItemSuspentionController@getWaitingConfirmationSuspentions');
+     Route::get('get/fixing', 'ItemSuspentionController@getFixSuspentions');
   });
 
   Route::prefix('withdrawal')->group(function(){

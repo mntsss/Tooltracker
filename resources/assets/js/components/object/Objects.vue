@@ -185,12 +185,10 @@ export default{
           }
         },
         addConsumables: function(withdrawals){
-          console.log(withdrawals.length)
           for(var i = 0; i < withdrawals.length; i++){
             if(withdrawals[i].item.ItemConsumable){
                 for(var j = i+1; j< withdrawals.length; j++)
                 {
-                    console.log(withdrawals[j])
                   if(withdrawals[i].ItemID == withdrawals[j].ItemID)
                   {
                     withdrawals[i].ItemWithdrawalQuantity += withdrawals[j].ItemWithdrawalQuantity;

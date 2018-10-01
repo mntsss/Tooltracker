@@ -37,6 +37,6 @@ class ReceivedCode implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('code-channel');
+        return new Channel(env('PUSHER_CHANNEL_NAME'));
     }
 }

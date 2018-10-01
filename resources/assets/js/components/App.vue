@@ -228,7 +228,7 @@ export default {
       if(window.innerWidth < 1265)
         this.drawer = false
 
-      Echo.channel('code-channel')
+      Echo.channel(process.env.MIX_PUSHER_CHANNEL_NAME)
         .listen('ReceivedCode', (e) => {
           console.log("Code received")
           if(e.userID == this.$user.UserID)
@@ -246,7 +246,7 @@ export default {
         return this.$store.state.recentCode
       },
     snackbarText: function(){
-      return 'Nuskaitytas kodas: '+this.RFIDcode
+      return 'NFC kodas nuskaitytas!'
     },
     resultBox: function(){
         if(this.searchQuery.length < 3 || this.searchResults == null)

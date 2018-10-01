@@ -14,13 +14,16 @@ use App\RfidCode;
 use App\ItemWithdrawal;
 use App\ItemImage;
 use App\ItemSuspention;
+use App\Action;
 use Auth;
 
+use App\Traits\ActionHistory;
 use App\Traits\ItemInfo;
 
 class ItemController extends Controller
 {
   use ItemInfo;
+  use ActionHistory;
 
     public function __construct(){
        $this->middleware('auth');
@@ -47,10 +50,20 @@ class ItemController extends Controller
         return response()->json($response);
     }
 
-
     public function deletedItems(){
         $items = Item::where('ItemDeleted', true)->with(['lastWithdrawal', 'lastSuspention', 'lastReservation', 'images'])->orderBy('updated_at', 'DESC')->get();
         return response()->json($items, 200);
+    }
+
+    public function history($id){
+        $item = Item::with(['withdrawals', 'reservations'])->find($id);
+        $withdrawals = $this->createWithdrawalHistory($item);
+        $reservations = $this->createReservationHistory($item);
+        $suspentions = $this->createSuspentionHistory($item);
+
+        $sorted = $withdrawals->merge($reservations)->merge($suspentions)->sortByDesc('Date')->values()->all();
+
+        return response()->json(['actions' => $sorted, 'item' => $item], 200);
     }
 
     public function create(ItemRequest $request){
@@ -86,7 +99,7 @@ class ItemController extends Controller
         $base64 = end($imageExpl);
         //saving image as a file
 
-        if(file_put_contents(public_path(env('ITEMS_IMAGE_ROUTE')).$imageName, base64_decode($base64))){
+        if(file_put_contents(public_path(env('IMAGE_UPLOAD_ROUTE')).$imageName, base64_decode($base64))){
             if(!ItemImage::create([
                 'ImageName' => $imageName,
                 'ItemID' => $item->ItemID
