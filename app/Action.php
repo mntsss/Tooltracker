@@ -8,6 +8,7 @@ use App\ReservationItem;
 class Action
 {
     protected $ItemName;
+    protected $GroupName;
     protected $ItemID;
     protected $Action; //in / out
     protected $Type; //withdrawal / reservation / suspention
@@ -18,7 +19,7 @@ class Action
     protected $Date;
     protected $ActionID;
 
-    public function __construct($ItemName = null, $ItemID = null, $Action = null, $Type = null, $Username = null, $UserID = null, $Date = null, $Quantity = null, $ActionID = null, $Subtype = null)
+    public function __construct($ItemName = null, $ItemID = null, $Action = null, $Type = null, $Username = null, $UserID = null, $Date = null, $Quantity = null, $ActionID = null, $Subtype = null, $group = null)
     {
         $this->ItemName = $ItemName;
         $this->ItemID = $ItemID;
@@ -30,6 +31,7 @@ class Action
         $this->Date = $Date;
         $this->Quantity = $Quantity;
         $this->ActionID = $ActionID;
+        $this->GroupName = $group;
     }
     // getters and setters
     public function setItemName($val){
@@ -63,6 +65,9 @@ class Action
     public function setSubtype($val){
         $this->Subtype = $val;
     }
+    public function setGroupName($val){
+      $this->GroupName = $val;
+    }
 
     public function getItemName(){
         return $this->ItemName;
@@ -94,6 +99,10 @@ class Action
     public function getSubtype(){
         return $this->Subtype;
     }
+    public function getGroupName(){
+      return $this->GroupName;
+    }
+
     public function __set($name, $value) {
 
         if (!property_exists($this, $name))

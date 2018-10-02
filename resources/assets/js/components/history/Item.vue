@@ -15,7 +15,7 @@
               </v-flex>
           </v-layout>
           <div class="card-body">
-              <v-data-table :headers="tableHeaders" :items="history" :pagination.sync="pagination" :rows-per-page-items='[5,10,25,{"text":"$vuetify.dataIterator.rowsPerPageAll","value":25}]' hide-actions class="elevation-3 border border-dark">
+              <v-data-table prev-icon="fa-arrow-left" next-icon="fa-arrow-right" sort-icon="fa-angle-down" rows-per-page-text="Rodymi įrašai puslapyje: " :headers="tableHeaders" :items="history" :pagination.sync="pagination" :rows-per-page-items='[25,50,100,{"text":"$vuetify.dataIterator.rowsPerPageAll","value":25}]' :hide-actions="false" class="elevation-3 border border-dark">
                   <template slot="items" slot-scope="props">
                     <tr class="cursor-pointer">
                       <td>
@@ -31,6 +31,9 @@
                         {{ props.item.Quantity}}
                       </td>
                     </tr>
+                  </template>
+                  <template slot="pageText" slot-scope="props">
+                    Rodoma {{ props.pageStart }} - {{ props.pageStop }} iš {{ props.itemsLength }}
                   </template>
                   <template slot="no-data">
                     <v-alert :value="true" class="bg-warning" icon="warning">
@@ -53,7 +56,7 @@ export default{
             pagination: {
                 sortBy: 'Date',
                 descending: true,
-                rowsPerPage: 50,
+                rowsPerPage: 25,
             },
             history: [],
             item: null,

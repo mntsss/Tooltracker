@@ -1,3 +1,6 @@
+import swal from 'sweetalert'
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/vue-loading.min.css'
 export default {
     computed: {
         $user() {

@@ -16,6 +16,8 @@ trait ActionHistory{
         foreach($item->withdrawals as $withdrawal){
             $action = new Action();
             $action->ItemName = $item->ItemName;
+            if($item->itemGroup)
+              $action->GroupName = $item->itemGroup->ItemGroupName;
             $action->ItemID = $item->ItemID;
             $action->Action = "withdrawal";
             $action->Type = "out";
@@ -48,6 +50,8 @@ trait ActionHistory{
         foreach($item->reservations as $reservation){
             $action = new Action();
             $action->ItemName = $item->ItemName;
+            if($item->itemGroup)
+              $action->GroupName = $item->itemGroup->ItemGroupName;
             $action->ItemID = $item->ItemID;
             $action->Action = "reservation";
             $action->Type = "out";
@@ -79,6 +83,8 @@ trait ActionHistory{
         $actionArray = [];
         foreach($item->suspentions as $suspention){
             $action = new Action();
+            if($item->itemGroup)
+              $action->GroupName = $item->itemGroup->ItemGroupName;
             $action->ItemName = $item->ItemName;
             $action->ItemID = $item->ItemID;
             $action->Action = "suspention";

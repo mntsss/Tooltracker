@@ -37,8 +37,7 @@
      >
        <v-card flat>
          <v-card-text>
-           <h2>{{ tab }}</h2>
-           "Tabas..."
+           <ItemsHistory></ItemsHistory>
          </v-card-text>
        </v-card>
      </v-tab-item>
@@ -51,10 +50,11 @@ import swal from 'sweetalert'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.min.css'
 import DatePicker from 'vue2-datepicker'
+import ItemsHistory from './modules/withdrawals'
 export default{
   data(){
     return{
-      isLoading: true,
+      isLoading: false,
       fullPage: false,
       currentTab: null,
       date_from: null,
@@ -83,7 +83,8 @@ export default{
   },
   components:{
     Loading,
-    DatePicker
+    DatePicker,
+    ItemsHistory
   }
 }
 </script>
