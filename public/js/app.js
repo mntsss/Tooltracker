@@ -76028,7 +76028,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         editNote: function editNote() {
             var _this5 = this;
 
-            this.$http.post('/item/edit/note', { id: this.itemData.ItemID, note: this.note }).then(function (response) {
+            this.$http.post('/item/edit', { id: this.itemData.ItemID, note: this.note }).then(function (response) {
                 if (response.status == 200) {
                     _this5.readonly = true;
                 }
@@ -76180,7 +76180,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         save: function save() {
             var _this = this;
 
-            this.$http.post('/item/edit/name', {
+            this.$http.post('/item/edit', {
                 'id': this.itemID,
                 'name': this.name
             }).then(function (response) {
@@ -76391,7 +76391,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         save: function save() {
             var _this = this;
 
-            this.$http.post('/item/edit/ident', {
+            this.$http.post('/item/edit', {
                 'id': this.itemID,
                 'idnumber': this.ident
             }).then(function (response) {
@@ -76639,7 +76639,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         save: function save() {
             var _this = this;
 
-            this.$http.post('/item/edit/ident', {
+            this.$http.post('/item/edit', {
                 'id': this.itemID,
                 'acquired': this.acquired
             }).then(function (response) {
@@ -78654,7 +78654,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         save: function save() {
             var _this = this;
 
-            this.$http.post('/item/edit/warranty', {
+            this.$http.post('/item/edit', {
                 'id': this.itemID,
                 'warranty': this.date
             }).then(function (response) {
@@ -84716,6 +84716,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -85243,73 +85271,6 @@ var render = function() {
                                                             headline: ""
                                                           }
                                                         },
-                                                        [_vm._v("fa-user-tie")]
-                                                      )
-                                                    ],
-                                                    1
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "v-flex",
-                                                    {
-                                                      attrs: {
-                                                        "px-2": "",
-                                                        shrink: ""
-                                                      }
-                                                    },
-                                                    [
-                                                      _vm._v(
-                                                        "Darbų vygdytojas:"
-                                                      )
-                                                    ]
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "v-flex",
-                                                    { attrs: { "px-2": "" } },
-                                                    [
-                                                      _vm._v(
-                                                        _vm._s(
-                                                          object.user.Username
-                                                        )
-                                                      )
-                                                    ]
-                                                  )
-                                                ],
-                                                1
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "v-layout",
-                                                {
-                                                  attrs: {
-                                                    row: "",
-                                                    wrap: "",
-                                                    "align-center": ""
-                                                  }
-                                                },
-                                                [
-                                                  _c(
-                                                    "v-flex",
-                                                    {
-                                                      staticStyle: {
-                                                        width: "40px !important"
-                                                      },
-                                                      attrs: {
-                                                        shrink: "",
-                                                        "pa-2": ""
-                                                      }
-                                                    },
-                                                    [
-                                                      _c(
-                                                        "v-icon",
-                                                        {
-                                                          staticClass:
-                                                            "primary--text",
-                                                          attrs: {
-                                                            headline: ""
-                                                          }
-                                                        },
                                                         [
                                                           _vm._v(
                                                             "fa-calendar-plus"
@@ -85330,7 +85291,7 @@ var render = function() {
                                                     },
                                                     [
                                                       _vm._v(
-                                                        "Objektas pridėtas:"
+                                                        "Objektas sukurtas:"
                                                       )
                                                     ]
                                                   ),
@@ -85345,6 +85306,218 @@ var render = function() {
                                                         )
                                                       )
                                                     ]
+                                                  )
+                                                ],
+                                                1
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-layout",
+                                                {
+                                                  attrs: {
+                                                    row: "",
+                                                    wrap: "",
+                                                    "align-center": "",
+                                                    "justify-center": ""
+                                                  }
+                                                },
+                                                [
+                                                  _c(
+                                                    "v-container",
+                                                    [
+                                                      _c(
+                                                        "v-card-title",
+                                                        {
+                                                          staticClass:
+                                                            "primary v-toolbar text-white mx-auto pa-1 v-layout align-center justify-center"
+                                                        },
+                                                        [
+                                                          _c(
+                                                            "v-flex",
+                                                            {
+                                                              staticClass:
+                                                                "text-center",
+                                                              attrs: {
+                                                                "px-2": ""
+                                                              }
+                                                            },
+                                                            [
+                                                              _c(
+                                                                "v-icon",
+                                                                {
+                                                                  staticClass:
+                                                                    "white--text px-2",
+                                                                  attrs: {
+                                                                    headline: ""
+                                                                  }
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "fa-user-tie"
+                                                                  )
+                                                                ]
+                                                              ),
+                                                              _vm._v(
+                                                                "Darbų vygdytojai"
+                                                              )
+                                                            ],
+                                                            1
+                                                          ),
+                                                          _vm._v(" "),
+                                                          _vm.$user.UserRole ==
+                                                          "Administratorius"
+                                                            ? _c(
+                                                                "v-flex",
+                                                                {
+                                                                  attrs: {
+                                                                    shrink: ""
+                                                                  }
+                                                                },
+                                                                [
+                                                                  _c(
+                                                                    "v-btn",
+                                                                    {
+                                                                      staticClass:
+                                                                        "my-0",
+                                                                      attrs: {
+                                                                        icon: ""
+                                                                      },
+                                                                      on: {
+                                                                        click: function(
+                                                                          $event
+                                                                        ) {}
+                                                                      }
+                                                                    },
+                                                                    [
+                                                                      _c(
+                                                                        "v-icon",
+                                                                        {
+                                                                          staticClass:
+                                                                            "white--text"
+                                                                        },
+                                                                        [
+                                                                          _vm._v(
+                                                                            "fa-plus"
+                                                                          )
+                                                                        ]
+                                                                      )
+                                                                    ],
+                                                                    1
+                                                                  )
+                                                                ],
+                                                                1
+                                                              )
+                                                            : _vm._e()
+                                                        ],
+                                                        1
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "v-card-text",
+                                                        _vm._l(
+                                                          object.foremen,
+                                                          function(foreman, i) {
+                                                            return _c(
+                                                              "router-link",
+                                                              {
+                                                                key: i,
+                                                                staticClass:
+                                                                  "row remove-side-margin cursor-pointer h6 v-layout align-center",
+                                                                attrs: {
+                                                                  tag: "div",
+                                                                  to: {
+                                                                    name:
+                                                                      "userWithdrawals",
+                                                                    params: {
+                                                                      userID:
+                                                                        foreman.UserID
+                                                                    }
+                                                                  }
+                                                                }
+                                                              },
+                                                              [
+                                                                _c(
+                                                                  "div",
+                                                                  {
+                                                                    staticClass:
+                                                                      "col-5 h6"
+                                                                  },
+                                                                  [
+                                                                    _vm._v(
+                                                                      "\n                                                        " +
+                                                                        _vm._s(
+                                                                          foreman
+                                                                            .user
+                                                                            .Username
+                                                                        ) +
+                                                                        "\n                                                      "
+                                                                    )
+                                                                  ]
+                                                                ),
+                                                                _vm._v(" "),
+                                                                _c(
+                                                                  "div",
+                                                                  {
+                                                                    staticClass:
+                                                                      "col-5 text-center h6"
+                                                                  },
+                                                                  [
+                                                                    _vm._v(
+                                                                      "\n                                                        " +
+                                                                        _vm._s(
+                                                                          foreman.created_at
+                                                                        ) +
+                                                                        "\n                                                      "
+                                                                    )
+                                                                  ]
+                                                                ),
+                                                                _vm._v(" "),
+                                                                _c(
+                                                                  "div",
+                                                                  {
+                                                                    staticClass:
+                                                                      "col text-center"
+                                                                  },
+                                                                  [
+                                                                    _c(
+                                                                      "v-btn",
+                                                                      {
+                                                                        attrs: {
+                                                                          icon:
+                                                                            ""
+                                                                        },
+                                                                        on: {
+                                                                          click: function(
+                                                                            $event
+                                                                          ) {}
+                                                                        }
+                                                                      },
+                                                                      [
+                                                                        _c(
+                                                                          "v-icon",
+                                                                          {
+                                                                            staticClass:
+                                                                              "primary--text"
+                                                                          },
+                                                                          [
+                                                                            _vm._v(
+                                                                              "fa-minus"
+                                                                            )
+                                                                          ]
+                                                                        )
+                                                                      ],
+                                                                      1
+                                                                    )
+                                                                  ],
+                                                                  1
+                                                                )
+                                                              ]
+                                                            )
+                                                          }
+                                                        )
+                                                      )
+                                                    ],
+                                                    1
                                                   )
                                                 ],
                                                 1
@@ -85369,7 +85542,7 @@ var render = function() {
                                                             "v-card-title",
                                                             {
                                                               staticClass:
-                                                                "primary v-toolbar text-white mx-auto "
+                                                                "primary v-toolbar text-white mx-auto pa-1"
                                                             },
                                                             [
                                                               _c("h5", [
@@ -85491,7 +85664,7 @@ var render = function() {
                                                         "v-card-title",
                                                         {
                                                           staticClass:
-                                                            "primary v-toolbar text-white mx-auto "
+                                                            "primary v-toolbar text-white mx-auto pa-1"
                                                         },
                                                         [
                                                           _c("h5", [

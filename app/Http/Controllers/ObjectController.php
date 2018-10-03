@@ -26,7 +26,10 @@ class ObjectController extends Controller
                 'images',
                 'itemGroup']);
             }]);
-        }, 'rented' => function($q){ $q->with('cobject');}])->get();
+        }, 'rented' => function($q){ $q->with('cobject');},
+          'foremen' => function($q){
+            $q->Active()->with('user');
+          }])->get();
 
         return response()->json($objects, 200);
     }
@@ -35,7 +38,10 @@ class ObjectController extends Controller
             $quer->where('ItemWithdrawalReturned', false)->with(['item' => function($q){
               $q->with(['lastWithdrawal' => function($query){ $query->with(['user', 'object']);}, 'lastSuspention' => function($query){ $query->with(['user']);}, 'lastReservation', 'images']);
             }]);
-        }, 'rented' => function($q){ $q->with('cobject');}])->get();
+        }, 'rented' => function($q){ $q->with('cobject');},
+          'foremen' => function($q){
+            $q->Active()->with('user');
+          }])->get();
 
         return response()->json($objects, 200);
     }

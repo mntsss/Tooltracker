@@ -22,6 +22,9 @@ class CObject extends Model
     public function user(){
         return $this->hasOne('App\User', 'UserID', 'UserID');
     }
+    public function foremen(){
+      return $this->hasMany('App\ObjectForeman', 'ObjectID', 'ObjectID');
+    }
     public function rented(){
       return $this->hasMany('App\RentedItem', 'ObjectID', 'ObjectID');
     }

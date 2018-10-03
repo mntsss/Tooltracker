@@ -25,23 +25,51 @@
                                 </div>
                                 <v-card>
                                     <v-card-text>
-                                        <v-layout row wrap align-center >
+                                        <!-- <v-layout row wrap align-center >
                                             <v-flex shrink pa-2 style="width: 40px !important">
                                                 <v-icon headline class="primary--text">fa-user-tie</v-icon>
                                             </v-flex>
                                             <v-flex px-2 shrink>Darbų vygdytojas:</v-flex>
                                             <v-flex px-2>{{object.user.Username}}</v-flex>
-                                        </v-layout>
+                                        </v-layout> -->
                                         <v-layout row wrap align-center >
                                             <v-flex shrink pa-2 style="width: 40px !important">
                                                 <v-icon headline class="primary--text">fa-calendar-plus</v-icon>
                                             </v-flex>
-                                            <v-flex px-2 shrink>Objektas pridėtas:</v-flex>
+                                            <v-flex px-2 shrink>Objektas sukurtas:</v-flex>
                                             <v-flex px-2>{{object.created_at}}</v-flex>
+                                        </v-layout>
+                                        <v-layout row wrap align-center justify-center>
+                                            <v-container>
+                                                <v-card-title class="primary v-toolbar text-white mx-auto pa-1 v-layout align-center justify-center">
+                                                  <v-flex px-2 class="text-center"><v-icon headline class="white--text px-2">fa-user-tie</v-icon>Darbų vygdytojai</v-flex>
+                                                  <v-flex shrink v-if="$user.UserRole == 'Administratorius'">
+                                                      <v-btn icon @click="" class="my-0">
+                                                        <v-icon class="white--text">fa-plus</v-icon>
+                                                      </v-btn>
+                                                  </v-flex>
+                                                </v-card-title>
+
+                                                <v-card-text>
+                                                    <router-link tag="div" class="row remove-side-margin cursor-pointer h6 v-layout align-center" :to="{ name: 'userWithdrawals', params: { userID: foreman.UserID}}" v-for="(foreman, i) in object.foremen" :key="i">
+                                                      <div class="col-5 h6">
+                                                        {{foreman.user.Username}}
+                                                      </div>
+                                                      <div class="col-5 text-center h6">
+                                                        {{foreman.created_at}}
+                                                      </div>
+                                                      <div class="col text-center">
+                                                        <v-btn icon @click="">
+                                                          <v-icon class="primary--text">fa-minus</v-icon>
+                                                        </v-btn>
+                                                      </div>
+                                                    </router-link>
+                                                </v-card-text>
+                                            </v-container>
                                         </v-layout>
                                         <v-layout row wrap align-center justify-center v-if="object.rented.length > 0">
                                             <v-container>
-                                                <v-card-title class="primary v-toolbar text-white mx-auto ">
+                                                <v-card-title class="primary v-toolbar text-white mx-auto pa-1">
                                                     <h5>Išnuomoti įrankiai / nuomos pradžia</h5>
                                                 </v-card-title>
                                                 <v-card-text>
@@ -58,7 +86,7 @@
                                         </v-layout>
                                         <v-layout row wrap align-center justify-center>
                                             <v-container>
-                                                <v-card-title class="primary v-toolbar text-white mx-auto ">
+                                                <v-card-title class="primary v-toolbar text-white mx-auto pa-1">
                                                     <h5>Naudojami įrankiai / išdavimo data</h5>
                                                 </v-card-title>
                                                 <v-card-text v-if="object.item_withdrawals.length > 0">
