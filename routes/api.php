@@ -32,10 +32,7 @@ Route::group(['middleware' => 'jwt.auth'], function(){
     Route::get('history/{id}', 'ItemController@history');
     Route::post('create', 'ItemController@create')->middleware('role');
     Route::get('get/{id}', 'ItemController@get');
-    Route::post('edit/name', 'ItemController@edit')->middleware('role');
-    Route::post('edit/ident', 'ItemController@edit')->middleware('role');
-    Route::post('edit/note', 'ItemController@edit')->middleware('role');
-    Route::post('edit/warranty', 'ItemController@edit')->middleware('role');
+    Route::post('edit', 'ItemController@edit')->middleware('role');
 
     Route::post('image', 'ItemController@changeImage')->middleware('role');
     Route::post('delete', 'ItemController@delete')->middleware('role');
@@ -48,12 +45,16 @@ Route::group(['middleware' => 'jwt.auth'], function(){
     // marks item withdrawal as returned if request has valid administrator card id
     Route::post('return/card', 'ItemWithdrawalController@return');
     // created unconfirmed return item suspention
-    Route::post('suspend/unconfirmedreturn', 'ItemSuspentionController@unconfirmedReturn')->middleware('role');
-    Route::post('suspend/warrantedfix', 'ItemSuspentionController@warrantedFix')->middleware('role');
-    Route::post('suspend/fix', 'ItemSuspentionController@unwarrantedFix')->middleware('role');
-    // confirm suspended item for unconfirmed return
-    Route::post('suspend/return/unconfirmed', 'ItemSuspentionController@returnConfirmed')->middleware('role');
-    Route::post('suspend/return/fixed', 'ItemSuspentionController@fixed')->middleware('role');
+    Route::prefix('suspend')->group(function(){
+        Route::post('unconfirmedreturn', 'ItemSuspentionController@unconfirmedReturn')->middleware('role');
+        Route::post('warrantedfix', 'ItemSuspentionController@warrantedFix')->middleware('role');
+        Route::post('fix', 'ItemSuspentionController@unwarrantedFix')->middleware('role');
+        // confirm suspended item for unconfirmed return
+        Route::prefix('return')->group(function(){
+            Route::post('unconfirmed', 'ItemSuspentionController@returnConfirmed')->middleware('role');
+            Route::post('fixed', 'ItemSuspentionController@fixed')->middleware('role');
+        });
+    });
   });
 
   Route::prefix('suspention')->group(function(){
@@ -92,6 +93,11 @@ Route::group(['middleware' => 'jwt.auth'], function(){
      Route::get('closed', 'ObjectController@closedObjects');
      // adds new object
      Route::post('add', 'ObjectController@add')->middleware('role');
+     // assigns and removes foreman to / from the object
+     Route::prefix('foreman')->group(function(){
+        Route::post('assign', 'ObjectController@assignForeman');
+        Route::post('remove', 'ObjectController@removeForeman');
+     });
   });
   Route::prefix('reservation')->group(function(){
     //create new item reservation for object

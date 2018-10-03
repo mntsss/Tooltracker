@@ -30,6 +30,8 @@ trait ActionHistory{
             if($withdrawal->ItemWithdrawalReturned){
                 $action = new Action();
                 $action->ItemName = $item->ItemName;
+                if($item->itemGroup)
+                  $action->GroupName = $item->itemGroup->ItemGroupName;
                 $action->ItemID = $item->ItemID;
                 $action->Action = "withdrawal";
                 $action->Type = "in";
@@ -64,6 +66,8 @@ trait ActionHistory{
             if($reservation->reservation->ReservationDelivered){
                 $action = new Action();
                 $action->ItemName = $item->ItemName;
+                if($item->itemGroup)
+                  $action->GroupName = $item->itemGroup->ItemGroupName;
                 $action->ItemID = $item->ItemID;
                 $action->Action = "reservation";
                 $action->Type = "in";
@@ -106,6 +110,8 @@ trait ActionHistory{
             if($suspention->SuspentionReturned){
                 $action = new Action();
                 $action->ItemName = $item->ItemName;
+                if($item->itemGroup)
+                  $action->GroupName = $item->itemGroup->ItemGroupName;
                 $action->ItemID = $item->ItemID;
                 $action->Action = "suspention";
                 $action->Type = "in";

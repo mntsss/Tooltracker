@@ -37,7 +37,7 @@ export default {
     },
   methods: {
     save: function(){
-        this.$http.post('/item/edit/ident', {
+        this.$http.post('/item/edit', {
             'id': this.itemID,
             'idnumber': this.ident
         }).then((response)=>{

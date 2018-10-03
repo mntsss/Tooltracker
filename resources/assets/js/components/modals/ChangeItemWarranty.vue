@@ -53,7 +53,7 @@ export default {
     },
   methods: {
     save: function(){
-        this.$http.post('/item/edit/warranty', {
+        this.$http.post('/item/edit', {
             'id': this.itemID,
             'warranty': this.date
         }).then((response)=>{

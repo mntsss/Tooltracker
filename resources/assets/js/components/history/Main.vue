@@ -9,9 +9,9 @@
       dark
       tabs
       >
-      <DatePicker class="justify-center d-flex theme--primary text-white ma-3" v-model="date_from" :shortcuts="false" :range='true' range-separator="-" :lang="lang" format="YYYY-MM-DD"></DatePicker>
-      <!-- <v-icon class="h5 text-white mx-2">fa-minus</v-icon>
-      <DatePicker class="justify-center d-flex theme--primary text-white ma-3" v-model="date_til" :lang="lang" format="YYYY-MM-DD"></DatePicker> -->
+      <v-layout aling-center justify-center><v-flex shrink headline white--text>Istorija</v-flex></v-layout>
+
+      <!-- <DatePicker class="justify-center d-flex theme--primary text-white ma-3" v-model="date_from" :shortcuts="false" :range='true' range-separator="-" :lang="lang" format="YYYY-MM-DD"></DatePicker> -->
       <v-tabs
        slot="extension"
        v-model="currentTab"
@@ -35,7 +35,7 @@
        :id="'tab-' + tab"
        :key="tab"
      >
-       <v-card flat>
+       <v-card flat v-if="currentTab == 'tab-'+tabs[0]">
          <v-card-text>
            <ItemsHistory></ItemsHistory>
          </v-card-text>

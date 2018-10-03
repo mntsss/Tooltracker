@@ -315,7 +315,7 @@ import ConfirmReturnItemSuspentionModal from '../modals/ConfirmReturnItemSuspent
         }})
     },
     editNote: function(){
-      this.$http.post('/item/edit/note', {id: this.itemData.ItemID, note: this.note})
+      this.$http.post('/item/edit', {id: this.itemData.ItemID, note: this.note})
       .then(response => {
         if(response.status == 200)
         {

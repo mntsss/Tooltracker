@@ -93899,24 +93899,18 @@ var render = function() {
             "v-toolbar",
             { attrs: { color: "primary", dark: "", tabs: "" } },
             [
-              _c("DatePicker", {
-                staticClass:
-                  "justify-center d-flex theme--primary text-white ma-3",
-                attrs: {
-                  shortcuts: false,
-                  range: true,
-                  "range-separator": "-",
-                  lang: _vm.lang,
-                  format: "YYYY-MM-DD"
-                },
-                model: {
-                  value: _vm.date_from,
-                  callback: function($$v) {
-                    _vm.date_from = $$v
-                  },
-                  expression: "date_from"
-                }
-              }),
+              _c(
+                "v-layout",
+                { attrs: { "aling-center": "", "justify-center": "" } },
+                [
+                  _c(
+                    "v-flex",
+                    { attrs: { shrink: "", headline: "", "white--text": "" } },
+                    [_vm._v("Istorija")]
+                  )
+                ],
+                1
+              ),
               _vm._v(" "),
               _c(
                 "v-tabs",
@@ -93964,12 +93958,14 @@ var render = function() {
                 "v-tab-item",
                 { key: tab, attrs: { id: "tab-" + tab } },
                 [
-                  _c(
-                    "v-card",
-                    { attrs: { flat: "" } },
-                    [_c("v-card-text", [_c("ItemsHistory")], 1)],
-                    1
-                  )
+                  _vm.currentTab == "tab-" + _vm.tabs[0]
+                    ? _c(
+                        "v-card",
+                        { attrs: { flat: "" } },
+                        [_c("v-card-text", [_c("ItemsHistory")], 1)],
+                        1
+                      )
+                    : _vm._e()
                 ],
                 1
               )

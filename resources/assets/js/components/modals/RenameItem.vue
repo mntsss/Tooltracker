@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     save: function(){
-        this.$http.post('/item/edit/name', {
+        this.$http.post('/item/edit', {
             'id': this.itemID,
             'name': this.name
         }).then((response)=>{
