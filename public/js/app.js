@@ -87230,6 +87230,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -87244,6 +87273,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       waitingImageDialog: false,
       imageLoadingDialog: false,
       hasImage: false,
+
+      isSearchLoading: false,
+      searchQuery: null,
+      items: [],
 
       userCard: false,
       user: null,
@@ -87305,15 +87338,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
         this.$store.commit('resetCode');
       }
+    },
+    searchQuery: function searchQuery(val) {
+      var _this2 = this;
+
+      if (this.searchQuery.length < 3) return;
+
+      this.isSearchLoading = true;
+
+      this.$http.post('/item/search', { query: this.searchQuery }).then(function (res) {
+        _this2.items = res.data;
+      }).catch(function (err) {
+        console.log(err);
+      }).finally(function () {
+        return _this2.isSearchLoading = false;
+      });
     }
   },
   methods: {
     loadObjects: function loadObjects() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.$http.get('/object/list').then(function (response) {
         if (response.status == 200) {
-          _this2.objects = response.data;
+          _this3.objects = response.data;
         }
       }).catch(function (error) {
         __WEBPACK_IMPORTED_MODULE_2_sweetalert___default()('Klaida!', error.response.data.message, 'error');
@@ -87341,6 +87389,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.newItem.quantity = 1;
       this.waitingImageDialog = false;
     },
+    add: function add(item) {
+
+      if (item.state == "Sandėlyje") {
+        this.newItem.item = item;
+        this.waitingImageDialog = true;
+      } else {
+        if (item.state == 'Rezervuotas') return __WEBPACK_IMPORTED_MODULE_2_sweetalert___default()("Klaida!", 'Įrankis jau yra pridėtas aktyvioje rezervacijoje...', 'error');else if (item.state == 'Naudojamas') return __WEBPACK_IMPORTED_MODULE_2_sweetalert___default()("Klaida!", 'Įrankis yra naudojamas ir negali būti pridėtas į rezervaciją!', 'error');else if (item.state == 'Ištrintas') return __WEBPACK_IMPORTED_MODULE_2_sweetalert___default()("Klaida!", 'Įrankis yra ištrintas, todėl negali būti pridėtas į rezervaciją!', 'error');else return __WEBPACK_IMPORTED_MODULE_2_sweetalert___default()("Klaida!", 'Įrankis yra įšaldytas, todėl negali būti pridėtas į rezervaciją!', 'error');
+      }
+    },
     cancelItemAddition: function cancelItemAddition() {
       this.hasImage = false;
       this.newItem.item = null;
@@ -87349,14 +87406,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.waitingImageDialog = false;
     },
     save: function save() {
-      var _this3 = this;
+      var _this4 = this;
 
       this.$http.post('/reservation/create', {
-        object: this.reservationObject,
+        objectID: this.reservationObject.ObjectID,
+        userID: this.reservationUser,
         items: this.reservedItems
       }).then(function (response) {
         __WEBPACK_IMPORTED_MODULE_2_sweetalert___default()(response.data.message, response.data.success, "success").then(function (value) {
-          _this3.$router.push({ name: 'reservations' });
+          _this4.$router.push({ name: 'reservations' });
         });
       }).catch(function (error) {
         if (error.response.status == 422) {
@@ -87709,6 +87767,7 @@ var render = function() {
               label: "Pasirinkite rezervacijos objektą",
               "hide-details": "",
               "item-text": "ObjectName",
+              "item-value": "ObjectID",
               "return-object": "",
               "prepend-icon": "fa-building",
               outline: ""
@@ -87731,8 +87790,7 @@ var render = function() {
                   label: "Pasirinkite darbų vygdytoją",
                   "hide-details": "",
                   "item-text": "user.Username",
-                  "item-value": "UserID",
-                  "return-object": "",
+                  "item-value": "user.UserID",
                   "prepend-icon": "fa-user",
                   outline: ""
                 },
@@ -87747,76 +87805,171 @@ var render = function() {
             : _vm._e(),
           _vm._v(" "),
           _c(
-            "v-data-table",
-            {
-              staticClass: "elevation-1",
-              attrs: {
-                headers: _vm.headers,
-                items: _vm.reservedItems,
-                "hide-actions": ""
-              },
-              scopedSlots: _vm._u([
-                {
-                  key: "items",
-                  fn: function(props) {
-                    return [
-                      _c("td", [_vm._v(_vm._s(props.item.item.ItemName))]),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "text-xs-center" }, [
-                        _vm._v(_vm._s(props.item.quantity))
-                      ]),
-                      _vm._v(" "),
+            "v-layout",
+            [
+              _c(
+                "v-flex",
+                { attrs: { sm6: "", "px-1": "" } },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      flat: "",
+                      solo: "",
+                      "hide-details": "",
+                      "prepend-inner-icon": "search",
+                      label: "Įrankių paieška..."
+                    },
+                    model: {
+                      value: _vm.searchQuery,
+                      callback: function($$v) {
+                        _vm.searchQuery = $$v
+                      },
+                      expression: "searchQuery"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.items || _vm.isSearchLoading
+                    ? [
+                        _vm.isSearchLoading
+                          ? _c("v-progress-linear", {
+                              attrs: { indeterminate: true }
+                            })
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _c(
+                          "v-list",
+                          _vm._l(_vm.items, function(item, i) {
+                            return _c(
+                              "v-list-tile",
+                              {
+                                key: i,
+                                staticClass: "cursor-pointer",
+                                on: {
+                                  click: function($event) {
+                                    _vm.add(item)
+                                  }
+                                }
+                              },
+                              [
+                                _c(
+                                  "v-list-tile-content",
+                                  [
+                                    _c("v-list-tile-title", {
+                                      domProps: {
+                                        textContent: _vm._s(item.ItemName)
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("v-list-tile-sub-title", {
+                                      domProps: {
+                                        textContent: _vm._s(item.state)
+                                      }
+                                    })
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-list-tile-avatar",
+                                  { staticClass: "headline font-weight-light" },
+                                  [
+                                    _c(
+                                      "v-icon",
+                                      { staticClass: "primary--text" },
+                                      [_vm._v("fa-arrow-alt-circle-right")]
+                                    )
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            )
+                          })
+                        )
+                      ]
+                    : _vm._e()
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                { attrs: { sm6: "", "px-1": "" } },
+                [
+                  _c(
+                    "v-data-table",
+                    {
+                      staticClass: "elevation-1",
+                      attrs: {
+                        headers: _vm.headers,
+                        items: _vm.reservedItems,
+                        "hide-actions": ""
+                      },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "items",
+                          fn: function(props) {
+                            return [
+                              _c("td", [
+                                _vm._v(_vm._s(props.item.item.ItemName))
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "text-xs-center" }, [
+                                _vm._v(_vm._s(props.item.quantity))
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "td",
+                                { staticClass: "justify-center layout px-0" },
+                                [
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      on: {
+                                        click: function($event) {
+                                          _vm.deleteItem(props.item)
+                                        }
+                                      }
+                                    },
+                                    [_c("v-icon", [_vm._v("delete")])],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ]
+                          }
+                        }
+                      ])
+                    },
+                    [
                       _c(
-                        "td",
-                        { staticClass: "justify-center layout px-0" },
+                        "template",
+                        { slot: "no-data" },
                         [
                           _c(
-                            "v-btn",
+                            "v-alert",
+                            {
+                              staticClass: "bg-warning",
+                              attrs: { value: true, icon: "warning" }
+                            },
                             [
-                              _c(
-                                "v-icon",
-                                {
-                                  on: {
-                                    click: function($event) {
-                                      _vm.deleteItem(props.item)
-                                    }
-                                  }
-                                },
-                                [_vm._v("delete")]
+                              _vm._v(
+                                "\n                    Laukiama rezervuojamų įrankių...\n                  "
                               )
-                            ],
-                            1
+                            ]
                           )
                         ],
                         1
                       )
-                    ]
-                  }
-                }
-              ])
-            },
-            [
-              _c(
-                "template",
-                { slot: "no-data" },
-                [
-                  _c(
-                    "v-alert",
-                    {
-                      staticClass: "bg-warning",
-                      attrs: { value: true, icon: "warning" }
-                    },
-                    [
-                      _vm._v(
-                        "\n                Laukiama rezervuojamų įrankių...\n              "
-                      )
-                    ]
+                    ],
+                    2
                   )
                 ],
                 1
               )
             ],
-            2
+            1
           ),
           _vm._v(" "),
           _c(

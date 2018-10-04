@@ -22,8 +22,8 @@ class ReservationController extends Controller
 
       $reservation = Reservation::create([
         'UserID' => Auth::user()->UserID,
-        'ObjectID' => $request->object['ObjectID'],
-        'ReservationRecipientUserID' => $request->object['UserID']
+        'ObjectID' => $request->objectID,
+        'ReservationRecipientUserID' => $request->userID
       ]);
 
       foreach($request->items as $item){
@@ -68,7 +68,9 @@ class ReservationController extends Controller
     public function list(){
       $reservations = Reservation::Active()->where('UserID', Auth::user()->UserID)->with(['items' => function($query){
         $query->with('item');
-    }, 'cobject' => function($query){ $query->with('user');}, 'recipient'])->orderBy('created_at', 'DESC')->get();
+    }, 'cobject' => function($query){ $query->with(['foremen' => function($q){
+      $q->with('user');
+    }]);}, 'recipient'])->orderBy('created_at', 'DESC')->get();
       return response()->json($reservations, 200);
     }
 

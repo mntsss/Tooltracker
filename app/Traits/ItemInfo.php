@@ -38,15 +38,15 @@ trait ItemInfo{
     if(!$item->ItemConsumable){
       if($this->checkItemWithdrawal($item->ItemID)){
         if($this->checkItemSuspention($item->ItemID))
-          $status = 'suspended';
-        else $status = 'withdrew';
+          return 'suspended';
+        else return 'withdrew';
       }
       if($this->checkItemSuspention($item->ItemID))
-          $status = 'suspended';
+          return 'suspended';
       if($this->checkItemReservation($item->ItemID))
-        $status = "reserved";
+        return "reserved";
       if($item->ItemDeleted)
-        $status = "deleted";
+        return "deleted";
     }
   }
   //checks if item is currently in reservation

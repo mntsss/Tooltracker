@@ -61,6 +61,7 @@
             label="Pasirinkite rezervacijos objektą"
             hide-details
             item-text="ObjectName"
+            item-value="ObjectID"
             return-object
             prepend-icon="fa-building"
             outline
@@ -73,27 +74,55 @@
             label="Pasirinkite darbų vygdytoją"
             hide-details
             item-text="user.Username"
-            item-value="UserID"
-            return-object
+            item-value="user.UserID"
             prepend-icon="fa-user"
             outline
             class="mb-4 mt-2"
             v-if="reservationObject"
         ></v-select>
-        <v-data-table :headers="headers" :items="reservedItems" hide-actions class="elevation-1">
-            <template slot="items" slot-scope="props">
-              <td>{{ props.item.item.ItemName }}</td>
-              <td class="text-xs-center">{{ props.item.quantity }}</td>
-              <td class="justify-center layout px-0">
-                  <v-btn><v-icon @click="deleteItem(props.item)">delete</v-icon></v-btn>
-              </td>
+        <v-layout>
+          <v-flex sm6 px-1>
+            <v-text-field
+              flat
+              solo
+              hide-details
+              prepend-inner-icon="search"
+              label="Įrankių paieška..."
+              v-model = "searchQuery"
+              class=""
+            ></v-text-field>
+            <template v-if="items || isSearchLoading" >
+              <v-progress-linear :indeterminate="true" v-if="isSearchLoading"></v-progress-linear >
+              <v-list>
+                <v-list-tile v-for="(item, i) in items" class="cursor-pointer" :key="i" @click="add(item)">
+                  <v-list-tile-content >
+                    <v-list-tile-title v-text="item.ItemName"></v-list-tile-title>
+                    <v-list-tile-sub-title v-text="item.state"></v-list-tile-sub-title>
+                  </v-list-tile-content>
+                  <v-list-tile-avatar class="headline font-weight-light">
+                    <v-icon class="primary--text">fa-arrow-alt-circle-right</v-icon>
+                  </v-list-tile-avatar>
+                </v-list-tile>
+              </v-list>
             </template>
-            <template slot="no-data">
-              <v-alert :value="true" class="bg-warning" icon="warning">
-                Laukiama rezervuojamų įrankių...
-              </v-alert>
-            </template>
-          </v-data-table>
+          </v-flex>
+          <v-flex sm6 px-1>
+            <v-data-table :headers="headers" :items="reservedItems" hide-actions class="elevation-1">
+                <template slot="items" slot-scope="props">
+                  <td>{{ props.item.item.ItemName }}</td>
+                  <td class="text-xs-center">{{ props.item.quantity }}</td>
+                  <td class="justify-center layout px-0">
+                      <v-btn @click="deleteItem(props.item)"><v-icon >delete</v-icon></v-btn>
+                  </td>
+                </template>
+                <template slot="no-data">
+                  <v-alert :value="true" class="bg-warning" icon="warning">
+                    Laukiama rezervuojamų įrankių...
+                  </v-alert>
+                </template>
+              </v-data-table>
+          </v-flex>
+        </v-layout>
           <v-layout row wrap mx-0 pa-3 justify-center align-center>
             <v-flex shrink><v-btn outline @click="save" :disabled="saveButtonDisabled"><v-icon class="primary--text headline mx-2">fa-save</v-icon>Išsaugoti rezervaciją</v-btn></v-flex>
           </v-layout>
@@ -115,6 +144,10 @@ export default{
       waitingImageDialog: false,
       imageLoadingDialog: false,
       hasImage: false,
+
+      isSearchLoading: false,
+      searchQuery: null,
+      items: [],
 
       userCard: false,
       user: null,
@@ -192,6 +225,21 @@ export default{
             }
             this.$store.commit('resetCode')
         }
+    },
+    searchQuery (val) {
+      if(this.searchQuery.length < 3)
+        return
+
+      this.isSearchLoading = true
+
+      this.$http.post('/item/search', {query: this.searchQuery})
+        .then(res => {
+          this.items = res.data
+        })
+        .catch(err => {
+          console.log(err)
+        })
+        .finally(() => (this.isSearchLoading = false))
     }
   },
   methods: {
@@ -226,6 +274,23 @@ export default{
       this.newItem.quantity = 1
       this.waitingImageDialog = false
     },
+    add: function(item){
+
+      if(item.state == "Sandėlyje"){
+        this.newItem.item = item
+        this.waitingImageDialog = true
+      }
+      else{
+        if(item.state == 'Rezervuotas')
+          return swal("Klaida!", 'Įrankis jau yra pridėtas aktyvioje rezervacijoje...', 'error')
+        else if(item.state == 'Naudojamas')
+          return swal("Klaida!", 'Įrankis yra naudojamas ir negali būti pridėtas į rezervaciją!', 'error')
+        else if(item.state == 'Ištrintas')
+          return swal("Klaida!", 'Įrankis yra ištrintas, todėl negali būti pridėtas į rezervaciją!', 'error')
+        else
+          return swal("Klaida!", 'Įrankis yra įšaldytas, todėl negali būti pridėtas į rezervaciją!', 'error')
+      }
+    },
     cancelItemAddition: function(){
         this.hasImage = false
         this.newItem.item = null
@@ -235,7 +300,8 @@ export default{
     },
     save: function(){
       this.$http.post('/reservation/create', {
-        object: this.reservationObject,
+        objectID: this.reservationObject.ObjectID,
+        userID: this.reservationUser,
         items: this.reservedItems
       }).then((response) => {
         swal(response.data.message, response.data.success, "success").then(value => {this.$router.push({name: 'reservations'})})
