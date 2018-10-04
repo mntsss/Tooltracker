@@ -1,6 +1,7 @@
 <template>
     <div class="loading-parent">
       <AddObject></AddObject>
+      <AssingForeman></AssingForeman>
         <Loading :active.sync="isLoading"
         :can-cancel="false"
         :is-full-page="fullPage"></Loading>
@@ -44,14 +45,14 @@
                                                 <v-card-title class="primary v-toolbar text-white mx-auto pa-1 v-layout align-center justify-center">
                                                   <v-flex px-2 class="text-center"><v-icon headline class="white--text px-2">fa-user-tie</v-icon>Darbų vygdytojai</v-flex>
                                                   <v-flex shrink v-if="$user.UserRole == 'Administratorius'">
-                                                      <v-btn icon @click="" class="my-0">
+                                                      <v-btn icon @click="show('assign-foreman-modal', {objectID: object.ObjectID})" class="my-0">
                                                         <v-icon class="white--text">fa-plus</v-icon>
                                                       </v-btn>
                                                   </v-flex>
                                                 </v-card-title>
 
                                                 <v-card-text>
-                                                    <router-link tag="div" class="row remove-side-margin cursor-pointer h6 v-layout align-center" :to="{ name: 'userWithdrawals', params: { userID: foreman.UserID}}" v-for="(foreman, i) in object.foremen" :key="i">
+                                                    <router-link tag="div" class="row remove-side-margin cursor-pointer h6 v-layout align-center mb-0" :to="{ name: 'userWithdrawals', params: { userID: foreman.UserID}}" v-for="(foreman, i) in object.foremen" :key="i">
                                                       <div class="col-5 h6">
                                                         {{foreman.user.Username}}
                                                       </div>
@@ -59,7 +60,7 @@
                                                         {{foreman.created_at}}
                                                       </div>
                                                       <div class="col text-center">
-                                                        <v-btn icon @click="">
+                                                        <v-btn icon @click.prevent="removeForeman(foreman.user, object.ObjectID)" class="ma-0">
                                                           <v-icon class="primary--text">fa-minus</v-icon>
                                                         </v-btn>
                                                       </div>
@@ -139,7 +140,7 @@
 <script>
 import Loading from 'vue-loading-overlay'
 import AddObject from '../modals/AddObject.vue'
-
+import AssingForeman from '../modals/object/AssignForeman.vue'
 import 'vue-loading-overlay/dist/vue-loading.min.css'
 import swal from 'sweetalert'
 
@@ -195,6 +196,37 @@ export default{
                 swal('Klaida', error.response.data.message, 'error')
             })
         },
+        removeForeman: function(user, objectID){
+            swal({
+              title: 'Ar tikrai norite pašalinti '+user.Username+' iš šio objekto?',
+              text: 'Pašalinus vartotoją iš objekto, vartotojo įrankiai ir toliau bus priskirti tiek objektui tiek vartotojui.',
+              icon: 'warning',
+              dangerMode: true,
+              buttons: {
+                del: { text: 'Trinti', value: true},
+                cancel: {text: 'Atšaukti'}
+              }
+            }).then(value => {
+              if(value){
+                this.$http.post('object/foreman/remove', {
+                  userID: user.UserID,
+                  objectID: objectID
+                }).then((response)=>{
+                    if(response.status == 200){
+                        swal(response.data.message, response.data.success, "success").then(value => { this.loadObjects()})
+                    }
+                }).catch(error =>{
+                    if(error.response.status == 422)
+                    {
+                        swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
+                    }
+                    else {
+                      swal('Klaida', error.response.data.message, 'error')
+                    }
+                })
+              }
+            })
+        },
         show: function(name, param = {}){
             this.$modal.show(name, param)
         },
@@ -231,7 +263,8 @@ export default{
     },
     components: {
         Loading,
-        AddObject
+        AddObject,
+        AssingForeman
     }
 }
 </script>

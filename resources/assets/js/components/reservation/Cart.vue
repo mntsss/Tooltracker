@@ -66,6 +66,20 @@
             outline
             class="mb-4 mt-2"
         ></v-select>
+        <v-select
+            :items="reservationObject.foremen"
+            v-model="reservationUser"
+            menu-props="auto"
+            label="Pasirinkite darbų vygdytoją"
+            hide-details
+            item-text="user.Username"
+            item-value="UserID"
+            return-object
+            prepend-icon="fa-user"
+            outline
+            class="mb-4 mt-2"
+            v-if="reservationObject"
+        ></v-select>
         <v-data-table :headers="headers" :items="reservedItems" hide-actions class="elevation-1">
             <template slot="items" slot-scope="props">
               <td>{{ props.item.item.ItemName }}</td>
@@ -106,7 +120,7 @@ export default{
       user: null,
       objects: [],
       reservationObject: null,
-
+      reservationUser: null,
       newItem: {
         item: null,
         image: null,
@@ -128,11 +142,9 @@ export default{
   },
   created(){
     this.loadObjects()
-    this.fetch()
   },
   mounted(){
     this.isLoading = false
-    this.user = this.$auth.user()
   },
   computed: {
     RFIDCode: function(){
@@ -156,7 +168,7 @@ export default{
     RFIDCode(oldRFIDCode, newRFIDCode){
         if(this.RFIDCode){
             if(!this.userCard){
-              if(this.user.UserRFIDCode == this.RFIDCode)
+              if(this.$user.UserRFIDCode == this.RFIDCode)
                 this.userCard = true
             }
             else if(this.userCard){
@@ -183,18 +195,6 @@ export default{
     }
   },
   methods: {
-    fetch() {
-        this.$auth.fetch({
-          success(response)
-          {
-            this.user = response.data;
-          },
-          error(error)
-          {
-            console.log('error ' + error);
-          }
-      });
-    },
     loadObjects: function(){
       this.$http.get('/object/list').then((response) => {
         if(response.status == 200){

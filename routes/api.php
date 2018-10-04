@@ -95,6 +95,7 @@ Route::group(['middleware' => 'jwt.auth'], function(){
      Route::post('add', 'ObjectController@add')->middleware('role');
      // assigns and removes foreman to / from the object
      Route::prefix('foreman')->group(function(){
+        Route::get('object/{objectID}', 'ObjectController@getObjectForemen');
         Route::post('assign', 'ObjectController@assignForeman');
         Route::post('remove', 'ObjectController@removeForeman');
      });

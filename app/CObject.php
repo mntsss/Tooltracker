@@ -13,14 +13,10 @@ class CObject extends Model
     protected $table = 'objects';
     protected $primaryKey = "ObjectID";
 
-    protected $fillable = ['ObjectName', 'ObjectFinished', 'UserID'];
+    protected $fillable = ['ObjectName', 'ObjectFinished'];
 
     public function itemWithdrawals(){
       return $this->hasMany('App\ItemWithdrawal', 'ObjectID');
-    }
-
-    public function user(){
-        return $this->hasOne('App\User', 'UserID', 'UserID');
     }
     public function foremen(){
       return $this->hasMany('App\ObjectForeman', 'ObjectID', 'ObjectID');

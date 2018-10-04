@@ -17,7 +17,6 @@ class CreateObjectsTable extends Migration
             $table->increments('ObjectID');
             $table->string('ObjectName');
             $table->boolean('ObjectFinished')->default(0);
-            $table->integer('UserID');
             $table->timestamps();
         });
     }
