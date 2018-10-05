@@ -36,6 +36,11 @@
            <ItemsHistory></ItemsHistory>
          </v-card-text>
        </v-card>
+       <v-card flat v-if="currentTab == 'tab-'+tabs[1]">
+         <v-card-text>
+           <Camera></Camera>
+         </v-card-text>
+       </v-card>
      </v-tab-item>
    </v-tabs-items>
     </div>
@@ -43,7 +48,8 @@
 <script>
 import swal from 'sweetalert'
 import DatePicker from 'vue2-datepicker'
-import ItemsHistory from './modules/withdrawals'
+import ItemsHistory from './modules/withdrawals.vue'
+import Camera from './Camera.vue'
 export default{
   data(){
     return{
@@ -74,7 +80,8 @@ export default{
   },
   components:{
     DatePicker,
-    ItemsHistory
+    ItemsHistory,
+    Camera
   }
 }
 </script>

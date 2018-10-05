@@ -34,6 +34,7 @@
     "vue-loading-overlay": "^2.2.1",
     "vue-router": "^3.0.1",
     "vue-signature-pad": "^0.6.0",
+    "vue-web-cam": "^1.2.3",
     "vue2-datepicker": "^2.4.0",
     "vuetify": "^1.1.13",
     "vuex": "^3.0.1"
