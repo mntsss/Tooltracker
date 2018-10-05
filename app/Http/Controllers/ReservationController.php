@@ -67,7 +67,7 @@ class ReservationController extends Controller
 
     public function list(){
       $reservations = Reservation::Active()->where('UserID', Auth::user()->UserID)->with(['items' => function($query){
-        $query->with('item');
+        $query->with(['item' => function($q){ $q->with('itemGroup');}]);
     }, 'cobject' => function($query){ $query->with(['foremen' => function($q){
       $q->with('user');
     }]);}, 'recipient'])->orderBy('created_at', 'DESC')->get();
@@ -77,7 +77,9 @@ class ReservationController extends Controller
     public function closed(){
       $reservations = Reservation::where('ReservationDelivered', true)->with(['items' => function($query){
         $query->with('item');
-    }, 'cobject' => function($query){ $query->with('user');}, 'recipient'])->get();
+    }, 'cobject' => function($query){ $query->with(['foremen' => function($q){
+      $q->with('user');
+    }]);}, 'recipient'])->get();
       return response()->json($reservations, 200);
     }
 

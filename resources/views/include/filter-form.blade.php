@@ -1,7 +1,7 @@
   <link rel="stylesheet" type="text/css" href="{{ asset('css/datetimepicker.css')}}"/>
   <div class="card bg-dark">
   <div class="card-body">
-    <form class="row" method="GET" action="{{$slot}}">
+    <form class="row mx-0" method="GET" action="{{$slot}}">
       {{csrf_field()}}
         <div class="col-md-3">
             <input type="text" name="query" class="form-control input-margin" value="{{old('query')}}" placeholder="Paieška..."/>

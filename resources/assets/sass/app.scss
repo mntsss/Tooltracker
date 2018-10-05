@@ -55,6 +55,11 @@ body{
 }
 
 /********************* Loading spinner ****************/
+
+.loading-parent{
+    position: relative;
+}
+
 .loading-overlay .loading-background {
     opacity: 1 !important;
     background-color: #FAFAFA !important;

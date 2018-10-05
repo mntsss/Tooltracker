@@ -54,7 +54,7 @@
   }
   </script>
   <div class="container">
-    <div class="row">
+    <div class="row mx-0">
       <div class="col-md-10 col-12">
         <div class="card bg-dark text-light">
           <div class="card-header">
@@ -67,7 +67,7 @@
               {{$param['order']->make}}&#160;{{$param['order']->name}}
             @endif
             @if($param['order']->type == "search" && Auth::user()->role == "Vadybininkas")
-              <form method="post" action="{{route('search.add.another')}}" class="flex-row-reverse">
+              <form method="post" action="{{route('search.add.another')}}" class="flex-row mx-0-reverse">
                 {{ csrf_field() }}
                 <input type="hidden" name="make" value="{{$param['order']->make}}" />
                 <input type="hidden" name="model" value="{{$param['order']->model}}" />
@@ -142,7 +142,7 @@
                   <b>Įkelti nuotrauką</b>
                 </div>
                 <form class="form-vertical" method="post" action="{{route('order.updatephoto.submit')}}" enctype="multipart/form-data" style="margin: 15px 0 !important">
-                <div class="form-group row">
+                <div class="form-group row mx-0">
                   @csrf
                   <div class="col-9 text-left">
                        <input type="hidden" name="id" value="{{$param['order']->id}}" />
@@ -188,7 +188,7 @@
           </div>
             <div class="card-body text-light remove-all-padding">
               @foreach ($param['actions'] as $a)
-                <div class="row history-row remove-all-margin" style=":hover{cursor: default !important;}">
+                <div class="row mx-0 history-row mx-0 remove-all-margin" style=":hover{cursor: default !important;}">
                   <div class="col-sm-9">
                     {!!$a->stringOutput()!!}
                   </div>

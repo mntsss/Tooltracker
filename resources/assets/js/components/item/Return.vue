@@ -1,11 +1,7 @@
 <template>
-  <div class="loading-parent" style="height: 70vh !important">
-      <Loading :active.sync="isLoading"
-          :can-cancel="false"
-          :is-full-page="fullPage"></Loading>
-      <ReturnConfirmModal></ReturnConfirmModal>
       <v-container>
-        <v-layout wrap row class="secondary mb-5" justify-center><v-flex shrink headline>Įrankių grąžinimas</v-flex></v-layout>
+        <ReturnConfirmModal></ReturnConfirmModal>
+        <v-layout wrap row mx-0 class="secondary mb-5" justify-center><v-flex shrink headline>Įrankių grąžinimas</v-flex></v-layout>
         <v-layout class="" align-center justify-center>
           <v-flex shrink>
             <v-card tile>
@@ -20,23 +16,18 @@
           </v-flex>
         </v-layout>
       </v-container>
-  </div>
 </template>
 <script>
 import swal from 'sweetalert'
-import Loading from 'vue-loading-overlay'
-import 'vue-loading-overlay/dist/vue-loading.min.css'
 import ReturnConfirmModal from '../modals/ItemReturnConfirmation.vue'
 export default{
   data(){
     return {
-      isLoading: true,
-      fullPage: false,
       item: null
     }
   },
-  created(){
-    this.isLoading = false
+  mounted(){
+    this.$contentLoadingHide()
   },
   computed:{
     RfidCode: function(){
@@ -59,18 +50,18 @@ export default{
               code: code
           }).then(response => {
               if(response.status == 200){
-                  if(response.data.status != "withdrew")
-                  {
-                      if(response.data.status == "suspended")
-                        swal('Klaida', 'Įrankis suspenduotas!', 'error')
-                      if(response.data.status == "reserved")
-                        swal('Klaida', 'Įrankis yra aktyvioje rezervacijoje!', 'error')
-                      if(response.data.status == "deleted")
-                        swal('Klaida', 'Įrankis ištrintas!', 'error')
-                      if(response.data.status == null)
-                        swal('Klaida', 'Įrankis sandėlyje!', 'error')
-                  }else{
-                      this.getWithdrawalInfo(response.data.item.ItemID)
+                  if(response.data.state != "Naudojamas"){
+                    if(item.state == 'Rezervuotas')
+                      return swal("Klaida!", 'Įrankis jau yra pridėtas aktyvioje rezervacijoje...', 'error')
+                    else if(item.state == 'Sandėlyje')
+                      return swal("Klaida!", 'Įrankis yra sandėlyje (arba negrąžinamas)!', 'error')
+                    else if(item.state == 'Ištrintas')
+                      return swal("Klaida!", 'Įrankis yra ištrintas!', 'error')
+                    else
+                      return swal("Klaida!", 'Įrankis yra įšaldytas!', 'error')
+                  }
+                  else{
+                      this.getWithdrawalInfo(response.data.ItemID)
                   }
               }
           }).catch(err => {
@@ -104,13 +95,7 @@ export default{
       }
   },
   components: {
-    Loading,
     ReturnConfirmModal
   }
 }
 </script>
-<style>
-    .loading-parent{
-        position: relative;
-    }
-    </style>

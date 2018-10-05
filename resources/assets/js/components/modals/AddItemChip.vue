@@ -13,11 +13,11 @@
         </div>
         <div class="card-body">
             <v-form v-model="valid">
-                <v-layout row wrap align-center>
+                <v-layout row mx-0 wrap align-center>
                   <v-flex v-if="!code" class="border-danger text-center headline text-danger">Laukiama naujo čipo...</v-flex>
                   <v-flex v-else-if="code" class="border-danger text-center headline text-success">Čipas nuskaityta!</v-flex>
                 </v-layout>
-                <v-layout row mx-0 align-center justify-center pa-3>
+                <v-layout row mx-0 mx-0 align-center justify-center pa-3>
                   <v-flex shrink>
                     <v-btn @click="save()" :disabled="disabled">Pridėti</v-btn>
                   </v-flex>

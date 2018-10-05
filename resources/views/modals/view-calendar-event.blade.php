@@ -18,7 +18,7 @@
         </div>
         <input type="hidden" name="event_id" id="event_id" />
       </div>
-      <div class="modal-footer row">
+      <div class="modal-footer row mx-0">
         <div class="col-12 justify-content-end">
           <button type="button" class="btn btn-outline-success">Atvyko</button>
           <button type="button" class="btn btn-outline-danger" onclick="removeEvent()">Ištringi</button>

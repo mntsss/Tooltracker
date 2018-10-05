@@ -179,13 +179,14 @@ class ItemController extends Controller
     }
     // finds item which is assigned to provided RFID code
     public function findWithCode(FindItemWithCodeRequest $request){
-        $item = RfidCode::where('Code', $request->code)->first()->item;
-        $item->status = $this->checkItemState($item);
+        $itemID = RfidCode::where('Code', $request->code)->first()->ItemID;
+        $item = Item::existing()->with(['lastWithdrawal', 'lastSuspention', 'lastReservation', 'images', 'itemGroup'])->find($itemID);
+        $item->state = $this->getItemState($item);
       return response()->json($item, 200);
     }
 
     public function search(ItemSearchRequest $request){
-      $items = Item::where('ItemName', 'like','%'.$request['query'].'%')->orWhere('ItemIdNumber', 'like', $request['query'].'%')->existing()->with(['lastWithdrawal', 'lastSuspention', 'lastReservation', 'images'])->limit(10)->get();
+      $items = Item::where('ItemName', 'like','%'.$request['query'].'%')->orWhere('ItemIdNumber', 'like', $request['query'].'%')->existing()->with(['lastWithdrawal', 'lastSuspention', 'lastReservation', 'images', 'itemGroup'])->limit(10)->get();
 
       foreach($items as $item){
         $item->state = $this->GetItemState($item);

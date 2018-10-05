@@ -55,7 +55,7 @@ export default {
     save: function(){
         this.$http.post('/item/edit', {
             'id': this.itemID,
-            'warranty': this.date
+            'warranty_date': this.date
         }).then((response)=>{
             if(response.status == 200){
                 this.$parent.itemData.ItemWarranty = this.date

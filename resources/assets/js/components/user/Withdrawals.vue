@@ -1,12 +1,7 @@
 <template>
-    <div class="loading-parent">
-        <Loading :active.sync="isLoading"
-        :can-cancel="false"
-        :is-full-page="fullPage"></Loading>
-
   <div class="container" style="min-height: 70vh !important">
     <div class="card" v-if="user">
-      <v-layout row wrap align-center class="card-header pb-0 pt-0 mx-0 secondary v-toolbar" >
+      <v-layout row mx-0 wrap align-center class="card-header pb-0 pt-0 mx-0 secondary v-toolbar" >
           <v-flex headline shrink justify-start align-content-center>
               <a @click="$back()" class="headline"><span class="fa fa-arrow-left primary--text remove-all-margin p-2 btn-func-misc"></span></a>
           </v-flex>
@@ -46,19 +41,14 @@
       </div>
     </div>
   </div>
-</div>
 </template>
 <script>
 import swal from 'sweetalert'
-import Loading from 'vue-loading-overlay'
-import 'vue-loading-overlay/dist/vue-loading.min.css'
 
   export default {
     data(){
       return {
         user: null,
-        isLoading: true,
-        fullPage: false,
         headers: [
             {
               text: 'Grupė',
@@ -98,7 +88,7 @@ import 'vue-loading-overlay/dist/vue-loading.min.css'
             return this.$http.get('/user/withdrawals/'+this.userID).then((response)=>{
                 if(response.status == 200){
                     this.user = response.data
-                    this.isLoading = false
+                    this.$contentLoadingHide()
                 }
             }).catch(error => {
                 swal('Klaida', error.response.data.message, 'error')
@@ -106,12 +96,6 @@ import 'vue-loading-overlay/dist/vue-loading.min.css'
         }
     },
     components: {
-      Loading
     }
 }
 </script>
-<style>
-    .loading-parent{
-        position: relative;
-    }
-</style>

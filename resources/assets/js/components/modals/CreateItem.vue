@@ -60,7 +60,7 @@
                     </div>
                 </div>
 
-                <div class="form-group row mx-0">
+                <div class="form-group row mx-0 mx-0">
                   <label class="col-auto control-label mb-4" for="consumable">
                     Suvartojama
                   </label>
@@ -76,7 +76,7 @@
                               capture="environment" @input="setImage" @onUpload="loadingDialog" @onComplete="loadingDialog" class="form-control"></image-uploader>
                         </div>
                 </div>
-                <v-layout row mx-0 align-center justify-center pa-3>
+                <v-layout row mx-0 mx-0 align-center justify-center pa-3>
                   <v-flex shrink v-if="code && !nocode">
                     <span class="text-success headline">Identifikacinis čipas nuskaitytas</span>
                   </v-flex>
@@ -84,7 +84,7 @@
                     <span class="text-danger headline">Laukiama identifikacinio čipo...</span>
                   </v-flex>
                 </v-layout>
-                <div class="form-group row remove-side-margin">
+                <div class="form-group row mx-0 remove-side-margin">
                   <label class="col-auto control-label mb-4" for="consumable">
                     Be identifikacinio čipo
                   </label>
@@ -92,7 +92,7 @@
                     <input class="remove-all-margin" type="checkbox" v-model="nocode" style="height:23px; width:23px">
                   </div>
                 </div>
-                <v-layout row mx-0 pa-2 align-center justify-center>
+                <v-layout row mx-0 mx-0 pa-2 align-center justify-center>
                   <v-flex shrink>
                     <v-btn outline color="primary" :disabled="!code && !nocode" @click="save()">
                             Pridėti

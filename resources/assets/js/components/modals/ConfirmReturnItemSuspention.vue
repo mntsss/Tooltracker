@@ -13,7 +13,7 @@
         </div>
         <div class="card-body">
             <v-form v-model="valid">
-                <v-layout row wrap align-center>
+                <v-layout row mx-0 wrap align-center>
                   <v-flex v-if="!code" class="text-center headline text-danger">Laukiama administratoriaus kortelės...</v-flex>
                   <v-flex v-else-if="code" class="text-center headline text-success">Kortelė nuskaityta!</v-flex>
                 </v-layout>

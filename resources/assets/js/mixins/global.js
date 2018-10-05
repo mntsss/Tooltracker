@@ -6,6 +6,9 @@ export default {
         $user() {
             return this.$store.state.user;
         },
+        $contentLoading(){
+            return this.$store.state.content_loading_screen
+        }
     },
     methods: {
       $getUser(){
@@ -20,6 +23,9 @@ export default {
                       console.log(error.response.data.errors)
                   })
               }
+      },
+      $contentLoadingHide(){
+        this.$store.commit('content_loading_screen_hide')  
       },
       $back(){
           var router = this.$router

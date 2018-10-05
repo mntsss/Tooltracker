@@ -1,8 +1,4 @@
 <template>
-  <div class="loading-parent">
-    <Loading :active.sync="isLoading"
-    :can-cancel="false"
-    :is-full-page="fullPage"></Loading>
     <div class="container" style="min-height: 70vh !important">
       <v-toolbar
       color="primary"
@@ -43,19 +39,14 @@
      </v-tab-item>
    </v-tabs-items>
     </div>
-  </div>
 </template>
 <script>
 import swal from 'sweetalert'
-import Loading from 'vue-loading-overlay'
-import 'vue-loading-overlay/dist/vue-loading.min.css'
 import DatePicker from 'vue2-datepicker'
 import ItemsHistory from './modules/withdrawals'
 export default{
   data(){
     return{
-      isLoading: false,
-      fullPage: false,
       currentTab: null,
       date_from: null,
       date_til: null,
@@ -82,14 +73,8 @@ export default{
 
   },
   components:{
-    Loading,
     DatePicker,
     ItemsHistory
   }
 }
 </script>
-<style>
-  .loading-parent{
-    position: relative;
-  }
-</style>

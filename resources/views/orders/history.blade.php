@@ -1,13 +1,13 @@
 @extends('layouts.main')
 @section('content')
   <div class="container">
-    <div class="row justify-content-center">
+    <div class="row mx-0 justify-content-center">
     @include("include.filter-history")
 
     <div class="card bg-dark" style="margin-top:20px !important">
         <div class="card-body text-light remove-all-padding">
           @foreach ($param['actions'] as $a)
-            <div class="row history-row remove-all-margin" onclick="window.location='{{route('order.view', ['id' => $a->orderId])}}';">
+            <div class="row mx-0 history-row mx-0 remove-all-margin" onclick="window.location='{{route('order.view', ['id' => $a->orderId])}}';">
               <div class="col-sm-9">
                 {!!$a->stringOutput()!!}
               </div>

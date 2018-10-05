@@ -1,12 +1,7 @@
 <template>
-  <div class="loading-parent" style="height: 70vh">
-      <Loading :active.sync="isLoading"
-      :can-cancel="false"
-      :is-full-page="fullPage"></Loading>
-
   <div class="container" style="overflow: auto !important">
     <CreateGroup></CreateGroup>
-    <v-layout row mx-0 mb-3 align-center justify-center class="primary">
+    <v-layout row mx-0 mx-0 mb-3 align-center justify-center class="primary">
         <v-flex shrink headline class="text-white">
             Įrankių grupės
         </v-flex>
@@ -25,24 +20,20 @@
               <span class="far fa-folder-open text-warning"></span>
           </div>
         </div>
-        <div class="row item-name-field ma-0">
+        <div class="row mx-0 item-name-field ma-0">
               {{group.ItemGroupName}}
         </div>
     </router-link>
   </div>
-</div>
+
 </template>
 <script>
 import CreateGroup from '../modals/CreateGroup.vue';
-import Loading from 'vue-loading-overlay'
-import 'vue-loading-overlay/dist/vue-loading.min.css'
 import swal from 'sweetalert'
 export default {
   data(){
     return {
       itemGroups: [],
-      isLoading: true,
-      fullPage: false
     }
   },
   created(){
@@ -56,7 +47,7 @@ export default {
       this.$http.get('/group/list').then((response)=>{
         if(response.status == 200)
           this.itemGroups = response.data;
-          this.isLoading = false
+          this.$contentLoadingHide()
       }).catch(error => {
           swal('Klaida', error.response.data.message, 'error')
       })
@@ -75,8 +66,7 @@ export default {
     }
   },
   components: {
-    CreateGroup,
-    Loading
+    CreateGroup
   }
 }
 </script>

@@ -1,14 +1,21 @@
 import Vuex from 'vuex'
 import Vue from 'vue'
 
+import ReservationModule from './reservationModule'
+
 Vue.use(Vuex)
 
+const modules = {
+    'reservation': ReservationModule
+}
 const store = new Vuex.Store({
+    modules: modules,
     state: {
       recentCode: null,
       user: null,
       routesHistory: [],
-      USER_API_CALL_LOADING: false
+      USER_API_CALL_LOADING: false,
+      content_loading_screen: true
     },
     mutations: {
       newcode(state, code){
@@ -27,7 +34,13 @@ const store = new Vuex.Store({
       },
       USER_API_CALL_LOADING(state, val){
           state.USER_API_CALL_LOADING = val
-      }
+      },
+      content_loading_screen_show(state){
+          state.content_loading_screen = true
+      },
+      content_loading_screen_hide(state){
+          state.content_loading_screen = false
+      },
     },
     actions: {},
     getters: {

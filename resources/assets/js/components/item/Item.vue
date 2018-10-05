@@ -1,8 +1,6 @@
 <template>
-<div class="loading-parent">
-    <Loading :active.sync="isLoading"
-        :can-cancel="false"
-        :is-full-page="fullPage"></Loading>
+
+    <div class="container">
         <RenameItemModal></RenameItemModal>
         <ChangeItemIdnumberModal></ChangeItemIdnumberModal>
         <AddItemChipModal></AddItemChipModal>
@@ -13,10 +11,9 @@
         <ItemReturnConfirmation v-on:reload="loadItem"></ItemReturnConfirmation>
         <ConfirmReturnItemSuspentionModal></ConfirmReturnItemSuspentionModal>
         <ChangeItemAcquiredModal></ChangeItemAcquiredModal>
-    <div class="container">
 
     <div class="card" v-if="itemData">
-      <v-layout row wrap align-content-center class="card-header pb-0 pt-0 mx-0 secondary">
+      <v-layout row mx-0 wrap align-content-center class="card-header pb-0 pt-0 mx-0 secondary">
           <v-flex headline shrink justify-start align-content-center>
               <a @click="$back()" class="headline"><span class="fa fa-arrow-left primary--text remove-all-margin p-2 btn-func-misc"></span></a>
           </v-flex>
@@ -39,7 +36,7 @@
             <v-layout mb-3>
               <v-card tile width="100%">
                   <v-card-text>
-                      <v-layout row align-center >
+                      <v-layout row mx-0 align-center >
                           <v-flex shrink pa-2 style="width: 40px !important">
                               <v-icon headline class="primary--text">fa-map-marker</v-icon>
                           </v-flex>
@@ -53,7 +50,7 @@
                           <v-flex v-else-if="itemStatus == 'Naudojamas'"><v-btn outline class="mx-2" @click="returnItem()"><v-icon class="primary--text pr-3">fa-sign-in-alt</v-icon>Grąžinti į sandėlį</v-btn></v-flex>
                           <v-flex v-else-if="itemStatus == 'Laukia patvirtinimo'"><v-btn outline class="mx-2" @click="$modal.show('confirm-return-item-suspention-modal', {itemID: itemData.ItemID})"><v-icon class="primary--text pr-3">fa-check</v-icon>Patvirtinti grąžinimą</v-btn></v-flex>
                       </v-layout>
-                      <v-layout row align-center v-if="itemData.last_suspention">
+                      <v-layout row mx-0 align-center v-if="itemData.last_suspention">
                           <v-flex pa-2 xs10 v-if="!itemData.last_suspention.SuspentionReturned && itemData.last_suspention.SuspentionNote">
                             <v-textarea
                               name="note"
@@ -65,48 +62,48 @@
                             ></v-textarea>
                           </v-flex>
                       </v-layout>
-                      <v-layout row wrap align-center v-if="itemData.ItemIdNumber">
+                      <v-layout row mx-0 wrap align-center v-if="itemData.ItemIdNumber">
                           <v-flex shrink pa-2 style="width: 40px !important">
                               <v-icon headline class="primary--text">fa-fingerprint</v-icon>
                           </v-flex>
                           <v-flex shrink px-2>Identifikacinis numeris:</v-flex>
                           <v-flex px-2>{{itemData.ItemIdNumber}}</v-flex>
                       </v-layout>
-                      <v-layout row wrap align-center v-if="itemData.ItemAcquiredFrom">
+                      <v-layout row mx-0 wrap align-center v-if="itemData.ItemAcquiredFrom">
                           <v-flex shrink pa-2 style="width: 40px !important">
                               <v-icon headline class="primary--text">fa-shopping-bag</v-icon>
                           </v-flex>
                           <v-flex shrink px-2>Įsigyta iš:</v-flex>
                           <v-flex px-2>{{itemData.ItemAcquiredFrom}}</v-flex>
                       </v-layout>
-                      <v-layout row wrap align-center >
+                      <v-layout row mx-0 wrap align-center >
                           <v-flex shrink pa-2 style="width: 40px !important">
                               <v-icon headline class="primary--text">fa-calendar-plus</v-icon>
                           </v-flex>
                           <v-flex px-2 shrink>Pridėjimo data:</v-flex>
                           <v-flex px-2>{{itemData.created_at}}</v-flex>
                       </v-layout>
-                      <v-layout row wrap align-center v-if="itemData.ItemPurchase">
+                      <v-layout row mx-0 wrap align-center v-if="itemData.ItemPurchase">
                           <v-flex shrink pa-2 style="width: 40px !important">
                               <v-icon headline class="primary--text">fa-calendar-alt</v-icon>
                           </v-flex>
                           <v-flex px-2 shrink>Įsigijimo data:</v-flex>
                           <v-flex px-2>{{itemData.ItemPurchase}}</v-flex>
                       </v-layout>
-                      <v-layout row wrap align-center v-if="itemData.ItemWarranty">
+                      <v-layout row mx-0 wrap align-center v-if="itemData.ItemWarranty">
                           <v-flex shrink pa-2 style="width: 40px !important">
                               <v-icon headline class="primary--text">fa-calendar-check</v-icon>
                           </v-flex>
                           <v-flex px-2 shrink>Garantinis iki:</v-flex>
                           <v-flex px-2>{{itemData.ItemWarranty}}</v-flex>
                       </v-layout>
-                      <v-layout row wrap align-center v-if="itemData.ItemConsumable">
+                      <v-layout row mx-0 wrap align-center v-if="itemData.ItemConsumable">
                           <v-flex shrink pa-2 style="width: 40px !important">
                               <v-icon headline class="primary--text">fa-check</v-icon>
                           </v-flex>
                           <v-flex px-2 shrink>Suvartojama</v-flex>
                       </v-layout>
-                      <v-layout row wrap align-center>
+                      <v-layout row mx-0 wrap align-center>
                         <v-flex pa-2 xs10>
                           <v-textarea
                             name="note"
@@ -122,7 +119,7 @@
                           <v-btn icon v-if="!readonly" @click="editNote()"><v-icon class="text-warning">fa-save</v-icon></v-btn>
                         </v-flex>
                       </v-layout>
-                      <v-layout row wrap align-center pa-2 justify-end>
+                      <v-layout row mx-0 wrap align-center pa-2 justify-end>
                           <v-flex shrink justify-end>
                             <v-btn outline v-if="!itemData.ItemDeleted && warrantyFix && itemStatus == 'Sandėlyje' && !itemData.ItemConsumable" @click="show('item-warranty-fix-modal')">
                                 <v-icon class="primary--text">fa-wrench</v-icon>
@@ -157,13 +154,10 @@
       </div>
     </div>
   </div>
-</div>
 </template>
 <script>
 import vueImages from 'vue-images'
 import swal from 'sweetalert'
-import Loading from 'vue-loading-overlay'
-import 'vue-loading-overlay/dist/vue-loading.min.css'
 import RenameItemModal from '../modals/RenameItem.vue'
 import ChangeItemIdnumberModal from '../modals/ChangeItemIdnumber.vue'
 import ChangeItemAcquiredModal from '../modals/ChangeItemAcquiredFrom.vue'
@@ -182,8 +176,7 @@ import ConfirmReturnItemSuspentionModal from '../modals/ConfirmReturnItemSuspent
           images: [],
           note: '',
           readonly: true,
-          isLoading: true,
-          fullPage: false,
+
           dropdownMeniu: [
             {text: 'Priskirti čipą', click: () =>{this.show('add-item-chip-modal')}},
             {text: 'Pervadinti', click: ()=>{this.show('rename-item-modal')}},
@@ -232,7 +225,7 @@ import ConfirmReturnItemSuspentionModal from '../modals/ConfirmReturnItemSuspent
     }
   },
   mounted(){
-    this.isLoading = false
+    this.$contentLoadingHide()
   },
   computed: {
     warrantyFix: function(){
@@ -258,7 +251,6 @@ import ConfirmReturnItemSuspentionModal from '../modals/ConfirmReturnItemSuspent
         this.$modal.show('item-return-confirm-modal', {item: item})
     },
     loadItem: function(){
-            //this.isLoading = true
         return this.$http.get('/item/get/'+this.itemData.ItemID).then((response)=>{
             if(response.status == 200){
                 this.itemStatus = response.data.state
@@ -278,11 +270,11 @@ import ConfirmReturnItemSuspentionModal from '../modals/ConfirmReturnItemSuspent
         }).catch(error => {
             if(error.response.status == 422){
                 swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
-                this.isLoading = false
+                this.$contentLoadingHide()
             }
             else{
               swal('Klaida', error.response.data.message, 'error')
-              this.isLoading = false
+              this.$contentLoadingHide()
             }
         })
     },
@@ -362,7 +354,6 @@ import ConfirmReturnItemSuspentionModal from '../modals/ConfirmReturnItemSuspent
   },
   components: {
       vueImages,
-      Loading,
       RenameItemModal,
       ChangeItemIdnumberModal,
       AddItemChipModal,
@@ -376,8 +367,3 @@ import ConfirmReturnItemSuspentionModal from '../modals/ConfirmReturnItemSuspent
   }
 }
 </script>
-<style>
-    .loading-parent{
-        position: relative;
-    }
-    </style>

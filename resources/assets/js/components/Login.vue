@@ -11,7 +11,7 @@
             <v-form v-model="valid" class="pt-1 pb-1 px-3">
                 <v-text-field prepend-icon="fa-user" v-model="email" :rules="[v => !!v || 'Neįvestas el. paštas']" label="El. paštas" required></v-text-field>
                 <v-text-field prepend-icon="fa-lock" type="password" v-model="password" :rules="[v => !!v || 'Neįvestas slaptažodis']" label="Slaptažodis" required></v-text-field>
-                <v-layout row mx-0 align-center justify-center pa-3>
+                <v-layout row mx-0 mx-0 align-center justify-center pa-3>
                     <v-flex shrink>
                         <v-btn outline @click="login"><v-icon class="primary--text mx-2">fa-sign-in-alt</v-icon>Prisijungti</v-btn>
                     </v-flex>
@@ -40,7 +40,7 @@ export default{
               password: app.password
             },
             success: function () {
-              this.$emit('loginSuccess')
+             location.reload()
             },
             error: function (data) {
               this.errors = data

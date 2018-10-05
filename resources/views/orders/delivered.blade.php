@@ -13,14 +13,14 @@
   </script>
   @include('comfirmations.order-delivered')
 <div class="container">
-  <div class="row justify-content-center">
+  <div class="row mx-0 justify-content-center">
     <div class="col-10">
       @component('include.filter-form')
             {{route('delivered')}}
           @endcomponent
     </div>
   </div>
-    <div class="row justify-content-center">
+    <div class="row mx-0 justify-content-center">
       @if (session('status'))
           <div class="alert alert-success">
             {{ session('status') }}
@@ -29,7 +29,7 @@
         <div class="col-md-10">
           <div class="card">
             <div class="card-header">
-              <div class="row text-center text-dark">
+              <div class="row mx-0 text-center text-dark">
                 <h3 class="mr-auto">Pristatyti užsakymai</h3>
               </div>
             </div>
@@ -38,7 +38,7 @@
                 <h5>Pristatytų užsakymų nėra</h5>
               @else
                 @foreach ($param['orders'] as $order)
-                  <div class="row remove-side-margin">
+                  <div class="row mx-0 remove-side-margin">
                     <div class="col-8 fit-text-dots order-entry" onclick="window.location='{{route('order.view', ['id' => $order->id])}}';">
                       @if($order->timeLimit != "")<span class="far fa-clock"></span>@endif
                       @if($order->make != ""){{$order->make}}@endif
@@ -47,7 +47,7 @@
                       @if($order->year != ""){{$order->year}}@endif
                         {{$order->name}}
                     </div>
-                    <div class="row col-sm-4" style="font-size: 18px; line-height: 2.5">
+                    <div class="row mx-0 col-sm-4" style="font-size: 18px; line-height: 2.5">
                       <div class="col-10 text-right">
                         {{$order->updated_at}}
                       </div>

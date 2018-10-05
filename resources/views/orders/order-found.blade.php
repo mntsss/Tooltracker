@@ -20,7 +20,7 @@
   }
   </script>
   <div class="container">
-    <div class="row justify-content-center">
+    <div class="row mx-0 justify-content-center">
       <div class="card bg-dark" style="margin-top: 15px !important">
         <div class="card-header">
           Iš kur gauta
@@ -28,19 +28,19 @@
         <div class="card-body">
           <form class="form-horizontal" method="post" action="{{route('order.found.submit')}}">
             {{ csrf_field() }}
-            <div class="form-group row">
+            <div class="form-group row mx-0">
               <input type="text" id="orderAddress" name="orderAddress" class="form-control col-9" value="{{old('orderAddress')}}" maxlength="50" placeholder="Adresas" required />
               <div class="col-3">
                 <button type="button" class="btn btn-outline-warning" onclick="getAddress()"><span class="fas fa-map-marker-alt"></span></button>
               </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row mx-0">
                 <input type="tel" name="orderPhone" class="form-control" value="{{old('orderPhone')}}" maxlength="15" placeholder="Telefono nr." required />
                 <input id="cooX" type="hidden" name="cooX" />
                 <input id="cooY" type="hidden" name="cooY" />
                 <input type="hidden" name="id" value="{{$id}}"/>
             </div>
-            <div class="row form-group justify-content-center">
+            <div class="row mx-0 form-group justify-content-center">
               <button type="submit" class="btn-outline-success">Išsaugoti</button>
             </div>
           </form>

@@ -37,11 +37,11 @@
   </script>
 
   <div class="container">
-    <div class="row row-title navbar-keytracker">
+    <div class="row mx-0 row mx-0-title navbar-keytracker">
       Įrankių kategorijos
     </div>
     @if(count($param['itemGroups']) == 0)
-      <div class="row">
+      <div class="row mx-0">
         <div class="col-md-2" style="padding: 10px">
           <div class="item-box-panel" onclick="$('#categoryAdd').modal()">
               <div class="item-add-box" style="height: 100% !important">
@@ -54,7 +54,7 @@
         @for ($i = 0; $i <= count($param['itemGroups'])-1; $i +=6)
 
               @if($i == 0)
-                <div class="row">
+                <div class="row mx-0">
                   <div class="col-md-2" style="padding: 10px">
                     <div class="item-box-panel" onclick="$('#categoryAdd').modal()">
                         <div class="item-add-box" style="height: 100% !important">
@@ -91,7 +91,7 @@
                     $i -= 1;
                 @endphp
               @else
-                <div class="row">
+                <div class="row mx-0">
                 @for ($j=0; $j < 6; $j++)
                     @if(isset($param['itemGroups'][$i+$j]))
                     <div class="col-md-2" style="padding: 10px">

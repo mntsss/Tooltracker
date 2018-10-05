@@ -40,7 +40,7 @@
                     </div>
                 </div>
 
-                <v-layout row mx-0 pa-2 align-center justify-center>
+                <v-layout row mx-0 mx-0 pa-2 align-center justify-center>
                   <v-flex shrink>
                     <v-btn outline color="primary" :disabled="!name || rentDate == '' || price == 0" @click="save()">
                             Išsaugoti

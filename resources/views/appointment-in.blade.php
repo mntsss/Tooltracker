@@ -16,7 +16,7 @@
     }
   </script>
   <form action="" method="post">
-  <div class="row justify-content-center">
+  <div class="row mx-0 justify-content-center">
     <div class="col-md-6 flex-column align-self-stretch">
       <div class="card">
         <div class="card-header bg-dark">
@@ -68,7 +68,7 @@
           <span class="fas fa-car"></span>&#160;Automobilis
         </div>
         <div class="card-body">
-          <div class="row">
+          <div class="row mx-0">
             <div class="col-md">
               <div class="form-group">
                 <label for="vehicleMake" class="col-form-label text-md-right">Gamintojas</label>
@@ -103,7 +103,7 @@
               </div>
             </div>
           </div>
-          <div class="row">
+          <div class="row mx-0">
             <div class="col-md">
               <div class="form-group">
                 <label for="vehicleYear" class="col-form-label text-md-right">Metai</label>
@@ -145,7 +145,7 @@
               </div>
             </div>
           </div>
-          <div class="row">
+          <div class="row mx-0">
             <div class="col-md">
               <div class="form-group">
                 <label for="vehicleType" class="col-form-label text-md-right">Kėbulo tipas</label>
@@ -180,7 +180,7 @@
             </div>
           </div>
         </div>
-        <div class="row">
+        <div class="row mx-0">
           <div class="col-md">
             <div class="form-group">
               <label for="vehiclePower" class="col-form-label text-md-right">Galingumas (kw)</label>
@@ -210,7 +210,7 @@
           </div>
         </div>
 
-        <div class="row">
+        <div class="row mx-0">
           <div class="col-md">
               <div class="form-group">
                 <label for="vehiclePlates" class="col-form-label text-md-right">Valstybinis numeris</label>

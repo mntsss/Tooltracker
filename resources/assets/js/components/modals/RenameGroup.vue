@@ -1,36 +1,32 @@
 <template>
-  <modal name="rename-group-modal"
-         height="auto"
-         :adaptive="true"
-         :scrollable="true"
-         transition="pop-out"
-         :pivotY="0.3"
-         @before-open="beforeOpen">
-    <div class="card">
-        <div class="card-header secondary">
+  <Modal modal_name="rename-group-modal">
+         <span slot="header">
             Pervadinti grupę
-        </div>
-        <div class="card-body">
-            <form>
-                <div class="form-group">
-                    <input class="form-control" type="text" name="name" v-model="name" maxlength="40" placeholder="Naujas pavadinimas" autocomplete="off"/>
-                </div>
-                <v-btn outline color="primary" @click="save()">Išsaugoti</v-btn>
-            </form>
-        </div>
-    </div>
-  </modal>
+        </span>
+        <form slot = "content">
+            <div class="form-group">
+                <input class="form-control" type="text" name="name" v-model="name" maxlength="40" placeholder="Naujas pavadinimas" autocomplete="off"/>
+            </div>
+            <v-btn outline color="primary" @click="save()">Išsaugoti</v-btn>
+        </form>
+  </Modal>
 </template>
 <script>
 import swal from 'sweetalert'
+import Modal from './Modal.vue'
 export default {
     data(){
         return {
-            name: '',
-            groupID: null
+            name: ''
         }
     },
   computed: {
+  },
+  props: {
+    groupID: {
+        required: true,
+        type: Number
+    }
   },
   methods: {
     save: function(){
@@ -52,10 +48,10 @@ export default {
                 swal("Klaida", error.response.data.message, "error");
             }
         })
-    },
-    beforeOpen: function(event){
-        this.groupID = event.params.groupID
     }
+},
+  components:{
+      Modal
   }
 }
 </script>

@@ -11,7 +11,7 @@ import swal from 'sweetalert'
 import Vuetify from 'vuetify'
 
 import routes from './routes';
-import store from './store';
+import store from './store/store';
 
 import App from './components/App.vue'
 
@@ -50,6 +50,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   var currentRoute = from.name
   var currentParams = from.params
+  store.commit('content_loading_screen_show')
   if(from.name != null){
       if(store.state.routesHistory.length > 0){
           if(store.state.routesHistory[0].route == to.name){

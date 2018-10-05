@@ -1,14 +1,9 @@
 <template>
-  <div class="loading-parent" style="height: 70vh">
-      <Loading :active.sync="isLoading"
-      :can-cancel="false"
-      :is-full-page="fullPage"></Loading>
-
     <v-container v-if="reservations">
-      <v-layout row wrap mx-0 align-center justify-center class="secondary v-toolbar">
+      <v-layout row mx-0 wrap mx-0 align-center justify-center class="secondary v-toolbar">
         <v-flex shrink headline>Uždarytos (atiduotos) rezervacijos</v-flex>
       </v-layout>
-      <v-layout class="" row wrap align-center mx-0 mt-2 v-if="reservations.length > 0">
+      <v-layout class="" row mx-0 wrap align-center mx-0 mt-2 v-if="reservations.length > 0">
           <v-expansion-panel>
               <v-expansion-panel-content class="primary v-toolbar mb-1 text-white" v-for="(reservation, i) in reservations" :key="i">
                   <div slot="header" v-if="reservation.cobject">
@@ -32,28 +27,28 @@
                                 </v-alert>
                               </template>
                             </v-data-table>
-                            <v-layout row wrap align-center>
+                            <v-layout row mx-0 wrap align-center>
                                 <v-flex shrink pa-2 style="width: 40px !important">
                                     <v-icon headline class="primary--text">fa-calendar-plus</v-icon>
                                 </v-flex>
                                 <v-flex px-2 shrink>Rezervacija sukurta:</v-flex>
                                 <v-flex px-2>{{reservation.created_at}}</v-flex>
                             </v-layout>
-                            <v-layout row wrap align-center>
+                            <v-layout row mx-0 wrap align-center>
                                 <v-flex shrink pa-2 style="width: 40px !important">
                                     <v-icon headline class="primary--text">fa-calendar-check</v-icon>
                                 </v-flex>
                                 <v-flex px-2 shrink>Rezervacija atiduota:</v-flex>
                                 <v-flex px-2>{{reservation.updated_at}}</v-flex>
                             </v-layout>
-                            <v-layout row wrap align-center v-if="reservation.ReservationConfirmCardNr">
+                            <v-layout row mx-0 wrap align-center v-if="reservation.ReservationConfirmCardNr">
                                 <v-flex shrink pa-2 style="width: 40px !important">
                                     <v-icon headline class="primary--text">fa-id-card</v-icon>
                                 </v-flex>
                                 <v-flex px-2 shrink>Patvirtinta kortele</v-flex>
                                 <v-flex px-2><v-icon headline class="text-success">fa-check</v-icon></v-flex>
                             </v-layout>
-                            <v-layout row wrap align-center v-else-if="reservation.ReservationConfirmSignature">
+                            <v-layout row mx-0 wrap align-center v-else-if="reservation.ReservationConfirmSignature">
                                 <v-flex shrink pa-2 style="width: 40px !important">
                                     <v-icon headline class="primary--text">fa-signature</v-icon>
                                 </v-flex>
@@ -79,18 +74,13 @@
         </div>
       </div>
     </v-container>
-  </div>
 </template>
 <script>
-import Loading from 'vue-loading-overlay'
-import 'vue-loading-overlay/dist/vue-loading.min.css'
 import swal from 'sweetalert'
 import vueImages from 'vue-images'
 export default{
   data(){
     return {
-      isLoading: true,
-      fullPage: false,
       reservations: null,
       headers: [
           {
@@ -111,7 +101,7 @@ export default{
     loadReservations: function(){
       this.$http.get('/reservation/closed').then((response)=> {
         if(response.status == 200){
-          this.isLoading = false
+          this.$contentLoadingHide()
           this.reservations = response.data
         }
       }).catch(error => {
@@ -123,15 +113,11 @@ export default{
     }
   },
   components: {
-    Loading,
     vueImages
   }
 }
 </script>
 <style>
-  .loading-parent{
-    position: relative;
-  }
   .signature{
       background-color: white !important;
   }

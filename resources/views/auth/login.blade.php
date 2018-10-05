@@ -18,7 +18,7 @@
 <body>
     <div id="app" class="login-screen">
       <div class="container-fluid">
-  <div class="row">
+  <div class="row mx-0">
       <div class="col-md-8 col-md-offset-2 vcenter">
           <div class="panel panel-default">
               <div class="panel-heading">Prisijungimas</div>
@@ -80,7 +80,7 @@
   </div>
 </div>
 <footer class="admin-footer">
-<div class="row">
+<div class="row mx-0">
 
 <div class="col-md-offset-5 col-md-3">
     <span>Visos teisės saugomos <span class="fa fa-copyright" style = "font-size: 15px !important"></span> <a href ="http://keytracker.lt" style="color:white">KeyTracker</a> 2017</span>

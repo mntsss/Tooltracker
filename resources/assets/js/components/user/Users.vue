@@ -1,14 +1,10 @@
 <template>
-    <div class="loading-parent">
-      <CreateUser></CreateUser>
-      <EditUser></EditUser>
-      <AddUserCard></AddUserCard>
-        <Loading :active.sync="isLoading"
-        :can-cancel="false"
-        :is-full-page="fullPage"></Loading>
         <div class="container" style="min-height: 70vh !important">
+            <CreateUser></CreateUser>
+            <EditUser></EditUser>
+            <AddUserCard></AddUserCard>
             <div class="card" v-if="users">
-                <v-layout row wrap align-center class="card-header pb-0 pt-0 mb-0 secondary v-toolbar mx-0">
+                <v-layout row mx-0 wrap align-center class="card-header pb-0 pt-0 mb-0 secondary v-toolbar mx-0">
                     <v-flex headline align-center>
                         <div class="text-center mb-0">
                             Vartotojai
@@ -19,7 +15,7 @@
                     </v-flex>
                 </v-layout>
                 <v-container class="card-body mt-0 pt-4" v-if="users.length > 0">
-                    <v-layout row wrap align-center>
+                    <v-layout row mx-0 wrap align-center>
                         <v-expansion-panel>
                             <v-expansion-panel-content class="primary v-toolbar mb-1 text-white" v-for="(user, i) in users" :key="i">
                                 <div slot="header">
@@ -27,42 +23,42 @@
                                 </div>
                                 <v-card>
                                     <v-card-text>
-                                        <v-layout row wrap align-center >
+                                        <v-layout row mx-0 wrap align-center >
                                             <v-flex shrink pa-2 style="width: 40px !important">
                                                 <v-icon headline class="primary--text">fa-phone</v-icon>
                                             </v-flex>
                                             <v-flex shrink px-2>Telefonas:</v-flex>
                                             <v-flex px-2>{{user.UserPhone}}</v-flex>
                                         </v-layout>
-                                        <v-layout row wrap align-center >
+                                        <v-layout row mx-0 wrap align-center >
                                             <v-flex shrink pa-2 style="width: 40px !important">
                                                 <v-icon headline class="primary--text">fa-envelope</v-icon>
                                             </v-flex>
                                             <v-flex shrink px-2>El. paštas:</v-flex>
                                             <v-flex px-2>{{user.email}}</v-flex>
                                         </v-layout>
-                                        <v-layout row wrap align-center >
+                                        <v-layout row mx-0 wrap align-center >
                                             <v-flex shrink pa-2 style="width: 40px !important">
                                                 <v-icon headline class="primary--text">fa-crown</v-icon>
                                             </v-flex>
                                             <v-flex px-2 shrink>Vartotojo tipas:</v-flex>
                                             <v-flex px-2>{{user.UserRole}}</v-flex>
                                         </v-layout>
-                                        <v-layout row wrap align-center >
+                                        <v-layout row mx-0 wrap align-center >
                                             <v-flex shrink pa-2 style="width: 40px !important">
                                                 <v-icon headline class="primary--text">fa-calendar-alt</v-icon>
                                             </v-flex>
                                             <v-flex px-2 shrink>Paskutinis aktyvumas:</v-flex>
                                             <v-flex px-2>{{user.UserLastSeen}}</v-flex>
                                         </v-layout>
-                                        <v-layout row wrap align-center >
+                                        <v-layout row mx-0 wrap align-center >
                                             <v-flex shrink pa-2 style="width: 40px !important">
                                                 <v-icon headline class="primary--text">fa-calendar-check</v-icon>
                                             </v-flex>
                                             <v-flex px-2 shrink>Registracijos data:</v-flex>
                                             <v-flex px-2>{{user.created_at}}</v-flex>
                                         </v-layout>
-                                        <v-layout row wrap align-center >
+                                        <v-layout row mx-0 wrap align-center >
                                             <v-flex shrink pa-2 style="width: 40px !important">
                                                 <v-icon headline class="primary--text">fa-address-card</v-icon>
                                             </v-flex>
@@ -72,7 +68,7 @@
                                               <v-icon headline class="text-warning" v-else-if="user.UserRFIDCode == null">fa-times</v-icon>
                                             </v-flex>
                                         </v-layout>
-                                        <v-layout row wrap align-center >
+                                        <v-layout row mx-0 wrap align-center >
                                             <v-flex shrink pa-2 style="width: 40px !important">
                                                 <v-icon headline class="primary--text">fa-address-card</v-icon>
                                             </v-flex>
@@ -81,7 +77,7 @@
                                               {{user.UserID}}
                                             </v-flex>
                                         </v-layout>
-                                        <v-layout row wrap align-center pa-2 justify-end>
+                                        <v-layout row mx-0 wrap align-center pa-2 justify-end>
                                             <v-flex shrink justify-end>
                                               <v-btn outline>
                                                   <v-icon class="primary--text">fa-history</v-icon>
@@ -118,25 +114,18 @@
                   </div>
                 </div>
             </div>
-
         </div>
-    </div>
 </template>
 <script>
 import CreateUser from '../modals/CreateUser.vue'
 import EditUser from '../modals/EditUser.vue'
 import AddUserCard from '../modals/AddUserCard.vue'
 
-import Loading from 'vue-loading-overlay'
-
-import 'vue-loading-overlay/dist/vue-loading.min.css'
 import swal from 'sweetalert'
 export default{
 
     data(){
         return {
-            isLoading: true,
-            fullPage: false,
             users: null
         }
     },
@@ -151,7 +140,7 @@ export default{
             this.$http.get('user/list').then((response)=>{
                 if(response.status == 200){
                     this.users = response.data
-                    this.isLoading = false
+                    this.$contentLoadingHide()
                 }
             }).catch(error => {
                 swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], 'error')
@@ -187,15 +176,9 @@ export default{
         }
     },
     components: {
-        Loading,
         CreateUser,
         EditUser,
         AddUserCard
     }
 }
 </script>
-<style>
-    .loading-parent{
-        position: relative;
-    }
-</style>

@@ -1,13 +1,9 @@
 <template>
-<div class="loading-parent">
-    <Loading :active.sync="isLoading"
-        :can-cancel="false"
-        :is-full-page="fullPage"></Loading>
     <div class="container">
         <EditRentedItem></EditRentedItem>
       <AssignRentedItemModal></AssignRentedItemModal>
     <div class="card" v-if="itemData">
-      <v-layout row wrap align-content-center class="card-header pb-0 pt-0 mx-0 secondary">
+      <v-layout row mx-0 wrap align-content-center class="card-header pb-0 pt-0 mx-0 secondary">
           <v-flex headline shrink justify-start align-content-center>
               <a @click="$back()" class="headline"><span class="fa fa-arrow-left primary--text remove-all-margin p-2 btn-func-misc"></span></a>
           </v-flex>
@@ -23,7 +19,7 @@
             <v-layout mb-3>
               <v-card tile width="100%">
                   <v-card-text>
-                      <v-layout row align-center >
+                      <v-layout row mx-0 align-center >
                           <v-flex shrink pa-2 style="width: 40px !important">
                               <v-icon headline class="primary--text">fa-map-marker</v-icon>
                           </v-flex>
@@ -33,28 +29,28 @@
 
                           <v-flex v-if="itemData.cobject"><v-btn outline class="mx-2" @click="unAssign()"><v-icon class="primary--text pr-3">fa-sign-in-alt</v-icon>Grąžinti į sandėlį</v-btn></v-flex>
                       </v-layout>
-                      <v-layout row wrap align-center >
+                      <v-layout row mx-0 wrap align-center >
                           <v-flex shrink pa-2 style="width: 40px !important">
                               <v-icon headline class="primary--text">fa-calendar-plus</v-icon>
                           </v-flex>
                           <v-flex px-2 shrink>Nuomos pradžia:</v-flex>
                           <v-flex px-2>{{itemData.RentedItemDate}}</v-flex>
                       </v-layout>
-                      <v-layout row wrap align-center v-if="itemData.RentedItemDailyPrice">
+                      <v-layout row mx-0 wrap align-center v-if="itemData.RentedItemDailyPrice">
                           <v-flex shrink pa-2 style="width: 40px !important">
                               <v-icon headline class="primary--text">fa-euro-sign</v-icon>
                           </v-flex>
                           <v-flex px-2 shrink>Dieninis įkainis:</v-flex>
                           <v-flex px-2>{{itemData.RentedItemDailyPrice}}</v-flex>
                       </v-layout>
-                      <v-layout row wrap align-center v-if="itemData.RentedItemDailyPrice && itemData.RentedItemDate">
+                      <v-layout row mx-0 wrap align-center v-if="itemData.RentedItemDailyPrice && itemData.RentedItemDate">
                           <v-flex shrink pa-2 style="width: 40px !important">
                               <v-icon headline class="primary--text">fa-money-bill-alt</v-icon>
                           </v-flex>
                           <v-flex px-2 shrink>Šiuo metu nuomos kaina:</v-flex>
                           <v-flex px-2>({{days(itemData.RentedItemDate)*itemData.RentedItemDailyPrice}} &euro;)</v-flex>
                       </v-layout>
-                      <v-layout row wrap align-center>
+                      <v-layout row mx-0 wrap align-center>
                         <v-flex pa-2 xs10>
                           <v-textarea
                             name="note"
@@ -70,7 +66,7 @@
                           <v-btn icon v-if="!readonly" @click="editNote()"><v-icon class="text-warning">fa-save</v-icon></v-btn>
                         </v-flex>
                       </v-layout>
-                      <v-layout row wrap align-center pa-2 justify-end>
+                      <v-layout row mx-0 wrap align-center pa-2 justify-end>
                           <v-flex shrink justify-end>
                             <v-btn outline v-if="!itemData.cobject" @click="show('assign-rented-item-modal', {itemID: itemData.RentedItemID})">
                                 <v-icon class="primary--text">fa-wrench</v-icon>
@@ -89,12 +85,9 @@
       </div>
     </div>
   </div>
-</div>
 </template>
 <script>
 import swal from 'sweetalert'
-import Loading from 'vue-loading-overlay'
-import 'vue-loading-overlay/dist/vue-loading.min.css'
 import AssignRentedItemModal from '../modals/rent/AssignRentedItem.vue'
 import EditRentedItem from '../modals/rent/EditRentedItem.vue'
   export default {
@@ -103,8 +96,6 @@ import EditRentedItem from '../modals/rent/EditRentedItem.vue'
           itemData: '',
           note: '',
           readonly: true,
-          isLoading: true,
-          fullPage: false,
           dropdownMeniu: [
             {text: 'Priskirti čipą', click: () =>{this.show('add-item-chip-modal')}},
             {text: 'Pervadinti', click: ()=>{this.show('rename-item-modal')}},
@@ -130,7 +121,7 @@ import EditRentedItem from '../modals/rent/EditRentedItem.vue'
     }
   },
   mounted(){
-    this.isLoading = false
+    this.$contentLoadingHide()
   },
   methods: {
     show: function(name, params={}){
@@ -138,7 +129,6 @@ import EditRentedItem from '../modals/rent/EditRentedItem.vue'
     },
 
     loadItem: function(){
-            //this.isLoading = true
         return this.$http.get('/rented/item/'+this.itemData.RentedItemID).then((response)=>{
             if(response.status == 200){
                 this.itemData = response.data
@@ -147,7 +137,7 @@ import EditRentedItem from '../modals/rent/EditRentedItem.vue'
         }).catch(error => {
             if(error.response.status == 422){
                 swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
-                this.isLoading = false
+                this.$contentLoadingHide()
             }else {
               swal('Klaida', error.response.data.message, 'error')
             }
@@ -237,7 +227,6 @@ import EditRentedItem from '../modals/rent/EditRentedItem.vue'
     }
   },
   components: {
-      Loading,
       AssignRentedItemModal,
       EditRentedItem
   }

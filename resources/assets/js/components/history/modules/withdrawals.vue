@@ -1,9 +1,4 @@
 <template>
-  <div class="loading-parent">
-      <Loading :active.sync="isLoading"
-      :can-cancel="false"
-      :is-full-page="fullPage"></Loading>
-
       <v-data-table prev-icon="fa-arrow-left"
               next-icon="fa-arrow-right"
               sort-icon="fa-angle-down"
@@ -41,17 +36,13 @@
                   </v-alert>
                 </template>
           </v-data-table>
-    </div>
 </template>
 <script>
 import swal from 'sweetalert'
-import Loading from 'vue-loading-overlay'
-import 'vue-loading-overlay/dist/vue-loading.min.css'
 export default{
   data(){
     return {
-      isLoading: true,
-      fullPage: false,
+
       itemsHistory: [],
       pagination: {
           sortBy: 'Date',
@@ -136,14 +127,13 @@ export default{
       this.$http.get('history/item/all')
       .then(response => {
         this.itemsHistory = response.data
-        this.isLoading = false
+        this.$contentLoadingHide()
       }).catch(err => {
         swal("Klaida", err.response.data.message, 'warning')
       })
     }
   },
   components:{
-    Loading
   }
 }
 </script>

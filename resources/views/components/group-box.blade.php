@@ -2,7 +2,7 @@
     <div class="item-image-box">
         {{$image}}
     </div>
-    <div class="row item-name-field remove-all-margin">
+    <div class="row mx-0 item-name-field remove-all-margin">
         <div class="col-9 item-text remove-all-padding">
           {{$groupName}}
         </div>

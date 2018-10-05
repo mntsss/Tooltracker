@@ -1,11 +1,6 @@
 <template>
-  <div class="loading-parent" style="height: 70vh">
-      <Loading :active.sync="isLoading"
-      :can-cancel="false"
-      :is-full-page="fullPage"></Loading>
-
-  <v-container>
-    <v-layout row mx-0 justify-center>
+  <v-container v-if='$user'>
+    <v-layout row mx-0 mx-0 justify-center>
       <v-flex sm-6 class="px-4 pb-3">
           <v-card tile>
               <v-card-title class="secondary h5">
@@ -66,7 +61,7 @@
           </v-card>
       </v-flex>
     </v-layout>
-    <v-layout row mx-0 justify-center>
+    <v-layout row mx-0 mx-0 justify-center>
       <v-flex sm-6 class="px-4 pb-3">
           <v-card tile>
               <v-card-title class="secondary h5">
@@ -105,7 +100,7 @@
                   Jūsų aktyvios rezervacijos
               </v-card-title>
               <v-card-text style="min-height: 25vh" class="white">
-                  <v-layout align-center mt-5 justify-center row fill-height>
+                  <v-layout align-center mt-5 justify-center row mx-0 fill-height>
                     <v-flex shrink>
                       <v-progress-circular :size="100" :width="7" color="primary" indeterminate></v-progress-circular>
                     </v-flex>
@@ -115,7 +110,6 @@
       </v-flex>
     </v-layout>
   </v-container>
-</div>
 </template>
 <script>
 import CreateGroup from './modals/CreateGroup.vue';
@@ -126,7 +120,6 @@ export default {
   data(){
     return {
       itemGroups: [],
-      isLoading: true,
       fullPage: false,
       suspentionLoading: true,
       suspentionFixLoading: true,
@@ -169,15 +162,12 @@ export default {
     }
   },
   mounted(){
-      this.isLoading = false
+      this.$contentLoadingHide()
       this.getSuspentionsUnconfirmedReturn();
       this.getLongestRented();
       this.getFixingSuspentions();
   },
   computed: {
-    username: function(){
-      return this.$auth.user().UserName
-    },
     RfidCode: function(){
         return this.$store.state.recentCode;
     }

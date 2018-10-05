@@ -137,7 +137,10 @@
             <Login v-if="!$auth.check() && $auth.ready()" v-on:loginSuccess="$getUser()"></Login>
           </v-layout>
           <v-layout justify-center align-center v-if="$auth.check()">
-            <v-flex grow>
+            <v-flex grow class="loading-parent">
+                <Loading :active.sync="$contentLoading"
+                :can-cancel="false"
+                :is-full-page="false"></Loading>
               <router-view></router-view>
             </v-flex>
           </v-layout>

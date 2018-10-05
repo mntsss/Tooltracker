@@ -21,7 +21,7 @@
             <label for="event">Telefonas</label>
             <input type="text" class="form-control" name="clientPhone" maxlength="15" id="clientPhone" required/>
           </div>
-          <div class="row justify-content-center">
+          <div class="row mx-0 justify-content-center">
             <button type="button" class="btn btn-outline-success" onclick="addEvent()">Pridėti</button>
           </div>
         </form>

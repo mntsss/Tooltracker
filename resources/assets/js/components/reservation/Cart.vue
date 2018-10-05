@@ -1,165 +1,66 @@
 <template>
-  <div class="loading-parent" style="height: 70vh">
-      <Loading :active.sync="isLoading"
-      :can-cancel="false"
-      :is-full-page="fullPage"></Loading>
-      <div class="overlay position-absolute h-100 w-100" v-if="!userCard">
-        <v-container fluid>
-          <v-layout align-center justify-center row fill-height mt-5>
-            <v-flex shrink mt-5>
-              <v-progress-circular :size="100" :width="7" color="primary" indeterminate></v-progress-circular>
-            </v-flex>
-          </v-layout>
-          <v-layout align-center justify-center>
-            <v-flex shrink align-center class="h4 text-center mt-3">
-              Laukiama identifikacinės kortelės...
-            </v-flex>
-          </v-layout>
-        </v-container>
-      </div>
-    <v-dialog v-model="waitingImageDialog" persistent max-width="780" >
-      <v-container fluid v-if="newItem.item" class="primary--border border bg-light mt-0">
-        <div class="card-header secondary headline">
-            {{newItem.item.ItemName}} <a @click="cancelItemAddition()" class="float-right"><span class="fas fa-times btn-func-misc primary-text"></span></a>
-        </div>
-        <v-divider light></v-divider>
-        <v-layout justify-center class="border border-primary" row wrap v-if="newItem.item.ItemConsumable">
-          <v-flex shrink>
-            <v-text-field type="number" v-model="newItem.quantity" label="Kiekis" placeholder="Paimamas kiekis"></v-text-field>
-          </v-flex>
+      <v-container>
+          <ImageDialog :forceImage="true"></ImageDialog>
+        <v-layout row mx-0 wrap mx-0 align-center justify-center class="primary text-light">
+          <v-flex shrink headline>Įrankių rezervavimas darbų vygdytojams</v-flex>
         </v-layout>
-        <v-layout row align-center justify-center v-if="!newItem.item.ItemConsumable">
-          <v-flex shrink v-if="!newItem.image">
-            <image-uploader :debug="0" :maxWidth="1024" :quality="0.7" :autoRotate=true outputFormat="verbose" :preview=false :className="['fileinput', { 'fileinput--loaded' : hasImage }]"
-              accept="image/*;capture=camera" capture="camera" @input="setImage" @onUpload="loadingDialog" @onComplete="loadingDialog"></image-uploader>
-          </v-flex>
-          <v-flex shrink v-else-if="newItem.image">
-            <img v-bind:src="newItem.image.dataUrl" alt="uploaded_image" class="uploaded-image" />
-          </v-flex>
-
-          <!-- Loading modal appearing on upload start and loading til upload and resize ends -->
-            <v-dialog v-model="imageLoadingDialog" hide-overlay persistent width="300">
-              <v-card class="border border-danger">
-                <v-card-text>
-                  Kraunama...
-                  <v-progress-linear indeterminate color="primary" class="mb-0"></v-progress-linear>
-                </v-card-text>
-              </v-card>
-            </v-dialog>
-
+        <v-layout>
+            <v-select
+                :items="objects"
+                v-model="reservationObject"
+                menu-props="auto"
+                label="Pasirinkite rezervacijos objektą"
+                hide-details
+                item-text="ObjectName"
+                item-value="ObjectID"
+                return-object
+                prepend-icon="fa-building"
+                outline
+                class="mb-4 mt-2"
+            ></v-select>
         </v-layout>
-        <v-layout row wrap mx-0 pa-3 justify-center align-center>
-          <v-flex shrink><v-btn outline @click="addToReservation" :disabled="addButtonDisabled"><v-icon class="primary--text headline mx-2">fa-plus</v-icon>Pridėti į rezervaciją</v-btn></v-flex>
+        <v-layout>
+            <v-select
+                :items="reservationObject.foremen"
+                v-model="reservationUser"
+                menu-props="auto"
+                label="Pasirinkite darbų vygdytoją"
+                hide-details
+                item-text="user.Username"
+                item-value="user.UserID"
+                prepend-icon="fa-user"
+                outline
+                class="mb-4 mt-2"
+                v-if="reservationObject"
+            >
+            <span slot="no-data">Darbų vygdytojų nėra</span>
+        </v-select>
+        </v-layout>
+        <FindItem v-on:itemAdded="itemAdded()"></FindItem>
+        <v-layout row mx-0 wrap mx-0 pa-3 justify-center align-center>
+          <v-flex shrink><v-btn outline @click="save" :disabled="saveButtonDisabled"><v-icon class="primary--text headline mx-2">fa-save</v-icon>Išsaugoti rezervaciją</v-btn></v-flex>
         </v-layout>
       </v-container>
-    </v-dialog>
-    <v-container>
-        <v-select
-            :items="objects"
-            v-model="reservationObject"
-            menu-props="auto"
-            label="Pasirinkite rezervacijos objektą"
-            hide-details
-            item-text="ObjectName"
-            item-value="ObjectID"
-            return-object
-            prepend-icon="fa-building"
-            outline
-            class="mb-4 mt-2"
-        ></v-select>
-        <v-select
-            :items="reservationObject.foremen"
-            v-model="reservationUser"
-            menu-props="auto"
-            label="Pasirinkite darbų vygdytoją"
-            hide-details
-            item-text="user.Username"
-            item-value="user.UserID"
-            prepend-icon="fa-user"
-            outline
-            class="mb-4 mt-2"
-            v-if="reservationObject"
-        ></v-select>
-        <v-layout>
-          <v-flex sm6 px-1>
-            <v-text-field
-              flat
-              solo
-              hide-details
-              prepend-inner-icon="search"
-              label="Įrankių paieška..."
-              v-model = "searchQuery"
-              class=""
-            ></v-text-field>
-            <template v-if="items || isSearchLoading" >
-              <v-progress-linear :indeterminate="true" v-if="isSearchLoading"></v-progress-linear >
-              <v-list>
-                <v-list-tile v-for="(item, i) in items" class="cursor-pointer" :key="i" @click="add(item)">
-                  <v-list-tile-content >
-                    <v-list-tile-title v-text="item.ItemName"></v-list-tile-title>
-                    <v-list-tile-sub-title v-text="item.state"></v-list-tile-sub-title>
-                  </v-list-tile-content>
-                  <v-list-tile-avatar class="headline font-weight-light">
-                    <v-icon class="primary--text">fa-arrow-alt-circle-right</v-icon>
-                  </v-list-tile-avatar>
-                </v-list-tile>
-              </v-list>
-            </template>
-          </v-flex>
-          <v-flex sm6 px-1>
-            <v-data-table :headers="headers" :items="reservedItems" hide-actions class="elevation-1">
-                <template slot="items" slot-scope="props">
-                  <td>{{ props.item.item.ItemName }}</td>
-                  <td class="text-xs-center">{{ props.item.quantity }}</td>
-                  <td class="justify-center layout px-0">
-                      <v-btn @click="deleteItem(props.item)"><v-icon >delete</v-icon></v-btn>
-                  </td>
-                </template>
-                <template slot="no-data">
-                  <v-alert :value="true" class="bg-warning" icon="warning">
-                    Laukiama rezervuojamų įrankių...
-                  </v-alert>
-                </template>
-              </v-data-table>
-          </v-flex>
-        </v-layout>
-          <v-layout row wrap mx-0 pa-3 justify-center align-center>
-            <v-flex shrink><v-btn outline @click="save" :disabled="saveButtonDisabled"><v-icon class="primary--text headline mx-2">fa-save</v-icon>Išsaugoti rezervaciją</v-btn></v-flex>
-          </v-layout>
-  </v-container>
-</div>
 </template>
 <script>
-import Loading from 'vue-loading-overlay'
-import 'vue-loading-overlay/dist/vue-loading.min.css'
 import swal from 'sweetalert'
-import { ImageUploader } from 'vue-image-upload-resize'
+import FindItem from './modules/FindItem.vue'
+import ImageDialog from './modules/ImageDialog.vue'
 export default{
 
   data(){
     return {
-      isLoading: true,
-      fullPage: false,
-
-      waitingImageDialog: false,
-      imageLoadingDialog: false,
-      hasImage: false,
 
       isSearchLoading: false,
       searchQuery: null,
+
+      objects: [],
+      users: [],
       items: [],
 
-      userCard: false,
-      user: null,
-      objects: [],
-      reservationObject: null,
       reservationUser: null,
-      newItem: {
-        item: null,
-        image: null,
-        quantity: 1
-      },
-      reservedItems: [],
+      reservationObject: null,
+
       //table setup
       headers: [
           {
@@ -177,72 +78,66 @@ export default{
     this.loadObjects()
   },
   mounted(){
-    this.isLoading = false
+    this.$contentLoadingHide()
+  },
+  beforeDestroy(){
+    this.$store.commit('reservation/clearReservation')
+    this.$store.commit('reservation/cancelItem')
   },
   computed: {
     RFIDCode: function(){
         return this.$store.state.recentCode
     },
-    addButtonDisabled: function(){
-      if(this.newItem.item.ItemConsumable)
-        return false
-      else return !this.hasImage;
-    },
     saveButtonDisabled: function(){
-      if(this.reservationObject){
-        if(this.reservedItems.length != 0)
-          if(this.userCard)
+      if(this.reservationObject && this.reservationUser){
+        if(this.reservationItems.length != 0)
             return false
       }
       return true
-    }
+  },
+  reservationItems: function(){
+     return this.$store.state.reservation.reservationItems
+  }
   },
   watch: {
     RFIDCode(oldRFIDCode, newRFIDCode){
         if(this.RFIDCode){
-            if(!this.userCard){
-              if(this.$user.UserRFIDCode == this.RFIDCode)
-                this.userCard = true
-            }
-            else if(this.userCard){
               this.$http.post('/item/findcode', {code: this.RFIDCode}).then((response) => {
                 if(response.status == 200)
-                  if(response.data.status == null){
-                    this.newItem.item = response.data
-                    this.waitingImageDialog = true
-                  }
-                  else if(response.data.status == 'reserved')
-                    swal("Klaida!", 'Įrankis jau yra pridėtas aktyvioje rezervacijoje...', 'error')
-                  else if(response.data.status == 'withdrew')
-                    swal("Klaida!", 'Įrankis yra naudojamas ir negali būti pridėtas į rezervaciją!', 'error')
-                  else if(response.data.status == 'suspended')
-                    swal("Klaida!", 'Įrankis yra įšaldytas, todėl negali būti pridėtas į rezervaciją!', 'error')
-                  else if(response.data.status == 'deleted')
-                    swal("Klaida!", 'Įrankis yra ištrintas, todėl negali būti pridėtas į rezervaciją!', 'error')
+                    this.addItem(response.data)
               }).catch(error => {
                 swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
               })
-            }
+
             this.$store.commit('resetCode')
         }
-    },
-    searchQuery (val) {
-      if(this.searchQuery.length < 3)
-        return
-
-      this.isSearchLoading = true
-
-      this.$http.post('/item/search', {query: this.searchQuery})
-        .then(res => {
-          this.items = res.data
-        })
-        .catch(err => {
-          console.log(err)
-        })
-        .finally(() => (this.isSearchLoading = false))
-    }
+      }
   },
   methods: {
+      addItem: function(item){
+        if(item.state != "Sandėlyje"){
+          if(item.state == 'Rezervuotas')
+            return swal("Klaida!", 'Įrankis jau yra pridėtas aktyvioje rezervacijoje...', 'error')
+          else if(item.state == 'Naudojamas')
+            return swal("Klaida!", 'Įrankis yra naudojamas ir negali būti pridėtas į rezervaciją!', 'error')
+          else if(item.state == 'Ištrintas')
+            return swal("Klaida!", 'Įrankis yra ištrintas, todėl negali būti pridėtas į rezervaciją!', 'error')
+          else
+            return swal("Klaida!", 'Įrankis yra įšaldytas, todėl negali būti pridėtas į rezervaciją!', 'error')
+        }
+        else{
+            for(var i = 0; i< this.reservationItems.length; i++)
+              {
+                  if(this.reservationItems[i].item.ItemID == item.ItemID)
+                      return swal("Klaida!", 'Įrankis jau rezervuotas!', 'error')
+              }
+              this.itemAdded()
+              this.$store.commit('reservation/addItem', item)
+          }
+      },
+      itemAdded: function(){
+          this.$modal.show('waiting-image-modal')
+      },
     loadObjects: function(){
       this.$http.get('/object/list').then((response) => {
         if(response.status == 200){
@@ -252,57 +147,12 @@ export default{
         swal('Klaida!',error.response.data.message, 'error');
       })
     },
-    setImage: function(file){
-        this.hasImage = true
-        this.newItem.image = file
-    },
-    takeImage: function(){
-      imageCapture.takePhoto()
-      .then(blob => {
-        console.log(blob)
-      })
-      .catch(error => console.error('takePhoto() error:', error));
-    },
-    loadingDialog: function(){
-        this.imageLoadingDialog = !this.imageLoadingDialog
-    },
-    addToReservation: function(){
-      this.reservedItems.push(JSON.parse(JSON.stringify(this.newItem)))
-      this.hasImage = false
-      this.newItem.item = null
-      this.newItem.image = null
-      this.newItem.quantity = 1
-      this.waitingImageDialog = false
-    },
-    add: function(item){
 
-      if(item.state == "Sandėlyje"){
-        this.newItem.item = item
-        this.waitingImageDialog = true
-      }
-      else{
-        if(item.state == 'Rezervuotas')
-          return swal("Klaida!", 'Įrankis jau yra pridėtas aktyvioje rezervacijoje...', 'error')
-        else if(item.state == 'Naudojamas')
-          return swal("Klaida!", 'Įrankis yra naudojamas ir negali būti pridėtas į rezervaciją!', 'error')
-        else if(item.state == 'Ištrintas')
-          return swal("Klaida!", 'Įrankis yra ištrintas, todėl negali būti pridėtas į rezervaciją!', 'error')
-        else
-          return swal("Klaida!", 'Įrankis yra įšaldytas, todėl negali būti pridėtas į rezervaciją!', 'error')
-      }
-    },
-    cancelItemAddition: function(){
-        this.hasImage = false
-        this.newItem.item = null
-        this.newItem.image = null
-        this.newItem.quantity = 1
-        this.waitingImageDialog = false
-    },
     save: function(){
       this.$http.post('/reservation/create', {
         objectID: this.reservationObject.ObjectID,
         userID: this.reservationUser,
-        items: this.reservedItems
+        items: this.reservationItems
       }).then((response) => {
         swal(response.data.message, response.data.success, "success").then(value => {this.$router.push({name: 'reservations'})})
       }).catch(error => {
@@ -314,22 +164,15 @@ export default{
             swal("Klaida", error.response.data.message, "error");
         }
       })
-  },
-  deleteItem (item) {
-        const index = this.reservedItems.indexOf(item)
-        this.reservedItems.splice(index, 1)
-      },
+  }
   },
   components: {
-    Loading,
-    ImageUploader
+     FindItem,
+     ImageDialog
   }
 }
 </script>
 <style>
-  .loading-parent{
-    position: relative;
-  }
   .overlay{
     z-index: 5;
     background-color: #FFF !important;

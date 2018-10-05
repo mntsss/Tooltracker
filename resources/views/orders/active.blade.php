@@ -33,7 +33,7 @@ $('#deliveredLink').attr('href', function() {
 }
 </script>
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="row mx-0 justify-content-center">
       @if (session('status'))
           <div class="alert alert-success">
             {{ session('status') }}
@@ -42,7 +42,7 @@ $('#deliveredLink').attr('href', function() {
         <div class="col-md-10">
           <div class="card">
             <div class="card-header">
-              <div class="row text-center text-dark">
+              <div class="row mx-0 text-center text-dark">
                 <h3 class="mr-auto">Aktyvūs užsakymai</h3>
                 @if(Auth::user()->role == "Vadybininkas")
                 <a href="{{route('order.add')}}" class="btn btn-dark"><span class="fas fa-car text-white">Atvežti</span></a>&#160;
@@ -55,7 +55,7 @@ $('#deliveredLink').attr('href', function() {
                 <h6>Aktyvių užsakymų nėra</h6>
               @else
                 @foreach ($param['orders'] as $order)
-                  <div class="row remove-side-margin">
+                  <div class="row mx-0 remove-side-margin">
                     <div class="col-sm-11 col-10 fit-text-dots order-entry" onclick="window.location='{{route('order.view', ['id' => $order->id])}}';">
                       @if($order->important && $order->status == "active")<span class="fas fa-exclamation text-danger"></span>&#160;@endif
                       @if($order->timeLimit != "" && $order->status == "active")<span class="far fa-clock"></span>

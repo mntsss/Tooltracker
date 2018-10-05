@@ -3,7 +3,7 @@
 @section('content')
   <link rel="stylesheet" type="text/css" href="{{ asset('css/datetimepicker.css')}}"/>
   <div class="container">
-    <div class="row">
+    <div class="row mx-0">
       <div class="col-md-10">
         <div class="card bg-dark">
           <div class="card-header">
@@ -13,7 +13,7 @@
             <form method="POST" action="{{ route('order.add.submit') }}" enctype="multipart/form-data">
                 @csrf
 
-                <div class="form-group row">
+                <div class="form-group row mx-0">
                     <label for="name" class="col-md-4 col-form-label text-md-right">Pavadinimas</label>
 
                     <div class="col-md-6">
@@ -27,7 +27,7 @@
                     </div>
                 </div>
 
-                <div class="form-group row">
+                <div class="form-group row mx-0">
                     <label for="code" class="col-md-4 col-form-label text-md-right">Delatės kodas</label>
 
                     <div class="col-md-6">
@@ -40,7 +40,7 @@
                         @endif
                     </div>
                 </div>
-                <div class="form-group row">
+                <div class="form-group row mx-0">
                     <label for="desciption" class="col-md-4 col-form-label text-md-right">Detalės aprašymas</label>
 
                     <div class="col-md-6">
@@ -53,7 +53,7 @@
                         @endif
                     </div>
                 </div>
-                <div class="form-group row">
+                <div class="form-group row mx-0">
                     <label for="image" class="col-md-4 col-form-label text-md-right">Nuotrauka</label>
 
                     <div class="col-md-6 text-left">
@@ -66,7 +66,7 @@
                     </div>
                 </div>
 
-                <div class="form-group row">
+                <div class="form-group row mx-0">
                     <label for="address" class="col-md-4 col-form-label text-md-right">Adresas</label>
 
                     <div class="col-md-6">
@@ -80,7 +80,7 @@
                     </div>
                 </div>
 
-                <div class="form-group row">
+                <div class="form-group row mx-0">
                     <label for="address" class="col-md-4 col-form-label text-md-right">Kontaktinis telefonas</label>
 
                     <div class="col-md-6">
@@ -95,7 +95,7 @@
                 </div>
 
 
-                <div class="form-group row">
+                <div class="form-group row mx-0">
                     <label for="important" class="col-md-4 col-form-label text-md-right">Skubu (atvežti kuo greičiau)</label>
 
                     <div class="col-md-6 text-left">
@@ -103,7 +103,7 @@
                     </div>
                 </div>
 
-                <div class="form-group row">
+                <div class="form-group row mx-0">
                     <label for="timeLimit" class="col-md-4 col-form-label text-md-right">Laiko limitas (atvežti iki ...)</label>
 
                     <div class="col-md-6">
@@ -117,7 +117,7 @@
                     </div>
                 </div>
 
-                <div class="form-group row mb-0 justify-content-center">
+                <div class="form-group row mx-0 mb-0 justify-content-center">
 
                         <button type="submit" class="btn btn-outline-light">
                             Išsaugoti

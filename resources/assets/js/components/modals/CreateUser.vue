@@ -17,7 +17,7 @@
                 <v-text-field v-model="password" :rules="passwordRules" type="password" label="Slaptažodis" required></v-text-field>
                 <v-text-field v-model="repassword" :rules="repasswordRules" type="password" label="Pakartokite slaptažodį" required></v-text-field>
                 <v-text-field v-model="phone" :rules="phoneRules" label="Telefonas"></v-text-field>
-                <v-layout row wrap align-center v-if="!nocode">
+                <v-layout row mx-0 wrap align-center v-if="!nocode">
                   <v-flex v-if="!code" class="border-danger text-center headline text-danger">Laukiama nauja kortelė...</v-flex>
                   <v-flex v-else-if="code" class="border-danger text-center headline text-success">Kortelė nuskaityta!</v-flex>
                 </v-layout>
