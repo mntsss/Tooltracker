@@ -67,7 +67,12 @@ export default {
     devices: function() {
       // Once we have a list select the first one
       let first = head(this.devices);
-      if(first) {
+      if(this.devices.length > 1)
+      {
+          this.camera = this.devices[1].deviceId;
+          this.deviceId = this.devices[1].deviceId;
+      }
+      else if(first) {
         this.camera = first.deviceId;
         this.deviceId = first.deviceId;
       }
