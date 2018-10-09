@@ -174,7 +174,16 @@ const routes = [
     meta: {
         auth: true
     }
-}
+},
+{
+    path: '/history/user',
+    name: 'userHistory',
+    component: require('./components/history/User'),
+    props: true,
+    meta: {
+        auth: true
+    }
+},
 ]
 
 export default routes

@@ -25,7 +25,7 @@
                     <label for="name" class="col-md-4 control-label">Nuomos pradžia</label>
 
                     <div class="col-md-6">
-                        <DatePicker v-model="rentDate" :lang="lang" format="YYYY-MM-DD"></DatePicker>
+                        <DatePicker v-on:change="date_changed"></DatePicker>
                     </div>
                 </div>
 
@@ -60,7 +60,7 @@
 </template>
 <script>
 import swal from 'sweetalert'
-import DatePicker from 'vue2-datepicker'
+import DatePicker from '../../modules/DatePicker.vue'
 export default {
     data(){
         return {
@@ -68,14 +68,6 @@ export default {
             rentDate: '',
             price: 0,
             note: null,
-            lang: {
-              days: ['Sek', 'Pr', 'An', 'Tr', 'Ket', 'Pn', 'Še'],
-              months: ['Sau', 'Vas', 'Kov', 'Bal', 'Geg', 'Bir', 'Lie', 'Rugp', 'Rugs', 'Spa', 'Lap', 'Gru'],
-              placeholder: {
-                date: 'Pasirinkite datą',
-                dateRange: 'Pasirinkite laikotarpį'
-              }
-            }
         }
     },
   methods: {
@@ -111,6 +103,9 @@ export default {
       this.rentDate = ''
       this.price = 0
       this.note = null
+    },
+    date_changed: function(event){
+      this.rentDate = event.date
     },
     format: function(date){
       if(date == null || date == "") return null

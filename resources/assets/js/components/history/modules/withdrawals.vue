@@ -119,12 +119,28 @@ export default{
 
     }
   },
+  props:{
+    url: {
+      required: false,
+      type: String
+    }
+  },
   created(){
     this.loadItemHistory()
   },
+  computed: {
+    request_url: function(){
+      if(this.url){
+        return this.url
+      }
+      else{
+        return "history/item/all"
+      }
+    }
+  },
   methods:{
     loadItemHistory: function(){
-      this.$http.get('history/item/all')
+      this.$http.get(this.request_url)
       .then(response => {
         this.itemsHistory = response.data
         this.$contentLoadingHide()
@@ -132,8 +148,6 @@ export default{
         swal("Klaida", err.response.data.message, 'warning')
       })
     }
-  },
-  components:{
   }
 }
 </script>

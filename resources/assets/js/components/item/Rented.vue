@@ -48,7 +48,7 @@
                               <v-icon headline class="primary--text">fa-money-bill-alt</v-icon>
                           </v-flex>
                           <v-flex px-2 shrink>Šiuo metu nuomos kaina:</v-flex>
-                          <v-flex px-2>({{days(itemData.RentedItemDate)*itemData.RentedItemDailyPrice}} &euro;)</v-flex>
+                          <v-flex px-2>({{calculatePrice(calcBusinessDays(itemData.RentedItemDate),itemData.RentedItemDailyPrice)}} &euro;)</v-flex>
                       </v-layout>
                       <v-layout row mx-0 wrap align-center>
                         <v-flex pa-2 xs10>
@@ -90,7 +90,9 @@
 import swal from 'sweetalert'
 import AssignRentedItemModal from '../modals/rent/AssignRentedItem.vue'
 import EditRentedItem from '../modals/rent/EditRentedItem.vue'
+import renttime from '../../mixins/renttime'
   export default {
+    mixins: [renttime],
     data(){
       return {
           itemData: '',

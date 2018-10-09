@@ -125,9 +125,7 @@ Route::group(['middleware' => 'jwt.auth'], function(){
          Route::get('suspentions/{id}', function(){ return 1;});
          Route::get('withdrawals/{id}', function(){ return 1;});
      });
-     Route::prefix('user')->group(function(){
-
-     });
+     Route::get('user/{userID}', 'HistoryController@getUserHistory');
      Route::prefix('object')->group(function(){
 
      });

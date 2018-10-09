@@ -79,7 +79,7 @@
                                         </v-layout>
                                         <v-layout row mx-0 wrap align-center pa-2 justify-end>
                                             <v-flex shrink justify-end>
-                                              <v-btn outline>
+                                              <v-btn outline @click="$router.push({name:'userHistory', params: {user: user}})">
                                                   <v-icon class="primary--text">fa-history</v-icon>
                                                   <span class="mx-2">Istorija</span>
                                               </v-btn>

@@ -33,14 +33,14 @@
                     <label for="name" class="col-md-4 control-label">Įsigijimo data</label>
 
                     <div class="col-md-6">
-                        <DatePicker v-model="purchase_date" :lang="lang" format="YYYY-MM-DD"></DatePicker>
+                        <DatePicker v-on:changed="purchase_changed"></DatePicker>
                     </div>
                 </div>
                 <div class="form-group mb-4">
                     <label for="name" class="col-md-4 control-label ">Garantinis iki</label>
 
                     <div class="col-md-6">
-                        <DatePicker v-model="warranty_date" :lang="lang" format="YYYY-MM-DD"></DatePicker>
+                      <DatePicker v-on:changed="warranty_changed"></DatePicker>
                     </div>
                 </div>
 
@@ -106,7 +106,7 @@
 </template>
 <script>
 import swal from 'sweetalert'
-import DatePicker from 'vue2-datepicker'
+import DatePicker from '../modules/DatePicker.vue'
 import { ImageUploader } from 'vue-image-upload-resize'
 export default {
     data(){
@@ -123,15 +123,7 @@ export default {
             consumable: false,
             warranty_date: '',
             purchase_date: '',
-            groupID: null,
-            lang: {
-              days: ['Sek', 'Pr', 'An', 'Tr', 'Ket', 'Pn', 'Še'],
-              months: ['Sau', 'Vas', 'Kov', 'Bal', 'Geg', 'Bir', 'Lie', 'Rugp', 'Rugs', 'Spa', 'Lap', 'Gru'],
-              placeholder: {
-                date: 'Pasirinkite datą',
-                dateRange: 'Pasirinkite laikotarpį'
-              }
-            }
+            groupID: null
         }
     },
     computed: {
@@ -217,6 +209,12 @@ export default {
         if (month.length < 2) month = '0' + month;
         if (day.length < 2) day = '0' + day;
         return [year, month, day].join('-');
+    },
+    purchase_changed: function(event){
+      this.purchase_date = event.date
+    },
+    warranty_changed: function(event){
+      this.warranty_date = event.date
     }
   },
   components: {

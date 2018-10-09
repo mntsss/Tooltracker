@@ -10,10 +10,10 @@
                   <Loading :active.sync="suspentionLoading"
                   :can-cancel="false"
                   :is-full-page="false"></Loading>
-                  <div class="table-responsive overview-box">
+                  <div class="table-responsive overview-box" v-if="unconfirmedReturnSuspentions.length > 0">
                     <v-data-table :headers="suspentionsHeaders" :items="unconfirmedReturnSuspentions" hide-actions class="elevation-3 border border-dark">
                         <template slot="items" slot-scope="props">
-                          <tr class="cursor-pointer" @click="$router.push({ name: 'item', params: { itemID: props.item.item.ItemID}})" v-bind:class="{'text-danger': (days(props.item.created_at)>6)}">
+                          <tr class="cursor-pointer" @click="$router.push({ name: 'item', params: { itemID: props.item.item.ItemID}})" v-bind:class="{'text-danger': (calcBusinessDays(props.item.created_at)>6)}">
                             <td>
                               {{ props.item.item.item_group.ItemGroupName}}
                             </td>
@@ -30,6 +30,16 @@
                         </template>
                    </v-data-table>
                  </div>
+                 <v-container class="hill-height" v-else>
+                   <v-layout mx0 align-center justify-center>
+                     <v-flex shrink><v-icon class="text-success display-3">fa-check</v-icon></v-flex>
+                   </v-layout>
+                   <v-layout align-center justify-center>
+                     <v-flex shrink class="text-center h5">
+                        Nepatvirtintų grąžinimų nėra...
+                     </v-flex>
+                   </v-layout>
+                 </v-container>
               </v-card-text>
           </v-card>
       </v-flex>
@@ -42,14 +52,14 @@
                 <Loading :active.sync="longestRentedLoading"
                 :can-cancel="false"
                 :is-full-page="false"></Loading>
-                <v-data-table :headers="rentedHeaders" :items="longestRentedItems" hide-actions class="elevation-3 border border-dark">
+                <v-data-table :headers="rentedHeaders" :items="longestRentedItems" hide-actions class="elevation-3 border border-dark" v-if="longestRentedItems.length>0">
                     <template slot="items" slot-scope="props">
                       <tr class="cursor-pointer" @click="$router.push({ name: 'rentedItem', params: { itemProp: props.item}})">
                         <td>
                           {{ props.item.RentedItemName}}
                         </td>
                         <td>
-                          {{days(props.item.RentedItemDate)*props.item.RentedItemDailyPrice}} &euro;
+                          {{calculatePrice(calcBusinessDays(props.item.RentedItemDate),props.item.RentedItemDailyPrice)}} &euro;
                         </td>
                       </tr>
                     </template>
@@ -57,6 +67,16 @@
                         Nuomojamų įrankių nėra...
                     </template>
                </v-data-table>
+               <v-container class="hill-height" v-else>
+                 <v-layout mx0 align-center justify-center>
+                   <v-flex shrink><v-icon class="text-success display-3">fa-check</v-icon></v-flex>
+                 </v-layout>
+                 <v-layout align-center justify-center>
+                   <v-flex shrink class="text-center h5">
+                      Nuomojamų įrankių nėra...
+                   </v-flex>
+                 </v-layout>
+               </v-container>
               </v-card-text>
           </v-card>
       </v-flex>
@@ -71,7 +91,7 @@
                   <Loading :active.sync="suspentionFixLoading"
                   :can-cancel="false"
                   :is-full-page="false"></Loading>
-                  <div class="table-responsive overview-box">
+                  <div class="table-responsive overview-box" v-if="fixingSuspentions.length >0">
                     <v-data-table :headers="suspentionsHeaders" :items="fixingSuspentions" hide-actions class="elevation-3 border border-dark">
                         <template slot="items" slot-scope="props">
                           <tr class="cursor-pointer" @click="$router.push({ name: 'item', params: { itemID: props.item.item.ItemID}})">
@@ -87,17 +107,27 @@
                           </tr>
                         </template>
                         <template slot="no-data">
-                            Taisomų įranki nėra...
+                            Taisomų įrankių nėra...
                         </template>
                    </v-data-table>
                  </div>
+                 <v-container class="hill-height" v-else>
+                   <v-layout mx0 align-center justify-center>
+                     <v-flex shrink><v-icon class="text-success display-3">fa-check</v-icon></v-flex>
+                   </v-layout>
+                   <v-layout align-center justify-center>
+                     <v-flex shrink class="text-center h5">
+                        Taisomų įrankių nėra...
+                     </v-flex>
+                   </v-layout>
+                 </v-container>
               </v-card-text>
           </v-card>
       </v-flex>
       <v-flex sm-6 class="px-4 pb-3">
           <v-card tile>
               <v-card-title class="secondary h5">
-                  Jūsų aktyvios rezervacijos
+                  &nbsp;
               </v-card-title>
               <v-card-text style="min-height: 25vh" class="white">
                   <v-layout align-center mt-5 justify-center row mx-0 fill-height>
@@ -116,7 +146,9 @@ import CreateGroup from './modals/CreateGroup.vue';
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.min.css'
 import swal from 'sweetalert'
+import renttime from '../mixins/renttime'
 export default {
+  mixins: [renttime],
   data(){
     return {
       itemGroups: [],
@@ -252,15 +284,6 @@ export default {
                   swal("Klaida", err.response.data.message, "error");
               }
           })
-      },
-      days: function(date){
-          var dateRented = new Date(date)
-          var currentDate = new Date()
-          if(dateRented > currentDate)
-              return 0
-          var timeDiff = Math.abs(currentDate.getTime() - dateRented.getTime());
-          var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-          return diffDays
       }
   },
   components: {

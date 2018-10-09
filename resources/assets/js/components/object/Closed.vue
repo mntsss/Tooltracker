@@ -39,7 +39,7 @@
                                                 <v-card-text>
                                                     <router-link tag="div" class="row mx-0 remove-side-margin cursor-pointer h6" :to="{ name: 'rentedItem', params: { itemProp: item}}" v-for="(item, i) in object.rented" :key="i">
                                                       <div class="col-6 h6">
-                                                        {{item.RentedItemName}}<span class="ml-2" v-if="item.RentedItemDate">({{days(item.RentedItemDate)*item.RentedItemDailyPrice}} &euro;)</span>
+                                                        {{item.RentedItemName}}<span class="ml-2" v-if="item.RentedItemDate">({{calcBusinessDays(item.RentedItemDate)*item.RentedItemDailyPrice}} &euro;)</span>
                                                       </div>
                                                       <div class="col text-center h6">
                                                         {{item.RentedItemDate}}
@@ -86,8 +86,9 @@
 </template>
 <script>
 import swal from 'sweetalert'
-
+import renttime from '../../mixins/renttime'
 export default{
+    mixins: [renttime],
     data(){
         return {
             objects: null,

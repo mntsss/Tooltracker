@@ -16,7 +16,7 @@
       <v-form>
       <v-layout>
         <v-flex xs12>
-          <DatePicker class="justify-center d-flex theme--primary text-white ma-3" v-model="warranty_date" :lang="lang" format="YYYY-MM-DD"></DatePicker>
+          <DatePicker v-on:changed="date_changed"></DatePicker>
         </v-flex>
       </v-layout>
       <v-layout justify-center align-bottom>
@@ -29,21 +29,13 @@
   </modal>
 </template>
 <script>
-import DatePicker from 'vue2-datepicker'
+import DatePicker from '../modules/DatePicker.vue'
 import swal from 'sweetalert'
 export default {
     data(){
         return {
             warranty_date: null,
-            itemID: null,
-            lang: {
-              days: ['Sek', 'Pr', 'An', 'Tr', 'Ket', 'Pn', 'Še'],
-              months: ['Sau', 'Vas', 'Kov', 'Bal', 'Geg', 'Bir', 'Lie', 'Rugp', 'Rugs', 'Spa', 'Lap', 'Gru'],
-              placeholder: {
-                date: 'Pasirinkite datą',
-                dateRange: 'Pasirinkite laikotarpį'
-              }
-            }
+            itemID: null
         }
     },
     computed: {
@@ -90,6 +82,9 @@ export default {
     beforeClose: function(){
         this.warranty_date = null
         this.itemID = null
+    },
+    date_changed: function(event){
+      this.warranty_date = event.date
     }
   },
   components: {
