@@ -1,11 +1,8 @@
-import Main from './components/Main.vue';
-
-
 const routes = [
   {
     path: '/',
     name: 'main',
-    component: Main,
+    component: require('./components/main/Main'),
     meta: {
       auth: true
     }

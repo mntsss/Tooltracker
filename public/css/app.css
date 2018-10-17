@@ -10512,6 +10512,29 @@ body {
   border: 1px solid #00768E;
 }
 
+/******************** Main - boxes *************************/
+
+.data-box-content {
+  height: 32vh;
+}
+
+.data-box-table {
+  overflow-y: auto;
+  max-height: 30vh;
+}
+
+.param-box-container {
+  width: 50%;
+  height: 50%;
+  overflow: hidden;
+}
+
+.param-box {
+  border: 1px solid #00768E;
+  height: 100%;
+  width: 100%;
+}
+
 /********************* Loading spinner ****************/
 
 .loading-parent {
@@ -10691,10 +10714,26 @@ body {
   }
 }
 
-@media screen and (max-width: 970px) {
-  /*.item-box-panel{
-    padding: 5px !important;
-  }*/
+@media screen and (min-width: 992px) {
+  .data-box {
+    max-width: 50%;
+    position: relative;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .data-box {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .v-toolbar__title {
+    margin-left: 0;
+  }
+
+  .container {
+    padding: 0 !important;
+  }
 }
 
 @media screen and (max-width: 770px) {
