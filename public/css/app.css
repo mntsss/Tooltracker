@@ -10514,13 +10514,9 @@ body {
 
 /******************** Main - boxes *************************/
 
-.data-box-content {
-  height: 32vh;
-}
-
 .data-box-table {
   overflow-y: auto;
-  max-height: 30vh;
+  max-height: 35vh;
 }
 
 .param-box-container {

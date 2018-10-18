@@ -143,5 +143,14 @@ Route::group(['middleware' => 'jwt.auth'], function(){
     Route::post('assign', 'RentedItemController@assign')->middleware('role');
     Route::post('return', 'RentedItemController@return')->middleware('role');
   });
+
+  Route::prefix('statistics')->group(function(){
+    Route::prefix('get')->group(function(){
+      Route::get('monthlyFixes', 'StatisticsController@calculateMonthFixes');
+      Route::get('rent', 'StatisticsController@calculateMonthRentPrice');
+      Route::get('totalItems', 'StatisticsController@countItems');
+      Route::get('totalItemsInUse', 'StatisticsController@countItemsInUse');
+    });
+  });
 });
 Route::get('sendCode/{key}/{userID}/{code}', 'HomeController@sendCode');

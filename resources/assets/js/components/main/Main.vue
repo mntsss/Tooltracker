@@ -1,8 +1,8 @@
 <template>
-  <v-container v-if='$user'>
+  <v-container class="py-0 my-0" v-if='$user'>
     <v-layout row mx-0 mx-0 justify-center>
       <v-flex sm-6 class="px-4 pb-3 data-box">
-        <DataBox>
+        <DataBox class="h-100">
           <span slot="title">
             Įrankiai laukiantys patvirtinimo
           </span>
@@ -31,9 +31,9 @@
         </DataBox>
       </v-flex>
       <v-flex sm-6 class="px-4 pb-3 data-box">
-        <v-container class="pt-0" style="margin-top: 0 !important">
-          <v-layout>
-            <v-flex class="param-box-container" fill-height>
+        <v-container class="pa-0" style="margin-top: 0 !important">
+          <v-layout fill-height>
+            <v-flex>
               <v-card class="param-box" tile>
                 <v-card-title class="text-center justify-center">
                   <v-icon class="display-3 text-success">fa-wrench</v-icon>
@@ -43,12 +43,12 @@
                     Šį mėnesį taisymų:
                   </div>
                   <div class="text-center display-2 text-warning font-weight-bold">
-                    13
+                    {{statistics.monthlyFixes}}
                   </div>
                 </v-card-text>
               </v-card>
             </v-flex>
-            <v-flex class="param-box-container" fill-height>
+            <v-flex>
               <v-card class="param-box" tile>
                 <v-card-title class="text-center justify-center">
                   <v-icon class="display-3 text-warning">fa-euro-sign</v-icon>
@@ -58,14 +58,14 @@
                     Šio mėnsio išlaidos įrankių nuomai
                   </div>
                   <div class="text-center display-2 text-warning font-weight-bold">
-                    130&euro;
+                    {{statistics.monthlyRentCost}}&euro;
                   </div>
                 </v-card-text>
               </v-card>
             </v-flex>
           </v-layout>
-          <v-layout>
-            <v-flex class="param-box-container" fill-height>
+          <v-layout fill-height>
+            <v-flex>
               <v-card class="param-box" tile>
                 <v-card-title class="text-center justify-center">
                   <v-icon class="display-3 primary--text">fa-toolbox</v-icon>
@@ -75,12 +75,12 @@
                     Įrankių skaičius sistemoje
                   </div>
                   <div class="text-center display-2 text-warning font-weight-bold">
-                    121
+                    {{statistics.totalItems}}
                   </div>
                 </v-card-text>
               </v-card>
             </v-flex>
-            <v-flex class="param-box-container" fill-height>
+            <v-flex>
               <v-card class="param-box" tile>
                 <v-card-title class="text-center justify-center">
                   <v-icon class="display-3 text-danger">fa-toolbox</v-icon>
@@ -90,7 +90,7 @@
                     Naudojami įrankiai:
                   </div>
                   <div class="text-center display-2 text-warning font-weight-bold">
-                    44
+                    {{statistics.itemsInUse}}
                   </div>
                 </v-card-text>
               </v-card>
@@ -99,7 +99,7 @@
         </v-container>
       </v-flex>
     </v-layout>
-    <v-layout row mx-0 mx-0 justify-center>
+    <v-layout mx-0 mx-0 justify-center fill-height>
       <v-flex sm-6 class="px-4 pb-3 data-box">
         <DataBox>
           <span slot="title">Taisomi įrankiai</span>
@@ -202,7 +202,13 @@ export default {
               align: 'left',
               sortable: false
             }
-          ]
+          ],
+        statistics: {
+          monthlyFixes: 0,
+          monthlyRentCost: 0,
+          totalItems: 0,
+          itemsInUse: 0
+        }
     }
   },
   mounted(){
@@ -210,6 +216,10 @@ export default {
       this.getSuspentionsUnconfirmedReturn();
       this.getLongestRented();
       this.getFixingSuspentions();
+      this.getMonthlyFixes();
+      this.getMonthlyRentPrice();
+      this.getTotalItems();
+      this.getTotalItemsInUse();
   },
   computed: {
     RfidCode: function(){
@@ -282,13 +292,13 @@ export default {
       getLongestRented: function(){
           this.$http.get('/rented/get/longest')
           .then(response => {
-              if(response.status == 200)
+              if(response.status === 200)
               {
                   this.longestRentedItems = response.data
                   this.longestRentedLoading = false
               }
           }).catch(err => {
-              if(err.response.status == 422)
+              if(err.response.status === 422)
               {
                   swal(err.response.data.message, Object.values(err.response.data.errors)[0][0], "error");
               }
@@ -296,6 +306,74 @@ export default {
                   swal("Klaida", err.response.data.message, "error");
               }
           })
+      },
+      getMonthlyFixes: function(){
+        this.$http.get('/statistics/get/monthlyFixes')
+        .then(response => {
+          if(response.status === 200)
+          {
+            this.statistics.monthlyFixes = response.data
+          }
+        }).catch(err => {
+            if(err.response.status === 422)
+            {
+                swal(err.response.data.message, Object.values(err.response.data.errors)[0][0], "error");
+            }
+            else{
+                swal("Klaida", err.response.data.message, "error");
+            }
+        })
+      },
+      getMonthlyRentPrice: function(){
+        this.$http.get('/statistics/get/rent')
+        .then(response => {
+          if(response.status === 200)
+          {
+            this.statistics.monthlyRentCost = response.data
+          }
+        }).catch(err => {
+            if(err.response.status === 422)
+            {
+                swal(err.response.data.message, Object.values(err.response.data.errors)[0][0], "error");
+            }
+            else{
+                swal("Klaida", err.response.data.message, "error");
+            }
+        })
+      },
+      getTotalItems: function(){
+        this.$http.get('/statistics/get/totalItems')
+        .then(response => {
+          if(response.status === 200)
+          {
+            this.statistics.totalItems = response.data
+          }
+        }).catch(err => {
+            if(err.response.status === 422)
+            {
+                swal(err.response.data.message, Object.values(err.response.data.errors)[0][0], "error");
+            }
+            else{
+                swal("Klaida", err.response.data.message, "error");
+            }
+        })
+      },
+      getTotalItemsInUse: function(){
+        this.$http.get('/statistics/get/totalItemsInUse')
+        .then(response => {
+          if(response.status === 200)
+          {
+            this.statistics.totalItemsInUse = response.data
+          }
+        }).catch(err => {
+            if(err.response.status === 422)
+            {
+                swal(err.response.data.message, Object.values(err.response.data.errors)[0][0], "error");
+            }
+            else{
+                swal("Klaida", err.response.data.message, "error");
+            }
+        })
       }
   },
   components: {

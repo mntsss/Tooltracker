@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\SuspentionRequest;
+use App\Http\Requests\Suspentions\SuspentionRequest;
 use Auth;
 use App\ItemSuspention;
 use App\ItemWithdrawal;
@@ -102,4 +102,5 @@ class ItemSuspentionController extends Controller
         })->with(['item' => function($q){ return $q->with('itemGroup');}])->orderBy("created_at", "ASC")->get();
         return response()->json($suspentions, 200);
     }
+
 }
