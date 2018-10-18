@@ -17,7 +17,7 @@ class StatisticsController extends Controller
     // if(!isset($request->date)){
     //
     // }
-    $date = date("01-m-Y");
+    $date = date("Y-m-01");
     $fixesCount = ItemSuspention::where(function($q){
       $q->where('SuspentionWarrantyFix', true)->orWhere('SuspentionUnwarrantedFix', true);
     })->where('created_at', '>=', $date)->count();
@@ -35,14 +35,14 @@ class StatisticsController extends Controller
     $count = 0;
     foreach($items as $item){
       //array_push($response, ['item'=> $item, 'state' => $this->GetItemState($item)]);
-      if($this->GetItemState($item) === "Naudojamas")
+      if($this->GetItemState($item) == "Naudojamas")
         $count++;
     }
     return response()->json($count, 200);
   }
 
   public function calculateMonthRentPrice(){
-    $date = date("01-m-Y");
+    $date = date("Y-m-01");
     $cost = 0;
     $items = RentedItem::where('RentedItemDate', '>=', $date)->get();
     foreach($items as $item){
@@ -55,7 +55,6 @@ class StatisticsController extends Controller
       $rentPeriod = $rentEndTime- strtotime($item->RentedItemDate);
       if($rentPeriod < 0) $rentPeriod = 0;
       $rentDays = round($rentPeriod / (60 * 60 * 24));
-      var_dump($rentDays);
       $cost += $rentDays * $item->RentedItemDailyPrice;
     }
     return response()->json(round($cost,2), 200);
