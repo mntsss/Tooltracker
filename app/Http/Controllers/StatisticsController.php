@@ -44,19 +44,59 @@ class StatisticsController extends Controller
   public function calculateMonthRentPrice(){
     $date = date("Y-m-01");
     $cost = 0;
-    $items = RentedItem::where('RentedItemDate', '>=', $date)->get();
+    $items = RentedItem::where('created_at', '>=', date("Y-01-01"))->get();
     foreach($items as $item){
+      if($item->RentedItemDate < $date){
+        $startDate = strtotime($date);
+      }
+      else {
+        $startDate = strtotime($item->RentedItemDate);
+      }
       if($item->RentedItemReturned){
         $rentEndTime = strtotime($item->updated_at);
       }
       else{
         $rentEndTime = time();
       }
-      $rentPeriod = $rentEndTime- strtotime($item->RentedItemDate);
+      $rentPeriod = $this->daysDifference($startDate, $rentEndTime);
+      var_dump($rentPeriod);
       if($rentPeriod < 0) $rentPeriod = 0;
-      $rentDays = round($rentPeriod / (60 * 60 * 24));
-      $cost += $rentDays * $item->RentedItemDailyPrice;
+      $cost += $rentPeriod * $item->RentedItemDailyPrice;
     }
     return response()->json(round($cost,2), 200);
   }
+   public function daysDifference($start, $end){
+
+      // otherwise the  end date is excluded (bug?)
+      //var_dump([$start,$end]);
+      $start = new \DateTime(date("Y-m-d", $start));
+      $end = new \DateTime(date("Y-m-d", $end));
+      $end->modify('+1 day');
+
+      $interval = $end->diff($start);
+
+      // total days
+      $days = $interval->days;
+
+      // create an iterateable period of date (P1D equates to 1 day)
+      $period = new \DatePeriod($start, new \DateInterval('P1D'), $end);
+
+      // best stored as array, so you can add more than one
+      $holidays = array('2018-11-01', '2018-12-25', '2018-12-26', '2019-01-01');
+
+      foreach($period as $dt) {
+          $curr = $dt->format('D');
+
+          // substract if Saturday or Sunday
+          if ($curr == 'Sat' || $curr == 'Sun') {
+              $days--;
+          }
+
+          // (optional) for the updated question
+          elseif (in_array($dt->format('Y-m-d'), $holidays)) {
+              $days--;
+          }
+      }
+      return $days;
+   }
 }
