@@ -55,7 +55,7 @@
                 </v-card-title>
                 <v-card-text>
                   <div class="text-center">
-                    Šio mėnsio išlaidos įrankių nuomai
+                    Šio mėnesio išlaidos įrankių nuomai
                   </div>
                   <div class="text-center display-2 text-warning font-weight-bold">
                     {{statistics.monthlyRentCost}}&euro;

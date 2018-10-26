@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Request\Suspentions\MonthlyFixesRequest;
 use App\ItemSuspention;
 use App\Item;
 use App\RentedItem;
@@ -59,7 +57,6 @@ class StatisticsController extends Controller
         $rentEndTime = time();
       }
       $rentPeriod = $this->daysDifference($startDate, $rentEndTime);
-      var_dump($rentPeriod);
       if($rentPeriod < 0) $rentPeriod = 0;
       $cost += $rentPeriod * $item->RentedItemDailyPrice;
     }
@@ -74,7 +71,6 @@ class StatisticsController extends Controller
       $end->modify('+1 day');
 
       $interval = $end->diff($start);
-
       // total days
       $days = $interval->days;
 
