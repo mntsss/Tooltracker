@@ -179,10 +179,10 @@ import ConfirmReturnItemSuspentionModal from '../modals/ConfirmReturnItemSuspent
 
           dropdownMeniu: [
             {text: 'Priskirti čipą', click: () =>{this.show('add-item-chip-modal')}},
-            {text: 'Pervadinti', click: ()=>{this.show('rename-item-modal')}},
-            {text: 'Keisti identifikacinį numerį', click: ()=>{this.show('change-item-idnumber-modal')}},
-            {text: 'Keisti įsigijimo vietą', click: ()=>{this.show('change-item-acquired-modal')}},
-            {text: 'Keisti garantinį laikotarpį', click: ()=>{this.$modal.show('change-item-warranty-modal', {itemID: this.itemData.ItemID, warranty: this.itemData.ItemWarranty})}},
+            {text: 'Pervadinti', click: ()=>{this.show('rename-item-modal', {name: this.itemData.ItemName})}},
+            {text: 'Keisti identifikacinį numerį', click: ()=>{this.show('change-item-idnumber-modal', {ident: this.itemData.ItemIdNumber})}},
+            {text: 'Keisti įsigijimo vietą', click: ()=>{this.show('change-item-acquired-modal', {acquired: this.itemData.ItemAcquiredFrom})}},
+            {text: 'Keisti garantinį laikotarpį', click: ()=>{this.show('change-item-warranty-modal', {warranty: this.itemData.ItemWarranty})}},
             {text: 'Ištrinti', click: ()=>{this.deleteItem()}},
           ]
       }
@@ -242,8 +242,9 @@ import ConfirmReturnItemSuspentionModal from '../modals/ConfirmReturnItemSuspent
     }
   },
   methods: {
-    show: function(name){
-      this.$modal.show(name, {itemID: this.itemData.ItemID})
+    show: function(name, params = {}){
+      params.itemID = this.itemData.ItemID
+      this.$modal.show(name, params)
     },
     returnItem: function(){
         var item = this.itemData

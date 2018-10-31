@@ -55,6 +55,7 @@ export default {
     },
     beforeOpen: function(event){
         this.itemID = event.params.itemID
+        this.name = event.params.name
     }
   }
 }
