@@ -58,6 +58,7 @@ export default {
     },
     beforeOpen: function(event){
         this.itemID = event.params.itemID
+        this.ident = event.params.ident
     },
     beforeClose: function(){
         this.ident = ''

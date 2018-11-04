@@ -58,6 +58,7 @@ export default {
     },
     beforeOpen: function(event){
         this.itemID = event.params.itemID
+        this.acquired = event.params.acquired
     },
     beforeClose: function(){
         this.ident = ''
