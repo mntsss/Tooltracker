@@ -328,7 +328,7 @@ export default {
         .then(response => {
           if(response.status === 200)
           {
-            this.statistics.totalItemsInUse = response.data
+            this.statistics.itemsInUse = response.data
           }
         }).catch(err => {
 
