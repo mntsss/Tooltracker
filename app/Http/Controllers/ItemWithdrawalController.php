@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\WithdrawalReturnRequest;
+use App\Http\Requests\Withdrawal\ReturnConsumableRequest;
 use Auth;
 use App\ItemWithdrawal;
 use App\Item;
@@ -34,5 +35,37 @@ class ItemWithdrawalController extends Controller
           $query->with('image');
       }])->find($id);
       return response()->json($item, 200);
+  }
+
+  public function returnConsumable(ReturnConsumableRequest $request){
+      $withdrawals = ItemWithdrawal::where('ObjectID', $request->objectID)->where('ItemID', $request->id)->Active()->get();
+      $quantity = $request->quantity;
+
+      $w_ID = 0;
+      while($quantity > 0 && $w_ID < count($withdrawals)){
+        if($withdrawals[$w_ID]->ItemWithdrawalQuantity >= $quantity){
+          $withdrawals[$w_ID]->ItemWithdrawalReturnedQuantity = $quantity;
+          $withdrawals[$w_ID]->ItemWithdrawalReturnConfirmedBy = Auth::user()->UserID;
+          $withdrawals[$w_ID]->ItemWithdrawalReturned = true;
+          $withdrawals[$w_ID]->save();
+          break;
+        }else{
+          $withdrawals[$w_ID]->ItemWithdrawalReturnedQuantity = $withdrawals[$w_ID]->ItemWithdrawalQuantity;
+          $withdrawals[$w_ID]->ItemWithdrawalReturnConfirmedBy = Auth::user()->UserID;
+          $withdrawals[$w_ID]->ItemWithdrawalReturned = true;
+          $withdrawals[$w_ID]->save();
+          $quantity -=  $withdrawals[$w_ID]->ItemWithdrawalQuantity;
+        }
+      }
+      foreach($withdrawals as $w){
+        if(!$w->ItemWithdrawalReturned){
+          $w->ItemWithdrawalReturnedQuantity = 0;
+          $w->ItemWithdrawalReturnConfirmedBy = Auth::user()->UserID;
+          $w->ItemWithdrawalReturned = true;
+          $w->save();
+        }
+      }
+
+      return response()->json(['message'=> 'Atlikta!', 'success' => 'Įrankiai sėkmingai grąžinti į sandėlį.'], 200);
   }
 }

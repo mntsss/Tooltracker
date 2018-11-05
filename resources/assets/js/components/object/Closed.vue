@@ -21,8 +21,12 @@
                                             <v-flex shrink pa-2 style="width: 40px !important">
                                                 <v-icon headline class="text-danger">fa-user-tie</v-icon>
                                             </v-flex>
-                                            <v-flex px-2 shrink>Darbų vygdytojas:</v-flex>
-                                            <v-flex px-2>{{object.user.Username}}</v-flex>
+                                            <v-flex px-2 shrink>Darbų vygdytojai:</v-flex>
+                                            <v-flex px-2>
+                                              <ul>
+                                                <li v-for="foreman in object.foremen">{{foreman.user.Username}}</li>
+                                              </ul>
+                                            </v-flex>
                                         </v-layout>
                                         <v-layout row mx-0 wrap align-center >
                                             <v-flex shrink pa-2 style="width: 40px !important">
@@ -48,8 +52,14 @@
                                                 </v-card-text>
                                             </v-container>
                                         </v-layout>
-                                        <v-layout row mx-0 wrap align-center justify-center>
-                                            <v-container>
+                                        <v-layout row mx-0 wrap align-center justify-end>
+                                          <v-flex shrink>
+                                            <v-btn outline color="primary" @click="$router.push({name: 'objectItems', params: {objectID: object.ObjectID}})">
+                                              <v-icon class="px-2">fa-toolbox</v-icon>
+                                              negrąžinti įrankiai
+                                            </v-btn>
+                                          </v-flex>
+                                            <!-- <v-container>
                                                 <v-card-title class="primary text-white v-toolbar mx-auto ">
                                                     <h5>Naudojami įrankiai / išdavimo data</h5>
                                                 </v-card-title>
@@ -68,7 +78,7 @@
                                                     Objekte įrankių nėra...
                                                   </div>
                                                 </div>
-                                            </v-container>
+                                            </v-container> -->
                                         </v-layout>
                                     </v-card-text>
                                 </v-card>

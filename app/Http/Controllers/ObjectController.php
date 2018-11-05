@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 use App\CObject;
 use App\Item;
 use App\ObjectForeman;
-
+use Auth;
 class ObjectController extends Controller
 {
     public function __construct(){
@@ -58,6 +58,17 @@ class ObjectController extends Controller
         }
     }
 
+    public function close($id){
+      if(Auth::user()->UserRole != "Administratorius")
+        return response()->json(['message'=>'Klaida', 'errors'=> ['name' => ['Neturite teisių atlikti šiam veiksmui!']]], 422);
+
+      $object = CObject::find($id);
+      $object->ObjectFinished = true;
+      $object->save();
+
+      return response()->json(['message' => 'Atlikta', 'success' => 'Objektas uždarytas!'], 200);
+    }
+
     public function getObjectForemen($objectID){
       $foremen = ObjectForeman::where('ObjectID', $objectID)->with('user')->get();
       return response()->json($foremen, 200);
@@ -77,5 +88,19 @@ class ObjectController extends Controller
     public function removeForeman(ObjectForemanRequest $request){
         ObjectForeman::where('UserID', $request->userID)->where('ObjectID', $request->objectID)->update(['ForemanRemoved' => true]);
             return response()->json(['message' => 'Atlikta', 'success' => 'Darbų vygdytojas pašalintas iš objekto.'], 200);
+    }
+
+    public function items($objectID){
+        $object = CObject::with(['itemWithdrawals' => function ($quer) {
+            $quer->where('ItemWithdrawalReturned', false)->with(['item' => function($q){
+              $q->with([
+                'images',
+                'itemGroup',
+                'codes']);
+            },
+            'user']);
+        }])->find($objectID);
+
+        return response()->json($object, 200);
     }
 }

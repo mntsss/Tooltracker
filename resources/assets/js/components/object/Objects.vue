@@ -118,6 +118,14 @@
                                                 </div>
                                             </v-container>
                                         </v-layout>
+                                        <v-layout justify-end>
+                                          <v-flex shrink>
+                                            <v-btn outline color="primary" @click="closeObject(object)">
+                                              <v-icon class="px-2">fa-flag-checkered</v-icon>
+                                              Uždaryti objektą
+                                            </v-btn>
+                                          </v-flex>
+                                        </v-layout>
                                     </v-card-text>
                                 </v-card>
                             </v-expansion-panel-content>
@@ -137,8 +145,9 @@ import AddObject from '../modals/AddObject.vue'
 import AssingForeman from '../modals/object/AssignForeman.vue'
 import swal from 'sweetalert'
 import renttime from '../../mixins/renttime'
+import consumables from '../../mixins/consumables'
 export default{
-    mixins: [renttime],
+    mixins: [renttime, consumables],
     data(){
         return {
             objects: null,
@@ -216,6 +225,36 @@ export default{
               }
             })
         },
+        closeObject: function(object){
+            swal({
+              title: `Ar tikrai norite uždaryti ${object.ObjectName} objektą?`,
+              text: 'Uždarius objektą, jam daugiau nebus galima priskirti įrankių, tačiau bus galima ten esamus įrankius grąžinti.',
+              icon: 'warning',
+              dangerMode: true,
+              buttons: {
+                close: { text: 'Uždaryti', value: true},
+                cancel: {text: 'Atšaukti'}
+              }
+            }).then(value => {
+              if(value){
+                this.$http.get('object/close/'+object.ObjectID).then((response)=>{
+                    if(response.status == 200){
+                        swal(response.data.message, response.data.success, "success").then(value => {
+                          this.$router.push({name: 'objectItems', params: {objectID: object.ObjectID}})
+                        })
+                    }
+                }).catch(error =>{
+                    if(error.response.status == 422)
+                    {
+                        swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
+                    }
+                    else {
+                      swal('Klaida', error.response.data.message, 'error')
+                    }
+                })
+              }
+            })
+        },
         show: function(name, param = {}){
             this.$modal.show(name, param)
         },
@@ -228,27 +267,6 @@ export default{
             var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
             return diffDays+1
         },
-        proccessObjectWithdrawals: function(){
-          for(var i = 0; i< this.objects.length; i++){
-            this.objects[i].item_withdrawals = this.addConsumables(this.objects[i].item_withdrawals);
-          }
-        },
-        addConsumables: function(withdrawals){
-          for(var i = 0; i < withdrawals.length; i++){
-            if(withdrawals[i].item.ItemConsumable){
-                for(var j = i+1; j< withdrawals.length; j++)
-                {
-                  if(withdrawals[i].ItemID == withdrawals[j].ItemID)
-                  {
-                    withdrawals[i].ItemWithdrawalQuantity += withdrawals[j].ItemWithdrawalQuantity;
-                    withdrawals.splice(j,1);
-                    j--;
-                  }
-                }
-            }
-          }
-          return withdrawals
-        }
     },
     components: {
         AddObject,

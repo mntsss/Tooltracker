@@ -44,6 +44,8 @@ Route::group(['middleware' => 'jwt.auth'], function(){
     Route::post('search', 'ItemController@search');
     // marks item withdrawal as returned if request has valid administrator card id
     Route::post('return/card', 'ItemWithdrawalController@return');
+    // returns consumable from objects
+    Route::post('return/consumable', 'ItemWithdrawalController@returnConsumable');
     // created unconfirmed return item suspention
     Route::prefix('suspend')->group(function(){
         Route::post('unconfirmedreturn', 'ItemSuspentionController@unconfirmedReturn')->middleware('role');
@@ -93,12 +95,15 @@ Route::group(['middleware' => 'jwt.auth'], function(){
      Route::get('closed', 'ObjectController@closedObjects');
      // adds new object
      Route::post('add', 'ObjectController@add')->middleware('role');
+     // closes object
+     Route::get('close/{id}', 'ObjectController@close');
      // assigns and removes foreman to / from the object
      Route::prefix('foreman')->group(function(){
         Route::get('object/{objectID}', 'ObjectController@getObjectForemen');
         Route::post('assign', 'ObjectController@assignForeman');
         Route::post('remove', 'ObjectController@removeForeman');
      });
+     Route::get('items/{objectID}', 'ObjectController@items');
   });
   Route::prefix('reservation')->group(function(){
     //create new item reservation for object

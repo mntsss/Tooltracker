@@ -29,7 +29,7 @@ class CreateReservationRequest extends FormRequest
             'items.*.item.ItemID' => 'required|distinct|exists:items,ItemID',
             'items.*.quantity' => 'required|numeric|min:1',
             'items.*.image' => 'nullable',
-            'items.*.image.dataUrl' => 'sometimes|string|max:500000',
+            'items.*.image.dataUrl' => 'sometimes|string|max:5000000',
             'items.*.image.name' => 'sometimes|string|max:128'
         ];
     }
