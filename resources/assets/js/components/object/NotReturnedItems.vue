@@ -40,7 +40,7 @@
                       {{ props.item.ItemWithdrawalQuantity }}
                     </td>
                     <td class="px-0">
-                      <v-btn outline color="primary" v-if="props.item.item.ItemConsumable"  @click.prevent="returnConsumable(props.item)">
+                      <v-btn outline color="primary" v-if="props.item.item.ItemConsumable && $user.UserRole =='Administratorius'"  @click.prevent="returnConsumable(props.item)">
                         <v-icon class="px-2">fa-sign-in-alt</v-icon>
                         Grąžinti į sandėlį
                       </v-btn>

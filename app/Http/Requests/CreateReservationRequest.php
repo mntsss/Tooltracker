@@ -24,7 +24,7 @@ class CreateReservationRequest extends FormRequest
     public function rules()
     {
         return [
-            'objectID' => 'required|exists:objects,ObjectID',
+            'objectID' => 'sometimes|exists:objects,ObjectID',
             'userID' => 'required|numeric|exists:users,UserID',
             'items.*.item.ItemID' => 'required|distinct|exists:items,ItemID',
             'items.*.quantity' => 'required|numeric|min:1',
@@ -36,7 +36,6 @@ class CreateReservationRequest extends FormRequest
 
     public function messages(){
       return [
-        'objectID.required' => 'Nepavyko identifikuoti objekto, kuriam bandoma priskirti rezervaciją. Bandykite dar kartą!',
         'objectID.exists' => 'Objektas, kuriam bandoma priskirti rezervaciją, nerastas duomenų bazėje. Patikrinkite ar objektas nebuvo ištrintas ir bandykite dar kartą.',
         'userID.required' => 'Nenurodytas vartotojas!',
         'userID.numeric' => 'Neteisingas formatas.',

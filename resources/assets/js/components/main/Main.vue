@@ -244,13 +244,8 @@ export default {
                   this.$router.push({name: 'item', params: {itemProp: response.data}});
               }
           }).catch(err => {
-              if(err.response.status == 422)
-              {
-                  swal(err.response.data.message, Object.values(err.response.data.errors)[0][0], "error");
-              }
-              else{
-                  swal("Klaida", err.response.data.message, "error");
-              }
+
+                  console.log(err.response.data.message);
           })
       },
       getSuspentionsUnconfirmedReturn: function(){
@@ -262,13 +257,8 @@ export default {
                   this.suspentionLoading = false
               }
           }).catch(err => {
-              if(err.response.status == 422)
-              {
-                  swal(err.response.data.message, Object.values(err.response.data.errors)[0][0], "error");
-              }
-              else{
-                  swal("Klaida", err.response.data.message, "error");
-              }
+
+                  console.log(err.response.data.message);
           })
       },
       getFixingSuspentions: function(){
@@ -280,13 +270,8 @@ export default {
                   this.suspentionFixLoading = false
               }
           }).catch(err => {
-              if(err.response.status == 422)
-              {
-                  swal(err.response.data.message, Object.values(err.response.data.errors)[0][0], "error");
-              }
-              else{
-                  swal("Klaida", err.response.data.message, "error");
-              }
+
+                  console.log(err.response.data.message);
           })
       },
       getLongestRented: function(){
@@ -298,13 +283,8 @@ export default {
                   this.longestRentedLoading = false
               }
           }).catch(err => {
-              if(err.response.status === 422)
-              {
-                  swal(err.response.data.message, Object.values(err.response.data.errors)[0][0], "error");
-              }
-              else{
-                  swal("Klaida", err.response.data.message, "error");
-              }
+
+                  console.log(err.response.data.message);
           })
       },
       getMonthlyFixes: function(){
@@ -315,13 +295,8 @@ export default {
             this.statistics.monthlyFixes = response.data
           }
         }).catch(err => {
-            if(err.response.status === 422)
-            {
-                swal(err.response.data.message, Object.values(err.response.data.errors)[0][0], "error");
-            }
-            else{
-                swal("Klaida", err.response.data.message, "error");
-            }
+
+                console.log(err.response.data.message);
         })
       },
       getMonthlyRentPrice: function(){
@@ -332,13 +307,8 @@ export default {
             this.statistics.monthlyRentCost = response.data
           }
         }).catch(err => {
-            if(err.response.status === 422)
-            {
-                swal(err.response.data.message, Object.values(err.response.data.errors)[0][0], "error");
-            }
-            else{
-                swal("Klaida", err.response.data.message, "error");
-            }
+
+                console.log(err.response.data.message);
         })
       },
       getTotalItems: function(){
@@ -349,13 +319,8 @@ export default {
             this.statistics.totalItems = response.data
           }
         }).catch(err => {
-            if(err.response.status === 422)
-            {
-                swal(err.response.data.message, Object.values(err.response.data.errors)[0][0], "error");
-            }
-            else{
-                swal("Klaida", err.response.data.message, "error");
-            }
+
+                console.log(err.response.data.message);
         })
       },
       getTotalItemsInUse: function(){
@@ -366,13 +331,8 @@ export default {
             this.statistics.totalItemsInUse = response.data
           }
         }).catch(err => {
-            if(err.response.status === 422)
-            {
-                swal(err.response.data.message, Object.values(err.response.data.errors)[0][0], "error");
-            }
-            else{
-                swal("Klaida", err.response.data.message, "error");
-            }
+
+                console.log(err.response.data.message);
         })
       }
   },

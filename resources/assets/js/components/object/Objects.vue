@@ -118,7 +118,7 @@
                                                 </div>
                                             </v-container>
                                         </v-layout>
-                                        <v-layout justify-end>
+                                        <v-layout justify-end v-if="$user.UserRole =='Administratorius'">
                                           <v-flex shrink>
                                             <v-btn outline color="primary" @click="closeObject(object)">
                                               <v-icon class="px-2">fa-flag-checkered</v-icon>

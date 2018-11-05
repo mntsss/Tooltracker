@@ -113,7 +113,7 @@ export default{
     save: function(){
         this.$http.post('/reservation/assign', {
             items: this.reservationItems,
-            user: this.reservationUser
+            userID: this.reservationUser.UserID
         }).then(response => {
             if(response.status == 200){
                 swal(response.data.message, response.data.success, 'success').then(value => { this.$router.push({ name: 'reservations'})})

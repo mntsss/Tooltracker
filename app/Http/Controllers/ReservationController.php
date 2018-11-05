@@ -164,10 +164,10 @@ class ReservationController extends Controller
 
         return response()->json(['message' => 'Atlikta!', 'success' => "Rezervuoti įrankiai perduoti vartotojui ".$reservation->recipient[0]->Username.", rezervacija patvirtinta."], 200);
     }
-    public function createAssignmentReservation(CreateAssignReservationRequest $request){
+    public function createAssignmentReservation(CreateReservationRequest $request){
         $reservation = Reservation::create([
             'UserID' => Auth::user()->UserID,
-            'ReservationRecipientUserID' => $request->user['UserID']
+            'ReservationRecipientUserID' => $request->userID
         ]);
 
         foreach($request->items as $item){
@@ -178,8 +178,32 @@ class ReservationController extends Controller
             $reservationItem = ReservationItem::create([
                 'ReservationID' => $reservation->ReservationID,
                 'ItemID' => $item['item']['ItemID'],
-                'ReservationItemQuantity' => 1
+                'ReservationItemQuantity' => $item['quantity']
             ]);
+
+            if($item['image'] != null){
+              //get image name
+              $explExtension = explode('.', $item['image']['name']);
+              $extension = end($explExtension);
+              $imageName = $explExtension[0].'_'.time().'.'.$extension;
+              //get image code
+              $imageExpl = explode(',',$item['image']['dataUrl']);
+              $base64 = end($imageExpl);
+              //saving image as a file
+
+              if(file_put_contents(public_path(env('IMAGE_UPLOAD_ROUTE')).$imageName, base64_decode($base64))){
+                  if(!ItemImage::create([
+                      'ImageName' => $imageName,
+                      'ItemID' => $item['item']['ItemID'],
+                      'ReservationItemID' => $reservationItem->ReservationItemID
+                  ])){
+                      return response()->json(['message'=>'Klaida', 'errors'=> ['name' => ['Įvyko klaida jungiantis į duomenų bazę. Susisiekite su administratoriumi.']]], 422);
+                  }
+              }
+              else {
+                  return response()->json(['message'=>'Klaida', 'errors'=> ['name' => ['Įvyko klaida išsaugant nuotrauką failų sistemoje. Susisiekite su administratoriumi.']]], 422);
+              }
+            }
       }
       return response()->json(['message'=> 'Atlikta!', 'success' => 'Įrankių priskyrimo rezervacija sėkmingai išsaugota!'],200);
     }
