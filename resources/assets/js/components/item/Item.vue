@@ -241,6 +241,11 @@ import ConfirmReturnItemSuspentionModal from '../modals/ConfirmReturnItemSuspent
       }
     }
   },
+  watch: {
+    itemProp: function(oldValue, newValue){
+      this.$forceUpdate();
+    }
+  },
   methods: {
     show: function(name, params = {}){
       params.itemID = this.itemData.ItemID

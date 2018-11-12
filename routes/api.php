@@ -111,7 +111,8 @@ Route::group(['middleware' => 'jwt.auth'], function(){
     // returns json list with all active reservations
     Route::get('list', 'ReservationController@list');
     // returns json list with closed reservations
-    Route::get('closed', 'ReservationController@closed');
+    Route::get('closed/user/{userID?}', 'ReservationController@closed');
+    Route::get('closed/user/{userID?}/from/{startingDate?}/til/{endDate?}', 'ReservationController@closed');
     // removes item from active reservation
     Route::post('removeitem', 'ReservationController@removeItemFromReservation')->middleware('role');
     // deletes entine active reservation

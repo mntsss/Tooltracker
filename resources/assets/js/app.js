@@ -7,6 +7,7 @@ import Vuex from 'vuex'
 import VueSignaturePad from 'vue-signature-pad';
 import vmodal from 'vue-js-modal'
 import swal from 'sweetalert'
+import 'beautify-scrollbar/dist/index.css';
 
 import Vuetify from 'vuetify'
 
