@@ -25,7 +25,25 @@
                     <label for="name" class="col-md-4 control-label">Nuomos pradžia</label>
 
                     <div class="col-md-6">
-                        <DatePicker v-on:change="date_changed"></DatePicker>
+                      <v-menu
+                        :close-on-content-click="false"
+                        v-model="menu"
+                        :nudge-right="40"
+                        lazy
+                        transition="scale-transition"
+                        offset-y
+                        full-width
+                        min-width="290px"
+                      >
+                        <v-text-field
+                          slot="activator"
+                          v-model="rentDate"
+                          prepend-icon="event"
+                          label="Nuomos pradžios data"
+                          readonly
+                        ></v-text-field>
+                        <v-date-picker v-model="rentDate" @input="menu = false" first-day-of-week="1" locale="lt"></v-date-picker>
+                      </v-menu>
                     </div>
                 </div>
 
@@ -64,8 +82,9 @@ import DatePicker from '../../modules/DatePicker.vue'
 export default {
     data(){
         return {
+            menu: false,
             name: null,
-            rentDate: '',
+            rentDate: this.format(new Date()),
             price: 0,
             note: null,
         }
