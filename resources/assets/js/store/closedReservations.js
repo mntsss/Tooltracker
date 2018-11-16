@@ -1,6 +1,6 @@
 const closedReservations = {
   state: {
-
+    
   },
   mutations: {
 
