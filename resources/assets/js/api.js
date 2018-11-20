@@ -17,7 +17,11 @@ instance.interceptors.request.use(tokenProvider({
 
 const endpoints = {
   getUsers: () => `/user/list`,
-  filterClosedReservations: (userID = null, startingDate = null, endDate = null) => `closed/user/${userID}/from/${startingDate}/til/${endDate}`,
+  filterClosedReservations: (userID = '', from = '', til = '') => {
+    if(userID) userID = '/'+userID;
+    if(from){ from = '/' + from;}
+    if(til){ til = '/' + til;}
+    return `reservation/closed${userID}${from}${til}`},
 };
 export default axios;
 export {endpoints, axios};

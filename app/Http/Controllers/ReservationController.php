@@ -11,11 +11,15 @@ use App\Reservation;
 use App\ReservationItem;
 use App\ItemImage;
 use App\ItemWithdrawal;
+use App\Http\Services\ValidationService;
 use Auth;
 class ReservationController extends Controller
 {
-    public function __construct(){
+    private $validationService;
+
+    public function __construct(ValidationService $validationService){
       $this->middleware('auth');
+      $this->validationService = $validationService;
     }
 
     public function create(CreateReservationRequest $request){
@@ -74,13 +78,26 @@ class ReservationController extends Controller
       return response()->json($reservations, 200);
     }
 
-    public function closed($userID = null){
+    public function closed(Request $request){
+
+      $userID = $request->route('userID');
+      $from = $request->route('from');
+      $til = $request->route('til');
+      if(!is_int($userID))
+        $userID = null;
+
+      if(!$this->validationService->isDateStringValid($from))
+          $from = null;
+
+      if(!$this->validationService->isDateStringValid($til))
+          $til = null;
       $reservations = Reservation::where('ReservationDelivered', true)->with(['items' => function($query){
         $query->with('item');
     }, 'cobject' => function($query){ $query->with(['foremen' => function($q){
       $q->with('user');
     }]);}, 'recipient']);
     if($userID){
+      dd($userID);
       $reservations = $reservations->where('ReservationRecipientUserID', $userID);
     }
     $reservations = $reservations->get();
