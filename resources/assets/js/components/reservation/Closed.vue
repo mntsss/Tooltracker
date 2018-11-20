@@ -3,67 +3,6 @@
       <v-layout row mx-0 wrap mx-0 align-center justify-center class="secondary v-toolbar">
         <v-flex shrink headline>Uždarytos (atiduotos) rezervacijos</v-flex>
       </v-layout>
-      <v-layout align-center justify-center class="px-3 py-1" row wrap>
-        <v-flex xs12 sm6 md4 d-flex>
-          <v-select
-            :items="users"
-            v-model="selectedUser"
-            label="Pagal vartotoją"
-            prepend-icon="fa-user"
-            item-text="Username"
-            item-value="UserID"
-          ></v-select>
-        </v-flex>
-        <v-flex xs12 sm6 md4 d-flex>
-          <v-menu
-            :close-on-content-click="false"
-            v-model="menu_from"
-            :nudge-right="40"
-            lazy
-            transition="scale-transition"
-            offset-y
-            full-width
-            min-width="290px"
-          >
-            <v-text-field
-              slot="activator"
-              v-model="date_from"
-              label="Rodyti nuo..."
-              prepend-icon="event"
-              readonly
-            ></v-text-field>
-            <v-date-picker v-model="date_from" no-title scrollable locale="lt" first-day-of-week="1" @input="menu_from = false">
-            </v-date-picker>
-          </v-menu>
-        </v-flex>
-        <v-flex xs12 sm6 md4 d-flex>
-          <v-menu
-            :close-on-content-click="false"
-            v-model="menu_til"
-            :nudge-right="40"
-            lazy
-            transition="scale-transition"
-            offset-y
-            full-width
-            min-width="290px"
-          >
-            <v-text-field
-              slot="activator"
-              v-model="date_til"
-              label="Rodyti iki..."
-              prepend-icon="event"
-              readonly
-            ></v-text-field>
-            <v-date-picker v-model="date_til" no-title scrollable locale="lt" first-day-of-week="1" @input="menu_til = false">
-            </v-date-picker>
-          </v-menu>
-        </v-flex>
-      </v-layout>
-      <v-layout align-center justify-center>
-        <v-flex shrink>
-          <v-btn color="primary" outline><v-icon class="px-2">fa-filter</v-icon>Filtruoti</v-btn>
-        </v-flex>
-      </v-layout>
       <v-layout class="" row mx-0 wrap align-center mx-0 mt-2 v-if="reservations.length > 0">
           <v-expansion-panel>
               <v-expansion-panel-content class="primary v-toolbar mb-1 text-white" v-for="(reservation, i) in reservations" :key="i">
@@ -142,13 +81,6 @@ import vueImages from 'vue-images'
 export default{
   data(){
     return {
-      users: [],
-      selectedUser: null,
-      date_from: new Date().toISOString().substr(0, 10),
-      date_til: new Date().toISOString().substr(0, 10),
-      menu_from: false,
-      menu_til: false,
-      reservations: null,
       headers: [
           {
             text: 'Įrankio (daikto) pavadinimas',
@@ -162,8 +94,16 @@ export default{
     }
   },
   created(){
-    this.loadUsers();
-    this.loadReservations();
+    this.$store.dispatch('closedReservations/LOAD_USERS');
+    this.$store.dispatch('closedReservations/LOAD_RESERVATIONS');
+  },
+  computed: {
+    users(){
+      return this.$store.state.closedReservations.users;
+    },
+    reservations(){
+      return this.$store.state.closedReservations.reservations;
+    }
   },
   methods:{
     loadReservations: function(){
