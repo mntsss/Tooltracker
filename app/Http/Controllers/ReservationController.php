@@ -74,12 +74,16 @@ class ReservationController extends Controller
       return response()->json($reservations, 200);
     }
 
-    public function closed(){
+    public function closed($userID = null){
       $reservations = Reservation::where('ReservationDelivered', true)->with(['items' => function($query){
         $query->with('item');
     }, 'cobject' => function($query){ $query->with(['foremen' => function($q){
       $q->with('user');
-    }]);}, 'recipient'])->get();
+    }]);}, 'recipient']);
+    if($userID){
+      $reservations = $reservations->where('ReservationRecipientUserID', $userID);
+    }
+    $reservations = $reservations->get();
       return response()->json($reservations, 200);
     }
 

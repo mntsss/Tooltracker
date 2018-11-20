@@ -1,4 +1,3 @@
-
 const reservationModule = {
     namespaced: true,
     state:{

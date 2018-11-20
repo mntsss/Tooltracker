@@ -1,12 +1,14 @@
-import Vuex from 'vuex'
-import Vue from 'vue'
+import Vuex from 'vuex';
+import Vue from 'vue';
 
-import ReservationModule from './reservationModule'
+import ReservationModule from './reservationModule';
+import ClosedReservationsModule from './closedReservationsModule';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 const modules = {
-    'reservation': ReservationModule
+    'reservation': ReservationModule,
+    'closedReservations': ClosedReservationsModule
 }
 const store = new Vuex.Store({
     modules: modules,

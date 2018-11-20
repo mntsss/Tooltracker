@@ -99,7 +99,7 @@
         </v-container>
       </v-flex>
     </v-layout>
-    <v-layout mx-0 mx-0 justify-center fill-height>
+    <v-layout mx-0 mx-0 justify-center fill-height row>
       <v-flex sm-6 class="px-4 pb-3 data-box">
         <DataBox>
           <span slot="title">Taisomi įrankiai</span>

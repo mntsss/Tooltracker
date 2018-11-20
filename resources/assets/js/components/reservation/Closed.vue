@@ -81,7 +81,6 @@ import vueImages from 'vue-images'
 export default{
   data(){
     return {
-      reservations: null,
       headers: [
           {
             text: 'Įrankio (daikto) pavadinimas',
@@ -95,15 +94,31 @@ export default{
     }
   },
   created(){
-    this.loadReservations();
+    this.$store.dispatch('closedReservations/LOAD_USERS');
+    this.$store.dispatch('closedReservations/LOAD_RESERVATIONS');
+  },
+  computed: {
+    users(){
+      return this.$store.state.closedReservations.users;
+    },
+    reservations(){
+      return this.$store.state.closedReservations.reservations;
+    }
   },
   methods:{
     loadReservations: function(){
-      this.$http.get('/reservation/closed').then((response)=> {
+      this.$http.get('/reservation/closed/user/').then((response)=> {
         if(response.status == 200){
           this.$contentLoadingHide()
           this.reservations = response.data
         }
+      }).catch(error => {
+        swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
+      })
+    },
+    loadUsers: function(){
+      this.$http.get('/user/list').then((response) => {
+        this.users = response.data
       }).catch(error => {
         swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
       })

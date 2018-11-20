@@ -37,7 +37,6 @@ class HistoryController extends Controller
         $reservations = $this->createReservationHistory($item);
         $suspentions = $this->createSuspentionHistory($item);
         $collection = $collection->merge($withdrawals)
-                                 ->merge($reservations)
                                  ->merge($suspentions)
                                  ;
       }

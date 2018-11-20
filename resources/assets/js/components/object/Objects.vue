@@ -22,13 +22,6 @@
                                 </div>
                                 <v-card>
                                     <v-card-text>
-                                        <!-- <v-layout row mx-0 wrap align-center >
-                                            <v-flex shrink pa-2 style="width: 40px !important">
-                                                <v-icon headline class="primary--text">fa-user-tie</v-icon>
-                                            </v-flex>
-                                            <v-flex px-2 shrink>Darbų vygdytojas:</v-flex>
-                                            <v-flex px-2>{{object.user.Username}}</v-flex>
-                                        </v-layout> -->
                                         <v-layout row mx-0 wrap align-center >
                                             <v-flex shrink pa-2 style="width: 40px !important">
                                                 <v-icon headline class="primary--text">fa-calendar-plus</v-icon>
