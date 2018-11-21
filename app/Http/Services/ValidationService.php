@@ -12,7 +12,7 @@ class ValidationService
     // code...
   }
 
-  public function isDateStringValid(string $date, $format = 'Y-m-d'): bool
+  public function isDateStringValid(?string $date, string $format = 'Y-m-d'): bool
   {
     $d = \DateTime::createFromFormat($format, $date);
     return $d && $d->format($format) === $date;

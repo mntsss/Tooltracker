@@ -5,13 +5,12 @@
       dark
       tabs
       >
-      <v-layout aling-center justify-center><v-flex shrink headline white--text>Istorija</v-flex></v-layout>
-
-      <!-- <DatePicker class="justify-center d-flex theme--primary text-white ma-3" v-model="date_from" :shortcuts="false" :range='true' range-separator="-" :lang="lang" format="YYYY-MM-DD"></DatePicker> -->
-   </v-toolbar>
+        <v-layout aling-center justify-center><v-flex shrink headline white--text>Istorija</v-flex></v-layout>
+      </v-toolbar>
+      <FilterBox :users = 'users' @filter = "loadHistory" @clear="loadHistory"></FilterBox>
        <v-card flat>
          <v-card-text>
-           <ItemsHistory></ItemsHistory>
+           <ActionsTable :actions = 'actions' @clicked="goToItem"></ActionsTable>
          </v-card-text>
        </v-card>
     </div>
@@ -19,29 +18,46 @@
 <script>
 import swal from 'sweetalert'
 import DatePicker from 'vue2-datepicker'
-import ItemsHistory from './modules/withdrawals.vue'
+import ActionsTable from './modules/actionsTable.vue'
+import FilterBox from '../modules/FilterBox.vue'
 export default{
-  data(){
-    return{
-      date_from: null,
-      date_til: null,
-      lang: {
-        days: ['Sek', 'Pr', 'An', 'Tr', 'Ket', 'Pn', 'Še'],
-        months: ['Sau', 'Vas', 'Kov', 'Bal', 'Geg', 'Bir', 'Lie', 'Rugp', 'Rugs', 'Spa', 'Lap', 'Gru'],
-        placeholder: {
-          date: 'Pasirinkite datą',
-          dateRange: 'Pasirinkite laikotarpį'
-        }
-      }
-
+  created(){
+    this.loadUsers().then(() => this.loadHistory().then(() => this.$contentLoadingHide()));
+  },
+  computed: {
+    actions(){
+      return this.$store.state.history.actions;
+    },
+    users(){
+      return this.$store.state.history.users;
     }
   },
   methods:{
-
+    loadHistory: function(payload){
+      if(payload){
+        let {user, from, til} = payload;
+        if(user)
+        {
+          return this.$store.dispatch('history/LOAD_USER_ACTIONS', {user, from, til})
+        }
+        else {
+          return this.$store.dispatch('history/LOAD_ACTIONS', {from, til})
+        }
+      }else {
+        return this.$store.dispatch('history/LOAD_ACTIONS', {from:'', til:''});
+      }
+    },
+    loadUsers: function(){
+      return this.$store.dispatch('history/LOAD_USERS');
+    },
+    goToItem: function(payload){
+      this.$router.push({ name: 'item', params: { itemID: payload.item.ItemID}})
+    }
   },
   components:{
     DatePicker,
-    ItemsHistory
+    ActionsTable,
+    FilterBox
   }
 }
 </script>

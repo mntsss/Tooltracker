@@ -20,7 +20,7 @@ const closedReservations = {
         commit('setUsers', response.data);
       })
     },
-    LOAD_RESERVATIONS: async function({commit}, user, from, til){
+    LOAD_RESERVATIONS: async function({commit}, {user, from, til}){
       return axios.get(endpoints.filterClosedReservations(user, from, til)).then((response) => {
         commit('setReservations', response.data);
       })

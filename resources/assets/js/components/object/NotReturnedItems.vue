@@ -179,7 +179,6 @@ export default{
       if(!item.ItemConsumable)
         this.$router.push({ name: 'item', params: { itemID: item.ItemID}})
 
-        // item/return/consumable
     },
     returnConsumable: function(withdrawal){
       this.$modal.show("item-return-consumable-modal", {withdrawal: withdrawal, objectID: this.object.ObjectID})

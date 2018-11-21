@@ -3,6 +3,7 @@
       <v-layout row mx-0 wrap mx-0 align-center justify-center class="secondary v-toolbar">
         <v-flex shrink headline>Uždarytos (atiduotos) rezervacijos</v-flex>
       </v-layout>
+      <FilterBox :users = "users" @filter="loadReservations" @clear="loadReservations"></FilterBox>
       <v-layout class="" row mx-0 wrap align-center mx-0 mt-2 v-if="reservations.length > 0">
           <v-expansion-panel>
               <v-expansion-panel-content class="primary v-toolbar mb-1 text-white" v-for="(reservation, i) in reservations" :key="i">
@@ -78,6 +79,7 @@
 <script>
 import swal from 'sweetalert'
 import vueImages from 'vue-images'
+import FilterBox from '../modules/FilterBox.vue'
 export default{
   data(){
     return {
@@ -94,8 +96,7 @@ export default{
     }
   },
   created(){
-    this.$store.dispatch('closedReservations/LOAD_USERS');
-    this.$store.dispatch('closedReservations/LOAD_RESERVATIONS');
+    this.loadUsers().then(() => this.loadReservations().then(() => this.$contentLoadingHide()));
   },
   computed: {
     users(){
@@ -106,29 +107,26 @@ export default{
     }
   },
   methods:{
-    loadReservations: function(){
-      this.$http.get('/reservation/closed/user/').then((response)=> {
-        if(response.status == 200){
-          this.$contentLoadingHide()
-          this.reservations = response.data
-        }
-      }).catch(error => {
-        swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
-      })
+    loadReservations: function(payload){
+      if(payload){
+        let {user, from, til} = payload;
+        return this.$store.dispatch('closedReservations/LOAD_RESERVATIONS', {user, from, til});
+      }
+      else {
+        return this.$store.dispatch('closedReservations/LOAD_RESERVATIONS', {user:'', from:'', til:''});
+      }
+
     },
     loadUsers: function(){
-      this.$http.get('/user/list').then((response) => {
-        this.users = response.data
-      }).catch(error => {
-        swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
-      })
+      return this.$store.dispatch('closedReservations/LOAD_USERS');
     },
     show: function(name, param = {}){
         this.$modal.show(name, param)
     }
   },
   components: {
-    vueImages
+    vueImages,
+    FilterBox
   }
 }
 </script>

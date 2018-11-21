@@ -35,6 +35,13 @@
                                             <v-flex px-2 shrink>Objektas pridėtas:</v-flex>
                                             <v-flex px-2>{{object.created_at}}</v-flex>
                                         </v-layout>
+                                        <v-layout row mx-0 wrap align-center >
+                                            <v-flex shrink pa-2 style="width: 40px !important">
+                                                <v-icon headline class="text-danger">fa-calendar-minus</v-icon>
+                                            </v-flex>
+                                            <v-flex px-2 shrink>Objektas uždarytas:</v-flex>
+                                            <v-flex px-2>{{object.updated_at}}</v-flex>
+                                        </v-layout>
                                         <v-layout row mx-0 wrap align-center justify-center v-if="object.rented.length > 0">
                                             <v-container>
                                                 <v-card-title class="primary text-white v-toolbar mx-auto ">

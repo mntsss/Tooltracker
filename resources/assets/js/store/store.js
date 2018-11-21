@@ -3,12 +3,14 @@ import Vue from 'vue';
 
 import ReservationModule from './reservationModule';
 import ClosedReservationsModule from './closedReservationsModule';
+import HistoryModule from './historyModule';
 
 Vue.use(Vuex);
 
 const modules = {
     'reservation': ReservationModule,
-    'closedReservations': ClosedReservationsModule
+    'closedReservations': ClosedReservationsModule,
+    'history': HistoryModule
 }
 const store = new Vuex.Store({
     modules: modules,

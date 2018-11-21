@@ -9,29 +9,51 @@
                   <div class="text-center headline" v-if="user">{{user.Username}} istorija</div>
               </v-flex>
           </v-layout>
-          <div class="card-body">
-              <withdrawals :url="'/history/user/'+user.UserID"></withdrawals>
-          </div>
+          <FilterBox :user_filter='false' @filter = "loadHistory" @clear="loadHistory"></FilterBox>
+           <v-card flat>
+             <v-card-text>
+               <ActionsTable :actions = 'actions' @clicked="goToItem"></ActionsTable>
+             </v-card-text>
+           </v-card>
         </div>
       </div>
 </template>
 <script>
 import swal from 'sweetalert'
-import withdrawals from './modules/withdrawals.vue'
+import ActionsTable from './modules/actionsTable.vue'
+import FilterBox from '../modules/FilterBox.vue'
 export default{
-    data(){
-        return {
-            user: null,
-        }
-    },
     props:{
         user: {
             required: true,
             type: Object
         }
     },
+    created(){
+      this.loadHistory().then(() => this.$contentLoadingHide());
+    },
+    computed: {
+      actions(){
+        return this.$store.state.history.actions;
+      }
+    },
+    methods:{
+      loadHistory: function(payload){
+        if(payload){
+          let {from, til} = payload;
+          return this.$store.dispatch('history/LOAD_USER_ACTIONS', {user:this.user.UserID, from, til})
+        }
+        else {
+          return this.$store.dispatch('history/LOAD_USER_ACTIONS', {user:this.user.UserID, from: '', til: ''})
+        }
+      },
+      goToItem: function(payload){
+        this.$router.push({ name: 'item', params: { itemID: payload.item.ItemID}})
+      }
+    },
     components: {
-      withdrawals
+      ActionsTable,
+      FilterBox
     }
 }
 </script>

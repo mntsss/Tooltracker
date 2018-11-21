@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-layout align-center justify-center class="px-3 py-1" row wrap>
-      <v-flex xs12 sm6 md4 d-flex>
+      <v-flex xs12 sm6 md4 d-flex v-if="user_filter">
         <v-select
           :items="users"
           v-model="selectedUser"
@@ -58,7 +58,7 @@
     </v-layout>
     <v-layout align-center justify-center>
       <v-flex shrink>
-        <v-btn color="primary" outline><v-icon class="px-2">fa-filter</v-icon>Filtruoti</v-btn>
+        <v-btn color="primary" outline @click="filter()"><v-icon class="px-2">fa-filter</v-icon>Filtruoti</v-btn>
       </v-flex>
       <v-flex shrink>
         <v-btn color="primary" outline @click="clear()"><v-icon class="px-2">fa-eraser</v-icon>Išvalyti</v-btn>
@@ -68,18 +68,27 @@
 </template>
 <script>
 export default{
+  props:{
+    users: {
+      type: Array
+    },
+    user_filter: {
+      type: Boolean,
+      default: true
+    }
+  },
   data(){
     return {
-      date_from: new Date().toISOString().substr(0, 10),
+      date_from: new Date("2018-01-01").toISOString().substr(0, 10),
       date_til: new Date().toISOString().substr(0, 10),
       menu_from: false,
       menu_til: false,
       selectedUser: null
     }
-  }
+  },
   methods: {
     clear: function(){
-      this.date_from = new Date().toISOString().substr(0, 10);
+      this.date_from = new Date("2018-01-01").toISOString().substr(0, 10);
       this.date_til = new Date().toISOString().substr(0, 10);
       this.selectedUser = null;
       this.$emit('clear');

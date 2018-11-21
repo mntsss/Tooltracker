@@ -78,29 +78,28 @@ class ReservationController extends Controller
       return response()->json($reservations, 200);
     }
 
-    public function closed(Request $request){
-
-      $userID = $request->route('userID');
-      $from = $request->route('from');
-      $til = $request->route('til');
-      if(!is_int($userID))
-        $userID = null;
-
-      if(!$this->validationService->isDateStringValid($from))
-          $from = null;
-
-      if(!$this->validationService->isDateStringValid($til))
-          $til = null;
-      $reservations = Reservation::where('ReservationDelivered', true)->with(['items' => function($query){
-        $query->with('item');
-    }, 'cobject' => function($query){ $query->with(['foremen' => function($q){
-      $q->with('user');
-    }]);}, 'recipient']);
-    if($userID){
-      dd($userID);
-      $reservations = $reservations->where('ReservationRecipientUserID', $userID);
-    }
-    $reservations = $reservations->get();
+    public function closed($userID = null, $from = null, $til = null)
+    {
+        $reservations = Reservation::where('ReservationDelivered', true)->with(['items' => function($query){
+          $query->with('item');
+      }, 'cobject' => function($query){ $query->with(['foremen' => function($q){
+        $q->with('user');
+      }]);}, 'recipient']);
+      if($userID){
+        if($userID === "all")
+        {}
+        else{
+          $userID = (int)$userID;
+          $reservations = $reservations->where('ReservationRecipientUserID', $userID);
+        }
+      }
+      if($this->validationService->isDateStringValid($from)){
+        $reservations = $reservations->where('updated_at', '>', $from);
+      }
+      if($this->validationService->isDateStringValid($til)){
+        $reservations = $reservations->where('updated_at', '<', $til);
+      }
+      $reservations = $reservations->orderBy('updated_at', 'DESC')->get();
       return response()->json($reservations, 200);
     }
 

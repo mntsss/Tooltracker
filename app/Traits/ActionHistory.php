@@ -11,7 +11,7 @@ use App\Action;
 
 trait ActionHistory{
 
-    public function createWithdrawalHistory(Item $item){
+    public function createWithdrawalHistory(Item $item, $from = null, $til = null){
         $actionArray = [];
         foreach($item->withdrawals as $withdrawal){
             $action = new Action();
@@ -26,7 +26,13 @@ trait ActionHistory{
             $action->Date = $withdrawal->created_at;
             $action->Quantity = $withdrawal->ItemWithdrawalQuantity;
             $action->ActionID = $withdrawal->ItemWithdrawalID;
-            $actionArray[] = $action->toArray();
+            if($from || $til){
+              if((new \DateTime($from)) <= (new \DateTime($action->Date)) && (new \DateTime($til)) >= (new \DateTime($action->Date)))
+                $actionArray[] = $action->toArray();
+            }
+            else{
+              $actionArray[] = $action->toArray();
+            }
             if($withdrawal->ItemWithdrawalReturned){
                 $action = new Action();
                 $action->ItemName = $item->ItemName;
@@ -40,14 +46,20 @@ trait ActionHistory{
                 $action->Date = $withdrawal->updated_at;
                 $action->Quantity = $withdrawal->ItemWithdrawalReturnedQuantity;
                 $action->ActionID = $withdrawal->ItemWithdrawalID;
-                $actionArray[] = $action->toArray();
+                if($from || $til){
+                  if((new \DateTime($from)) <= (new \DateTime($action->Date)) && (new \DateTime($til)) >= (new \DateTime($action->Date)))
+                    $actionArray[] = $action->toArray();
+                }
+                else{
+                  $actionArray[] = $action->toArray();
+                }
             }
         }
         $withdrawalActions = collect($actionArray);
         return $withdrawalActions;
     }
 
-    public function createReservationHistory(Item $item){
+    public function createReservationHistory(Item $item, $from = null, $til = null){
         $actionArray = [];
         foreach($item->reservations as $reservation){
             $action = new Action();
@@ -62,7 +74,13 @@ trait ActionHistory{
             $action->Date = $reservation->created_at;
             $action->Quantity = $reservation->ReservationItemQuantity;
             $action->ActionID = $reservation->ReservationItemID;
-            $actionArray[] = $action->toArray();
+            if($from || $til){
+              if((new \DateTime($from)) <= (new \DateTime($action->Date)) && (new \DateTime($til)) >= (new \DateTime($action->Date)))
+                $actionArray[] = $action->toArray();
+            }
+            else{
+              $actionArray[] = $action->toArray();
+            }
             if($reservation->reservation->ReservationDelivered){
                 $action = new Action();
                 $action->ItemName = $item->ItemName;
@@ -76,14 +94,20 @@ trait ActionHistory{
                 $action->Date = $reservation->reservation->updated_at;
                 $action->Quantity = $reservation->ReservationItemQuantity;
                 $action->ActionID = $reservation->ReservationItemID;
-                $actionArray[] = $action->toArray();
+                if($from || $til){
+                  if((new \DateTime($from)) <= (new \DateTime($action->Date)) && (new \DateTime($til)) >= (new \DateTime($action->Date)))
+                    $actionArray[] = $action->toArray();
+                }
+                else{
+                  $actionArray[] = $action->toArray();
+                }
             }
         }
         $reservationActions = collect($actionArray);
         return $reservationActions;
     }
 
-    public function createSuspentionHistory(Item $item){
+    public function createSuspentionHistory(Item $item, $from = null, $til = null){
         $actionArray = [];
         foreach($item->suspentions as $suspention){
             $action = new Action();
@@ -106,7 +130,13 @@ trait ActionHistory{
                 $action->Subtype = "unwarranted_fix";
             if($suspention->SuspentionUnconfirmedReturn)
                 $action->Subtype = "unconfirmed_return";
-            $actionArray[] = $action->toArray();
+            if($from || $til){
+              if((new \DateTime($from)) <= (new \DateTime($action->Date)) && (new \DateTime($til)) >= (new \DateTime($action->Date)))
+                $actionArray[] = $action->toArray();
+            }
+            else{
+              $actionArray[] = $action->toArray();
+            }
             if($suspention->SuspentionReturned){
                 $action = new Action();
                 $action->ItemName = $item->ItemName;
@@ -128,7 +158,13 @@ trait ActionHistory{
                     $action->Subtype = "unwarranted_fix";
                 if($suspention->SuspentionUnconfirmedReturn)
                     $action->Subtype = "unconfirmed_return";
-                $actionArray[] = $action->toArray();
+                if($from || $til){
+                  if((new \DateTime($from)) <= (new \DateTime($action->Date)) && (new \DateTime($til)) >= (new \DateTime($action->Date)))
+                    $actionArray[] = $action->toArray();
+                }
+                else{
+                  $actionArray[] = $action->toArray();
+                }
             }
         }
         $suspentionsActions = collect($actionArray);

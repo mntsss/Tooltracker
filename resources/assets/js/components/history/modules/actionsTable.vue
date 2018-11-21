@@ -3,13 +3,13 @@
               next-icon="fa-arrow-right"
               sort-icon="fa-angle-down"
               rows-per-page-text="Rodymi įrašai puslapyje: "
-              :headers="headers" :items="itemsHistory"
+              :headers="headers" :items="actions"
               :pagination.sync="pagination"
               :rows-per-page-items='[25,50,100,{"text":"$vuetify.dataIterator.rowsPerPageAll","value":25}]'
               :hide-actions="false" class="elevation-3 border border-dark">
 
               <template slot="items" slot-scope="props">
-                  <tr class="cursor-pointer">
+                  <tr class="cursor-pointer" @click="$emit('clicked', {item: props.item})">
                     <td>
                       {{ props.item.GroupName}}
                     </td>
@@ -39,11 +39,11 @@
 </template>
 <script>
 import swal from 'sweetalert'
+import historyActions from '../../../mixins/historyActions'
 export default{
+  mixins: [historyActions],
   data(){
     return {
-
-      itemsHistory: [],
       pagination: {
           sortBy: 'Date',
           descending: true,
@@ -86,67 +86,17 @@ export default{
             align: 'center'
           }
         ],
-      actionDesc: {
-          suspention: {
-              in: {
-                  unconfirmed_return: "Grąžinimas patvirtintas",
-                  warranty_fix: "Grįžo iš garantinio",
-                  unwarranted_fix: "Sutaisyta"
-              },
-              out: {
-                  unconfirmed_return: "Įšaldyta: Nepatvirtintas grąžinimas",
-                  warranty_fix: "Įšaldyta: Garantinis taisymas",
-                  unwarranted_fix: "Įšaldyta: Taisymas"
-              }
-          },
-          withdrawal: {
-              in: {
-                  null: "Įrankis grąžintas"
-              },
-              out: {
-                  null: "Įrankis priskirtas vartotojui"
-              }
-          },
-          reservation: {
-              in: {
-                  null: "Įrankio rezervacija patvirtinta"
-              },
-              out: {
-                  null: "Įrankis rezervuotas"
-              }
-          }
-      }
-
+    }
+  },
+  computed: {
+    actionDesc: function(){
+      return historyActions;
     }
   },
   props:{
-    url: {
-      required: false,
-      type: String
-    }
-  },
-  created(){
-    this.loadItemHistory()
-  },
-  computed: {
-    request_url: function(){
-      if(this.url){
-        return this.url
-      }
-      else{
-        return "history/item/all"
-      }
-    }
-  },
-  methods:{
-    loadItemHistory: function(){
-      this.$http.get(this.request_url)
-      .then(response => {
-        this.itemsHistory = response.data
-        this.$contentLoadingHide()
-      }).catch(err => {
-        swal("Klaida", err.response.data.message, 'warning')
-      })
+    actions: {
+      required: true,
+      type: Array
     }
   }
 }

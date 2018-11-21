@@ -127,14 +127,11 @@ Route::group(['middleware' => 'jwt.auth'], function(){
 
   Route::prefix('history')->group(function(){
      Route::prefix('item')->group(function(){
-       Route::get('all', "HistoryController@getItemsHistory");
-         Route::get('suspentions/{id}', function(){ return 1;});
-         Route::get('withdrawals/{id}', function(){ return 1;});
+       Route::get('all/{from?}/{til?}', "HistoryController@getItemsHistory");
+       Route::get('suspentions/{id}', function(){ return 1;});
+       Route::get('withdrawals/{id}', function(){ return 1;});
      });
-     Route::get('user/{userID}', 'HistoryController@getUserHistory');
-     Route::prefix('object')->group(function(){
-
-     });
+     Route::get('user/{userID}/{from?}/{til?}', 'HistoryController@getUserHistory');
 
   });
   Route::prefix('rented')->group(function(){
