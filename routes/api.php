@@ -66,6 +66,7 @@ Route::group(['middleware' => 'jwt.auth'], function(){
 
   Route::prefix('withdrawal')->group(function(){
     Route::get('get/{id}', 'ItemWithdrawalController@get');
+    Route::get('writeoff/{id}', 'ItemController@writeOff');
   });
 
   Route::prefix('user')->group(function(){

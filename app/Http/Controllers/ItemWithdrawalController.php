@@ -68,4 +68,15 @@ class ItemWithdrawalController extends Controller
 
       return response()->json(['message'=> 'Atlikta!', 'success' => 'Įrankiai sėkmingai grąžinti į sandėlį.'], 200);
   }
+
+  public function writeOff($id)
+  {
+    $withdrawal = ItemWithdrawal::find($id);
+    $withdrawal->ItemWithdrawalReturnedQuantity = 0;
+    $withdrawal->ItemWithdrawalReturnConfirmedBy = Auth::user()->UserID;
+    $withdrawal->ItemWithdrawalReturned = true;
+    $withdrawal->save();
+
+    return response()->json(['message'=> 'Atlikta!', 'success' => 'Sėkmingai nurašyta.'], 200);
+  }
 }

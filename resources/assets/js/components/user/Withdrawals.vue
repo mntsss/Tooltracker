@@ -22,8 +22,11 @@
                   <td class="text-xs-center">
                     {{ props.item.ItemWithdrawalQuantity }}
                   </td>
-                  <td class="justify-center layout px-0">
+                  <td class="justify-center align-center layout px-0">
                     {{ props.item.created_at}}
+                  </td>
+                  <td class="text-center">
+                    <v-btn @click.stop="writeOff(props.item)" color="primary" class="px-2" v-if="props.item.item.ItemConsumable && $user.UserRole =='Administratorius'">Nurašyti</v-btn>
                   </td>
                 </tr>
               </template>
@@ -70,6 +73,10 @@ import swal from 'sweetalert'
               text: 'Išdavimo data',
               value: 'created_at',
               align: 'left'
+            },
+            {
+              text: '',
+              sortable: false
             }
           ]
       }
@@ -93,6 +100,9 @@ import swal from 'sweetalert'
             }).catch(error => {
                 swal('Klaida', error.response.data.message, 'error')
             })
+        },
+        writeOff: function(withdrawal){
+          alert(`${withdrawal.item.ItemName} bus nurasytas...`);
         }
     },
     components: {
