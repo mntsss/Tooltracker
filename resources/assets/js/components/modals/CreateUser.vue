@@ -22,7 +22,12 @@
                   <v-flex v-else-if="code" class="border-danger text-center headline text-success">Kortelė nuskaityta!</v-flex>
                 </v-layout>
                 <v-checkbox v-model="nocode" label="Be identifikacinės kortelės"></v-checkbox>
-                <v-btn @click="save()" :disabled="disabled">Išsaugoti</v-btn>
+                <v-progress-circular
+                  indeterminate
+                  color="primary"
+                  v-if="pendingRequest"
+                ></v-progress-circular>
+                <v-btn v-else @click="save()" :disabled="disabled">Išsaugoti</v-btn>
             </v-form>
         </div>
     </div>
@@ -33,6 +38,7 @@ import swal from 'sweetalert'
 export default {
     data(){
         return {
+            pendingRequest: false,
             email: '',
             name: '',
             role: '',
@@ -88,7 +94,7 @@ export default {
     },
   methods: {
     save: function(){
-
+        this.pendingRequest = true
         this.$http.post('/user/create', {
           email: this.email,
           username: this.name,
@@ -100,6 +106,7 @@ export default {
           nocode: this.nocode
         }
       ).then((response)=>{
+          this.pendingRequest = false
             if(response.status == 200){
                 this.$modal.hide('create-user-modal')
                 swal(response.data.message, response.data.success, "success")
@@ -114,7 +121,7 @@ export default {
                 this.nocode= false
             }
         }).catch(error =>{
-
+            this.pendingRequest = false
             if(error.response.status == 422)
             {
                 swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");

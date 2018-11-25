@@ -30,7 +30,7 @@ const endpoints = {
     if(from){ from = '/' + from;}
     if(til){ til = '/' + til;}
     return `history/item/all${from}${til}`},
-    
+
   filterUserHistory: (userID = '', from = '', til = '') => {
     if(userID) userID = '/'+userID;
     if(!userID && (from || til)){ userID = "all";}

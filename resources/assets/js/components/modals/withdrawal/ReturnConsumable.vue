@@ -24,7 +24,12 @@
       </v-layout>
       <v-layout align-center>
         <v-flex shrink>
-          <v-btn @click="save()" class="ma-3"><v-icon class="primary--text mr-2">fa-check</v-icon>Patvirtinti grąžinimą</v-btn>
+          <v-progress-circular
+            indeterminate
+            color="primary"
+            v-if="pendingRequest"
+          ></v-progress-circular>
+          <v-btn v-else @click="save()" class="ma-3"><v-icon class="primary--text mr-2">fa-check</v-icon>Patvirtinti grąžinimą</v-btn>
         </v-flex>
       </v-layout>
     </div>
@@ -38,7 +43,8 @@ export default{
     return {
       withdrawal: null,
       objectID: null,
-      quantity: null
+      quantity: null,
+      pendingRequest: false
     }
   },
 
@@ -57,17 +63,19 @@ export default{
         swal("Klaida", "Grąžinamas kiekis negali viršyti objekte naudojamo kiekio!", "error");
         return;
       }
+      this.pendingRequest = true
       this.$http.post('/item/return/consumable', {
         objectID: this.objectID,
         id: this.withdrawal.item.ItemID,
         quantity: this.quantity
       }).then(response => {
         if(response.status == 200){
+          this.pendingRequest = false
           swal(response.data.message, response.data.success, 'success').then(value => { this.$modal.hide('item-return-consumable-modal')})
           this.parentReload()
         }
       }).catch(error =>{
-
+          this.pendingRequest = false
           if(error.response.status == 422)
           {
               swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error").then(value => { this.$modal.hide('item-return-consumable-modal')})

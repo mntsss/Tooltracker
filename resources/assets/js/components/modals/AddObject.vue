@@ -26,7 +26,12 @@
         ></v-select>
             <v-layout align-center justify-center pa-3>
                 <v-flex shrink>
-                    <v-btn @click="save()" :disabled="!valid">Išsaugoti</v-btn>
+                  <v-progress-circular
+                    indeterminate
+                    color="primary"
+                    v-if="pendingRequest"
+                  ></v-progress-circular>
+                    <v-btn v-else @click="save()" :disabled="!valid">Išsaugoti</v-btn>
                 </v-flex>
             </v-layout>
 
@@ -44,6 +49,7 @@ export default {
             users: null,
             user: '',
             valid: false,
+            pendingRequest: false,
             nameRules: [
                 v => !!v || "Objekto pavadinimas būtinas!",
                 v => v.length <= 50 || "Objekto pavadinimas negali viršyti 50 simbolių!"
@@ -52,19 +58,20 @@ export default {
     },
   methods: {
     save: function(){
-
+        this.pendingRequest = true
         this.$http.post('/object/add', {
           name: this.name,
           user: this.user,
         }
       ).then((response)=>{
+        this.pendingRequest = false
             if(response.status == 200){
                 this.$modal.hide('add-object-modal')
                 swal(response.data.message, response.data.success, "success")
                 this.$parent.loadObjects();
             }
         }).catch(error =>{
-
+            this.pendingRequest = false
             if(error.response.status == 422)
             {
                 swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");

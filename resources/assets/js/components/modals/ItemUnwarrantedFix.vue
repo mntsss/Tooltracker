@@ -20,7 +20,12 @@
       </v-layout>
       <v-layout justify-center align-bottom>
         <v-flex shrink>
-          <v-btn class="ma-2" @click="save()"><v-icon class="primary--text mr-3">fa-wrench</v-icon>Įšaldyti taisymui</v-btn>
+          <v-progress-circular
+            indeterminate
+            color="primary"
+            v-if="pendingRequest"
+          ></v-progress-circular>
+          <v-btn v-else class="ma-2" @click="save()"><v-icon class="primary--text mr-3">fa-wrench</v-icon>Įšaldyti taisymui</v-btn>
         </v-flex>
       </v-layout>
       </v-form>
@@ -33,21 +38,25 @@ export default {
     data(){
         return {
             note: '',
-            itemID: null
+            itemID: null,
+            pendingRequest: false
         }
     },
   methods: {
     save: function(){
+      this.pendingRequest = true
         this.$http.post('/item/suspend/fix', {
             'id': this.itemID,
             'note': this.note
         }).then((response)=>{
+          this.pendingRequest = false
             if(response.status == 200){
                 this.$parent.loadItem()
                 this.$modal.hide('item-unwarranted-fix-modal')
                 swal(response.data.message, response.data.success, "success")
             }
         }).catch(error =>{
+          this.pendingRequest = false
             if(error.response.status == 422)
             {
                 swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");

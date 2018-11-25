@@ -66,7 +66,12 @@
 
                 <v-layout row mx-0 mx-0 pa-2 align-center justify-center>
                   <v-flex shrink>
-                    <v-btn outline color="primary" :disabled="!name || rentDate == '' || price == 0" @click="save()">
+                    <v-progress-circular
+                      indeterminate
+                      color="primary"
+                      v-if="pendingRequest"
+                    ></v-progress-circular>
+                    <v-btn v-else outline color="primary" :disabled="!name || rentDate == '' || price == 0" @click="save()">
                             Pridėti
                         </v-btn>
                   </v-flex>
@@ -87,10 +92,12 @@ export default {
             rentDate: this.format(new Date()),
             price: 0,
             note: null,
+            pendingRequest: false
         }
     },
   methods: {
     save: function(){
+      this.pendingRequest = true
         this.$http.post('/rented/create',
         {
             name: this.name,
@@ -99,13 +106,14 @@ export default {
             note: this.note
         }
       ).then((response)=>{
+        this.pendingRequest = false
             if(response.status == 200){
                 this.$modal.hide('create-rented-item-modal')
                 swal(response.data.message, response.data.success, "success")
                 this.$parent.loadItems();
             }
         }).catch(error =>{
-
+          this.pendingRequest = false
             if(error.response.status == 422)
             {
                 swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");

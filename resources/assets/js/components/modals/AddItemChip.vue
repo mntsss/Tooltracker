@@ -19,7 +19,12 @@
                 </v-layout>
                 <v-layout row mx-0 mx-0 align-center justify-center pa-3>
                   <v-flex shrink>
-                    <v-btn @click="save()" :disabled="disabled">Pridėti</v-btn>
+                    <v-progress-circular
+                      indeterminate
+                      color="primary"
+                      v-if="pendingRequest"
+                    ></v-progress-circular>
+                    <v-btn v-else @click="save()" :disabled="disabled">Pridėti</v-btn>
                   </v-flex>
                 </v-layout>
             </v-form>
@@ -35,6 +40,7 @@ export default {
             id: '',
             code: null,
             valid: false,
+            pendingRequest: false
         }
     },
     computed: {
@@ -60,19 +66,20 @@ export default {
     },
   methods: {
     save: function(){
-
+        this.pendingRequest = true
         this.$http.post('/item/addchip', {
           id: this.id,
           code: this.code,
         }
       ).then((response)=>{
+        this.pendingRequest = false
             if(response.status == 200){
                 this.$modal.hide('add-item-chip-modal')
                 swal(response.data.message, response.data.success, "success")
                 this.$parent.loadUsers();
             }
         }).catch(error =>{
-
+            this.pendingRequest = false
             if(error.response.status == 422)
             {
               this.code = null

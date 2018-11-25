@@ -14,7 +14,7 @@
                <a @click="$modal.hide('item-return-confirm-modal')" class="float-right"><span class="fas fa-times btn-func-misc p-3"></span></a>
           </div>
         <v-container class="bg-white">
-          <v-layout align-center justify-center row mx-0 fill-height mt-5>
+          <v-layout align-center justify-center row fill-height mt-5>
             <v-flex shrink mt-5>
               <v-progress-circular :size="100" :width="7" color="primary" indeterminate></v-progress-circular>
             </v-flex>

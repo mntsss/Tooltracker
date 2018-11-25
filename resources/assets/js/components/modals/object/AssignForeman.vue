@@ -25,7 +25,7 @@
         ></v-select>
             <v-layout align-center justify-center pa-3>
                 <v-flex shrink>
-                    <v-btn @click="save()" :disabled="!valid">Išsaugoti</v-btn>
+                    <v-btn @click="save()" :disabled="!valid && !waitingRequest">Išsaugoti</v-btn>
                 </v-flex>
             </v-layout>
 
@@ -43,17 +43,19 @@ export default {
             users: null,
             UserID: null,
             valid: false,
+            waitingRequest: false
         }
     },
   methods: {
     save: function(){
-
+        this.waitingRequest = true;
         this.$http.post('/object/foreman/assign', {
           objectID: this.ObjectID,
           userID: this.UserID,
         }
       ).then((response)=>{
             if(response.status == 200){
+                this.waitingRequest = false;
                 this.$modal.hide('assign-foreman-modal')
                 swal(response.data.message, response.data.success, "success")
                 this.$parent.loadObjects();

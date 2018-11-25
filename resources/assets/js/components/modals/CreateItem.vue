@@ -94,7 +94,12 @@
                 </div>
                 <v-layout row mx-0 mx-0 pa-2 align-center justify-center>
                   <v-flex shrink>
-                    <v-btn outline color="primary" :disabled="!code && !nocode" @click="save()">
+                    <v-progress-circular
+                      indeterminate
+                      color="primary"
+                      v-if="pendingRequest"
+                    ></v-progress-circular>
+                    <v-btn v-else outline color="primary" :disabled="!code && !nocode" @click="save()">
                             Pridėti
                         </v-btn>
                   </v-flex>
@@ -123,7 +128,8 @@ export default {
             consumable: false,
             warranty_date: '',
             purchase_date: '',
-            groupID: null
+            groupID: null,
+            pendingRequest: false
         }
     },
     computed: {
@@ -144,6 +150,7 @@ export default {
     },
   methods: {
     save: function(){
+      this.pendingRequest = true
         this.$http.post('/item/create',
         {
             name: this.name,
@@ -158,13 +165,14 @@ export default {
             groupID: this.groupID,
         }
       ).then((response)=>{
+        this.pendingRequest = false
             if(response.status == 200){
                 this.$modal.hide('create-item-modal')
                 swal(response.data.message, response.data.success, "success")
                 this.$parent.loadItems();
             }
         }).catch(error =>{
-
+          this.pendingRequest = false
             if(error.response.status == 422)
             {
                 swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");

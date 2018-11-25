@@ -26,7 +26,7 @@
                     {{ props.item.created_at}}
                   </td>
                   <td class="text-center">
-                    <v-btn @click.stop="writeOff(props.item)" color="primary" class="px-2" v-if="props.item.item.ItemConsumable && $user.UserRole =='Administratorius'">Nurašyti</v-btn>
+                    <!-- <v-btn @click.stop="writeOff(props.item)" color="primary" class="px-2" v-if="props.item.item.ItemConsumable && $user.UserRole =='Administratorius'">Nurašyti</v-btn> -->
                   </td>
                 </tr>
               </template>

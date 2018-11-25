@@ -39,7 +39,12 @@
 
                 <v-layout align-center justify-center>
                     <v-flex shrink>
-                        <v-btn @click="save()">
+                      <v-progress-circular
+                        indeterminate
+                        color="primary"
+                        v-if="pendingRequest"
+                      ></v-progress-circular>
+                        <v-btn v-else @click="save()">
                             <v-icon class="mr-2">fa-check</v-icon>Pridėti
                         </v-btn>
                     </v-flex>
@@ -58,13 +63,16 @@ export default {
             imageLoadingDialog: false,
             hasImage: false,
             name: null,
-            image: null
+            image: null,
+            pendingRequest: false
         }
     },
   methods: {
     save: function(){
+        this.pendingRequest = true
         this.$http.post('/group/create', { image: this.image, name: this.name})
         .then((response)=>{
+          this.pendingRequest = false
             if(response.status == 200){
                 this.$modal.hide('create-group-modal')
                 swal(response.data.message, response.data.success, "success")
@@ -72,6 +80,7 @@ export default {
 
             }
         }).catch(error =>{
+          this.pendingRequest = false
             if(error.response.status == 422)
             {
                 swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");

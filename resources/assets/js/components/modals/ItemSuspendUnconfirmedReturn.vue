@@ -19,7 +19,12 @@
       </v-layout>
       <v-layout justify-center align-bottom>
         <v-flex shrink>
-          <v-btn class="ma-5" @click="save()"><v-icon class="primary--text mr-3">fa-lock</v-icon>Įšaldyti</v-btn>
+          <v-progress-circular
+            indeterminate
+            color="primary"
+            v-if="pendingRequest"
+          ></v-progress-circular>
+          <v-btn v-else class="ma-5" @click="save()"><v-icon class="primary--text mr-3">fa-lock</v-icon>Įšaldyti</v-btn>
         </v-flex>
       </v-layout>
     </div>
@@ -31,7 +36,8 @@ export default{
   data(){
     return {
       item: null,
-      note: null
+      note: null,
+      pendingRequest: false
     }
   },
   methods: {
@@ -43,14 +49,16 @@ export default{
       this.note = null
     },
     save: function(){
+      this.pendingRequest = true
       this.$http.post('/item/suspend/unconfirmedreturn', {id: this.item.ItemID, note: this.note})
       .then(response => {
+        this.pendingRequest = false
         if(response.status == 200){
           swal(response.data.message, response.data.success, 'success').then(val => {this.$modal.hide('item-return-confirm-modal')})
           this.$emit('reload')
         }
       }).catch(error =>{
-
+          this.pendingRequest = false
           if(error.response.status == 422)
           {
               swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error")

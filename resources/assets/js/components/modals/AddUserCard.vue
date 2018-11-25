@@ -16,8 +16,12 @@
                   <v-flex v-if="!code" class="border-danger text-center headline text-danger">Laukiama nauja kortelė...</v-flex>
                   <v-flex v-else-if="code" class="border-danger text-center headline text-success">Kortelė nuskaityta!</v-flex>
                 </v-layout>
-
-                <v-btn @click="save()" :disabled="disabled">Išsaugoti</v-btn>
+                <v-progress-circular
+                  indeterminate
+                  color="primary"
+                  v-if="pendingRequest"
+                ></v-progress-circular>
+                <v-btn v-else @click="save()" :disabled="disabled">Išsaugoti</v-btn>
             </v-form>
         </div>
     </div>
@@ -31,6 +35,7 @@ export default {
             userID: '',
             code: null,
             valid: false,
+            pendingRequest: false
         }
     },
     computed: {
@@ -56,12 +61,13 @@ export default {
     },
   methods: {
     save: function(){
-
+        this.pendingRequest = true
         this.$http.post('/user/addcard', {
           id: this.userID,
           code: this.code,
         }
       ).then((response)=>{
+          this.pendingRequest = false
             if(response.status == 200){
                 this.$modal.hide('add-user-card-modal')
                 swal(response.data.message, response.data.success, "success")
@@ -70,7 +76,7 @@ export default {
                 this.code = null
             }
         }).catch(error =>{
-
+            this.pendingRequest = false
             if(error.response.status == 422)
             {
               this.code = null

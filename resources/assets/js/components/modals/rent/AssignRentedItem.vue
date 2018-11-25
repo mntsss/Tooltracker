@@ -15,7 +15,12 @@
         <div class="card-body">
             <v-form v-model="valid">
                 <v-select v-model="object" :items = "objects" item-text="ObjectName" item-value="ObjectID" label="Objektas" required></v-select>
-                <v-btn @click="save()" :disabled="!object">Priskirti</v-btn>
+                <v-progress-circular
+                  indeterminate
+                  color="primary"
+                  v-if="pendingRequest"
+                ></v-progress-circular>
+                <v-btn v-else @click="save()" :disabled="!object">Priskirti</v-btn>
             </v-form>
         </div>
     </div>
@@ -29,7 +34,8 @@ export default {
             object: null,
             itemID: null,
             valid: false,
-            objects: []
+            objects: [],
+            pendingRequest: false
         }
     },
     created(){
@@ -37,19 +43,20 @@ export default {
     },
   methods: {
     save: function(){
-
+        this.pendingRequest = true
         this.$http.post('/rented/assign', {
           id: this.itemID,
           object: this.object
         }
-      ).then((response)=>{
+      ).then((response) => {
             if(response.status == 200){
+                this.pendingRequest = false;
                 this.$modal.hide('assign-rented-item-modal')
                 swal(response.data.message, response.data.success, "success")
                 this.$parent.loadItem();
             }
         }).catch(error =>{
-
+            this.pendingRequest = false;
             if(error.response.status == 422)
             {
                 swal(error.response.data.message, Object.values(error.response.data.errors)[0][0], "error");
