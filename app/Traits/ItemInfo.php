@@ -33,22 +33,6 @@ trait ItemInfo{
     return "Sandėlyje";
   }
 
-  //checks item state
-  public function checkItemState(Item $item){
-    if(!$item->ItemConsumable){
-      if($this->checkItemWithdrawal($item->ItemID)){
-        if($this->checkItemSuspention($item->ItemID))
-          return 'suspended';
-        else return 'withdrew';
-      }
-      if($this->checkItemSuspention($item->ItemID))
-          return 'suspended';
-      if($this->checkItemReservation($item->ItemID))
-        return "reserved";
-      if($item->ItemDeleted)
-        return "deleted";
-    }
-  }
   //checks if item is currently in reservation
   public function checkItemReservation($id){
     $reservationCheck = Item::find($id)->reservations()->get();

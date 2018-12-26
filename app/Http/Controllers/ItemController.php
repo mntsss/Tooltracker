@@ -33,7 +33,6 @@ class ItemController extends Controller
     public function items($groupID){
       $items = Item::where('ItemGroupID', $groupID)->existing()->with(['lastWithdrawal' => function($query){ $query->with(['user', 'object']);}, 'lastSuspention' => function($query){ $query->with(['user']);}, 'lastReservation', 'images'])->get();
       foreach($items as $item){
-        //array_push($response, ['item'=> $item, 'state' => $this->GetItemState($item)]);
         $item->state = $this->GetItemState($item);
       }
       return response()->json($items);
