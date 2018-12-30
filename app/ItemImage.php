@@ -6,9 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ItemImage extends Model
 {
-    protected $primaryKey = 'ImageID';
-
-    protected $fillable = ['ImageName', 'ItemID', 'ReservationID', 'ItemWithdrawalID', 'ReservationItemID'];
+    protected $fillable = ['name', 'item_id', 'reservation_id', 'withdrawal_id', 'reservation_item_id'];
 
     public function item(){
       return $this->hasOne('App\Item', 'ItemID');

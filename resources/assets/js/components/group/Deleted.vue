@@ -28,7 +28,7 @@
 
 import RenameModal from '../modals/RenameGroup.vue'
 import ChangeImageModal from '../modals/ChangeGroupImage.vue'
-import CreateItemModal from '../modals/CreateItem.vue'
+import CreateItemModal from '../modals/item/CreateItem.vue'
 import swal from 'sweetalert'
   export default {
     data(){

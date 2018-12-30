@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRfidCodesTable extends Migration
+class CreateCodesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,16 @@ class CreateRfidCodesTable extends Migration
      */
     public function up()
     {
-        Schema::create('rfid_codes', function (Blueprint $table) {
-            $table->increments('CodeID');
-            $table->string('Code');
-            $table->integer('ItemID');
+        Schema::create('codes', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('code');
+            $table->integer('item_id');
             $table->timestamps();
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('rfid_codes');
+        Schema::dropIfExists('codes');
     }
 }

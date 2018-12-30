@@ -111,7 +111,7 @@
 </template>
 <script>
 import swal from 'sweetalert'
-import DatePicker from '../modules/DatePicker.vue'
+import DatePicker from '../../modules/DatePicker.vue'
 import { ImageUploader } from 'vue-image-upload-resize'
 export default {
     data(){
@@ -156,13 +156,13 @@ export default {
             name: this.name,
             image: this.image,
             code: this.code,
-            idnumber: this.idnumber,
-            acquired: this.acquired,
+            identification: this.idnumber,
+            acquired_from: this.acquired,
             consumable: this.consumable,
             nocode: this.nocode,
             warranty_date: this.format(this.warranty_date),
             purchase_date: this.format(this.purchase_date),
-            groupID: this.groupID,
+            group_id: this.groupID,
         }
       ).then((response)=>{
         this.pendingRequest = false

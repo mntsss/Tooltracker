@@ -13,7 +13,7 @@ use Auth;
 use Carbon\Carbon;
 use Hash;
 use App\User;
-use App\RfidCode;
+use App\Code;
 
 class UserController extends Controller
 {
@@ -59,7 +59,7 @@ class UserController extends Controller
     }
 
     public function create(CreateUserRequest $request){
-      if(RfidCode::where('Code', $request->code)->exists())
+      if(Code::where('Code', $request->code)->exists())
         return response()->json(['message' => 'Klaida!', 'errors' => ['name' => ['Kortelės ar čipo kodas jau naudojamas sistemoje ir negali būti priskirtas dar kartą! Bandykite kitą kortelę.']] ],422);
 
       if($request->code == null && !$request->nocode)
@@ -107,7 +107,7 @@ class UserController extends Controller
     }
 
     public function addcard(AddUserCardRequest $request){
-      if(RfidCode::where('Code', $request->code)->exists())
+      if(Code::where('Code', $request->code)->exists())
         return response()->json(['message' => 'Klaida!', 'errors' => ['name' => ['Kortelės ar čipo kodas jau naudojamas sistemoje ir negali būti priskirtas dar kartą! Bandykite kitą kortelę.']] ],422);
 
       if(User::find($request->id)->update(['UserRFIDCode' => $request->code]))

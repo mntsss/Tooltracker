@@ -24,12 +24,12 @@
           </v-flex>
       </v-layout>
       <div class="card-body" v-if="items.length > 0">
-        <router-link tag="div" class="row mx-0 remove-side-margin cursor-pointer" :to="{ name: 'item', params: { itemProp: item}}" v-for="item in items" :key="item.ItemID">
+        <router-link tag="div" class="row mx-0 remove-side-margin cursor-pointer" :to="{ name: 'item', params: { itemProp: item}}" v-for="item in items" :key="item.id">
           <div class="col-6">
-            {{item.ItemName}}
+            {{item.name}}
           </div>
           <div class="col text-center">
-            {{item.state}}
+            {{item.status}}
           </div>
       </router-link>
       </div>
@@ -46,7 +46,7 @@
 
 import RenameModal from '../modals/RenameGroup.vue'
 import ChangeImageModal from '../modals/ChangeGroupImage.vue'
-import CreateItemModal from '../modals/CreateItem.vue'
+import CreateItemModal from '../modals/item/CreateItem.vue'
 import swal from 'sweetalert'
 
   export default {

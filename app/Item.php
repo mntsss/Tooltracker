@@ -18,9 +18,9 @@ class Item extends Model
     public const ITEM_IN_USE = "in_use";
     public const ITEM_RESERVED = "reserved";
 
-    protected $primaryKey = 'ItemID';
+    protected $primaryKey = 'id';
 
-    protected $fillable = ['name', 'quantity', 'image','acquired_from', 'warranty_date', 'purchase_date', 'consumable', 'group_id', 'identification'];
+    protected $fillable = ['name', 'acquired_from', 'warranty_date', 'purchase_date', 'consumable', 'group_id', 'storage_id', 'identification'];
 
 
     public function setInStorage(){
@@ -50,12 +50,30 @@ class Item extends Model
         $this->status = self::ITEM_RESERVED;
     }
 
+    /**
+     * Scopes
+     */
+
+    public function scopeSuspended($query){
+        return $query->where('status', self::ITEM_UNWARRANTED_FIX)->orWhere('status', self::ITEM_WARRANTED_FIX)->orWhere('status', self::ITEM_WAITING_CONFIRMATION);
+    }
+    public function scopeDeleted($query){
+        return $query->where('status', self::ITEM_DELETED)->orderBy('updated_at', 'DESC');
+    }
+    public function scopeExisting($query){
+        return $query->where('ItemDeleted', false);
+    }
+
+    /**
+     *  Relations
+     */
+
     public function itemGroup(){
       return $this->belongsTo('App\ItemGroup', 'ItemGroupID');
     }
 
     public function codes(){
-      return $this->hasMany('App\RfidCode', 'ItemID');
+      return $this->hasMany('App\Code', 'ItemID');
     }
 
     public function images(){
@@ -78,11 +96,5 @@ class Item extends Model
     }
     public function lastReservation(){
       return $this->hasOne('App\ReservationItem', 'ItemID')->latest();
-    }
-    public function scopeDeleteItem($query){
-      return $query->update(['ItemDeleted' => true]);
-    }
-    public function scopeExisting($query){
-      return $query->where('ItemDeleted', false);
     }
 }

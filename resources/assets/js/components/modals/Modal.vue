@@ -24,14 +24,9 @@
   </modal>
 </template>
 <script>
-import swal from 'sweetalert'
+import swal from 'sweetalert';
+
 export default {
-    data(){
-        return {
-            name: '',
-            //groupID: null
-        }
-    },
     props: {
         modal_name:{
             required: true,

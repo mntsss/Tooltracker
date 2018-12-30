@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\RfidCode;
+use App\Code;
 
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
