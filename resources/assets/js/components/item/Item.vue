@@ -18,7 +18,7 @@
               <a @click="$back()" class="headline"><span class="fa fa-arrow-left primary--text remove-all-margin p-2 btn-func-misc"></span></a>
           </v-flex>
           <v-flex>
-              <div class="text-center headline">{{itemData.ItemName}}</div>
+              <div class="text-center headline">{{itemData.name}}</div>
           </v-flex>
           <v-flex shrink headline justify-end align-content-center v-if="$user.UserRole == 'Administratorius'">
               <v-menu offset-y>
@@ -41,7 +41,7 @@
                               <v-icon headline class="primary--text">fa-map-marker</v-icon>
                           </v-flex>
                           <v-flex shrink px-2>Būsena:</v-flex>
-                          <v-flex px-2 shrink>{{itemStatus}}</v-flex>
+                          <v-flex px-2 shrink>{{itemData.status}}</v-flex>
                           <v-flex v-if="itemStatus == 'Naudojamas' && itemData.last_withdrawal.object">({{itemData.last_withdrawal.object.ObjectName}})</v-flex>
                           <v-flex v-else-if="itemStatus == 'Naudojamas' && itemData.last_withdrawal.user">({{itemData.last_withdrawal.user.Username}})</v-flex>
                           <v-flex v-else-if="itemStatus == 'Laukia patvirtinimo' && itemData.last_withdrawal.user">({{itemData.last_withdrawal.user.Username}})</v-flex>
@@ -62,19 +62,19 @@
                             ></v-textarea>
                           </v-flex>
                       </v-layout>
-                      <v-layout row mx-0 wrap align-center v-if="itemData.ItemIdNumber">
+                      <v-layout row mx-0 wrap align-center v-if="itemData.identification">
                           <v-flex shrink pa-2 style="width: 40px !important">
                               <v-icon headline class="primary--text">fa-fingerprint</v-icon>
                           </v-flex>
                           <v-flex shrink px-2>Identifikacinis numeris:</v-flex>
-                          <v-flex px-2>{{itemData.ItemIdNumber}}</v-flex>
+                          <v-flex px-2>{{itemData.identification}}</v-flex>
                       </v-layout>
-                      <v-layout row mx-0 wrap align-center v-if="itemData.ItemAcquiredFrom">
+                      <v-layout row mx-0 wrap align-center v-if="itemData.acquired_from">
                           <v-flex shrink pa-2 style="width: 40px !important">
                               <v-icon headline class="primary--text">fa-shopping-bag</v-icon>
                           </v-flex>
                           <v-flex shrink px-2>Įsigyta iš:</v-flex>
-                          <v-flex px-2>{{itemData.ItemAcquiredFrom}}</v-flex>
+                          <v-flex px-2>{{itemData.acquired_from}}</v-flex>
                       </v-layout>
                       <v-layout row mx-0 wrap align-center >
                           <v-flex shrink pa-2 style="width: 40px !important">
@@ -88,16 +88,16 @@
                               <v-icon headline class="primary--text">fa-calendar-alt</v-icon>
                           </v-flex>
                           <v-flex px-2 shrink>Įsigijimo data:</v-flex>
-                          <v-flex px-2>{{itemData.ItemPurchase}}</v-flex>
+                          <v-flex px-2>{{itemData.purchase_date}}</v-flex>
                       </v-layout>
-                      <v-layout row mx-0 wrap align-center v-if="itemData.ItemWarranty">
+                      <v-layout row mx-0 wrap align-center v-if="itemData.warranty_date">
                           <v-flex shrink pa-2 style="width: 40px !important">
                               <v-icon headline class="primary--text">fa-calendar-check</v-icon>
                           </v-flex>
                           <v-flex px-2 shrink>Garantinis iki:</v-flex>
-                          <v-flex px-2>{{itemData.ItemWarranty}}</v-flex>
+                          <v-flex px-2>{{itemData.warranty_date}}</v-flex>
                       </v-layout>
-                      <v-layout row mx-0 wrap align-center v-if="itemData.ItemConsumable">
+                      <v-layout row mx-0 wrap align-center v-if="itemData.consumable">
                           <v-flex shrink pa-2 style="width: 40px !important">
                               <v-icon headline class="primary--text">fa-check</v-icon>
                           </v-flex>
@@ -198,7 +198,7 @@ import ConfirmReturnItemSuspentionModal from '../modals/ConfirmReturnItemSuspent
       }
   },
   created(){
-    if(this.itemProp == null){
+    if(this.itemProp === null){
         if(this.itemID != null){
             this.itemData = {ItemID: this.itemID}
         }
@@ -206,7 +206,7 @@ import ConfirmReturnItemSuspentionModal from '../modals/ConfirmReturnItemSuspent
     }
     else {
       this.itemData =  this.itemProp
-      if(this.itemProp.state == null){
+      if(this.itemProp.state === null){
           this.loadItem()
       }
       else {
@@ -341,7 +341,7 @@ import ConfirmReturnItemSuspentionModal from '../modals/ConfirmReturnItemSuspent
           }
         }).then(value => {
           if(value){
-            this.$http.post('/item/delete', {id: this.itemData.ItemID}).then((response)=>{
+            this.$http.post('/item/delete', {id: this.itemData.id}).then((response)=>{
                 if(response.status == 200){
                     swal(response.data.message, response.data.success, "success").then(value => { this.$router.push({ path: '/group/'+this.itemData.ItemGroupID})})
                 }

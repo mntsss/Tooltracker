@@ -13,7 +13,6 @@ class CreateItemsTable extends Migration
      */
     public function up()
     {
-        $this->down();
         Schema::create('items', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
@@ -21,8 +20,8 @@ class CreateItemsTable extends Migration
             $table->string('acquired_from')->nullable();
             $table->string('warranty_date')->nullable();
             $table->string('purchase_date')->nullable();
-            $table->integer('group_id')->->nullable();;
-            $table->integer('storage_id')->->nullable();
+            $table->integer('group_id')->nullable();
+            $table->integer('storage_id')->nullable();
             $table->string('identification')->nullable();
             $table->string('status')->default(Item::ITEM_IN_STORAGE);
             $table->timestamps();

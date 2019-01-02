@@ -15,6 +15,7 @@ use App\Code;
 use App\Traits\ActionHistory;
 use App\Traits\ItemInfo;
 use Auth;
+use App\Http\Services\ActionRecorderService;
 
 class ItemController extends Controller
 {
@@ -54,10 +55,13 @@ class ItemController extends Controller
         return response()->json(['actions' => $sorted, 'item' => $item], 200);
     }
 
-    public function create(ItemRequest $request, ImageService $imageService)
+    public function create(ItemRequest $request, ImageService $imageService, ActionRecorderService $recorderService)
     {
         $item = new Item();
         $item->fill($request->item())->save();
+        $recorderService->record($item, Item::ITEM_IN_STORAGE);
+        $item->status = Item::ITEM_IN_STORAGE;
+        $item->save();
 
         if($request->hasImage()){
             $name = $imageService->save($request->image());
@@ -119,20 +123,16 @@ class ItemController extends Controller
     }
 
     // marks item as deleted
-    public function delete(ItemRequest $request)
+    public function delete(ItemRequest $request, ActionRecorderService $actionRecorder)
     {
+        $item = Item::find($request->id);
 
-        $id = $request->id;
-        if ($this->checkItemReservation($id))
-            return response()->json(['message' => 'Klaida', 'errors' => ['name' => ['Įrankis priskirtas aktyviai rezercavijai, todėl negali būti ištrintas.']]], 422);
+        if ($item->status != Item::ITEM_IN_STORAGE)
+            return response()->json(['message' => 'Klaida', 'errors' => ['name' => ['Įrankis negrąžintas į sandėlį, todėl negali būti ištrintas.']]], 422);
 
-        if ($this->checkItemWithdrawal($id))
-            return response()->json(['message' => 'Klaida', 'errors' => ['name' => ['Įrankis priskirtas vartotojui, todėl negali būti ištrintas.']]], 422);
+        $actionRecorder->record($item, Item::ITEM_DELETED);
 
-        if ($this->checkItemSuspention($id))
-            return response()->json(['message' => 'Klaida', 'errors' => ['name' => ['Įrankis suspenduotas (įšaldytas), todėl negali būti ištrintas.']]], 422);
-
-        if (Item::find($id)->update(['ItemDeleted' => true]))
+        if($item->update(['ItemDeleted' => true]))
             return response()->json(['message' => 'Atlikta!', 'success' => 'Įrankis sėkmingai ištrintas.'], 200);
         else return response()->json(['message' => 'Klaida', 'errors' => ['name' => ['Kažkur įvyko klaida siunčiant užklausą į duomenų bazę. Susisiekite su administracija.']]], 422);
     }
