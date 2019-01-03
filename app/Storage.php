@@ -13,7 +13,7 @@ class Storage extends Model
       return $this->hasMany('App\ItemGroup', 'storage_id');
     }
 
-    public function scopeActive(){
+    public function scopeActive($query){
       return $query->where('deleted', false);
     }
 

@@ -220,6 +220,7 @@ export default {
       this.getMonthlyRentPrice();
       this.getTotalItems();
       this.getTotalItemsInUse();
+      this.$store.dispatch('storage/LOAD_STORAGE_LIST');
   },
   computed: {
     RfidCode: function(){

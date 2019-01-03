@@ -33,6 +33,16 @@ body{
   white-space: nowrap;
 }
 
+.fa, .far, .fas {
+    font-family: "Font Awesome 5 Free" !important;
+}
+.fa, .fas {
+    font-weight: 900 !important;
+}
+.logo{
+    max-height: 50px;
+    max-width: auto;
+}
 
 .pagination > li > a:focus,
 .pagination > li > a:hover,
