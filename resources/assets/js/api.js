@@ -1,6 +1,11 @@
 import Vue from 'vue';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
+//endpoints
+import userEndpoints from './api/user';
+import historyEndpoints from './api/history';
+import storageEndpoints from './api/storage';
+import reservationEndpoints from './api/reservation';
 
 Vue.use(VueAxios, axios);
 
@@ -16,29 +21,11 @@ instance.interceptors.request.use(tokenProvider({
 }));
 
 const endpoints = {
-  getUsers: () => `/user/list`,
-  filterClosedReservations: (userID = '', from = '', til = '') => {
-    if(userID) userID = '/'+userID;
-    if(!userID && (from || til)){ userID = "all";}
-    if(til && !from){ from = '/1990-01-01'}
-    if(from){ from = '/' + from;}
-    if(til){ til = '/' + til;}
-    return `reservation/closed${userID}${from}${til}`},
-
-  filterHistory: (from = '', til = '') => {
-    if(til && !from){ from = '/1990-01-01'}
-    if(from){ from = '/' + from;}
-    if(til){ til = '/' + til;}
-    return `history/item/all${from}${til}`},
-
-  filterUserHistory: (userID = '', from = '', til = '') => {
-    if(userID) userID = '/'+userID;
-    if(!userID && (from || til)){ userID = "all";}
-    if(til && !from){ from = '/1990-01-01'}
-    if(from){ from = '/' + from;}
-    if(til){ til = '/' + til;}
-    return `history/user${userID}${from}${til}`;
-  }
+  ...userEndpoints,
+  ...historyEndpoints,
+  ...storageEndpoints,
+  ...reservationEndpoints
 };
+
 export default axios;
 export {endpoints, axios};

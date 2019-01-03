@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateItemGroupsTable extends Migration
+class CreateStoragesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateItemGroupsTable extends Migration
      */
     public function up()
     {
-        Schema::create('item_groups', function (Blueprint $table) {
-            $table->increments('ItemGroupID');
-            $table->string('ItemGroupName');
-            $table->text('ItemGroupImage')->nullable();
-            $table->integer('storage_id')>nullable();
+        Schema::create('storages', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->boolean('deleted')->default(0);
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateItemGroupsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('item_groups');
+        Schema::dropIfExists('storages');
     }
 }

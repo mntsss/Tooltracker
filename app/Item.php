@@ -61,7 +61,7 @@ class Item extends Model
         return $query->where('status', self::ITEM_DELETED)->orderBy('updated_at', 'DESC');
     }
     public function scopeExisting($query){
-        return $query->where('ItemDeleted', false);
+        return $query->where('status', "!=", self::ITEM_DELETED);
     }
 
     /**

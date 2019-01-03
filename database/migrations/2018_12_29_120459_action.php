@@ -22,6 +22,7 @@ class Action extends Migration
             $table->string('current_state');
             $table->text('signature')->nullable();
             $table->string('identification_code')->nullable();
+            $tablr->integer('storage_id')->nullable();
             $table->timestamps();
         });
     }

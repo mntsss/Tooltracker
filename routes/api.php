@@ -14,6 +14,15 @@ Route::prefix('auth')->group(function(){
 });
 
 Route::group(['middleware' => 'jwt.auth'], function(){
+
+  Route::prefix('storage')->group(function(){
+    Route::get('list', 'StorageController@list');
+    Route::get('get/{id}', 'StorageController@get');
+    Route::post('create', 'StorageController@create');
+    Route::post('edit', 'StorageController@edit');
+    Route::get('delete/{id}', 'StorageController@delete');
+  });
+
   //item groups routes
   Route::prefix('group')->group(function(){
     Route::get('list', 'ItemGroupController@groups');
