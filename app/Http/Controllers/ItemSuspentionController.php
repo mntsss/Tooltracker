@@ -7,6 +7,7 @@ use App\Http\Requests\Suspentions\SuspentionRequest;
 use Auth;
 use App\ItemSuspention;
 use App\ItemWithdrawal;
+use App\Item;
 class ItemSuspentionController extends Controller
 {
     public function __construct(){
@@ -92,15 +93,12 @@ class ItemSuspentionController extends Controller
     }
 
     public function getWaitingConfirmationSuspentions(){
-        $suspentions = ItemSuspention::Active()->where('SuspentionUnconfirmedReturn', true)->with(['item' => function($q){ return $q->with('itemGroup');}])->orderBy("created_at", "ASC")->get();
-        return response()->json($suspentions, 200);
+        return response()->json(Item::existing()->where('status', Item::ITEM_WAITING_CONFIRMATION)->with('group')->orderBy("created_at", "ASC")->get(), 200);
     }
 
     public function getFixSuspentions(){
-        $suspentions = ItemSuspention::Active()->where(function ($q){
-            return $q->where('SuspentionWarrantyFix', true)->orWhere('SuspentionUnwarrantedFix', true);
-        })->with(['item' => function($q){ return $q->with('itemGroup');}])->orderBy("created_at", "ASC")->get();
-        return response()->json($suspentions, 200);
+      return response()->json(Item::existing()->where('status', Item::ITEM_WARRANTED_FIX)->orWhere('status', Item::ITEM_UNWARRANTED_FIX)
+        ->with('group')->orderBy("created_at", "ASC")->get(), 200);
     }
 
 }

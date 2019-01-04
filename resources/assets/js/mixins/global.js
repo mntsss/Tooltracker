@@ -1,6 +1,7 @@
 import swal from 'sweetalert'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.min.css'
+import eventBus from './../eventBus';
 export default {
     computed: {
         $user() {
@@ -8,6 +9,9 @@ export default {
         },
         $contentLoading(){
             return this.$store.state.content_loading_screen
+        },
+        $eventBus(){
+          return eventBus;
         }
     },
     methods: {
@@ -25,7 +29,7 @@ export default {
               }
       },
       $contentLoadingHide(){
-        this.$store.commit('content_loading_screen_hide')  
+        this.$store.commit('content_loading_screen_hide')
       },
       $back(){
           var router = this.$router

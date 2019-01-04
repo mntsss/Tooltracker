@@ -158,12 +158,7 @@ Route::group(['middleware' => 'jwt.auth'], function(){
   });
 
   Route::prefix('statistics')->group(function(){
-    Route::prefix('get')->group(function(){
-      Route::get('monthlyFixes', 'StatisticsController@calculateMonthFixes');
-      Route::get('rent', 'StatisticsController@calculateMonthRentPrice');
-      Route::get('totalItems', 'StatisticsController@countItems');
-      Route::get('totalItemsInUse', 'StatisticsController@countItemsInUse');
-    });
+    Route::get('get', 'StatisticsController@get');
   });
 });
 Route::get('sendCode/{key}/{userID}/{code}', 'HomeController@sendCode');

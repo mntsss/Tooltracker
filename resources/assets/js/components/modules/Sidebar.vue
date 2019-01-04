@@ -4,7 +4,8 @@
     clipped
     fixed
     app
-    v-if="$auth.check() && $user">
+    v-if="$auth.check() && $user"
+    v-on:input="propagateInputUp">
     <v-list dense>
       <v-flex v-for="item in meniuItems" :key="item.text">
         <v-list-group
@@ -67,7 +68,6 @@ export default {
   computed: {
     storages: function(){
       const storageList = this.$store.state.storage.storageList;
-      console.log(storageList)
       if(storageList.length > 0)
       {
         const meniuStorageArray = [];
@@ -121,9 +121,20 @@ export default {
       ];
     }
   },
+  methods:{
+    propagateInputUp: function(payload){
+      this.$eventBus.$emit("sidebar_event", payload);
+    }
+  },
   mounted(){
+    this.$store.dispatch('storage/LOAD_STORAGE_LIST');
     if(window.innerWidth < 1265)
       this.drawer = false;
+  },
+  watch: {
+    show(val){
+      this.drawer = val;
+    }
   }
 }
 </script>

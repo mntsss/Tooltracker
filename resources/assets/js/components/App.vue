@@ -27,7 +27,7 @@
         :can-cancel="false"
         :is-full-page="fullPage"></Loading>
         <ChangePasswordModal></ChangePasswordModal>
-        <Sidebar :show = "drawer" on:input="changeDrawer"></Sidebar>
+        <Sidebar :show = "drawer"></Sidebar>
       <v-toolbar app fixed clipped-left v-if="$auth.check() && $user" class="white">
         <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
         <v-toolbar-title><a href="/"><img src="/media/logo.png" alt="logo" class="logo mx-4"/></a></v-toolbar-title>
@@ -108,6 +108,10 @@ export default {
             }
     },
     mounted(){
+      this.$eventBus.$on('sidebar_event', (payload) => {
+        this.drawer = payload;
+      });
+
       if(window.innerWidth < 1265)
         this.drawer = false
 
@@ -139,8 +143,7 @@ export default {
   },
   methods: {
     changeDrawer: function (payload){
-      alert("Trigered");
-      this.drawer = payload[0];
+      this.drawer = payload;
     }
   },
   components: {
