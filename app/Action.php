@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Action extends Model
 {
-    protected $fillable = ['item_id', 'user_id', 'object_id', 'previous_status', 'current_status',
+    protected $fillable = ['item_id', 'user_id', 'object_id', 'storage_id', 'previous_status', 'current_status',
       'signature', 'identification_code'];
 
     public function item(){

@@ -14,8 +14,4 @@ class ItemGroup extends Model
     public function items(){
       return $this->hasMany('App\Item', 'group_id');
     }
-
-    // public function scopeClient($query){
-    //   return $query->where('ClientID', Auth::user()->ClientID);
-    // }
 }

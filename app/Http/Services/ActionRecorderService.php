@@ -27,6 +27,7 @@ class ActionRecorderService
   {
     $action = new Action();
     $action->item_id = $item->id;
+    $action->storage_id = $item->storage_id;
     $action->previous_status = $item->status;
     return $action;
   }
