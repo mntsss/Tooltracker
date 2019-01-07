@@ -25,7 +25,7 @@ class CreateReservationRequest extends FormRequest
     {
         return [
             'objectID' => 'sometimes|exists:objects,ObjectID',
-            'userID' => 'required|numeric|exists:users,UserID',
+            'userID' => 'required|numeric|exists:users,id',
             'items.*.item.ItemID' => 'required|distinct|exists:items,ItemID',
             'items.*.quantity' => 'required|numeric|min:1',
             'items.*.image' => 'nullable',

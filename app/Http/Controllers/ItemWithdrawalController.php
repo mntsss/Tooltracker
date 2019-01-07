@@ -21,7 +21,7 @@ class ItemWithdrawalController extends Controller
     $withdrawal = ItemWithdrawal::find($request->id);
     if($withdrawal){
       $withdrawal->ItemWithdrawalReturnConfirmCard = $request->code;
-      $withdrawal->ItemWithdrawalReturnConfirmedBy = Auth::user()->UserID;
+      $withdrawal->ItemWithdrawalReturnConfirmedBy = Auth::user()->id;
       $withdrawal->ItemWithdrawalReturned = true;
       $withdrawal->ItemWithdrawalReturnedQuantity = $request->quantity;
       $withdrawal->save();
@@ -45,13 +45,13 @@ class ItemWithdrawalController extends Controller
       while($quantity > 0 && $w_ID < count($withdrawals)){
         if($withdrawals[$w_ID]->ItemWithdrawalQuantity >= $quantity){
           $withdrawals[$w_ID]->ItemWithdrawalReturnedQuantity = $quantity;
-          $withdrawals[$w_ID]->ItemWithdrawalReturnConfirmedBy = Auth::user()->UserID;
+          $withdrawals[$w_ID]->ItemWithdrawalReturnConfirmedBy = Auth::user()->id;
           $withdrawals[$w_ID]->ItemWithdrawalReturned = true;
           $withdrawals[$w_ID]->save();
           break;
         }else{
           $withdrawals[$w_ID]->ItemWithdrawalReturnedQuantity = $withdrawals[$w_ID]->ItemWithdrawalQuantity;
-          $withdrawals[$w_ID]->ItemWithdrawalReturnConfirmedBy = Auth::user()->UserID;
+          $withdrawals[$w_ID]->ItemWithdrawalReturnConfirmedBy = Auth::user()->id;
           $withdrawals[$w_ID]->ItemWithdrawalReturned = true;
           $withdrawals[$w_ID]->save();
           $quantity -=  $withdrawals[$w_ID]->ItemWithdrawalQuantity;
@@ -60,7 +60,7 @@ class ItemWithdrawalController extends Controller
       foreach($withdrawals as $w){
         if(!$w->ItemWithdrawalReturned){
           $w->ItemWithdrawalReturnedQuantity = 0;
-          $w->ItemWithdrawalReturnConfirmedBy = Auth::user()->UserID;
+          $w->ItemWithdrawalReturnConfirmedBy = Auth::user()->id;
           $w->ItemWithdrawalReturned = true;
           $w->save();
         }
@@ -73,7 +73,7 @@ class ItemWithdrawalController extends Controller
   {
     $withdrawal = ItemWithdrawal::find($id);
     $withdrawal->ItemWithdrawalReturnedQuantity = 0;
-    $withdrawal->ItemWithdrawalReturnConfirmedBy = Auth::user()->UserID;
+    $withdrawal->ItemWithdrawalReturnConfirmedBy = Auth::user()->id;
     $withdrawal->ItemWithdrawalReturned = true;
     $withdrawal->save();
 

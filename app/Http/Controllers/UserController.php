@@ -29,7 +29,7 @@ class UserController extends Controller
     }
 
     public function listUsers(){
-        $users = User::existing()->get();
+        $users = User::existing()->with('managedStorages')->get();
         return response()->json($users, 200);
     }
 
@@ -51,7 +51,7 @@ class UserController extends Controller
             {
                 return response()->json(['message'=>'Klaida', 'errors'=>['name'=>['Senas slaptažodis neteisingas.']]], 422);
             }
-            User::find(Auth::user()->UserID)->update(['password' => Hash::make($request->password)]);
+            User::find(Auth::user()->id)->update(['password' => Hash::make($request->password)]);
 
             return response()->json(['message'=> 'Atlikta', 'success'=>'Slaptažodis pakeistas sėkmingai.']);
         }

@@ -14,7 +14,7 @@ class ItemSuspention extends Model
       return $this->belongsTo('App\Item', 'ItemID');
     }
     public function user(){
-      return $this->hasOne('App\User', 'UserID', 'UserID');
+      return $this->hasOne('App\User', 'UserID');
     }
     public function scopeActive($query){
         return $query->where('SuspentionReturned', false);

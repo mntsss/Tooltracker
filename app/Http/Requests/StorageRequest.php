@@ -25,16 +25,18 @@ class StorageRequest extends FormRequest
     {
         return [
           'id' => 'sometimes|numeric|exists:storages,id',
-          'name' => 'sometimes|string|max:40|min:3',
+          'name' => 'required|string|max:40|min:3',
         ];
     }
 
     public function messages()
     {
-      'id.numeric' => 'Įvyko klaida!',
-      'id.exists' => 'Sandėlis nerastas!',
-      'name.string' => 'Sandėlio pavadinimas netinkamas.',
-      'name.max' => 'Sandėlio pavadinimas negali viršyti 40 simbolių.',
-      'name.min' => 'Sandėlio pavadinimas negali būti trumpesnis nei 3 simboliai.',
+      return [
+        'id.numeric' => 'Įvyko klaida!',
+        'id.exists' => 'Sandėlis nerastas!',
+        'name.required' => 'Sandėlio pavadinimas neįvestas!',
+        'name.max' => 'Sandėlio pavadinimas negali viršyti 40 simbolių.',
+        'name.min' => 'Sandėlio pavadinimas negali būti trumpesnis nei 3 simboliai.',
+      ];
     }
 }

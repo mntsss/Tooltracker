@@ -74769,6 +74769,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -74781,6 +74782,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         allowClose: {
             required: false,
             type: Boolean
+        },
+        onClose: {
+            required: false
         }
     },
     computed: {},
@@ -74809,7 +74813,8 @@ var render = function() {
         scrollable: true,
         transition: "pop-out",
         pivotY: 0.3,
-        clickToClose: _vm.allowClose
+        clickToClose: _vm.allowClose,
+        beforeClose: _vm.onClose
       },
       on: { closed: _vm.closed }
     },
@@ -97003,6 +97008,8 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__modals_storage_create_vue__ = __webpack_require__(329);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__modals_storage_create_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__modals_storage_create_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modules_InfoTile_vue__ = __webpack_require__(332);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modules_InfoTile_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__modules_InfoTile_vue__);
 //
 //
 //
@@ -97020,6 +97027,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -97028,8 +97068,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.$contentLoadingHide();
     },
 
+    computed: {
+        storages: function storages() {
+            return this.$store.state.storage.storageList;
+        }
+    },
     components: {
-        createModal: __WEBPACK_IMPORTED_MODULE_0__modals_storage_create_vue___default.a
+        createModal: __WEBPACK_IMPORTED_MODULE_0__modals_storage_create_vue___default.a,
+        infoTile: __WEBPACK_IMPORTED_MODULE_1__modules_InfoTile_vue___default.a
     }
 });
 
@@ -97080,6 +97126,119 @@ var render = function() {
                 )
               ])
             : _vm._e()
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-layout",
+        [
+          _c(
+            "v-expansion-panel",
+            _vm._l(_vm.storages, function(storage, i) {
+              return _c(
+                "v-expansion-panel-content",
+                { key: i },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "h5",
+                      attrs: { slot: "header" },
+                      slot: "header"
+                    },
+                    [
+                      _vm._v(
+                        "\n               " +
+                          _vm._s(storage.name) +
+                          "\n           "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-card",
+                    [
+                      _c("v-card-text", [
+                        _c("div", { staticClass: "container" }, [
+                          _c("div", { staticClass: "row equal" }, [
+                            _c(
+                              "div",
+                              { staticClass: "col-sm-3 col-6 px-1 d-flex" },
+                              [
+                                _c("infoTile", {
+                                  attrs: {
+                                    icon: "fa-toolbox",
+                                    color: "success",
+                                    text: "Įrankiai",
+                                    number: "85"
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "col-sm-3 col-6 px-1 d-flex" },
+                              [
+                                _c("infoTile", {
+                                  attrs: {
+                                    icon: "fa-toolbox",
+                                    color: "warning",
+                                    text: "Naudojami įrankiai",
+                                    number: "52"
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "col-sm-3 col-6 px-1 d-flex" },
+                              [
+                                _c("infoTile", {
+                                  attrs: {
+                                    icon: "fa-wrench",
+                                    color: "primary",
+                                    text: "Taisomi įrankiai",
+                                    number: "5"
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "col-sm-3 col-6 px-1 d-flex" },
+                              [
+                                _c("infoTile", {
+                                  attrs: {
+                                    icon: "fa-flag",
+                                    color: "danger",
+                                    text: "Laukia patvirtinimo",
+                                    number: "3"
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          ])
+                        ]),
+                        _vm._v(
+                          "\n               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+                        )
+                      ])
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            })
+          )
         ],
         1
       )
@@ -98457,7 +98616,25 @@ var storageModule = {
       }
 
       return LOAD_STORAGE;
-    }()
+    }(),
+    CREATE_STORAGE: function CREATE_STORAGE(_ref6, _ref7) {
+      var commit = _ref6.commit,
+          dispatch = _ref6.dispatch;
+      var data = _ref7.data;
+
+      return __WEBPACK_IMPORTED_MODULE_1__api__["a" /* axios */].post(__WEBPACK_IMPORTED_MODULE_1__api__["b" /* endpoints */].storageCreate(), data).then(function (response) {
+        dispatch('LOAD_STORAGE_LIST');
+      });
+    },
+    RENAME_STORAGE: function RENAME_STORAGE(_ref8, _ref9) {
+      var commit = _ref8.commit,
+          dispatch = _ref8.dispatch;
+      var data = _ref9.data;
+
+      return __WEBPACK_IMPORTED_MODULE_1__api__["a" /* axios */].post(__WEBPACK_IMPORTED_MODULE_1__api__["b" /* endpoints */].storageEdit(), data).then(function (response) {
+        dispatch('LOAD_STORAGE_LIST');
+      });
+    }
   }
 };
 /* harmony default export */ __webpack_exports__["a"] = (storageModule);
@@ -101400,6 +101577,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return this.name.length > 3;
         }
     },
+    methods: {
+        save: function save() {
+            var data = { name: this.name };
+            this.$store.dispatch('storage/CREATE_STORAGE', { data: data });
+            this.$modal.hide('add-storage-modal');
+        },
+        clear: function clear() {
+            this.name = "";
+        }
+    },
     components: {
         Modal: __WEBPACK_IMPORTED_MODULE_0__Modal_vue___default.a
     }
@@ -101415,7 +101602,14 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "Modal",
-    { attrs: { modal_name: "add-storage-modal" } },
+    {
+      attrs: { modal_name: "add-storage-modal" },
+      on: {
+        closed: function($event) {
+          _vm.clear()
+        }
+      }
+    },
     [
       _c("span", { attrs: { slot: "header" }, slot: "header" }, [
         _vm._v("\n        Pridėti sandėlį\n    ")
@@ -101446,7 +101640,11 @@ var render = function() {
             "v-btn",
             {
               attrs: { disabled: !_vm.valid },
-              on: { click: function($event) {} }
+              on: {
+                click: function($event) {
+                  _vm.save()
+                }
+              }
             },
             [_vm._v("Pridėti")]
           )
@@ -101464,6 +101662,157 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-057da46c", module.exports)
+  }
+}
+
+/***/ }),
+/* 332 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(333)
+/* template */
+var __vue_template__ = __webpack_require__(334)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\storage\\modules\\InfoTile.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-608b13e9", Component.options)
+  } else {
+    hotAPI.reload("data-v-608b13e9", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 333 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    icon: {
+      required: true,
+      type: String
+    },
+    color: {
+      required: true,
+      type: String
+    },
+    text: {
+      required: true,
+      type: String
+    },
+    number: {
+      required: true,
+      type: String
+    }
+  },
+  data: function data() {
+    return {
+      tile_icon: this.icon,
+      tile_icon_color: this.color,
+      tile_text: this.text,
+      tile_number: this.number
+    };
+  }
+});
+
+/***/ }),
+/* 334 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-card",
+    {
+      staticClass: "border d-flex align-items-stretch flex-column flex-wrap",
+      attrs: { tile: "" }
+    },
+    [
+      _c(
+        "v-card-title",
+        { staticClass: "justify-center" },
+        [
+          _c(
+            "v-icon",
+            { attrs: { "x-large": "", color: _vm.tile_icon_color } },
+            [_vm._v("\n      " + _vm._s(_vm.tile_icon) + "\n    ")]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("v-card-text", [
+        _c("div", { staticClass: "text-center" }, [
+          _vm._v("\n      " + _vm._s(_vm.tile_text) + "\n    ")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "display-1 primary--text text-center" }, [
+          _vm._v("\n      " + _vm._s(_vm.tile_number) + "\n    ")
+        ])
+      ])
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-608b13e9", module.exports)
   }
 }
 

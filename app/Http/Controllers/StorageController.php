@@ -21,7 +21,7 @@ class StorageController extends Controller
     public function create(StorageRequest $request)
     {
       $storage = new Storage();
-      $storage->fill($request)->save();
+      $storage->fill($request->all())->save();
 
       return response()->json(["message" => "Atlikta!", "success" => "Sandėlis sėkmingai pridėtas."], 200);
     }

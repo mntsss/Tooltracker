@@ -24,7 +24,7 @@ class ObjectForemanRequest extends FormRequest
     public function rules()
     {
         return [
-            'userID' => 'required|numeric|exists:users,UserID',
+            'userID' => 'required|numeric|exists:users,id',
             'objectID' => 'required|numeric|exists:objects,ObjectID'
         ];
     }

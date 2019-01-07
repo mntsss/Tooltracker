@@ -18,7 +18,7 @@ class ReceivedCode implements ShouldBroadcast
 
 
     public $code;
-    public $userID;
+    public $user_id;
     /**
      * Create a new event instance.
      *
@@ -27,7 +27,7 @@ class ReceivedCode implements ShouldBroadcast
     public function __construct($c, $u)
     {
       $this->code = $c;
-      $this->userID = $u;
+      $this->user_id = $u;
     }
 
     /**

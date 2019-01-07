@@ -6,6 +6,7 @@
          transition="pop-out"
          :pivotY="0.3"
          :clickToClose="allowClose"
+         :beforeClose="onClose"
          @closed="closed">
 
 
@@ -35,6 +36,9 @@ export default {
         allowClose:{
             required: false,
             type: Boolean
+        },
+        onClose: {
+          required: false
         }
     },
     computed: {

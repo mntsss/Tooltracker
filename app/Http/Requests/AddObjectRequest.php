@@ -25,7 +25,7 @@ class AddObjectRequest extends FormRequest
      {
          return [
            'name' => 'required|string|min:3|max:125',
-           'user' => 'required|exists:users,UserID'
+           'user' => 'required|exists:users,id'
          ];
      }
      public function messages(){

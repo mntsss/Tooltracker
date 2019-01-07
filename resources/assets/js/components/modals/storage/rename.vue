@@ -1,11 +1,11 @@
 <template>
-    <Modal modal_name="add-storage-modal" v-on:closed = "clear()">
+    <Modal modal_name="rename-storage-modal" v-on:closed = "clear()">
         <span slot="header">
-            Pridėti sandėlį
+            Pervadinti sandėlį
         </span>
         <v-form slot="content">
             <v-text-field v-model="name" prepend-icon="fa-warehouse" :max = "max" required name="name" label="Pavadinimas"></v-text-field>
-            <v-btn @click="save()" :disabled="!valid">Pridėti</v-btn>
+            <v-btn @click="save()" :disabled="!valid">Pervadinti</v-btn>
         </v-form>
     </Modal>
 </template>
@@ -14,11 +14,24 @@
     import Modal from './../Modal.vue';
     export default {
         name: "create",
+        props: {
+          storage_name: {
+            required: true,
+            type: String
+          },
+          storage_id: {
+            required: true,
+            type: Number
+          }
+        },
         data(){
             return {
                 name: "",
                 max: 40
             }
+        },
+        mounted(){
+          this.name = this.storage_name;
         },
         computed:{
             valid(){
@@ -27,9 +40,9 @@
         },
         methods:{
           save: function(){
-            const data = {name: this.name};
-            this.$store.dispatch('storage/CREATE_STORAGE', {data});
-            this.$modal.hide('add-storage-modal');
+            const data = {name: this.name, id: this.storage_id};
+            this.$store.dispatch('storage/RENAME_STORAGE', {data});
+            this.$modal.hide('rename-storage-modal');
           },
           clear: function(){
             this.name = "";

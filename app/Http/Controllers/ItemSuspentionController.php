@@ -86,7 +86,7 @@ class ItemSuspentionController extends Controller
         $withdrawal->ItemWithdrawalReturned = true;
         $withdrawal->ItemWithdrawalReturnedQuantity = $withdrawal->ItemWithdrawalQuantity;
         $withdrawal->ItemWithdrawalReturnConfirmCard = $request->code;
-        $withdrawal->ItemWithdrawalReturnConfirmedBy = Auth::user()->UserID;
+        $withdrawal->ItemWithdrawalReturnConfirmedBy = Auth::user()->id;
         $withdrawal->save();
       }
       return response()->json(['message' => 'Atlikta', 'success' => 'Įrankio įšaldymas panaikintas, įrankis grąžintas į sandėlį.'], 200);

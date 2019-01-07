@@ -19,7 +19,7 @@ class ActionRecorderService
   private function checkUser($user_id):int
   {
     if(!$user_id)
-      return Auth::user()->UserID;
+      return Auth::user()->id;
     return $user_id;
   }
 

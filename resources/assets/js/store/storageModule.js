@@ -23,7 +23,19 @@ const storageModule = {
     LOAD_STORAGE: async function({commit}, {id}){
       return axios.get(endpoints.storageGet(id)).then(response => {
         commit("setStorage", response.data);
-      })
+      });
+    },
+    CREATE_STORAGE: function ({commit, dispatch}, {data}){
+      return axios.post(endpoints.storageCreate(), data).then( response =>
+      {
+        dispatch('LOAD_STORAGE_LIST');
+      });
+    },
+    RENAME_STORAGE: function ({commit, dispatch}, {data}){
+      return axios.post(endpoints.storageEdit(), data).then( response =>
+      {
+        dispatch('LOAD_STORAGE_LIST');
+      });
     }
   }
 }

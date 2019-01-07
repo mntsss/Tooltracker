@@ -18,7 +18,7 @@ class ItemWithdrawal extends Model
         return $this->hasOne('App\ItemImage', 'ItemWithdrawalID', 'ItemWithdrawalID');
     }
     public function user(){
-      return $this->hasOne('App\User', 'UserID', 'UserID');
+      return $this->hasOne('App\User', 'UserID');
     }
     public function object(){
       return $this->hasOne('App\CObject', 'ObjectID', 'ObjectID');

@@ -15,7 +15,7 @@ class ObjectForeman extends Model
     }
 
     public function user(){
-        return $this->hasOne('App\User', 'UserID', 'UserID');
+        return $this->hasOne('App\User', 'UserID');
     }
 
     public function scopeActive($query){

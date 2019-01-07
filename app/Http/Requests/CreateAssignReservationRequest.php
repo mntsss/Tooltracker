@@ -22,7 +22,7 @@ class CreateAssignReservationRequest extends FormRequest
             'items' => 'required',
             'items.*.item.ItemID' => 'required|exists:items,ItemID',
             'user' => 'required',
-            'user.UserID' => 'exists:users,UserID'
+            'user.UserID' => 'exists:users,id'
         ];
     }
     public function messages(){

@@ -25,7 +25,7 @@ class ReservationController extends Controller
     public function create(CreateReservationRequest $request){
 
       $reservation = Reservation::create([
-        'UserID' => Auth::user()->UserID,
+        'UserID' => Auth::user()->id,
         'ObjectID' => $request->objectID,
         'ReservationRecipientUserID' => $request->userID
       ]);
@@ -70,7 +70,7 @@ class ReservationController extends Controller
     }
 
     public function list(){
-      $reservations = Reservation::Active()->where('UserID', Auth::user()->UserID)->with(['items' => function($query){
+      $reservations = Reservation::Active()->where('UserID', Auth::user()->id)->with(['items' => function($query){
         $query->with(['item' => function($q){ $q->with('itemGroup');}]);
     }, 'cobject' => function($query){ $query->with(['foremen' => function($q){
       $q->with('user');
@@ -186,7 +186,7 @@ class ReservationController extends Controller
     }
     public function createAssignmentReservation(CreateReservationRequest $request){
         $reservation = Reservation::create([
-            'UserID' => Auth::user()->UserID,
+            'UserID' => Auth::user()->id,
             'ReservationRecipientUserID' => $request->userID
         ]);
 

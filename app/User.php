@@ -10,7 +10,6 @@ class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
 
-    protected $primaryKey = "UserID";
     protected $fillable = [
         'email', 'Username', 'UserPhone','password', 'UserLastSeen', 'UserRole', 'UserDeleted', 'UserRFIDCode'];
 
@@ -38,6 +37,10 @@ class User extends Authenticatable implements JWTSubject
     }
     public function reservations(){
         return $this->hasMany('App\Reservation', 'UserID');
+    }
+
+    public function managedStorages(){
+      return $this->belongsToMany('App\Storage', 'storage_managers');
     }
 
     /**
