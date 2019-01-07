@@ -190,6 +190,14 @@ const routes = [
         auth: true
     }
 },
+    {
+        path: '/storages',
+        name: 'storages',
+        component: require('./components/storage/Storage'),
+        meta:{
+            auth: true
+        }
+    },
 ]
 
 export default routes

@@ -23,7 +23,7 @@ class CreateItemsTable extends Migration
             $table->integer('group_id')->nullable();
             $table->integer('storage_id')->nullable();
             $table->string('identification')->nullable();
-            $table->string('status')->default(Item::ITEM_IN_STORAGE);
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

@@ -172,9 +172,6 @@ export default{
     mounted(){
         this.loadObjects();
     },
-    computed: {
-
-    },
     methods: {
         loadObjects: function(){
             this.$http.get('object/list').then((response)=>{
