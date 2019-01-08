@@ -39,7 +39,21 @@
                        </div>
                      </div>
                    </div>
-                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-card-text>
+                   <div class="row" v-if="storage.managers.length > 0">
+                     <div class="card">
+                       <div class="card-header text-center">
+                         Sandėlio vadybininkai
+                       </div>
+                       <div class="card-body">
+                         <div class="row mx-0" v-for="(manager, i) in storage.managers" :key = "i">
+                           <div class="h5 px-2 border border-primary">
+                             {{manager.Username}}
+                           </div>
+                         </div>
+                       </div>
+                     </div>
+                   </div>
+                 </v-card-text>
                </v-card>
              </v-expansion-panel-content>
            </v-expansion-panel>

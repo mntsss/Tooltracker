@@ -10,7 +10,7 @@ class StorageController extends Controller
 
     public function list()
     {
-      return response()->json(Storage::active()->get());
+      return response()->json(Storage::active()->with('managers')->get());
     }
 
     public function get(Storage $storage)
