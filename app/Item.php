@@ -77,7 +77,7 @@ class Item extends Model
     }
 
     public function images(){
-        return $this->hasMany('App\ItemImage', 'ItemID', 'ItemID')->orderBy('created_at', 'DESC');
+        return $this->hasMany('App\ItemImage')->orderBy('created_at', 'DESC');
     }
     public function withdrawals(){
       return $this->hasMany('App\ItemWithdrawal', 'ItemID');

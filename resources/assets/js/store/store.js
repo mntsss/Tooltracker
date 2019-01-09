@@ -17,7 +17,7 @@ const modules = {
     'storage': StorageModule,
     'main': MainModule,
     'item': ItemModule,
-}
+};
 const store = new Vuex.Store({
     modules: modules,
     state: {

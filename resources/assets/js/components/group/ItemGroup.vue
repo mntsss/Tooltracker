@@ -24,7 +24,7 @@
           </v-flex>
       </v-layout>
       <div class="card-body" v-if="items.length > 0">
-        <router-link tag="div" class="row mx-0 remove-side-margin cursor-pointer" :to="{ name: 'item', params: { itemProp: item}}" v-for="item in items" :key="item.id">
+        <router-link tag="div" class="row mx-0 remove-side-margin cursor-pointer" :to="{ name: 'item', params: { itemID: item.id}}" v-for="item in items" :key="item.id">
           <div class="col-6">
             {{item.name}}
           </div>
