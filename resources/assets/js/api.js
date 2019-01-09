@@ -5,6 +5,7 @@ import VueAxios from 'vue-axios';
 import userEndpoints from './api/user';
 import historyEndpoints from './api/history';
 import storageEndpoints from './api/storage';
+import groupEndpoints from './api/group';
 import reservationEndpoints from './api/reservation';
 import statistics from './api/statistics';
 
@@ -26,7 +27,8 @@ const endpoints = {
   ...historyEndpoints,
   ...storageEndpoints,
   ...reservationEndpoints,
-  ...statistics
+  ...statistics,
+  ...groupEndpoints
 };
 
 export default axios;

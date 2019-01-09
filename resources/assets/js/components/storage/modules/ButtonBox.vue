@@ -1,6 +1,6 @@
 <template>
     <div class="btn-container--width-300">
-        <v-btn class="w-100 mx-0" outline color="primary" @click="closeObject(object)">
+        <v-btn class="w-100 mx-0" outline color="primary" @click="items()">
             <v-icon class="px-2">fa-toolbox</v-icon>
             Įrankiai
         </v-btn>
@@ -31,6 +31,10 @@
         methods: {
             renameStorage: function(){
                 this.$eventBus.$emit('rename_storage_modal', {id: this.storage.id, name: this.storage.name});
+            },
+            items: function(){
+              this.$store.dispatch('storage/LOAD_STORAGE', {id: this.storage.id});
+              this.$router.push({name: 'groups', params: {storage_id: this.storage.id}});
             }
         }
     }

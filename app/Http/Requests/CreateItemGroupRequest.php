@@ -24,7 +24,8 @@ class CreateItemGroupRequest extends FormRequest
     public function rules()
     {
         return [
-          'name' => 'required|string|min:3|max:50|unique:item_groups,ItemGroupName',
+          'name' => 'required|string|min:3|max:50',
+          'storage_id' => 'sometimes|numeric|exists:storages,id',
           'image' => 'nullable',
           'image.dataUrl' => 'sometimes|string|max:500000',
           'image.name' => 'sometimes|string|max:128'
@@ -37,6 +38,7 @@ class CreateItemGroupRequest extends FormRequest
         'name.min' => 'Grupės pavadinimas negali būti trumpesnis nei 3 simboliai.',
         'name.max' => 'Grupės pavadinimas negali būti ilgesnis nei 50 simboliai.',
         'name.unique' => 'Įrankių grupė tokiu pavadinimu jau yra.',
+        'storage_id.exists' => 'Klaida identifikuojant sandėlį.',
         'image.dataUrl.max' => 'Nuotraukos dydis per didelis. Kameros nustatymuose sumažinkite nuotraukų dimensijas ar kokybę.',
         'image.name.max' => 'Nuotraukos pavadinimo formatas netinkamas.'
       ];

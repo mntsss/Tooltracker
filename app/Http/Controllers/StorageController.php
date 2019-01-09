@@ -13,9 +13,10 @@ class StorageController extends Controller
       return response()->json(Storage::active()->with('managers')->get());
     }
 
-    public function get(Storage $storage)
+    public function get(int $id)
     {
-      return response()->json($storage->groups());
+      $storage = Storage::with('groups')->find($id);
+      return response()->json($storage);
     }
 
     public function create(StorageRequest $request)

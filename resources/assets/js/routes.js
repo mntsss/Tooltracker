@@ -11,6 +11,7 @@ const routes = [
     path: '/groups',
     name: 'groups',
     component: require('./components/group/Groups'),
+    props: true,
     meta: {
       auth: true
     }

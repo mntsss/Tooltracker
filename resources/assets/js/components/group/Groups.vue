@@ -1,9 +1,9 @@
 <template>
-  <div class="container" style="overflow: auto !important">
+  <div class="container" style="overflow: auto !important" v-if="storage">
     <CreateGroup></CreateGroup>
     <v-layout row mx-0 mx-0 mb-3 align-center justify-center class="primary">
-        <v-flex shrink headline class="text-white">
-            Įrankių grupės
+        <v-flex shrink headline class="text-white text-center">
+            Sandėlio <u>{{storage.name}}</u> grupės
         </v-flex>
     </v-layout>
     <div class="item-box-panel" @click="$modal.show('create-group-modal')" v-if="$user.UserRole =='Administratorius'">
@@ -11,46 +11,44 @@
             <span class="fas fa-plus text-success"></span>
         </div>
     </div>
-    <router-link tag="div" class="item-box-panel" :to="{ path: '/group/'+group.ItemGroupID}" v-for="group in itemGroups" :key="group.ItemGroupID">
-        <div class="item-image-box" v-if="group.ItemGroupImage">
-            <img :src="group.ItemGroupImage" alt="item-img" class="item-img"/>
-        </div>
-        <div class="item-image-box" v-if="!group.ItemGroupImage">
-          <div class="item-noimg">
-              <span class="far fa-folder-open text-warning"></span>
-          </div>
-        </div>
-        <div class="row mx-0 item-name-field ma-0">
-              {{group.ItemGroupName}}
-        </div>
-    </router-link>
+    <group-card :group="group" v-for="(group, i) in storage.groups" :key="i"></group-card>
   </div>
 
 </template>
 <script>
-import CreateGroup from '../modals/CreateGroup.vue';
+import CreateGroup from '../modals/group/create.vue';
+import groupCard from './modules/GroupCard.vue';
 import swal from 'sweetalert'
 export default {
-  data(){
-    return {
-      itemGroups: [],
+  props: {
+    storage_id: {
+      required: true,
+      type: Number
     }
   },
   created(){
-    this.loadGroups()
+    //this.loadGroups()
+    this.$contentLoadingHide();
   },
   updated(){
     this.equalizeHeigth()
   },
+  computed:{
+    storage: function (){
+      return this.$store.state.storage.storage;
+    }
+  },
   methods: {
     loadGroups: function(){
-      this.$http.get('/group/list').then((response)=>{
-        if(response.status == 200)
-          this.itemGroups = response.data;
-          this.$contentLoadingHide()
-      }).catch(error => {
-          swal('Klaida', error.response.data.message, 'error')
-      })
+      if(!this.storage){
+        this.$store.dispatch('storage/LOAD_STORAGE', {id: this.storage_id});
+      }
+      else
+      if(this.storage_id != this.storage.id)
+      {
+        this.$store.dispatch('storage/LOAD_STORAGE', {id: this.storage_id});
+      }
+
     },
     equalizeHeigth: function(){
       var boxes = document.getElementsByClassName("item-box-panel");
@@ -66,7 +64,8 @@ export default {
     }
   },
   components: {
-    CreateGroup
+    CreateGroup,
+    groupCard
   }
 }
 </script>

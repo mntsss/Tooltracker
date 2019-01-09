@@ -71,8 +71,12 @@ export default {
       if(storageList.length > 0)
       {
         const meniuStorageArray = [];
-        storageList.forEach(function(storage, i){
-          meniuStorageArray.push({icon: 'keyboard_arrow_right', text: storage.name, click: ()=> {this.$router.push({name: 'groups'})}})
+        storageList.forEach((storage, i) => {
+          meniuStorageArray.push({icon: 'keyboard_arrow_right', text: storage.name, click: ()=> {
+            this.$store.dispatch('storage/LOAD_STORAGE', {id: storage.id});
+            if(window.innerWidth < 768)
+              this.$eventBus.$emit("sidebar_event", false);
+            this.$router.push({name: 'groups', params: {storage_id: storage.id}})}});
         });
         return meniuStorageArray;
       }

@@ -21,8 +21,8 @@ Vue.use(vmodal);
 Vue.use(VueSignaturePad);
 Vue.use(Vuetify, {
   theme: {
-    primary: '#00768E',
-    secondary: '#c4c4c4',
+    primary: '#0055AA',
+    secondary: '#E9BF8C',
     accent: '#8c9eff',
     error: '#DC3545'
   }});

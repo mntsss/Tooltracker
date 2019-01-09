@@ -30,7 +30,7 @@
         <Sidebar :show = "drawer"></Sidebar>
       <v-toolbar app fixed clipped-left v-if="$auth.check() && $user" class="white">
         <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-        <v-toolbar-title><a href="/"><img src="/media/logo.png" alt="logo" class="logo mx-4"/></a></v-toolbar-title>
+        <v-toolbar-title class="mx-0 mx-sm-4"><a href="/"><img src="/media/logo.png" alt="logo" class="logo"/></a></v-toolbar-title>
         <SearchBox></SearchBox>
         <v-spacer></v-spacer>
         <v-menu offset-y v-if="$user.UserRole =='Administratorius'">

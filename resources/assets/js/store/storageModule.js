@@ -36,6 +36,12 @@ const storageModule = {
       {
         dispatch('LOAD_STORAGE_LIST');
       });
+    },
+    CREATE_GROUP: function ({state, dispatch}, {data}){
+      return axios.post(endpoints.groupCreate(), data).then( response =>
+      {
+        dispatch('LOAD_STORAGE', {id: state.storage.id});
+      });
     }
   }
 }

@@ -30,7 +30,8 @@ class ItemGroupController extends Controller
 
       ItemGroup::create([
         'ItemGroupName' => $request->name,
-        'ItemGroupImage' => $image
+        'ItemGroupImage' => $image,
+        'storage_id' => $request->storage_id
       ]);
       return response()->json(['message' => 'Atlikta!', 'success' => 'Nauja grupė sėkmingai sukurta.'], 200);
 
