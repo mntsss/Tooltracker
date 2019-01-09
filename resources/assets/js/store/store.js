@@ -6,6 +6,7 @@ import ClosedReservationsModule from './closedReservationsModule';
 import HistoryModule from './historyModule';
 import StorageModule from './storageModule';
 import MainModule from './mainModule';
+import ItemModule from './itemModule';
 
 Vue.use(Vuex);
 
@@ -15,6 +16,7 @@ const modules = {
     'history': HistoryModule,
     'storage': StorageModule,
     'main': MainModule,
+    'item': ItemModule,
 }
 const store = new Vuex.Store({
     modules: modules,

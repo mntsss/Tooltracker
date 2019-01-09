@@ -54,6 +54,7 @@ export default {
             image: this.image
         }).then((response)=>{
             if(response.status == 200){
+                this.$store.dispatch('storage/LOAD_STORAGE', {id: this.$store.state.storage.storage.id});
                 this.$modal.hide('change-group-image-modal')
                 swal(response.data.message, response.data.success, "success")
             }
