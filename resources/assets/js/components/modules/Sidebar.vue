@@ -90,7 +90,7 @@ export default {
             {icon: 'keyboard_arrow_right', text: 'Ištrinti', click: ()=> {this.$router.push({name: 'deletedItems'})}}
           ]
         },
-        {
+        /*{
           icon: 'fa-briefcase',
           'icon-alt': 'keyboard_arrow_down',
           text: 'Objektai',
@@ -99,7 +99,8 @@ export default {
             { icon: 'keyboard_arrow_right', text: 'Aktyvūs', click: ()=> { this.$router.push({name: 'objects'})} },
             { icon: 'keyboard_arrow_right', text: 'Uždaryti', click: ()=>{ this.$router.push({name: 'closedObjects'})}}
           ]
-        },
+        },*/
+        {icon: 'fa-warehouse', text: 'Sandėliai', click: ()=>{this.$router.push({name:'storages'})}},
         {
           icon: 'fa-shipping-fast',
           'icon-alt': 'keyboard_arrow_down',
