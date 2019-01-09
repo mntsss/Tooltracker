@@ -14,24 +14,19 @@
     import Modal from './../Modal.vue';
     export default {
         name: "create",
-        props: {
-          storage_name: {
-            required: true,
-            type: String
-          },
-          storage_id: {
-            required: true,
-            type: Number
-          }
-        },
         data(){
             return {
                 name: "",
+                id: null,
                 max: 40
             }
         },
         mounted(){
-          this.name = this.storage_name;
+          this.$eventBus.$on('rename_storage_modal', (payload) => {
+              this.name = payload.name;
+              this.id = payload.id;
+              this.$modal.show('rename-storage-modal');
+          });
         },
         computed:{
             valid(){
@@ -40,12 +35,13 @@
         },
         methods:{
           save: function(){
-            const data = {name: this.name, id: this.storage_id};
+            const data = {name: this.name, id: this.id};
             this.$store.dispatch('storage/RENAME_STORAGE', {data});
             this.$modal.hide('rename-storage-modal');
           },
           clear: function(){
             this.name = "";
+            this.id = null;
           }
         },
         components:
