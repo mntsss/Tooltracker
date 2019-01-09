@@ -96,7 +96,7 @@ export default {
               {text: 'Įrankių grąžinimas', click: ()=>{ this.$router.push({name: 'return'})}},
             ],
             settingsDropdownMeniu: [
-              {text: 'Sandėliai', click: ()=>{this.$router.push({name:'storages'})}},
+              /*{text: 'Sandėliai', click: ()=>{this.$router.push({name:'storages'})}},*/
               {text: 'Mano įrankiai', click: ()=>{this.$router.push({name:'userWithdrawals', params: {userID: this.$user.UserID}})}},
               {text: 'Keisti slaptažodį', click: () =>{ this.$modal.show('change-password-modal')}},
               {text: 'Atsijungti', click: ()=>{ this.$store.commit('setUser', null); this.$auth.logout()}},

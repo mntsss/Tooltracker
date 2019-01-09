@@ -11,10 +11,10 @@ class ItemSuspention extends Model
     protected $fillable = ['SuspentionWarrantyFix', 'SuspentionUnwarrantedFix', 'SuspentionReturned', 'SuspentionNote', 'UserID','SuspentionConfirmCode', 'SuspentionWarningShowed', 'SuspentionUnconfirmedReturn', 'ItemID'];
 
     public function item(){
-      return $this->belongsTo('App\Item', 'ItemID');
+      return $this->belongsTo('App\Item', 'id', 'ItemID');
     }
     public function user(){
-      return $this->hasOne('App\User', 'UserID');
+      return $this->hasOne('App\User', 'id', 'UserID');
     }
     public function scopeActive($query){
         return $query->where('SuspentionReturned', false);
