@@ -25,7 +25,7 @@ class WithdrawalReturnRequest extends FormRequest
     {
         return [
             'id' => 'required|exists:item_withdrawals,ItemWithdrawalID',
-            'code' => 'required|exists:users,UserRFIDCode',
+            'code' => 'required|exists:users,code',
             'quantity' => 'required|numeric|min:1'
         ];
     }

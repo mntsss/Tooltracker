@@ -25,7 +25,7 @@ class ConfirmCardReservationRequest extends FormRequest
      {
          return [
            'id' => 'required',
-           'code' => 'required|string|max:30|exists:users,UserRFIDCode',
+           'code' => 'required|string|max:30|exists:users,code',
          ];
      }
 

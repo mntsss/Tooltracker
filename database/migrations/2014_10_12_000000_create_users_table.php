@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->boolean('UserDeleted')->default(0);
             $table->string('UserLastSeen')->nullable();
-            $table->string('UserRFIDCode')->nullable();
+            $table->string('code')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

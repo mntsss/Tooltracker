@@ -1,29 +1,16 @@
 <template>
     <Modal modal_name="waiting-image-modal" :allowClose='false' v-on:closed="imageDialogClosed()">
         <div slot="header" v-if="newItem.item">
-            {{newItem.item.ItemName}}
+            {{newItem.item.name}}
         </div>
         <div slot="content" v-if="newItem.item">
-            <v-layout justify-center class="border border-primary" row mx-0 wrap v-if="newItem.item.ItemConsumable">
+            <v-layout justify-center class="border border-primary" row mx-0 wrap v-if="newItem.item.consumable">
                 <v-flex shrink>
                     <v-text-field type="number" v-model="quantity" label="Kiekis" placeholder="Paimamas kiekis"></v-text-field>
                 </v-flex>
             </v-layout>
-            <v-layout row mx-0 align-center justify-center v-if="!newItem.item.ItemConsumable">
+            <v-layout row mx-0 align-center justify-center v-if="!newItem.item.consumable">
               <v-flex grow>
-                <v-tabs
-                  color="primary"
-                  dark
-                  slider-color="yellow"
-                  grow
-                >
-                  <v-tab ripple>
-                    Įkelti nuotrauką
-                  </v-tab>
-                  <v-tab ripple>
-                    Kamera
-                  </v-tab>
-                  <v-tab-item>
                     <v-card flat>
                       <v-card-text>
                         <v-layout>
@@ -37,48 +24,6 @@
                         </v-layout>
                       </v-card-text>
                     </v-card>
-                  </v-tab-item>
-                  <v-tab-item>
-                    <v-card flat>
-                      <v-card-text>
-                        <div class="container">
-                          <div class="row" v-if="!hasImage">
-                              <code v-if="device">{{ device.label }}</code>
-                              <div class="border">
-                                <web-cam ref="webcam"
-                                      height="576"
-                                      width="1024"
-                                      :deviceId="deviceId"
-                                      @started="onStarted"
-                                      @stopped="onStopped"
-                                      @error="onError"
-                                      @cameras="onCameras"
-                                      @camera-change="onCameraChange" />
-                              </div>
-
-                              <div class="row">
-                                <div class="col-md-12">
-                                  <select v-model="camera">
-                                    <option>-- Pasirinkite kamerą --</option>
-                                    <option v-for="device in devices" :key="device.deviceId" :value="device.deviceId">{{ device.label }}</option>
-                                  </select>
-                                </div>
-                                <div class="col-md-12">
-                                  <button type="button" class="btn btn-primary" @click="onCapture">Fotografuoti</button>
-                                </div>
-                            </div>
-                          </div>
-                            <div class="row" v-if="hasImage">
-                              <h2>Nuotrauka</h2><v-btn icon @click="resetPhoto()" class="ml-3"><v-icon class="h4 primary--text pa-2">fa-eraser</v-icon></v-btn>
-                              <figure class="figure">
-                                <img :src="newItem.image.dataUrl" class="img-responsive" />
-                              </figure>
-                            </div>
-                          </div>
-                      </v-card-text>
-                    </v-card>
-                  </v-tab-item>
-                </v-tabs>
               </v-flex>
 
 
@@ -126,7 +71,7 @@ export default{
         },
         addButtonDisabled: function(){
             if(this.forceImage)
-                if(!this.newItem.item.ItemConsumable)
+                if(!this.newItem.item.consumable)
                     return !this.hasImage
             else
                 return false

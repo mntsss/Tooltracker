@@ -73,7 +73,7 @@ class ItemSuspentionController extends Controller
 
     // marks item suspention of unconfirmed return as returned and completes item withdrawal return
     public function returnConfirmed(SuspentionRequest $request){
-      if(Auth::user()->UserRFIDCode != $request->code)
+      if(Auth::user()->code != $request->code)
         return response()->json(['message' => 'Klaida', 'errors' => ['name' => ['Nuskaityta kortelė priklauso ne jums. Nuskaitykite savo kortelę.']]], 422);
       $suspention = ItemSuspention::where('ItemID', $request->id)->orderBy('created_at', 'DESC')->first();
       if($suspention)

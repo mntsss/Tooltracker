@@ -59,8 +59,8 @@
                                             </v-flex>
                                             <v-flex px-2 shrink>Priskirta identifikacinė kortelė:</v-flex>
                                             <v-flex px-2>
-                                              <v-icon headline class="text-success" v-if="user.UserRFIDCode">fa-check</v-icon>
-                                              <v-icon headline class="text-warning" v-else-if="user.UserRFIDCode == null">fa-times</v-icon>
+                                              <v-icon headline class="text-success" v-if="user.code">fa-check</v-icon>
+                                              <v-icon headline class="text-warning" v-else>fa-times</v-icon>
                                             </v-flex>
                                         </v-layout>
                                         <v-layout row mx-0 wrap align-center pa-2 justify-end v-if="$user.UserRole == 'Administratorius'">

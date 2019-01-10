@@ -15,7 +15,7 @@ class ItemWithdrawalController extends Controller
   }
 
   public function return(WithdrawalReturnRequest $request){
-    if($request->code != Auth::user()->UserRFIDCode){
+    if($request->code != Auth::user()->code){
       return response()->json(['message'=>'Klaida!', 'error'=>['name'=>['Įrankio grąžinimas turi būti patvirtintas Jūsų (administratoriaus) kortele!']]]);
     }
     $withdrawal = ItemWithdrawal::find($request->id);

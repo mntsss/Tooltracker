@@ -3,7 +3,7 @@
     <CreateGroup></CreateGroup>
     <v-layout row mx-0 mx-0 mb-3 align-center justify-center class="primary">
         <v-flex shrink headline class="text-white text-center">
-            Sandėlio <u>{{storage.name}}</u> grupės
+            <u>{{storage.name}}</u> įrankių grupės
         </v-flex>
     </v-layout>
     <div class="item-box-panel" @click="$modal.show('create-group-modal')" v-if="$user.UserRole =='Administratorius'">

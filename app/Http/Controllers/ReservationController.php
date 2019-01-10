@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\ActionRecorderService;
+use App\Http\Services\ImageService;
+use App\Item;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateReservationRequest;
 use App\Http\Requests\ConfirmCardReservationRequest;
@@ -22,7 +25,7 @@ class ReservationController extends Controller
       $this->validationService = $validationService;
     }
 
-    public function create(CreateReservationRequest $request){
+    public function create(CreateReservationRequest $request, ImageService $imageService, ActionRecorderService $actionRecorderService){
 
       $reservation = Reservation::create([
         'UserID' => Auth::user()->id,
@@ -32,39 +35,30 @@ class ReservationController extends Controller
 
       foreach($request->items as $item){
 
-          if($item['item']['ItemDeleted']){
-              return response()->json(['message'=>'Klaida', 'errors'=> ['name' => ['Įrankis '.$item['item']['ItemName'].' yra ištrintas, ir negali būti pridėtas į rezervaciją!']]], 422);
+          if($item['item']['status'] != Item::ITEM_IN_STORAGE){
+              return response()->json(['message'=>'Klaida', 'errors'=> ['name' => ['Įrankis '.$item['item']['ItemName'].' ne sandėlyje, todėl negali būti pridėtas į rezervaciją!']]], 422);
           }
 
           $reservationItem = ReservationItem::create([
               'ReservationID' => $reservation->ReservationID,
-              'ItemID' => $item['item']['ItemID'],
+              'ItemID' => $item['item']['id'],
               'ReservationItemQuantity' => $item['quantity']
           ]);
 
-        if($item['image'] != null){
-          //get image name
-          $explExtension = explode('.', $item['image']['name']);
-          $extension = end($explExtension);
-          $imageName = $explExtension[0].'_'.time().'.'.$extension;
-          //get image code
-          $imageExpl = explode(',',$item['image']['dataUrl']);
-          $base64 = end($imageExpl);
-          //saving image as a file
+          $item = new Item();
+          $item->fill($item);
+          $actionRecorderService->record($item, Item::ITEM_RESERVED);
 
-          if(file_put_contents(public_path(env('IMAGE_UPLOAD_ROUTE')).$imageName, base64_decode($base64))){
-              if(!ItemImage::create([
-                  'ImageName' => $imageName,
-                  'ItemID' => $item['item']['ItemID'],
-                  'ReservationItemID' => $reservationItem->ReservationItemID
-              ])){
-                  return response()->json(['message'=>'Klaida', 'errors'=> ['name' => ['Įvyko klaida jungiantis į duomenų bazę. Susisiekite su administratoriumi.']]], 422);
-              }
+
+          if($item['image'] != null){
+              $name = $imageService->save($item['image']);
+              $image = new ItemImage();
+              $image->item_id = $item->id;
+              $image->reservation_item_id = $reservationItem->ReservationItemID;
+              $image->reservation_id = $reservation->ReservationID;
+              $image->name = $name;
+              $image->save();
           }
-          else {
-              return response()->json(['message'=>'Klaida', 'errors'=> ['name' => ['Įvyko klaida išsaugant nuotrauką failų sistemoje. Susisiekite su administratoriumi.']]], 422);
-          }
-        }
       }
       return response()->json(['message'=> 'Atlikta!', 'success' => 'Rezervacija sėkmingai sukurta!'],200);
     }
@@ -135,7 +129,7 @@ class ReservationController extends Controller
             return response()->json(['message'=>'Klaida', 'errors'=> ['name' => ['Rezervacija jau pristatyta! Greičiausiai kažkur įsivėlė klaida, pabandykite perkrauti puslapį.']]], 422);
 
 
-        if($request->code != $reservation->recipient[0]->UserRFIDCode)
+        if($request->code != $reservation->recipient[0]->code)
             return response()->json(['message'=>'Klaida', 'errors'=> ['name' => ['Nuskaityta neteisinga kortelė. Norėdami patvirtinti rezervaciją, nuskaitykite objekto, kuriam rezervacija sukurta, darbų vykdytojo identifikacinę kortelę.']]], 422);
         else{
             foreach($reservation->items as $item){
@@ -184,47 +178,40 @@ class ReservationController extends Controller
 
         return response()->json(['message' => 'Atlikta!', 'success' => "Rezervuoti įrankiai perduoti vartotojui ".$reservation->recipient[0]->Username.", rezervacija patvirtinta."], 200);
     }
-    public function createAssignmentReservation(CreateReservationRequest $request){
+    public function createAssignmentReservation(CreateReservationRequest $request, ImageService $imageService, ActionRecorderService $actionRecorderService){
         $reservation = Reservation::create([
             'UserID' => Auth::user()->id,
             'ReservationRecipientUserID' => $request->userID
         ]);
 
-        foreach($request->items as $item){
-            if($item['item']['ItemDeleted']){
-                return response()->json(['message'=>'Klaida', 'errors'=> ['name' => ['Įrankis '.$item['item']['ItemName'].' yra ištrintas, ir negali būti pridėtas į rezervaciją!']]], 422);
+        foreach($request->items as $item) {
+
+            if ($item['item']['status'] != Item::ITEM_IN_STORAGE) {
+                return response()->json(['message' => 'Klaida', 'errors' => ['name' => ['Įrankis ' . $item['item']['ItemName'] . ' ne sandėlyje, todėl negali būti pridėtas į rezervaciją!']]], 422);
             }
 
             $reservationItem = ReservationItem::create([
                 'ReservationID' => $reservation->ReservationID,
-                'ItemID' => $item['item']['ItemID'],
+                'ItemID' => $item['item']['id'],
                 'ReservationItemQuantity' => $item['quantity']
             ]);
+            //dd($item['item']);
+            $itemTemp = new Item();
+            $itemTemp->fill($item['item']);
+            $itemTemp->id = $item['item']['id'];
+            $actionRecorderService->record($itemTemp, Item::ITEM_RESERVED);
 
-            if($item['image'] != null){
-              //get image name
-              $explExtension = explode('.', $item['image']['name']);
-              $extension = end($explExtension);
-              $imageName = $explExtension[0].'_'.time().'.'.$extension;
-              //get image code
-              $imageExpl = explode(',',$item['image']['dataUrl']);
-              $base64 = end($imageExpl);
-              //saving image as a file
 
-              if(file_put_contents(public_path(env('IMAGE_UPLOAD_ROUTE')).$imageName, base64_decode($base64))){
-                  if(!ItemImage::create([
-                      'ImageName' => $imageName,
-                      'ItemID' => $item['item']['ItemID'],
-                      'ReservationItemID' => $reservationItem->ReservationItemID
-                  ])){
-                      return response()->json(['message'=>'Klaida', 'errors'=> ['name' => ['Įvyko klaida jungiantis į duomenų bazę. Susisiekite su administratoriumi.']]], 422);
-                  }
-              }
-              else {
-                  return response()->json(['message'=>'Klaida', 'errors'=> ['name' => ['Įvyko klaida išsaugant nuotrauką failų sistemoje. Susisiekite su administratoriumi.']]], 422);
-              }
+            if ($item['image'] != null) {
+                $name = $imageService->save($item['image']);
+                $image = new ItemImage();
+                $image->item_id = $item->id;
+                $image->reservation_item_id = $reservationItem->ReservationItemID;
+                $image->reservation_id = $reservation->ReservationID;
+                $image->name = $name;
+                $image->save();
             }
-      }
+        }
       return response()->json(['message'=> 'Atlikta!', 'success' => 'Įrankių priskyrimo rezervacija sėkmingai išsaugota!'],200);
     }
 }

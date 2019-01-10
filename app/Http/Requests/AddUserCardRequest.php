@@ -25,7 +25,7 @@ class AddUserCardRequest extends FormRequest
     {
         return [
             'id' => 'required',
-            'code' => 'required|string|max:30|unique:users,UserRFIDCode',
+            'code' => 'required|string|max:30|unique:users,code',
         ];
     }
     public function messages(){

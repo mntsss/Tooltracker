@@ -16,7 +16,7 @@ class SuspentionRequest extends FormRequest
       return [
           'id' => 'required|numeric|exists:items,ItemID',
           'note' => 'sometimes|max:500',
-          'code' => 'sometimes|string|max:30|exists:users,UserRFIDCode'
+          'code' => 'sometimes|string|max:30|exists:users,code'
       ];
   }
   public function messages(){

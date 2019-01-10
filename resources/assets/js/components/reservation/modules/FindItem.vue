@@ -16,7 +16,7 @@
                 <v-list>
                   <v-list-tile v-for="(item, i) in items" class="cursor-pointer" :key="i" @click="add(item)">
                     <v-list-tile-content >
-                      <v-list-tile-title v-text="item.ItemName"></v-list-tile-title>
+                      <v-list-tile-title v-text="item.name"></v-list-tile-title>
                       <v-list-tile-sub-title v-text="item.state"></v-list-tile-sub-title>
                     </v-list-tile-content>
                     <v-list-tile-avatar class="headline font-weight-light">
@@ -46,7 +46,7 @@
                   <v-data-table :headers="headers" :items="reservationItems" hide-actions class="elevation-1">
                 <template slot="items" slot-scope="props">
                 <td>{{ props.item.item.item_group.ItemGroupName }}</td>
-                  <td>{{ props.item.item.ItemName }}</td>
+                  <td>{{ props.item.item.name }}</td>
                   <td class="text-xs-center">{{ props.item.quantity }}</td>
                   <td class="justify-center layout px-0">
                       <v-btn @click="remove(props.item)"><v-icon >delete</v-icon></v-btn>
@@ -82,7 +82,7 @@ export default{
               text: 'Pavadinimas',
               align: 'left',
               sortable: false,
-              value: 'item.ItemName'
+              value: 'item.name'
             },
             { text: 'Kiekis (vnt.)', value: 'quantity', sortable:false },
             { text: '', value: 'value' }
@@ -101,26 +101,14 @@ export default{
   },
   methods:{
     add: function(item){
-      if(item.state != "Sandėlyje"){
-        if(item.state == 'Rezervuotas')
-          return swal("Klaida!", 'Įrankis jau yra pridėtas aktyvioje rezervacijoje...', 'error')
-        else if(item.state == 'Naudojamas')
-          return swal("Klaida!", 'Įrankis yra naudojamas ir negali būti pridėtas į rezervaciją!', 'error')
-        else if(item.state == 'Ištrintas')
-          return swal("Klaida!", 'Įrankis yra ištrintas, todėl negali būti pridėtas į rezervaciją!', 'error')
-        else
-          return swal("Klaida!", 'Įrankis yra įšaldytas, todėl negali būti pridėtas į rezervaciją!', 'error')
-      }
-      else{
           for(var i = 0; i< this.reservationItems.length; i++)
             {
-                if(this.reservationItems[i].item.ItemID == item.ItemID)
+                if(this.reservationItems[i].item.id == item.id)
                     return swal("Klaida!", 'Įrankis jau rezervuotas!', 'error')
             }
             this.$emit('itemAdded')
             this.$store.commit('reservation/addItem', item)
 
-        }
     },
     remove: function(item){
         this.$store.commit('reservation/removeItem', item)

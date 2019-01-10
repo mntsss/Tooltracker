@@ -72,7 +72,7 @@ class UserController extends Controller
         'Username' => $request->username,
         'UserRole' => $request->role,
         'UserPhone' => $request->phone,
-        'UserRFIDCode' => $request->code,
+        'code' => $request->code,
         'password' => Hash::make($request->password)
       ]))
         return response()->json(['message' => 'Atlikta!', 'success' => 'Naujas vartotojas sėkmingai užregistruotas!'], 200);
@@ -99,7 +99,7 @@ class UserController extends Controller
       else if($reservationCheck)
         return response()->json(['message' => 'Klaida!', 'errors' => ['name' => [ 'Vartotojas turi aktyvių rezervacijų!']]], 422);
       else {
-        if(User::find($id)->update(['UserDeleted' => true, 'password' => 'deleted', 'UserRFIDCode' => null]))
+        if(User::find($id)->update(['UserDeleted' => true, 'password' => 'deleted', 'code' => null]))
           return response()->json(['message' => 'Atlikta!', 'success' => 'Vartotojas sėkmingai ištrintas.'],200);
         else
           return response()->json(['message' => 'Klaida!', 'errors' => ['name' => ['Įvyko klaida jungiantis į duomenų bazę. Apie klaidą praneškite administracijai.']]], 422);
@@ -110,7 +110,7 @@ class UserController extends Controller
       if(Code::where('Code', $request->code)->exists())
         return response()->json(['message' => 'Klaida!', 'errors' => ['name' => ['Kortelės ar čipo kodas jau naudojamas sistemoje ir negali būti priskirtas dar kartą! Bandykite kitą kortelę.']] ],422);
 
-      if(User::find($request->id)->update(['UserRFIDCode' => $request->code]))
+      if(User::find($request->id)->update(['code' => $request->code]))
         return response()->json(['message' => 'Atlikta!', 'success' => 'Vartotojui sėkmingai priskirta nauja identifikacinė kortelė.'],200);
       else
         return response()->json(['message' => 'Klaida!', 'errors' => ['name' => ['Įvyko klaida jungiantis į duomenų bazę. Apie klaidą praneškite administracijai.']]], 422);

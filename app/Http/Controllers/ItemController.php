@@ -40,7 +40,7 @@ class ItemController extends Controller
 
     public function deletedItems()
     {
-        return response()->json(Item::deleted()->get());
+        return response()->json(Item::where('status', Item::ITEM_DELETED)->get());
     }
 
     public function history($id)
@@ -156,7 +156,7 @@ class ItemController extends Controller
 
     public function search(ItemSearchRequest $request)
     {
-        $items = Item::where('ItemName', 'like', '%' . $request['query'] . '%')->orWhere('ItemIdNumber', 'like', $request['query'] . '%')->existing()->with(['lastWithdrawal', 'lastSuspention', 'lastReservation', 'images', 'itemGroup'])->limit(10)->get();
+        $items = Item::where('name', 'like', '%' . $request['query'] . '%')->orWhere('identification', 'like', $request['query'] . '%')->with('itemGroup')->existing()->limit(10)->get();
 
         foreach ($items as $item) {
             $item->state = $this->GetItemState($item);

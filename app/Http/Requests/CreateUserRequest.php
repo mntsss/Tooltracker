@@ -29,7 +29,7 @@ class CreateUserRequest extends FormRequest
             'role' => 'required|string|max:50',
             'password' => 'required|string|min:6|max:50|confirmed',
             'phone' => 'sometimes|max:14',
-            'code' => 'nullable|string|max:30|unique:users,UserRFIDCode',
+            'code' => 'nullable|string|max:30|unique:users,code',
             'nocode' => 'required|boolean'
         ];
     }

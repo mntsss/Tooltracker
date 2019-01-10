@@ -19,16 +19,16 @@
             <v-layout mb-3>
               <v-card tile width="100%">
                   <v-card-text>
-                      <v-layout row mx-0 align-center >
+                      <!--<v-layout row mx-0 align-center >
                           <v-flex shrink pa-2 style="width: 40px !important">
-                              <v-icon headline class="primary--text">fa-map-marker</v-icon>
+                              <v-icon headline class="primary&#45;&#45;text">fa-map-marker</v-icon>
                           </v-flex>
                           <v-flex shrink px-2>Būsena:</v-flex>
                           <v-flex px-2 shrink v-if="!itemData.cobject">Sandėlyje</v-flex>
                           <v-flex px-2 shrink v-else-if="itemData.cobject">Naudojamas ({{itemData.cobject.ObjectName}})</v-flex>
 
-                          <v-flex v-if="itemData.cobject"><v-btn outline class="mx-2" @click="unAssign()"><v-icon class="primary--text pr-3">fa-sign-in-alt</v-icon>Grąžinti į sandėlį</v-btn></v-flex>
-                      </v-layout>
+                          <v-flex v-if="itemData.cobject"><v-btn outline class="mx-2" @click="unAssign()"><v-icon class="primary&#45;&#45;text pr-3">fa-sign-in-alt</v-icon>Grąžinti į sandėlį</v-btn></v-flex>
+                      </v-layout>-->
                       <v-layout row mx-0 wrap align-center >
                           <v-flex shrink pa-2 style="width: 40px !important">
                               <v-icon headline class="primary--text">fa-calendar-plus</v-icon>
@@ -68,10 +68,10 @@
                       </v-layout>
                       <v-layout row mx-0 wrap align-center pa-2 justify-end>
                           <v-flex shrink justify-end>
-                            <v-btn outline v-if="!itemData.cobject" @click="show('assign-rented-item-modal', {itemID: itemData.RentedItemID})">
-                                <v-icon class="primary--text">fa-wrench</v-icon>
+                            <!--<v-btn outline v-if="!itemData.cobject" @click="show('assign-rented-item-modal', {itemID: itemData.RentedItemID})">
+                                <v-icon class="primary&#45;&#45;text">fa-wrench</v-icon>
                                 <span class="mx-2">Priskirti objektui</span>
-                            </v-btn>
+                            </v-btn>-->
                             <v-btn outline v-if="!itemData.cobject" @click="returnItem()">
                                 <v-icon class="primary--text">fa-wrench</v-icon>
                                 <span class="mx-2">Užbaigti nuomą</span>

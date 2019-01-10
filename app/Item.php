@@ -20,7 +20,7 @@ class Item extends Model
 
     protected $primaryKey = 'id';
 
-    protected $fillable = ['name', 'acquired_from', 'warranty_date', 'purchase_date', 'consumable', 'group_id', 'storage_id', 'identification'];
+    protected $fillable = ['name', 'acquired_from', 'warranty_date', 'purchase_date', 'consumable', 'deleted', 'group_id', 'storage_id', 'identification'];
 
 
     public function setInStorage(){
@@ -69,7 +69,7 @@ class Item extends Model
      */
 
     public function itemGroup(){
-      return $this->belongsTo('App\ItemGroup', 'ItemGroupID');
+      return $this->belongsTo('App\ItemGroup', 'group_id');
     }
 
     public function codes(){
