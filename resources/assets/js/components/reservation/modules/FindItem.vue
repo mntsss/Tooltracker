@@ -1,16 +1,24 @@
 <template>
     <v-container>
+        <QRreader></QRreader>
         <v-layout row mx-0 mx-0>
             <v-flex sm6 px-1>
-              <v-text-field
-                flat
-                solo
-                hide-details
-                prepend-inner-icon="search"
-                label="Įrankių paieška..."
-                v-model = "searchQuery"
-                class=""
-              ></v-text-field>
+              <v-layout>
+                  <v-flex>
+                      <v-text-field
+                              flat
+                              solo
+                              hide-details
+                              prepend-inner-icon="search"
+                              label="Įrankių paieška..."
+                              v-model = "searchQuery"
+                              class=""
+                      ></v-text-field>
+                  </v-flex>
+                  <v-flex shrink>
+                      <v-btn icon @click="$modal.show('qr-reader-modal')"><v-icon medium color="primary">fa-camera</v-icon></v-btn>
+                  </v-flex>
+              </v-layout>
               <template>
                 <v-progress-linear :indeterminate="true" v-if="isSearchLoading"></v-progress-linear >
                 <v-list>
@@ -65,6 +73,7 @@
 </template>
 <script>
 import swal from 'sweetalert'
+import QRreader from './../../modals/QRreader.vue';
 export default{
   data(){
       return {
@@ -130,6 +139,9 @@ export default{
         })
         .finally(() => (this.isSearchLoading = false))
     }
-  }
+  },
+    components:{
+      QRreader
+    }
 }
 </script>

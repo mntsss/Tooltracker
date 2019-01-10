@@ -24,7 +24,7 @@ class FindItemWithCodeRequest extends FormRequest
     public function rules()
     {
         return [
-            'code' => 'required|string|max:50|exists:rfid_codes,Code'
+            'code' => 'required|string|max:50|exists:codes,code'
         ];
     }
 

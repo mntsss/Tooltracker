@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Action;
 use Illuminate\Http\Request;
 use App\Item;
 use App\Traits\ActionHistory;
@@ -19,22 +20,16 @@ class HistoryController extends Controller
   }
 
     public function getItemsHistory($from = null, $til = null){
-      $items = Item::with(['withdrawals', 'reservations'])->get();
-      $collection = collect();
-      foreach($items as $item){
-        $withdrawals = $this->createWithdrawalHistory($item, $from, $til);
-        $reservations = $this->createReservationHistory($item, $from, $til);
-        $suspentions = $this->createSuspentionHistory($item, $from, $til);
-        $collection = $collection->merge($withdrawals)
-                                 ->merge($reservations)
-                                 ->merge($suspentions)
-                                 ;
+      $query = Action::with(['item', 'user', 'storage'])->orderBy('created_at', 'DESC');
+      if($from){
+          $query->where('created_at', '>=', $from);
       }
+      if($til){
+          $query->where('created_at', '<=', $til);
+      }
+      $actions = $query->get();
 
-
-      $sorted = $collection->sortByDesc('Date')->values()->all();
-
-      return response()->json($sorted, 200);
+      return response()->json($actions, 200);
     }
 
     public function getUserHistory($userID, $from = null, $til = null){

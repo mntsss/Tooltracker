@@ -1,7 +1,7 @@
 <template>
     <Modal modal_name="waiting-image-modal" :allowClose='false' v-on:closed="imageDialogClosed()">
         <div slot="header" v-if="newItem.item">
-            {{newItem.item.name}}
+            Įrankio {{newItem.item.name}} nuotrauka
         </div>
         <div slot="content" v-if="newItem.item">
             <v-layout justify-center class="border border-primary" row mx-0 wrap v-if="newItem.item.consumable">

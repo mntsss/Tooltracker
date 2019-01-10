@@ -68,30 +68,30 @@
                     <input class="remove-all-margin" type="checkbox" value="" id="consumable" v-model="consumable" style="height:23px; width:23px">
                   </div>
                 </div>
-                <div class="form-group mb-4">
+<!--                <div class="form-group mb-4">
                         <label for="image" class="col-md-4 control-label">Nuotrauka</label>
 
                         <div class="col-md-6 text-right">
-                            <image-uploader :debug="1" :maxWidth="192" :quality="0.7" :autoRotate=true outputFormat="verbose" :preview=false :className="['fileinput', { 'fileinput--loaded' : hasImage }]"
+                            <image-uploader :debug="1" :maxWidth="192" :quality="0.7" :autoRotate=true outputFormat="verbose" :preview=false :className="['fileinput', { 'fileinput&#45;&#45;loaded' : hasImage }]"
                               capture="environment" @input="setImage" @onUpload="loadingDialog" @onComplete="loadingDialog" class="form-control"></image-uploader>
                         </div>
-                </div>
-                <v-layout row mx-0 mx-0 align-center justify-center pa-3>
+                </div>-->
+<!--                <v-layout row mx-0 mx-0 align-center justify-center pa-3>
                   <v-flex shrink v-if="code && !nocode">
                     <span class="text-success headline">Identifikacinis čipas nuskaitytas</span>
                   </v-flex>
                   <v-flex shrink v-else-if="!code && !nocode">
                     <span class="text-danger headline">Laukiama identifikacinio čipo...</span>
                   </v-flex>
-                </v-layout>
-                <div class="form-group row mx-0 remove-side-margin">
+                </v-layout>-->
+<!--                <div class="form-group row mx-0 remove-side-margin">
                   <label class="col-auto control-label mb-4" for="consumable">
                     Be identifikacinio čipo
                   </label>
                   <div class="col align-left">
                     <input class="remove-all-margin" type="checkbox" v-model="nocode" style="height:23px; width:23px">
                   </div>
-                </div>
+                </div>-->
                 <v-layout row mx-0 mx-0 pa-2 align-center justify-center>
                   <v-flex shrink>
                     <v-progress-circular
@@ -122,7 +122,7 @@ export default {
             name: null,
             image: null,
             code: null,
-            nocode: false,
+            nocode: true,
             acquired: null,
             idnumber: null,
             consumable: false,
@@ -201,7 +201,6 @@ export default {
       this.image = null
       this.code = null
       this.consumable = false
-      this.nocode= false
       this.acquired = null
       this.warranty_date = ''
       this.purchase_date= ''

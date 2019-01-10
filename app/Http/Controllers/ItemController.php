@@ -61,6 +61,7 @@ class ItemController extends Controller
         $item->fill($request->item())->save();
         $recorderService->record($item, Item::ITEM_IN_STORAGE);
         $item->status = Item::ITEM_IN_STORAGE;
+        $item->storage_id = ItemGroup::find($item->group_id)->storage_id;
         $item->save();
 
         if($request->hasImage()){
@@ -148,7 +149,7 @@ class ItemController extends Controller
     // finds item which is assigned to provided RFID code
     public function findWithCode(FindItemWithCodeRequest $request)
     {
-        $itemID = Code::where('Code', $request->code)->first()->ItemID;
+        $itemID = Code::where('code', $request->code)->first()->item_id;
         $item = Item::existing()->with(['lastWithdrawal', 'lastSuspention', 'lastReservation', 'images', 'itemGroup'])->find($itemID);
         $item->state = $this->getItemState($item);
         return response()->json($item, 200);

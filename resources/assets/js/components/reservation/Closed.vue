@@ -17,7 +17,7 @@
                       <v-card-text>
                           <v-data-table :headers="headers" :items="reservation.items" hide-actions class="elevation-3 border border-dark mb-3">
                               <template slot="items" slot-scope="props">
-                                <td>{{ props.item.item.ItemName }}</td>
+                                <td>{{ props.item.item.name }}</td>
                                 <td class="text-xs-center">{{ props.item.ReservationItemQuantity }}</td>
                                 <td class="justify-center layout px-0">
                                 </td>

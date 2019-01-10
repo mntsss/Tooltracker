@@ -12,12 +12,12 @@
       <div class="card-body" v-if="user.withdrawals.length > 0">
           <v-data-table :headers="headers" :items="user.withdrawals" hide-actions class="elevation-3 border border-dark">
               <template slot="items" slot-scope="props">
-                <tr @click="$router.push({ name: 'item', params: { itemID: props.item.item.ItemID}})" class="cursor-pointer">
+                <tr @click="$router.push({ name: 'item', params: { itemID: props.item.item.id}})" class="cursor-pointer">
                   <td>
                     {{ props.item.item.item_group.ItemGroupName}}
                   </td>
                   <td>
-                    {{ props.item.item.ItemName }}
+                    {{ props.item.item.name }}
                   </td>
                   <td class="text-xs-center">
                     {{ props.item.ItemWithdrawalQuantity }}

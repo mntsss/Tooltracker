@@ -17,7 +17,7 @@
           </v-layout>
             <v-layout align-center justify-center>
               <v-flex shrink class="border border-dark">
-                <VueSignaturePad width="500px" height="500px" ref="signaturePad"/>
+                <VueSignaturePad width="300px" height="300px" ref="signaturePad"/>
               </v-flex>
             </v-layout>
             <v-layout align-center justify-center>

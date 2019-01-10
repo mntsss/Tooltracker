@@ -11,22 +11,20 @@
               <template slot="items" slot-scope="props">
                   <tr class="cursor-pointer" @click="$emit('clicked', {item: props.item})">
                     <td>
-                      {{ props.item.GroupName}}
+                      <span v-if="props.item.storage">{{ props.item.storage.name}}</span>
                     </td>
                     <td>
-                      {{ props.item.ItemName}}
+                      {{ props.item.item.name}}
                     </td>
                     <td>
-                      {{ actionDesc[props.item.Action][props.item.Type][props.item.Subtype]}}
+                      {{ props.item.previous_status}} -> {{props.item.current_status}}
+                      <!--{{ actionDesc[props.item.previous_status][props.item.current_status]}}-->
                     </td>
                     <td>
-                      {{ props.item.Username }}
+                      {{ props.item.user.Username }}
                     </td>
                     <td class="text-xs-center">
-                      {{ props.item.Date }}
-                    </td>
-                    <td class="justify-center layout px-0">
-                      {{ props.item.Quantity}}
+                      {{ props.item.created_at }}
                     </td>
                   </tr>
                 </template>
@@ -51,16 +49,16 @@ export default{
       },
       headers: [
           {
-            text: "Grupė",
+            text: "Sandėlis",
             align: 'left',
             sortable: false,
-            value: 'item.itemGroup.ItemGroupName'
+            value: 'storage.name'
           },
           {
             text: "Pavadinimas",
             align: 'left',
             sortable: false,
-            value: 'ItemName'
+            value: 'item.name'
           },
           {
             text: 'Veiksmas',
@@ -72,18 +70,12 @@ export default{
             text: 'Vartotojas',
             align: 'left',
             sortable: false,
-            value: 'Username'
+            value: 'user.Username'
           },
           {
             text: 'Data',
-            value: 'Date',
+            value: 'created_at',
             align: 'left'
-          },
-          {
-            text: 'Kiekis',
-            value: 'Quantity',
-            sortable: false,
-            align: 'center'
           }
         ],
     }

@@ -125,7 +125,7 @@
         },
         components: {
             FindItem,
-            ImageDialog
+            ImageDialog,
         }
     }
 </script>

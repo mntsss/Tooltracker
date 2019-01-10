@@ -48,7 +48,7 @@ export default {
               code: code
           }).then(response => {
               if(response.status == 200){
-                  this.$router.push({name: 'item', params: {itemProp: response.data}});
+                  this.$router.push({name: 'item', params: {itemID: response.data.id}});
               }
           }).catch(err => {
 

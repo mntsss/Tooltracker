@@ -11,7 +11,7 @@
         <ItemReturnConfirmation v-on:reload="loadItem"></ItemReturnConfirmation>
         <ConfirmReturnItemSuspentionModal></ConfirmReturnItemSuspentionModal>
         <ChangeItemAcquiredModal></ChangeItemAcquiredModal>
-
+        <QRreader></QRreader>
     <div class="card" v-if="item">
       <v-layout row mx-0 wrap align-content-center class="card-header pb-0 pt-0 mx-0 secondary">
           <v-flex headline shrink justify-start align-content-center>
@@ -168,6 +168,7 @@ import ItemReturnConfirmation from '../modals/ItemReturnConfirmation.vue'
 import ChangeItemWarrantyModal from '../modals/ChangeItemWarranty.vue'
 import RestoreItemModal from '../modals/RestoreItem.vue'
 import ConfirmReturnItemSuspentionModal from '../modals/ConfirmReturnItemSuspention.vue'
+import QRreader from '../modals/QRreader.vue';
   export default {
     data(){
       return {
@@ -176,7 +177,7 @@ import ConfirmReturnItemSuspentionModal from '../modals/ConfirmReturnItemSuspent
           readonly: true,
 
           dropdownMeniu: [
-            {text: 'Priskirti čipą', click: () =>{this.show('add-item-chip-modal')}},
+            {text: 'Priskirti kodą', click: () =>{this.$modal.show('qr-reader-modal')}},
             {text: 'Pervadinti', click: ()=>{this.show('rename-item-modal', {name: this.item.ItemName})}},
             {text: 'Keisti identifikacinį numerį', click: ()=>{this.show('change-item-idnumber-modal', {ident: this.item.ItemIdNumber})}},
             {text: 'Keisti įsigijimo vietą', click: ()=>{this.show('change-item-acquired-modal', {acquired: this.item.ItemAcquiredFrom})}},
@@ -328,7 +329,8 @@ import ConfirmReturnItemSuspentionModal from '../modals/ConfirmReturnItemSuspent
       ChangeItemWarrantyModal,
       RestoreItemModal,
       ConfirmReturnItemSuspentionModal,
-      ChangeItemAcquiredModal
+      ChangeItemAcquiredModal,
+      QRreader
   }
 }
 </script>

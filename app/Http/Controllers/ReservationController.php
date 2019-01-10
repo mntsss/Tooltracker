@@ -46,7 +46,6 @@ class ReservationController extends Controller
           ]);
 
           $item = new Item();
-          $item->fill($item);
           $actionRecorderService->record($item, Item::ITEM_RESERVED);
 
 
@@ -76,9 +75,7 @@ class ReservationController extends Controller
     {
         $reservations = Reservation::where('ReservationDelivered', true)->with(['items' => function($query){
           $query->with('item');
-      }, 'cobject' => function($query){ $query->with(['foremen' => function($q){
-        $q->with('user');
-      }]);}, 'recipient']);
+      }, 'recipient']);
       if($userID){
         if($userID === "all")
         {}
@@ -97,23 +94,36 @@ class ReservationController extends Controller
       return response()->json($reservations, 200);
     }
 
-    public function removeItemFromReservation(Request $request){
+    public function removeItemFromReservation(Request $request, ActionRecorderService $actionRecorderService){
         $reservation = Reservation::find($request->item['ReservationID']);
+        $item = Item::find($request->item['ItemID']);
         if($reservation->ReservationDelivered)
             return response()->json(['message'=>'Klaida', 'errors'=> ['name' => ['Negalima ištrinti įrankių iš jau pristatytų rezervacijų...']]], 422);
         if(ReservationItem::destroy($request->item['ReservationItemID']))
+        {
+            $actionRecorderService->record($item, Item::ITEM_IN_STORAGE);
+            $item->status = Item::ITEM_IN_STORAGE;
+            $item->save();
             return response()->json(['message'=> 'Atlikta!', 'success' => 'Įrankis panaikintas iš rezervacijos!'],200);
+        }
         else {
             return response()->json(['message'=>'Klaida', 'errors'=> ['name' => ['Įvyko klaida jungiantis į duomenų bazę. Susisiekite su administratoriumi.']]], 422);
         }
     }
 
-    public function deleteReservation($id){
+    public function deleteReservation($id, ActionRecorderService $actionRecorderService){
         $reservation = Reservation::find($id);
         if($reservation->ReservationDelivered)
             return response()->json(['message'=>'Klaida', 'errors'=> ['name' => ['Negalima ištrinti jau pristatytų rezervacijų...']]], 422);
 
-        ReservationItem::where('ReservationID', $id)->delete();
+        $items = ReservationItem::where('ReservationID', $id)->get();
+        foreach($items as $reservationItem){
+            $item = Item::find($reservationItem->ItemID);
+            $actionRecorderService->record($item, Item::ITEM_IN_STORAGE);
+            $item->status = Item::ITEM_IN_STORAGE;
+            $item->save();
+            $reservationItem->delete();
+        }
         if($reservation->delete()){
             return response()->json(['message'=> 'Atlikta!', 'success' => 'Rezervacija sėkmingai ištrinta, visi rezervacijos įrankiai perkelti į sandėlį.'],200);
         }
@@ -153,7 +163,7 @@ class ReservationController extends Controller
         }
     }
 
-    public function confirmReservationWithSignature(ConfirmSignReservationRequest $request){
+    public function confirmReservationWithSignature(ConfirmSignReservationRequest $request, ActionRecorderService $actionRecorderService){
       $reservation = Reservation::with(['items' => function($query){ $query->with('image');}, 'recipient'])->find($request->id);
 
       if($reservation->ReservationDelivered)
@@ -162,16 +172,21 @@ class ReservationController extends Controller
       foreach($reservation->items as $item){
           $withdrawal = ItemWithdrawal::create([
               'ItemWithdrawalQuantity' => $item->ReservationItemQuantity,
-              'UserID' => $reservation->recipient[0]->UserID,
+              'UserID' => $reservation->recipient[0]->id,
               'ObjectID' => $reservation->ObjectID,
               'ItemID' => $item->ItemID
             ]);
           if($item->image){
-            $image = ItemImage::find($item->image->ImageID);
+            $image = ItemImage::find($item->image->id);
             if($image)
                 $image->update(['ItemWithdrawalID'=> $withdrawal->ItemWithdrawalID]);
           }
         }
+        $itemTemp = Item::find($item->ItemID);
+        $actionRecorderService->record($itemTemp, ITEM::ITEM_IN_USE, $reservation->recipient[0]->id);
+        $itemTemp->status = Item::ITEM_IN_USE;
+        $itemTemp->save();
+
         $reservation->ReservationDelivered = true;
         $reservation->ReservationConfirmSignature = $request->sign;
         $reservation->save();
@@ -195,17 +210,17 @@ class ReservationController extends Controller
                 'ItemID' => $item['item']['id'],
                 'ReservationItemQuantity' => $item['quantity']
             ]);
-            //dd($item['item']);
-            $itemTemp = new Item();
-            $itemTemp->fill($item['item']);
-            $itemTemp->id = $item['item']['id'];
+
+            $itemTemp = Item::find($item['item']['id']);
             $actionRecorderService->record($itemTemp, Item::ITEM_RESERVED);
+            $itemTemp->status = Item::ITEM_RESERVED;
+            $itemTemp->save();
 
 
             if ($item['image'] != null) {
-                $name = $imageService->save($item['image']);
+                $name = $imageService->save($item);
                 $image = new ItemImage();
-                $image->item_id = $item->id;
+                $image->item_id = $itemTemp->id;
                 $image->reservation_item_id = $reservationItem->ReservationItemID;
                 $image->reservation_id = $reservation->ReservationID;
                 $image->name = $name;

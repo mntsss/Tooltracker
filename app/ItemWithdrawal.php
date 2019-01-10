@@ -12,7 +12,7 @@ class ItemWithdrawal extends Model
     protected $fillable = ['ItemWithdrawalQuantity', 'ItemWithdrawalReturned', 'ItemWithdrawalReturnedQuantity', 'ItemWithdrawalReturnConfirmedBy', 'ItemWithdrawalReturnConfirmCard', 'ItemID', 'UserID', 'ObjectID'];
 
     public function item(){
-      return $this->hasOne('App\Item', 'ItemID');
+      return $this->hasOne('App\Item', 'id', 'ItemID');
     }
     public function image(){
         return $this->hasOne('App\ItemImage', 'ItemWithdrawalID', 'ItemWithdrawalID');

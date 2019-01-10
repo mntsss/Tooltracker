@@ -83,7 +83,7 @@
                                                   <v-icon class="primary--text">fa-history</v-icon>
                                                   <span class="mx-2">Istorija</span>
                                               </v-btn>
-                                              <v-btn outline @click="$router.push({name:'userWithdrawals', params: {userID: user.UserID}})">
+                                              <v-btn outline @click="$router.push({name:'userWithdrawals', params: {userID: user.id}})">
                                                   <v-icon class="primary--text">fa-toolbox</v-icon>
                                                   <span class="mx-2">Įrankiai</span>
                                               </v-btn>
@@ -91,7 +91,7 @@
                                                     <v-icon class="primary--text">fa-edit</v-icon>
                                                     <span class="mx-2">Redaguoti</span>
                                                 </v-btn>
-                                                <v-btn outline @click="show('add-user-card-modal', {id: user.UserID})" v-if="$user.UserRole == 'Administratorius'">
+                                                <v-btn outline @click="show('add-user-card-modal', {id: user.id})" v-if="$user.UserRole == 'Administratorius'">
                                                     <v-icon class="primary--text">fa-id-card</v-icon>
                                                     <span class="mx-2">Nauja kortelė</span>
                                                 </v-btn>

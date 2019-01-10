@@ -124,7 +124,7 @@
                 settingsDropdownMeniu: [
                     {
                         text: 'Mano įrankiai', click: () => {
-                            this.$router.push({name: 'userWithdrawals', params: {userID: this.$user.UserID}})
+                            this.$router.push({name: 'userWithdrawals', params: {userID: this.$user.id}})
                         }
                     },
                     {

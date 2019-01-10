@@ -3,6 +3,7 @@
     <v-container v-if="reservations">
         <ConfirmWithCard></ConfirmWithCard>
         <ConfirmWithSign></ConfirmWithSign>
+        <QRreader></QRreader>
         <v-layout row mx-0 wrap mx-0 align-center justify-center class="secondary v-toolbar">
             <v-flex shrink headline>Aktyvios rezervacijos</v-flex>
          </v-layout>
@@ -20,7 +21,7 @@
                               <v-data-table :headers="headers" :items="reservation.items" hide-actions class="elevation-3 border border-dark">
                                   <template slot="items" slot-scope="props">
                                     <td>{{ props.item.item.item_group.ItemGroupName }}</td>
-                                    <td>{{ props.item.item.ItemName }}</td>
+                                    <td>{{ props.item.item.name }}</td>
                                     <td class="text-xs-center">{{ props.item.ReservationItemQuantity }}</td>
                                     <td class="justify-center layout px-0">
                                         <v-btn @click="deleteItem(props.item, i)" v-if="$user.UserRole == 'Administratorius'"><v-icon>delete</v-icon></v-btn>
@@ -33,7 +34,7 @@
                                   </template>
                                 </v-data-table>
                                 <v-layout row mx-0 wrap align-center pa-2 justify-end v-if="$user.UserRole == 'Administratorius'">
-                                      <v-btn outline @click="show('confirm-reservation-with-card-modal', {id: reservation.ReservationID, user: reservation.recipient[0].Username})">
+                                      <v-btn outline @click="$modal.show('qr-reader-modal')">
                                           <v-icon class="primary--text">fa-id-card</v-icon>
                                           <span class="mx-2">Patvirtinti kortele</span>
                                       </v-btn>
@@ -64,6 +65,7 @@
 import swal from 'sweetalert'
 import ConfirmWithCard from '../modals/ConfirmReservationWithCard.vue'
 import ConfirmWithSign from '../modals/ConfirmReservationWithSignature.vue'
+import QRreader from './../modals/QRreader.vue';
 export default{
   data(){
     return {
@@ -79,7 +81,7 @@ export default{
             text: 'Įrankio (daikto) pavadinimas',
             align: 'left',
             sortable: false,
-            value: 'item.ItemName'
+            value: 'item.name'
           },
           { text: 'Kiekis (vnt.)', value: 'quantity' },
           { text: '', value: 'value' }
@@ -102,7 +104,7 @@ export default{
     },
     deleteItem: function(item, i){
         swal({
-          title: 'Ar tikrai norite iš rezervacijos pašalinti įrankį '+item.item.ItemName+'?',
+          title: 'Ar tikrai norite iš rezervacijos pašalinti įrankį '+item.item.name+'?',
           text: 'Iš rezervacijos panaikintas įrankis bus automatiškai perkeltas į sandėlį.',
           icon: 'warning',
           dangerMode: true,
@@ -161,7 +163,8 @@ export default{
   },
   components: {
     ConfirmWithCard,
-    ConfirmWithSign
+    ConfirmWithSign,
+      QRreader
   }
 }
 </script>

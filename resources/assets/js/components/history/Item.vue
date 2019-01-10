@@ -6,7 +6,7 @@
                   <a @click="$back()" class="headline"><span class="fa fa-arrow-left primary--text remove-all-margin p-2 btn-func-misc"></span></a>
               </v-flex>
               <v-flex>
-                  <div class="text-center headline" v-if="item">{{item.ItemName}} istorija</div>
+                  <div class="text-center headline" v-if="item">{{item.item.name}} istorija</div>
               </v-flex>
           </v-layout>
           <div class="card-body">
@@ -17,12 +17,12 @@
                         {{ actionDesc[props.item.Action][props.item.Type][props.item.Subtype]}}
                       </td>
                       <td>
-                        {{ props.item.Username }}
+                        {{ props.item.user.Username }}
                       </td>
                       <td class="text-xs-center">
-                        {{ props.item.Date }}
+                        {{ props.item.created_at }}
                       </td>
-                      <td class="justify-center layout px-0" v-if="item.ItemConsumable && props.item.Quantity">
+                      <td class="justify-center layout px-0" v-if="item.item.consumable && props.item.Quantity">
                         {{ props.item.Quantity}}
                       </td>
                     </tr>

@@ -10,14 +10,18 @@ class Action extends Model
       'signature', 'identification_code'];
 
     public function item(){
-      $this->hasOne('App\Item', 'item_id');
+      return $this->hasOne('App\Item', 'id', 'item_id');
     }
 
     public function cobject(){
-      $this->hasOne('App\CObject', 'object_id');
+      return $this->hasOne('App\CObject', 'object_id');
     }
 
     public function user(){
-      $this->hasOne('App\User', 'user_id');
+      return $this->hasOne('App\User', 'id','user_id');
+    }
+
+    public function storage(){
+        return $this->hasOne('App\Storage', 'id','storage_id');
     }
 }
