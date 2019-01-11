@@ -7,7 +7,7 @@
     </div>
 </template>
 <script>
-    import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from 'vue-qrcode-reader'
+    import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from 'vue-qrcode-reader';
 
     export default{
         data () {

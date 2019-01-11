@@ -686,11 +686,9 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
             return $result;
         }
 
-        $runEntireClass =  $this->runClassInSeparateProcess && !$this->runTestInSeparateProcess;
+        if ($this->runInSeparateProcess()) {
+            $runEntireClass = $this->runClassInSeparateProcess && !$this->runTestInSeparateProcess;
 
-        if (($this->runTestInSeparateProcess === true || $this->runClassInSeparateProcess === true) &&
-            $this->inIsolation !== true &&
-            !$this instanceof PhptTestCase) {
             $class = new ReflectionClass($this);
 
             if ($runEntireClass) {
@@ -1125,6 +1123,11 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
         return $this->data;
     }
 
+    public function addWarning(string $warning): void
+    {
+        $this->warnings[] = $warning;
+    }
+
     /**
      * Override to run the test and assert its state.
      *
@@ -1447,7 +1450,8 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
     protected function getMockFromWsdl($wsdlFile, $originalClassName = '', $mockClassName = '', array $methods = [], $callOriginalConstructor = true, array $options = []): MockObject
     {
         if ($originalClassName === '') {
-            $originalClassName = \pathinfo(\basename(\parse_url($wsdlFile)['path']), \PATHINFO_FILENAME);
+            $fileName          = \pathinfo(\basename(\parse_url($wsdlFile)['path']), \PATHINFO_FILENAME);
+            $originalClassName = \preg_replace('/[^a-zA-Z0-9_]/', '', $fileName);
         }
 
         if (!\class_exists($originalClassName)) {
@@ -1719,7 +1723,10 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
                 }
 
                 if (!isset($passedKeys[$dependency])) {
+                    $this->status = BaseTestRunner::STATUS_SKIPPED;
+
                     $this->result->startTest($this);
+
                     $this->result->addError(
                         $this,
                         new SkippedTestError(
@@ -1730,6 +1737,7 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
                         ),
                         0
                     );
+
                     $this->result->endTest($this, 0);
 
                     return false;
@@ -1984,13 +1992,7 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
             return true;
         }
 
-        foreach ($enumerator->enumerate($this->testResult) as $object) {
-            if ($mock === $object) {
-                return false;
-            }
-        }
-
-        return true;
+        return !\in_array($mock, $enumerator->enumerate($this->testResult), true);
     }
 
     /**
@@ -2108,5 +2110,11 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
         }
 
         return $result;
+    }
+
+    private function runInSeparateProcess(): bool
+    {
+        return ($this->runTestInSeparateProcess === true || $this->runClassInSeparateProcess === true) &&
+               $this->inIsolation !== true && !$this instanceof PhptTestCase;
     }
 }

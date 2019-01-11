@@ -11,6 +11,7 @@
 
 namespace Symfony\Component\HttpFoundation\Tests;
 
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -362,6 +363,11 @@ class ResponseTest extends ResponseTestCase
         $response->headers->set('Expires', -1);
         $response->expire();
         $this->assertNull($response->headers->get('Age'), '->expire() does not set the Age when the response is expired');
+
+        $response = new Response();
+        $response->headers->set('Expires', date(DATE_RFC2822, time() + 600));
+        $response->expire();
+        $this->assertNull($response->headers->get('Expires'), '->expire() removes the Expires header when the response is fresh');
     }
 
     public function testGetTtl()
@@ -566,6 +572,24 @@ class ResponseTest extends ResponseTestCase
         $response->prepare($request);
         $this->assertFalse($response->headers->has('pragma'));
         $this->assertFalse($response->headers->has('expires'));
+    }
+
+    public function testPrepareSetsCookiesSecure()
+    {
+        $cookie = Cookie::create('foo', 'bar');
+
+        $response = new Response('foo');
+        $response->headers->setCookie($cookie);
+
+        $request = Request::create('/', 'GET');
+        $response->prepare($request);
+
+        $this->assertFalse($cookie->isSecure());
+
+        $request = Request::create('https://localhost/', 'GET');
+        $response->prepare($request);
+
+        $this->assertTrue($cookie->isSecure());
     }
 
     public function testSetCache()

@@ -426,6 +426,16 @@ class HasManyThrough extends Relation
     }
 
     /**
+     * Get a generator for the given query.
+     *
+     * @return \Generator
+     */
+    public function cursor()
+    {
+        return $this->prepareQueryBuilder()->cursor();
+    }
+
+    /**
      * Execute a callback over each item while chunking.
      *
      * @param  callable  $callback
@@ -451,8 +461,10 @@ class HasManyThrough extends Relation
      */
     protected function prepareQueryBuilder($columns = ['*'])
     {
-        return $this->query->applyScopes()->addSelect(
-            $this->shouldSelect($this->query->getQuery()->columns ? [] : $columns)
+        $builder = $this->query->applyScopes();
+
+        return $builder->addSelect(
+            $this->shouldSelect($builder->getQuery()->columns ? [] : $columns)
         );
     }
 
@@ -498,7 +510,7 @@ class HasManyThrough extends Relation
         $query->getModel()->setTable($hash);
 
         return $query->select($columns)->whereColumn(
-            $parentQuery->getQuery()->from.'.'.$query->getModel()->getKeyName(), '=', $this->getQualifiedFirstKeyName()
+            $parentQuery->getQuery()->from.'.'.$this->localKey, '=', $this->getQualifiedFirstKeyName()
         );
     }
 

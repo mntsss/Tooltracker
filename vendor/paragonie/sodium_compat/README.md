@@ -25,7 +25,16 @@ If you require such an audit before you can use sodium_compat in your projects
 and have the funds for such an audit, please open an issue or contact 
 `security at paragonie dot com` so we can help get the ball rolling.
 
-If you'd like to learn more about the defensive security measures we've taken,
+However, sodium_compat has been adopted by high profile open source projects,
+such as [Joomla!](https://github.com/joomla/joomla-cms/blob/459d74686d2a638ec51149d7c44ddab8075852be/composer.json#L40)
+and [Magento](https://github.com/magento/magento2/blob/8fd89cfdf52c561ac0ca7bc20fd38ef688e201b0/composer.json#L44).
+Furthermore, sodium_compat was developed by Paragon Initiative Enterprises, a
+company that *specializes* in secure PHP development and PHP cryptography, and
+has been informally reviewed by many other security experts who also specialize
+in PHP.
+
+If you'd like to learn more about the defensive security measures we've taken
+to prevent sodium_compat from being a source of vulnerability in your systems,
 please read [*Cryptographically Secure PHP Development*](https://paragonie.com/blog/2017/02/cryptographically-secure-php-development).
 
 # Installing Sodium Compat
@@ -87,6 +96,11 @@ Non-commercial report will be facilitated through [Github issues](https://github
 We offer no guarantees of our availability to resolve questions about integrating sodium_compat into third-party
 software for free, but will strive to fix any bugs (security-related or otherwise) in our library.
 
+## Support Contracts
+
+If your company uses this library in their products or services, you may be
+interested in [purchasing a support contract from Paragon Initiative Enterprises](https://paragonie.com/enterprise).
+
 # Using Sodium Compat
 
 ## True Polyfill
@@ -114,8 +128,6 @@ if (\Sodium\crypto_sign_verify_detached($signature, $message, $alice_pk)) {
 
 The polyfill does not expose this API on PHP < 5.3, or if you have the PHP
 extension installed already.
-
-Since this doesn't require a namespace, this API *is* exposed on PHP 5.2.
 
 ## General-Use Polyfill
 
@@ -145,6 +157,8 @@ if (ParagonIE_Sodium_Compat::crypto_sign_verify_detached($signature, $message, $
 Generally: If you replace `\Sodium\ ` with `ParagonIE_Sodium_Compat::`, any
 code already written for the libsodium PHP extension should work with our
 polyfill without additional code changes.
+
+Since this doesn't require a namespace, this API *is* exposed on PHP 5.2.
 
 Since version 0.7.0, we have our own namespaced API (`ParagonIE\Sodium\*`) to allow brevity
 in software that uses PHP 5.3+. This is useful if you want to use our file cryptography 
@@ -188,6 +202,22 @@ There are three ways to make it fast:
       without harming the security of your cryptography keys. If your processor *isn't* safe, then decide whether you
       want speed or security because you can't have both.
 
+### How can I tell if sodium_compat will be slow, at runtime?
+
+Since version 1.8, you can use the `polyfill_is_fast()` static method to
+determine if sodium_compat will be slow at runtime.
+
+```php
+<?php
+if (ParagonIE_Sodium_Compat::polyfill_is_fast()) {
+    // Use libsodium now
+    $process->execute();
+} else {
+    // Defer to a cron job or other sort of asynchronous process
+    $process->enqueue();
+}
+```
+
 ### Help, my PHP only has 32-Bit Integers! It's super slow!
 
 Some features of sodium_compat are ***incredibly slow* with PHP 5 on Windows**
@@ -200,9 +230,11 @@ of the libsodium extension from PECL or. Alternatively, simply upgrade to PHP 7
 and the slowdown will be greatly reduced.
 
 This is also true of non-Windows 32-bit operating systems, or if somehow PHP
-was compiled where `PHP_INT_SIZE` equals `4` instead of `8`.
+was compiled where `PHP_INT_SIZE` equals `4` instead of `8` (i.e. Linux on i386).
 
 ## API Coverage
+
+**Recommended reading:** [Libsodium Quick Reference](https://paragonie.com/blog/2017/06/libsodium-quick-reference-quick-comparison-similar-functions-and-which-one-use)
 
 * Mainline NaCl Features
     * `crypto_auth()`
