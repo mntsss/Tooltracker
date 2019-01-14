@@ -30,13 +30,13 @@ class StorageController extends Controller
     public function edit(StorageRequest $request)
     {
       Storage::find($request->id)->rename($request->name);
-
       return response()->json(["message" => "Atlikta!", "success" => "Sandėlis pervadintas."], 200);
     }
 
     public function delete(Storage $storage)
     {
       /**
+      * // TODO: 
       * Check if storage can be deleted...
       */
       $storage->delete();
